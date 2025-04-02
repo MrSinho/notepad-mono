@@ -41,12 +41,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-
-
-# Flutter stuff
-app/windows
-app/linux
-app/macos
-app/ios
-app/android
