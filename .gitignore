@@ -25,3 +25,15 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+.qodo
+
+
+
+
+
+# Flutter stuff
+app/windows
+app/linux
+app/macos
+app/ios
+app/android
