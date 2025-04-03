@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+
 import 'types/app.dart';
 
+import 'backend/handle.dart';
 
 
-int main() {
 
-  const App app = App();
+Future<int> main() async {
+
+  Handle handle = Handle();
+
+  handle.initAll();
+
+  App app = App(handle: handle);
 
   runApp(app);
 

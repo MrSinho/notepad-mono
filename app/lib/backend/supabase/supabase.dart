@@ -1,7 +1,9 @@
-import 'package:supabase/supabase.dart';
-import "package:supabase_flutter/supabase_flutter.dart";
 
-import 'handle.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
+
+import '../handle.dart';
+import 'queries.dart';
 
 
 Future<int> initializeSupabase(
@@ -33,18 +35,43 @@ Future<int> initializeSupabase(
 
   }
   catch (exception) {
-    print('Failed to initialize Supabase: $exception');
+    debugPrint('Failed to initialize Supabase: $exception');
     return 0;
   }
   
 }
 
+Future<bool> checkIfUserExists(User user) async {
+  final session = Supabase.instance.client.auth.currentSession;
+
+  if (session?.user != null) {
+    debugPrint("User already authenticated: ${session!.user.email}");
+    return true;
+  } else {
+    debugPrint("User not authenticated");
+    return false;
+  }
+}
+
+
+
 Future<int> checkUserInfo(
   Handle handle,
 ) async {
 
-  //await SQLCreateUserProfile(handle, handle.private_profile.email);
-  //await GetCurrentProfileInfo(handle, handle.private_profile.email);
+  await queryCreateUserProfile(handle);
+  await queryProfileInfo(handle);
 
   return 1;
 }
+
+
+
+
+
+
+
+
+
+
+

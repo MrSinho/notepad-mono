@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 
-import '../types/handle.dart';
+import '../backend/handle.dart';
 
 import 'package:simple_icons/simple_icons.dart';
 
-import '../backend/login.dart';
+import '../backend/supabase/login.dart';
 import '../static/utils.dart';
 
 InkWell wrapIconTextButton(Icon icon, Text text, VoidCallback callback) {
-  InkWell inkwell = InkWell(onTap: callback, customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), child: wrapIconText(icon, text));
+
+  InkWell inkwell = InkWell(
+    onTap: callback,
+    customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), child: wrapIconText(icon, text)
+  );
 
   return inkwell;
-}
-
-Widget SignSeparator() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [ Text("―――――――――――――――― or ――――――――――――――――"), ]
-  );
 }
 
 Widget signInProviderContent(Handle handle) {
 
   Row row = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      wrapIconTextButton(Icon(SimpleIcons.google), Text("Sign In with Google"), () => googleLogin(handle)), 
-      SizedBox(width: 30),
-      wrapIconTextButton(Icon(SimpleIcons.github), Text("Sign In with Github"), () => githubLogin(handle)), 
+      wrapIconTextButton(const Icon(SimpleIcons.google), const Text("Sign In with Google"), () => googleLogin(handle)), 
+      const SizedBox(width: 30),
+      wrapIconTextButton(const Icon(SimpleIcons.github), const Text("Sign In with Github"), () => githubLogin(handle)), 
     ]
   );
 
@@ -47,4 +44,33 @@ Padding wrapIconText(Icon icon, Text text) {
     );
 
   return result;
+}
+
+FutureBuilder futureBuilderWidget(
+  Future<dynamic> async_widget,
+) {
+
+  FutureBuilder builder = FutureBuilder(
+    future: async_widget, 
+    builder: (BuildContext context, AsyncSnapshot snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(child: CircularProgressIndicator()); // Loading state
+      } else if (snapshot.hasError) {
+        return Center(child: Text('Error: ${snapshot.error}')); // Error state
+      } else {
+        return snapshot.data; // Render the dialog once async is done
+      }
+    }
+  );  
+
+  return builder;
+
+}
+
+WidgetBuilder futureBuilder(
+  Future<dynamic> async_widget,
+) {
+
+  return (BuildContext context) { return futureBuilderWidget(async_widget); };
+
 }

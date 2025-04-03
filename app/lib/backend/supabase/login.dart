@@ -1,16 +1,25 @@
-import '../types/supabase.dart';
-import '../types/handle.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:template/backend/supabase/listen.dart';
+import 'package:flutter/foundation.dart';
+
+import '../handle.dart';
+
+import 'queries.dart';
+
+
 
 Future<int> googleLogin(
   Handle handle
 ) async {
 
-  await handle.supabase_objects.auth.signInWithOAuth(
+  bool r = await handle.supabase_objects.auth.signInWithOAuth(
     OAuthProvider.google,
     redirectTo: "https://oofcqqefirmebbwdztvk.supabase.co/auth/v1/callback"
   );
+
+  if (!r) {
+    debugPrint("Google login failed");
+  }
 
   return 1;
 }
@@ -19,10 +28,14 @@ Future<int> githubLogin(
   Handle handle
 ) async {
 
-  await handle.supabase_objects.auth.signInWithOAuth(
+  bool r = await handle.supabase_objects.auth.signInWithOAuth(
     OAuthProvider.github,
     redirectTo: "https://oofcqqefirmebbwdztvk.supabase.co/auth/v1/callback"
   );
+
+  if (!r) {
+    debugPrint("Github login failed");
+  }
 
   return 1;
 }

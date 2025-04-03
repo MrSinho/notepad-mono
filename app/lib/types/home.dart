@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {// Configuration class for the state, holds state management
-  const Home({super.key, required this.title});// Key is required for flutter to track stateful widgets in the widget tree
+
+
+class Home extends StatefulWidget {//Configuration class for the state, holds state management
+  const Home({super.key, required this.title});//Key is required for flutter to track stateful widgets in the widget tree
 
   final String title;
 
@@ -11,6 +13,7 @@ class Home extends StatefulWidget {// Configuration class for the state, holds s
   }
 
 }
+
 
 
 class state_Home extends State<Home> {
@@ -23,7 +26,7 @@ class state_Home extends State<Home> {
 
 
   void graphics_incrementCounter() {
-    setState(() => incrementCounter()); //When setState() is called, the widgets specified in build() will be rebuilt
+    setState(() => incrementCounter());//When setState() is called, the widgets specified in build() will be rebuilt
   }
 
 
