@@ -5,7 +5,7 @@ import '../backend/handle.dart';
 
 
 class NavBar extends StatefulWidget {
-  NavBar({super.key, required this.handle});
+  const NavBar({super.key, required this.handle});
 
   final Handle handle;
 
@@ -44,7 +44,7 @@ class state_NavBar extends State<NavBar> {
 
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
 
     List<BottomNavigationBarItem> navbar_items = [
       const BottomNavigationBarItem(icon: Icon(Icons.local_library),           label: 'Selection'),  

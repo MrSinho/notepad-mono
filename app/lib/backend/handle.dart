@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import "package:supabase_flutter/supabase_flutter.dart";
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'supabase/supabase.dart';
-import 'supabase/listen.dart';
 
 import '../types/dashboard.dart';
 import '../types/drawer.dart';
@@ -12,6 +11,9 @@ import '../types/nav_bar.dart';
 import '../types/nav_page.dart';
 import '../types/profile_view.dart';
 import '../types/user_header.dart';
+import '../types/swipe_sheet.dart';
+
+
 
 class SupabaseObjects {
 
@@ -50,6 +52,7 @@ class Types {
   late collection_NavBar      collection_nav_bar;
   late collection_ProfileView collection_profile_view;
   late collection_UserHeader  collection_user_header;
+  late collection_SwipeSheet  collection_swipe_sheet;
 
 }
 
@@ -72,6 +75,7 @@ class Handle {
     types.collection_nav_bar      = collection_NavBar     (handle: this);
     types.collection_profile_view = collection_ProfileView(handle: this);
     types.collection_user_header  = collection_UserHeader (handle: this);
+    types.collection_swipe_sheet  = collection_SwipeSheet (handle: this, children: []);
   
   }
 

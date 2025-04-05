@@ -14,23 +14,23 @@ Dialog signOutDialog(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text("Confirm Sign Out", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-      SizedBox(height: 20),
-      Text(
+      const Text("Confirm Sign Out", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+      const SizedBox(height: 20),
+      const Text(
         "Are you sure you want to Sign Out?", 
         //style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      SizedBox(height: 40),
+      const SizedBox(height: 40),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           TextButton(
-            child: Text("Cancel"),
+            child: const Text("Cancel"),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text("Confirm"),
+            child: const Text("Confirm"),
             onPressed: () async {
               await logout(handle);
               Navigator.pop(context);
@@ -44,7 +44,7 @@ Dialog signOutDialog(
 
   Dialog dialog = Dialog(
     child: Padding(
-      padding: EdgeInsets.all(48.0),
+      padding: const EdgeInsets.all(48.0),
       child: dialog_content,
     )
   );

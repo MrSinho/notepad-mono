@@ -1,10 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:template/backend/supabase/listen.dart';
 import 'package:flutter/foundation.dart';
 
 import '../handle.dart';
-
-import 'queries.dart';
 
 
 

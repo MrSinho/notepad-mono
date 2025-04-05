@@ -40,16 +40,16 @@ class state_Drawer extends State<Drawer> {
     ListView list_view = ListView(
       children: [
         widget.handle.types.collection_user_header.widget,
-        ListTile(title: Text("Profile"), leading: Icon(Icons.person), onTap: () { widget.handle.types.collection_nav_bar.key.currentState?.graphics_selectPage(2); Navigator.pop(context); }),
-        ListTile(title: Text("Security"), leading: Icon(Icons.security), onTap: () {}),
-        ListTile(title: Text("Notifications"), leading: Icon(Icons.notifications), onTap: () {}),
-        Divider(),
-        ListTile(title: Text("About Sinho Softworks"), leading: Icon(Icons.code), onTap: () {},),
+        ListTile(title: const Text("Profile"), leading: const Icon(Icons.person), onTap: () { widget.handle.types.collection_nav_bar.key.currentState?.graphics_selectPage(2); Navigator.pop(context); }),
+        ListTile(title: const Text("Security"), leading: const Icon(Icons.security), onTap: () {}),
+        ListTile(title: const Text("Notifications"), leading: const Icon(Icons.notifications), onTap: () {}),
+        const Divider(),
+        ListTile(title: const Text("About Sinho Softworks"), leading: const Icon(Icons.code), onTap: () {},),
         //ListTile(title: Text("Report issue"), leading: Icon(Icons.bug_report), onTap: () => showDialog(context: context, builder: (BuildContext context) => softyReportIssueDialog(handle, context))),
-        Divider(),
-        ListTile(title: Text("Build"), subtitle: Text("pre-release"), leading: Icon(Icons.build), onTap: () {}),
-        Divider(),
-        ListTile(title: Text("Sign Out"), leading: Icon(Icons.logout), onTap: () => showDialog(context: context, builder: (BuildContext context) => signOutDialog(widget.handle, context))),
+        const Divider(),
+        ListTile(title: const Text("Build"), subtitle: const Text("pre-release"), leading: const Icon(Icons.build), onTap: () {}),
+        const Divider(),
+        ListTile(title: const Text("Sign Out"), leading: const Icon(Icons.logout), onTap: () => showDialog(context: context, builder: (BuildContext context) => signOutDialog(widget.handle, context))),
       ],
     );
 

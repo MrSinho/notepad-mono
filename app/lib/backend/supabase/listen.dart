@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
+
 import '../handle.dart';
+
 import 'queries.dart';
 
 
@@ -28,7 +31,7 @@ int listenToProfile(
 
   }
   catch (exception) {
-    print('Failed listening to new profile: $exception');
+    debugPrint('Failed listening to new profile: $exception');
     return 0;
   }
 

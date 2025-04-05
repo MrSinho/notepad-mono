@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:template/backend/supabase/listen.dart';
-import 'package:template/backend/supabase/queries.dart';
-import 'package:template/static/utils.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../backend/supabase/listen.dart';
+import '../backend/supabase/queries.dart';
 import '../backend/handle.dart';
-import '../backend/supabase/supabase.dart';
 
-
-import 'package:supabase/supabase.dart';
-import "package:supabase_flutter/supabase_flutter.dart";
 
 
 
 class App extends StatelessWidget {
-  App({super.key, required this.handle});
+  const App({super.key, required this.handle});
 
   final Handle handle;
 

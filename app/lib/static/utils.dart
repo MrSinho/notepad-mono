@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../backend/handle.dart';
-
 import 'package:simple_icons/simple_icons.dart';
 
+import '../backend/handle.dart';
 import '../backend/supabase/login.dart';
-import '../static/utils.dart';
+
+
 
 InkWell wrapIconTextButton(Icon icon, Text text, VoidCallback callback) {
 
@@ -31,11 +30,11 @@ Widget signInProviderContent(Handle handle) {
 
 Padding wrapIconText(Icon icon, Text text) {
   Padding result = Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
           icon,
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 8.0),
           ),
           text
@@ -54,7 +53,7 @@ FutureBuilder futureBuilderWidget(
     future: async_widget, 
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator()); // Loading state
+        return const Center(child: CircularProgressIndicator()); // Loading state
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}')); // Error state
       } else {

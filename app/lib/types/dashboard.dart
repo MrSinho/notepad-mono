@@ -7,7 +7,7 @@ import '../static/sign_out_dialog.dart';
 
 
 class Dashboard extends StatefulWidget {
-  Dashboard({super.key, required this.handle});
+  const Dashboard({super.key, required this.handle});
 
   final Handle handle;
 
@@ -38,10 +38,10 @@ class state_Dashboard extends State<Dashboard> {
   Widget build(BuildContext context) {
 
     AppBar bar = AppBar(
-    title: Text("Softy", style: TextStyle(fontFamily: "Consolas", fontSize: 25, fontWeight: FontWeight.bold)),
+    title: const Text("Softy", style: TextStyle(fontFamily: "Consolas", fontSize: 25, fontWeight: FontWeight.bold)),
     actions: [ 
-      IconButton(icon: Icon(Icons.face), onPressed: () => widget.handle.types.collection_nav_bar.key.currentState?.graphics_selectPage(2)), 
-      IconButton(icon: Icon(Icons.logout), onPressed: () => showDialog(context: context, builder: (BuildContext context) => signOutDialog(widget.handle, context)) ),
+      IconButton(icon: const Icon(Icons.face), onPressed: () => widget.handle.types.collection_nav_bar.key.currentState?.graphics_selectPage(2)), 
+      IconButton(icon: const Icon(Icons.logout), onPressed: () => showDialog(context: context, builder: (BuildContext context) => signOutDialog(widget.handle, context)) ),
     ],
   );
 
@@ -49,7 +49,8 @@ class state_Dashboard extends State<Dashboard> {
     appBar              : bar, 
     bottomNavigationBar : widget.handle.types.collection_nav_bar.widget,
     //drawer              : widget.handle.types.collection_drawer.widget, 
-    body                : widget.handle.types.collection_nav_page.widget
+    body                : widget.handle.types.collection_nav_page.widget,
+    bottomSheet         : widget.handle.types.collection_swipe_sheet.widget,
   );
 
     return scaffold;

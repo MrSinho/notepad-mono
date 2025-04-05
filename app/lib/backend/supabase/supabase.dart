@@ -3,7 +3,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
 
 import '../handle.dart';
+
 import 'queries.dart';
+
 
 
 Future<int> initializeSupabase(
@@ -45,12 +47,19 @@ Future<bool> checkIfUserExists(User user) async {
   final session = Supabase.instance.client.auth.currentSession;
 
   if (session?.user != null) {
+
     debugPrint("User already authenticated: ${session!.user.email}");
+
     return true;
+
   } else {
+
     debugPrint("User not authenticated");
+
     return false;
+
   }
+
 }
 
 

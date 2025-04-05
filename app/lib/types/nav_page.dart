@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../backend/handle.dart';
 
+
+
 class NavPage extends StatefulWidget {
   const NavPage({super.key, required this.handle});
 
@@ -66,7 +68,7 @@ class state_NavPage extends State<NavPage> {
         const Center(child: Text("Second")),
         Center(child: widget.handle.types.collection_profile_view.widget)
       ],
-      onPageChanged: (int page_idx) => ()
+      onPageChanged: (int page_idx) => () {}
     );
 
     return page_view;
