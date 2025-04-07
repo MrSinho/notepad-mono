@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+
 import '../backend/handle.dart';
+
 
 
 class SwipeSheet extends StatefulWidget {
@@ -26,7 +30,7 @@ class collection_SwipeSheet {
 }
 
 class state_SwipeSheet extends State<SwipeSheet> {
-  final DraggableScrollableController controller = DraggableScrollableController();
+  DraggableScrollableController controller = DraggableScrollableController();
 
   double minChildSize         = 0.04;
   double initialChildSize     = 0.04;
@@ -43,6 +47,7 @@ class state_SwipeSheet extends State<SwipeSheet> {
   @override
   void initState() {
     children = widget.children;
+    controller.addListener(graphics_update);
     super.initState();
   }
 
@@ -92,6 +97,10 @@ class state_SwipeSheet extends State<SwipeSheet> {
     controller.jumpTo(
       newSize.clamp(minChildSize, maxChildSize),
     );
+  }
+
+  void graphics_update() {
+    setState((){});
   }
 
   Widget scrollableSheetBuilder(BuildContext context, ScrollController scrollController) {
@@ -166,7 +175,46 @@ class state_SwipeSheet extends State<SwipeSheet> {
       builder: scrollableSheetBuilder
     );
     
-    return sheet;
+    Stack stack = Stack(
+      children: [ 
+        const Text("HELLO"),
+        Container(
+          color: Colors.blueGrey[100],
+          child: const Center(
+            child: Text(
+              'Background Content',
+              style: TextStyle(fontSize: 24),
+            ),
+          ),
+        ),
+        Builder(builder: (context) {
+
+            double sigma = 0.0;
+
+            if (controller.isAttached) {
+              sigma = (controller.size - minChildSize) * 20;
+              sigma = sigma.clamp(0.0, 10.0); // Limit sigma to a max of 10 for example.
+            }
+
+            return AnimatedBuilder(
+              animation: controller,
+              builder: (context, child) {
+                return BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+                  child: Container(
+                    color: Colors.black.withOpacity(sigma > 0 ? 0.1 : 0.0),
+                  ),
+                );
+              },
+            );
+          }
+        ),
+        sheet
+      ],
+    );
+
+    
+    return stack;
 
   }
 }

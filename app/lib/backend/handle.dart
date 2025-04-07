@@ -77,6 +77,7 @@ class Handle {
     types.collection_user_header  = collection_UserHeader (handle: this);
     types.collection_swipe_sheet  = collection_SwipeSheet (handle: this, children: []);
   
+    WidgetsFlutterBinding.ensureInitialized();
   }
 
 }

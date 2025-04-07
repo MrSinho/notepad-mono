@@ -46,11 +46,11 @@ Padding wrapIconText(Icon icon, Text text) {
 }
 
 FutureBuilder futureBuilderWidget(
-  Future<dynamic> async_widget,
+  Future<dynamic> asyncWidget,
 ) {
 
   FutureBuilder builder = FutureBuilder(
-    future: async_widget, 
+    future: asyncWidget, 
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const Center(child: CircularProgressIndicator()); // Loading state
@@ -67,9 +67,9 @@ FutureBuilder futureBuilderWidget(
 }
 
 WidgetBuilder futureBuilder(
-  Future<dynamic> async_widget,
+  Future<dynamic> asyncWidget,
 ) {
 
-  return (BuildContext context) { return futureBuilderWidget(async_widget); };
+  return (BuildContext context) { return futureBuilderWidget(asyncWidget); };
 
 }
