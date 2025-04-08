@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     handle.initAll();
 
 
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(//otherwise keys are invalid
       (Duration duration) {
         handle.types.collection_swipe_sheet.key.currentState?.graphics_setChildren(sheetContent);
       }
