@@ -44,7 +44,10 @@ class MyApp extends StatelessWidget {
       title: 'Draggable Bottom Sheet',
       home: Scaffold(
         backgroundColor: Colors.amber,
-        body: handle.types.collection_swipe_sheet.widget,
+        body: Stack(children: [ 
+          const Center(child: Text("HELLO!")),
+          handle.types.collection_swipe_sheet.widget ]
+        )
       )
     );
 

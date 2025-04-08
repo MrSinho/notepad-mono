@@ -65,15 +65,6 @@ class state_BlueFilter extends State<BlurFilter> {
   Widget build(BuildContext context) {
     
     List<Widget> stackContent = [
-      Container(
-        color: Colors.blueGrey[100],
-        child: const Center(
-          child: Text(
-            'Background Content',
-            style: TextStyle(fontSize: 24),
-          ),
-        ),
-      ),
       Builder(builder: (context) { return filterBuilder(); }),
     ];
 
