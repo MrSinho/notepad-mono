@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
     ];    
 
     SwipeSearchBarInfo searchBar = SwipeSearchBarInfo(
-      handle: handle,
       srcData: searchSrc,
       titleProperty: "title",
       subtitleProperty: "subtitle",
@@ -62,7 +61,7 @@ class MyApp extends StatelessWidget {
       searchBar.widget,
     ];
 
-    DynamicStackInfo stack = DynamicStackInfo(handle: handle, children: stackContent);
+    DynamicStackInfo stack = DynamicStackInfo(children: stackContent);
 
     MaterialApp app = MaterialApp(
       title: 'Draggable Bottom Sheet',
