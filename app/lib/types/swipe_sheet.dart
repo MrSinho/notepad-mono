@@ -1,13 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:template/backend/check.dart';
-import 'package:template/static/utils.dart';
 
 import '../types/blur_filter.dart';
 import '../types/dynamic_stack.dart';
 
+import '../backend/check.dart';
 import '../backend/handle.dart';
+
+import '../static/utils.dart';
 
 
 
