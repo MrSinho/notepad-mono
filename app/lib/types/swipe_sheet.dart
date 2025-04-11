@@ -146,8 +146,6 @@ class SwipeSheetState extends State<SwipeSheet> {
 
     pageContents!.insert(0, blurFilterInfo.widget);
 
-    debugPrint("WIDGETS ON PAGE: $pageContents");
-
     dynamicStackInfo = DynamicStackInfo(children: pageContents);
 
     super.initState();
