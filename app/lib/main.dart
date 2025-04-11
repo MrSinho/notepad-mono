@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:template/types/swipe_seach_bar.dart';
-import 'package:template/types/swipe_sheet.dart';
-import 'backend/handle.dart';
 
-import 'types/dynamic_stack.dart';
+import 'types/swipe_seach_bar.dart';
+import 'types/swipe_sheet.dart';
+
+import 'backend/handle.dart';
 
 
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         "title": "house", 
         "subtitle": "docker"
       }
-    ];    
+    ];
 
     SwipeSearchBarInfo searchBar = SwipeSearchBarInfo(
       srcData: searchSrc,
@@ -53,25 +53,22 @@ class MyApp extends StatelessWidget {
       subtitleProperty: "subtitle",
     );
 
-    handle.types.swipeSheetInfos.addAll(
-      {
-        "main": SwipeSheetInfo(children: sheetContent)
-      }
-    );
-    
     List<Widget> stackContent = [ 
       const Center(child: Text("HELLO!")),
-      handle.types.swipeSheetInfos["main"]!.widget,
       searchBar.widget,
     ];
 
-    DynamicStackInfo stack = DynamicStackInfo(children: stackContent);
-
+    handle.types.swipeSheetInfos.addAll(
+      {
+        "main": SwipeSheetInfo(children: sheetContent, pageContents: stackContent)
+      }
+    );
+    
     MaterialApp app = MaterialApp(
       title: 'Draggable Bottom Sheet',
       home: Scaffold(
         backgroundColor: Colors.amber,
-        body: stack.widget
+        body: assertSwipeSheetInfoMemory(handle.types.swipeSheetInfos["main"]).widget,
       )
     );
 

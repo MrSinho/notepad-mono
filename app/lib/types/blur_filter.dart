@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:template/backend/check.dart';
 
 import '../backend/handle.dart';
 
@@ -23,24 +24,32 @@ class BlurFilter extends StatefulWidget {
   final double? opacity;
 
   @override
-  State<BlurFilter> createState() => BlueFilterState();
+  State<BlurFilter> createState() => BlurFilterState();
 }
 
 class BlurFilterInfo {
   
-  late GlobalKey<BlueFilterState> key;
+  late GlobalKey<BlurFilterState> key;
   late BlurFilter                  widget;
 
   BlurFilterInfo({Handle? handle, double? blurX, double? blurY, double? opacity}) {
     
-    key    = GlobalKey<BlueFilterState>();
+    key    = GlobalKey<BlurFilterState>();
     widget = BlurFilter(key: key, handle: handle, blurX: blurX, blurY: blurY, opacity: opacity);
 
   }
 
 }
 
-class BlueFilterState extends State<BlurFilter> {
+BlurFilterInfo assertBlurFilterInfoMemory(BlurFilterInfo? src) {
+
+  BlurFilterInfo defaultValue = BlurFilterInfo();
+
+  return assertMemory(src, defaultValue);
+
+}
+
+class BlurFilterState extends State<BlurFilter> {
 
   late double blurX;
   late double blurY;

@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:template/backend/check.dart';
+import 'package:template/static/utils.dart';
 
 import '../types/blur_filter.dart';
+import '../types/dynamic_stack.dart';
 
 import '../backend/handle.dart';
 
@@ -12,6 +15,7 @@ class SwipeSheet extends StatefulWidget {
   SwipeSheet({
       Key? key,
       this.handle,
+      this.pageContents,
       this.children,
       this.minChildSize,
       this.initialChildSize,
@@ -22,16 +26,18 @@ class SwipeSheet extends StatefulWidget {
     }
   );
 
-  final Handle?       handle;
+  final Handle? handle;
+
+  final List<Widget>? pageContents;
 
   final List<Widget>? children;
 
-  final double?       minChildSize;
-  final double?       initialChildSize;
-  final double?       maxChildSize;
-  final double?       triggerSwipeVelocity;
-  final double?       maximizeThreshold;
-  final double?       minimizeThreshold;
+  final double? minChildSize;
+  final double? initialChildSize;
+  final double? maxChildSize;
+  final double? triggerSwipeVelocity;
+  final double? maximizeThreshold;
+  final double? minimizeThreshold;
 
 
   @override
@@ -44,6 +50,7 @@ class SwipeSheetInfo {
 
   SwipeSheetInfo({
       Handle?       handle,
+      List<Widget>? pageContents,
       List<Widget>? children,
       double?       minChildSize,
       double?       initialChildSize,
@@ -59,6 +66,7 @@ class SwipeSheetInfo {
     widget = SwipeSheet(
       key: key,
       handle: handle,
+      pageContents: pageContents,
       children: children,
       minChildSize: minChildSize,
       initialChildSize: initialChildSize,
@@ -72,9 +80,22 @@ class SwipeSheetInfo {
 
 }
 
+SwipeSheetInfo assertSwipeSheetInfoMemory(SwipeSheetInfo? src) {
+
+  SwipeSheetInfo defaultValue = SwipeSheetInfo(
+    children: [ 
+      warningText("assertMemory: invalid SwipeSheet info memory")
+    ]
+  );
+
+  return assertMemory(src, defaultValue);
+}
+
 class SwipeSheetState extends State<SwipeSheet> {
   DraggableScrollableController controller = DraggableScrollableController();
   
+  late List<Widget>? pageContents;
+
   late List<Widget> children;
 
   late double minChildSize;
@@ -84,11 +105,15 @@ class SwipeSheetState extends State<SwipeSheet> {
   late double maximizeThreshold;  
   late double minimizeThreshold;  
 
-  late BlurFilterInfo collection_blurFilter;
-  
+  late BlurFilterInfo   blurFilterInfo;
+  late DynamicStackInfo dynamicStackInfo;
+
+  bool isMinimized = true;
 
   @override
   void initState() {
+
+    pageContents = widget.pageContents ?? [];
 
     children = widget.children ?? [];
 
@@ -111,13 +136,19 @@ class SwipeSheetState extends State<SwipeSheet> {
       builder: scrollableSheetBuilder
     );
 
-    collection_blurFilter = BlurFilterInfo(handle: widget.handle);
+    blurFilterInfo = BlurFilterInfo(handle: widget.handle);
 
     WidgetsBinding.instance.addPostFrameCallback(//otherwise keys are invalid
       (Duration duration) {
-        collection_blurFilter.key.currentState!.graphics_setChildren([sheet]);
+        blurFilterInfo.key.currentState!.graphics_setChildren([sheet]);
       }
     );
+
+    pageContents!.insert(0, blurFilterInfo.widget);
+
+    debugPrint("WIDGETS ON PAGE: $pageContents");
+
+    dynamicStackInfo = DynamicStackInfo(children: pageContents);
 
     super.initState();
   }
@@ -130,10 +161,44 @@ class SwipeSheetState extends State<SwipeSheet> {
 
   void graphics_maximize() {
     setState(() { controller.animateTo(maxChildSize, duration: const Duration(milliseconds: 200), curve: Curves.linear); });
+    isMinimized = false;
+
+    graphics_moveBlurFilterToLast();
   }
 
   void graphics_minimize() {
     setState(() { controller.animateTo(minChildSize, duration: const Duration(milliseconds: 200), curve: Curves.linear); });
+    if (widget.pageContents == null) { return; }
+
+    graphics_moveBlurFilterToFirst();
+  }
+
+  void moveBlurFilterToLast() {
+    int index = pageContents!.indexWhere((widget) => widget is BlurFilter);
+
+    if (index == 0) {
+      pageContents!.removeAt(index);
+      pageContents!.add(blurFilterInfo.widget);
+    }
+
+  }
+
+  void moveBlurFilterToFirst() {
+    int index = pageContents!.indexWhere((widget) => widget is BlurFilter);
+
+    if (index != 0) {
+      pageContents!.removeAt(index);
+      pageContents!.insert(0, blurFilterInfo.widget);
+    }
+
+  }
+
+  void graphics_moveBlurFilterToLast() {
+    setState(() => moveBlurFilterToLast());
+  }
+
+  void graphics_moveBlurFilterToFirst() {
+    setState(() => moveBlurFilterToFirst());
   }
 
   void onVerticalSwipe(DragEndDetails details) {
@@ -163,6 +228,14 @@ class SwipeSheetState extends State<SwipeSheet> {
     controller.jumpTo(
       newSize.clamp(minChildSize, maxChildSize),
     );
+
+    if (controller.size == minChildSize) {
+      graphics_minimize();
+    }
+    else {
+      graphics_moveBlurFilterToLast();
+    }
+
   }
 
   void graphics_updateFilter() {
@@ -170,7 +243,7 @@ class SwipeSheetState extends State<SwipeSheet> {
 
     if (controller.size == minChildSize) { amount = 0.0; }
 
-    collection_blurFilter.key.currentState!.graphics_setBlurAmount(amount, amount);
+    blurFilterInfo.key.currentState!.graphics_setBlurAmount(amount, amount);
   }
 
   Widget scrollableSheetBuilder(BuildContext context, ScrollController scrollController) {
@@ -235,7 +308,7 @@ class SwipeSheetState extends State<SwipeSheet> {
   @override
   Widget build(BuildContext context) {
     
-    return collection_blurFilter.widget;
+    return Stack(children: pageContents ?? []);
 
   }
 }

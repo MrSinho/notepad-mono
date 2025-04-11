@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:template/backend/check.dart';
+import 'package:template/static/utils.dart';
 
 import '../backend/handle.dart';
 
@@ -26,7 +28,7 @@ class DynamicStack extends StatefulWidget {
 
 class DynamicStackInfo {
   late GlobalKey<DynamicStackState> key;
-  late DynamicStack                  widget;
+  late DynamicStack                 widget;
 
   DynamicStackInfo({Handle? handle, List<Widget>? children}) {
     key    = GlobalKey<DynamicStackState>();
@@ -36,6 +38,16 @@ class DynamicStackInfo {
 
 }
 
+DynamicStackInfo assertDynamicStackInfoMemory(DynamicStackInfo? src) {
+
+  DynamicStackInfo defaultValue = DynamicStackInfo(
+    children: [
+      warningText("assertMemory: invalid DynamicStackInfo memory")
+    ]
+  );
+
+  return assertMemory(src, defaultValue);
+}
 
 
 class DynamicStackState extends State<DynamicStack> {

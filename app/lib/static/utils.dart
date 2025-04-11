@@ -73,3 +73,7 @@ WidgetBuilder futureBuilder(
   return (BuildContext context) { return futureBuilderWidget(asyncWidget); };
 
 }
+
+Text warningText(String msg) {
+  return Text(msg, style: const TextStyle(color: Colors.red));
+}
