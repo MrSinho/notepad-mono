@@ -12,37 +12,33 @@ import '../static/utils.dart';
 class Login extends StatefulWidget {
   Login({super.key, required this.handle});
 
-  Handle handle = Handle(); 
+  final Handle handle; 
 
   @override
   State<Login> createState() {
-    return state_Login();
+    return LoginState();
   }
 
 }
 
-class collection_Login {
-  late GlobalKey<state_Login> key;
+class LoginInfo {
+  late GlobalKey<LoginState> key;
   late Login                  widget;
 
-  collection_Login({required Handle handle}) {
+  LoginInfo({required Handle handle}) {
     
-    key    = GlobalKey<state_Login>();
+    key    = GlobalKey<LoginState>();
     widget = Login(handle: handle, key: key);
 
   }
 
 }
 
-class state_Login extends State<Login> {
+class LoginState extends State<Login> {
 
-  void updateHandle(Handle handle) {
-    widget.handle = handle;
-  } 
-
-
-  void graphics_updateHandle(Handle handle) {
-    setState(() => updateHandle(handle));
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override

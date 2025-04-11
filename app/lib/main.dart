@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:template/types/swipe_seach_bar.dart';
+import 'package:template/types/swipe_sheet.dart';
 import 'backend/handle.dart';
 
-import 'dart:ui'; // For ImageFilter
+import 'types/dynamic_stack.dart';
+
 
 
 void main() {
@@ -33,21 +36,39 @@ class MyApp extends StatelessWidget {
 
     handle.initAll();
 
-
-    WidgetsBinding.instance.addPostFrameCallback(//otherwise keys are invalid
-      (Duration duration) {
-        handle.types.collection_swipe_sheet.key.currentState?.graphics_setChildren(sheetContent);
+    List<Map<String, dynamic>> searchSrc = [
+      {
+        "title": "hello", 
+        "subtitle": "miao"
+      },
+      {
+        "title": "house", 
+        "subtitle": "docker"
       }
+    ];    
+
+    SwipeSearchBarInfo searchBar = SwipeSearchBarInfo(
+      handle: handle,
+      srcData: searchSrc,
+      titleProperty: "title",
+      subtitleProperty: "subtitle",
     );
+
+    handle.types.swipeSheetInfo = SwipeSheetInfo(children: sheetContent);
+    
+    List<Widget> stackContent = [ 
+      const Center(child: Text("HELLO!")),
+      handle.types.swipeSheetInfo.widget,
+      searchBar.widget,
+    ];
+
+    DynamicStackInfo stack = DynamicStackInfo(handle: handle, children: stackContent);
 
     MaterialApp app = MaterialApp(
       title: 'Draggable Bottom Sheet',
       home: Scaffold(
         backgroundColor: Colors.amber,
-        body: Stack(children: [ 
-          const Center(child: Text("HELLO!")),
-          handle.types.collection_swipe_sheet.widget ]
-        )
+        body: stack.widget
       )
     );
 

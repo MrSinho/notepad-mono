@@ -45,14 +45,23 @@ class Profile {
 
 class Types {
 
-  late collection_Dashboard   collection_dashboard;
-  late collection_Drawer      collection_drawer;
-  late collection_Login       collection_login;
-  late collection_NavPage     collection_nav_page;
-  late collection_NavBar      collection_nav_bar;
-  late collection_ProfileView collection_profile_view;
-  late collection_UserHeader  collection_user_header;
-  late collection_SwipeSheet  collection_swipe_sheet;
+  late DashboardInfo   dashboardInfo;
+  late DrawerInfo      drawerInfo;
+  late LoginInfo       loginInfo;
+  late NavPageInfo     navPageInfo;
+  late NavBarInfo      navBarInfo;
+  late ProfileViewInfo profileViewInfo;
+  late UserHeaderInfo  userHeaderInfo;
+  late SwipeSheetInfo  swipeSheetInfo;
+
+  //late Map<String, DashboardInfo>   dashboardInfos;
+  //late Map<String, DrawerInfo>      drawerInfos;
+  //late Map<String, LoginInfo>       loginInfos;
+  //late Map<String, NavPageInfo>     navPageInfos;
+  //late Map<String, NavBarInfo>      navBarInfos;
+  //late Map<String, ProfileViewInfo> profileViewInfos;
+  //late Map<String, UserHeaderInfo>  userHeaderInfos;
+  //late Map<String, SwipeSheetInfo>  swipeSheetInfos;
 
 }
 
@@ -68,14 +77,14 @@ class Handle {
 
     initializeSupabase(this);
 
-    types.collection_dashboard    = collection_Dashboard  (handle: this);
-    types.collection_drawer       = collection_Drawer     (handle: this);
-    types.collection_login        = collection_Login      (handle: this);
-    types.collection_nav_page     = collection_NavPage    (handle: this);
-    types.collection_nav_bar      = collection_NavBar     (handle: this);
-    types.collection_profile_view = collection_ProfileView(handle: this);
-    types.collection_user_header  = collection_UserHeader (handle: this);
-    types.collection_swipe_sheet  = collection_SwipeSheet (handle: this, children: []);
+    types.dashboardInfo   = DashboardInfo  (handle: this);
+    types.drawerInfo      = DrawerInfo     (handle: this);
+    types.loginInfo       = LoginInfo      (handle: this);
+    types.navPageInfo     = NavPageInfo    (handle: this);
+    types.navBarInfo      = NavBarInfo     (handle: this);
+    types.profileViewInfo = ProfileViewInfo(handle: this);
+    types.userHeaderInfo  = UserHeaderInfo (handle: this);
+    types.swipeSheetInfo  = SwipeSheetInfo (handle: this);
   
     WidgetsFlutterBinding.ensureInitialized();
   }

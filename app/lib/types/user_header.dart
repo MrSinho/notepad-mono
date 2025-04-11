@@ -11,26 +11,25 @@ class UserHeader extends StatefulWidget {
 
   @override
   State<UserHeader> createState() {
-    return state_UserHeader();
+    return UserHeaderState();
   }
 
 }
 
-class collection_UserHeader {
-  late GlobalKey<state_UserHeader> key;
+class UserHeaderInfo {
+  late GlobalKey<UserHeaderState> key;
   late UserHeader                  widget;
 
-  collection_UserHeader({required Handle handle}) {
+  UserHeaderInfo({required Handle handle}) {
     
-    key    = GlobalKey<state_UserHeader>();
-    widget = UserHeader(handle: handle, key: key);
+    key    = GlobalKey<UserHeaderState>();
+    widget = UserHeader(key: key, handle: handle);
 
   }
 
 }
 
-class state_UserHeader extends State<UserHeader> {
-
+class UserHeaderState extends State<UserHeader> {
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +40,7 @@ class state_UserHeader extends State<UserHeader> {
         children: [
           Text(widget.handle.profile.public.username, style: const TextStyle(color: Colors.white,   fontSize: 24, fontWeight: FontWeight.bold, fontFamily: "Consolas")),
           Text(widget.handle.profile.private.email,    style: const TextStyle(color: Colors.white70, fontSize: 16, fontFamily: "Consolas")),
-          IconButton(icon: const Icon(Icons.face, color: Colors.white, size: 50), onPressed: () { widget.handle.types.collection_nav_bar.key.currentState?.graphics_selectPage(2); Navigator.pop(context); }),
+          IconButton(icon: const Icon(Icons.face, color: Colors.white, size: 50), onPressed: () { widget.handle.types.navBarInfo.key.currentState?.graphics_selectPage(2); Navigator.pop(context); }),
           const Spacer(),
           Text(widget.handle.profile.public.username, style: const TextStyle(color: Colors.white,   fontSize: 18, fontWeight: FontWeight.bold)),
           Text(widget.handle.profile.private.email,    style: const TextStyle(color: Colors.white,   fontSize: 18)),

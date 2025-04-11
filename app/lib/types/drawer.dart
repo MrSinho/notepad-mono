@@ -13,25 +13,25 @@ class Drawer extends StatefulWidget {
 
   @override
   State<Drawer> createState() {
-    return state_Drawer();
+    return DrawerState();
   }
 
 }
 
-class collection_Drawer {
-  late GlobalKey<state_Drawer> key;
+class DrawerInfo {
+  late GlobalKey<DrawerState> key;
   late Drawer                  widget;
 
-  collection_Drawer({required Handle handle}) {
+  DrawerInfo({required Handle handle}) {
     
-    key    = GlobalKey<state_Drawer>();
-    widget = Drawer(handle: handle, key: key);
+    key    = GlobalKey<DrawerState>();
+    widget = Drawer(key: key, handle: handle);
 
   }
 
 }
 
-class state_Drawer extends State<Drawer> {
+class DrawerState extends State<Drawer> {
 
 
   @override
@@ -39,8 +39,8 @@ class state_Drawer extends State<Drawer> {
 
     ListView list_view = ListView(
       children: [
-        widget.handle.types.collection_user_header.widget,
-        ListTile(title: const Text("Profile"), leading: const Icon(Icons.person), onTap: () { widget.handle.types.collection_nav_bar.key.currentState?.graphics_selectPage(2); Navigator.pop(context); }),
+        widget.handle.types.userHeaderInfo.widget,
+        ListTile(title: const Text("Profile"), leading: const Icon(Icons.person), onTap: () { widget.handle.types.navBarInfo.key.currentState?.graphics_selectPage(2); Navigator.pop(context); }),
         ListTile(title: const Text("Security"), leading: const Icon(Icons.security), onTap: () {}),
         ListTile(title: const Text("Notifications"), leading: const Icon(Icons.notifications), onTap: () {}),
         const Divider(),

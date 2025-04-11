@@ -16,25 +16,25 @@ class ProfileView extends StatefulWidget {
 
   @override
   State<ProfileView> createState() {
-    return state_ProfileView();
+    return ProfileViewState();
   }
 
 }
 
-class collection_ProfileView {
-  late GlobalKey<state_ProfileView> key;
+class ProfileViewInfo {
+  late GlobalKey<ProfileViewState> key;
   late ProfileView                  widget;
 
-  collection_ProfileView({required Handle handle}) {
+  ProfileViewInfo({required Handle handle}) {
     
-    key    = GlobalKey<state_ProfileView>();
-    widget = ProfileView(handle: handle, key: key);
+    key    = GlobalKey<ProfileViewState>();
+    widget = ProfileView(key: key, handle: handle);
 
   }
 
 }
 
-class state_ProfileView extends State<ProfileView> {
+class ProfileViewState extends State<ProfileView> {
 
   void updateProfile() async {
     await queryProfileInfo(widget.handle);

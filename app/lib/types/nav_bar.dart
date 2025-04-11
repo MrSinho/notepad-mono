@@ -11,25 +11,25 @@ class NavBar extends StatefulWidget {
 
   @override
   State<NavBar> createState() {
-    return state_NavBar();
+    return NavBarState();
   }
 
 }
 
-class collection_NavBar {
-  late GlobalKey<state_NavBar> key;
+class NavBarInfo {
+  late GlobalKey<NavBarState> key;
   late NavBar                  widget;
 
-  collection_NavBar({required Handle handle}) {
+  NavBarInfo({required Handle handle}) {
     
-    key    = GlobalKey<state_NavBar>();
-    widget = NavBar(handle: handle, key: key);
+    key    = GlobalKey<NavBarState>();
+    widget = NavBar(key: key, handle: handle);
 
   }
 
 }
 
-class state_NavBar extends State<NavBar> {
+class NavBarState extends State<NavBar> {
 
   int page_index = 0;
 
@@ -39,7 +39,7 @@ class state_NavBar extends State<NavBar> {
 
   void graphics_selectPage(int page_idx) {
     setState(() => selectPage(page_idx));
-    widget.handle.types.collection_nav_page.key.currentState?.graphics_selectPage(page_idx);
+    widget.handle.types.navPageInfo.key.currentState?.graphics_selectPage(page_idx);
   }
 
 

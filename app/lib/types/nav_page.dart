@@ -12,24 +12,24 @@ class NavPage extends StatefulWidget {
 
   @override
   State<NavPage> createState() {
-    return state_NavPage();
+    return NavPageState();
   }
 }
 
-class collection_NavPage {
-  late GlobalKey<state_NavPage> key;
+class NavPageInfo {
+  late GlobalKey<NavPageState> key;
   late NavPage                  widget;
 
-  collection_NavPage({required Handle handle}) {
+  NavPageInfo({required Handle handle}) {
     
-    key    = GlobalKey<state_NavPage>();
-    widget = NavPage(handle: handle, key: key);
+    key    = GlobalKey<NavPageState>();
+    widget = NavPage(key: key, handle: handle);
 
   }
 
 }
 
-class state_NavPage extends State<NavPage> {
+class NavPageState extends State<NavPage> {
   late PageController page_controller;
   int page_index = 0;
 
@@ -66,7 +66,7 @@ class state_NavPage extends State<NavPage> {
       children: [
         const Center(child: Text("First")),
         const Center(child: Text("Second")),
-        Center(child: widget.handle.types.collection_profile_view.widget)
+        Center(child: widget.handle.types.profileViewInfo.widget)
       ],
       onPageChanged: (int page_idx) => () {}
     );

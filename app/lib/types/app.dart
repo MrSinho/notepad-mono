@@ -29,12 +29,12 @@ class App extends StatelessWidget {
               future: queryProfileInfo(handle),
               builder: (context, futureSnapshot) {
                 listenToProfile(handle);
-                return handle.types.collection_dashboard.widget;
+                return handle.types.dashboardInfo.widget;
               }
             );
           }
           else {
-            return handle.types.collection_login.widget;
+            return handle.types.loginInfo.widget;
           }
         }
       )

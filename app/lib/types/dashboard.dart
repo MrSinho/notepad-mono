@@ -13,26 +13,26 @@ class Dashboard extends StatefulWidget {
 
   @override
   State<Dashboard> createState() {
-    return state_Dashboard();
+    return DashboardState();
   }
 
 }
 
-class collection_Dashboard {
+class DashboardInfo {
 
-  late GlobalKey<state_Dashboard> key;
+  late GlobalKey<DashboardState> key;
   late Dashboard                  widget;
 
-  collection_Dashboard({required Handle handle}) {
+  DashboardInfo({required Handle handle}) {
     
-    key    = GlobalKey<state_Dashboard>();
-    widget = Dashboard(handle: handle, key: key);
+    key    = GlobalKey<DashboardState>();
+    widget = Dashboard(key: key, handle: handle);
 
   }
 
 }
 
-class state_Dashboard extends State<Dashboard> {
+class DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +40,17 @@ class state_Dashboard extends State<Dashboard> {
     AppBar bar = AppBar(
     title: const Text("Softy", style: TextStyle(fontFamily: "Consolas", fontSize: 25, fontWeight: FontWeight.bold)),
     actions: [ 
-      IconButton(icon: const Icon(Icons.face), onPressed: () => widget.handle.types.collection_nav_bar.key.currentState?.graphics_selectPage(2)), 
+      IconButton(icon: const Icon(Icons.face), onPressed: () => widget.handle.types.navBarInfo.key.currentState?.graphics_selectPage(2)), 
       IconButton(icon: const Icon(Icons.logout), onPressed: () => showDialog(context: context, builder: (BuildContext context) => signOutDialog(widget.handle, context)) ),
     ],
   );
 
   Scaffold scaffold = Scaffold(
     appBar              : bar, 
-    bottomNavigationBar : widget.handle.types.collection_nav_bar.widget,
-    //drawer              : widget.handle.types.collection_drawer.widget, 
-    body                : widget.handle.types.collection_nav_page.widget,
-    bottomSheet         : widget.handle.types.collection_swipe_sheet.widget,
+    bottomNavigationBar : widget.handle.types.navBarInfo.widget,
+    //drawer              : widget.handle.types.drawerInfo.widget, 
+    body                : widget.handle.types.navPageInfo.widget,
+    bottomSheet         : widget.handle.types.swipeSheetInfo.widget,
   );
 
     return scaffold;

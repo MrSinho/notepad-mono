@@ -84,7 +84,7 @@ Future<int> queryUpdatePublicUserProfile(
       }
     ).eq("profile_id", handle.profile.private.id);
 
-    handle.types.collection_profile_view.key.currentState?.graphics_updateProfile();
+    handle.types.profileViewInfo.key.currentState?.graphics_updateProfile();
 
     return 1;
   }

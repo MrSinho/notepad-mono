@@ -9,49 +9,95 @@ import '../backend/handle.dart';
 
 
 class SwipeSheet extends StatefulWidget {
-  const SwipeSheet({super.key, required this.handle, required this.children});
+  SwipeSheet({
+      Key? key,
+      this.handle,
+      this.children,
+      this.minChildSize,
+      this.initialChildSize,
+      this.maxChildSize,
+      this.triggerSwipeVelocity,
+      this.maximizeThreshold,
+      this.minimizeThreshold
+    }
+  );
 
-  final Handle       handle;
-  final List<Widget> children;
+  final Handle?       handle;
+
+  final List<Widget>? children;
+
+  final double?       minChildSize;
+  final double?       initialChildSize;
+  final double?       maxChildSize;
+  final double?       triggerSwipeVelocity;
+  final double?       maximizeThreshold;
+  final double?       minimizeThreshold;
+
 
   @override
-  State<SwipeSheet> createState() => state_SwipeSheet();
+  State<SwipeSheet> createState() => SwipeSheetState();
 }
 
-class collection_SwipeSheet {
-  late GlobalKey<state_SwipeSheet> key;
+class SwipeSheetInfo {
+  late GlobalKey<SwipeSheetState> key;
   late SwipeSheet                  widget;
 
-  collection_SwipeSheet({required Handle handle, required List<Widget> children}) {
+  SwipeSheetInfo({
+      Handle?       handle,
+      List<Widget>? children,
+      double?       minChildSize,
+      double?       initialChildSize,
+      double?       maxChildSize,
+      double?       triggerSwipeVelocity,
+      double?       maximizeThreshold,
+      double?       minimizeThreshold,
+    }
+  ) {
     
-    key    = GlobalKey<state_SwipeSheet>();
-    widget = SwipeSheet(handle: handle, key: key, children: children);
+    key = GlobalKey<SwipeSheetState>();
+
+    widget = SwipeSheet(
+      key: key,
+      handle: handle,
+      children: children,
+      minChildSize: minChildSize,
+      initialChildSize: initialChildSize,
+      maxChildSize: maxChildSize,
+      triggerSwipeVelocity: triggerSwipeVelocity,
+      maximizeThreshold: maximizeThreshold,
+      minimizeThreshold: minimizeThreshold
+    );
 
   }
 
 }
 
-class state_SwipeSheet extends State<SwipeSheet> {
+class SwipeSheetState extends State<SwipeSheet> {
   DraggableScrollableController controller = DraggableScrollableController();
-
-  double minChildSize         = 0.04;
-  double initialChildSize     = 0.04;
-  double maxChildSize         = 1.0; 
-  double triggerSwipeVelocity = 0.0;
-  double maximizeThreshold    = 0.5;  
-  double minimizeThreshold    = 0.5;  
-
-  List<Widget> children = [];
-
-  late collection_BlurFilter collection_blurFilter;
   
+  late List<Widget> children;
 
+  late double minChildSize;
+  late double initialChildSize;
+  late double maxChildSize; 
+  late double triggerSwipeVelocity;
+  late double maximizeThreshold;  
+  late double minimizeThreshold;  
+
+  late BlurFilterInfo collection_blurFilter;
+  
 
   @override
   void initState() {
-    super.initState();
 
-    children = widget.children;
+    children = widget.children ?? [];
+
+    minChildSize         = widget.minChildSize         ?? 0.04;
+    initialChildSize     = widget.initialChildSize     ?? 0.04;
+    maxChildSize         = widget.maxChildSize         ?? 1.0;
+    triggerSwipeVelocity = widget.triggerSwipeVelocity ?? 0.0;
+    maximizeThreshold    = widget.maximizeThreshold    ?? 0.5;
+    minimizeThreshold    = widget.minimizeThreshold    ?? 0.5;
     
     controller.addListener(graphics_updateFilter);
 
@@ -65,7 +111,7 @@ class state_SwipeSheet extends State<SwipeSheet> {
       builder: scrollableSheetBuilder
     );
 
-    collection_blurFilter = collection_BlurFilter(handle: widget.handle);
+    collection_blurFilter = BlurFilterInfo(handle: widget.handle);
 
     WidgetsBinding.instance.addPostFrameCallback(//otherwise keys are invalid
       (Duration duration) {
@@ -73,6 +119,7 @@ class state_SwipeSheet extends State<SwipeSheet> {
       }
     );
 
+    super.initState();
   }
 
   @override
@@ -182,7 +229,7 @@ class state_SwipeSheet extends State<SwipeSheet> {
   }
 
   void graphics_setChildren(List<Widget> newChildren) {
-    setState(() => children = newChildren);
+    setState(() { children = newChildren; });
   }
 
   @override

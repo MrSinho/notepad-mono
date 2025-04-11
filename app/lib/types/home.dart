@@ -9,14 +9,14 @@ class Home extends StatefulWidget {//Configuration class for the state, holds st
 
   @override
   State<Home> createState() {
-    return state_Home();
+    return HomeState();
   }
 
 }
 
 
 
-class state_Home extends State<Home> {
+class HomeState extends State<Home> {
 
   int count = 0;
 

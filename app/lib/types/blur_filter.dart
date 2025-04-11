@@ -7,34 +7,54 @@ import '../backend/handle.dart';
 
 
 class BlurFilter extends StatefulWidget {
-  const BlurFilter({super.key, required this.handle});
+  const BlurFilter({
+      super.key,
+      this.handle,
+      this.blurX,
+      this.blurY,
+      this.opacity
+    }
+  );
 
-  final Handle       handle;
+  final Handle? handle;
+
+  final double? blurX;
+  final double? blurY;
+  final double? opacity;
 
   @override
-  State<BlurFilter> createState() => state_BlueFilter();
+  State<BlurFilter> createState() => BlueFilterState();
 }
 
-class collection_BlurFilter {
-  late GlobalKey<state_BlueFilter> key;
+class BlurFilterInfo {
+  
+  late GlobalKey<BlueFilterState> key;
   late BlurFilter                  widget;
 
-  collection_BlurFilter({required Handle handle}) {
+  BlurFilterInfo({Handle? handle, double? blurX, double? blurY, double? opacity}) {
     
-    key    = GlobalKey<state_BlueFilter>();
-    widget = BlurFilter(handle: handle, key: key);
+    key    = GlobalKey<BlueFilterState>();
+    widget = BlurFilter(key: key, handle: handle, blurX: blurX, blurY: blurY, opacity: opacity);
 
   }
 
 }
 
-class state_BlueFilter extends State<BlurFilter> {
+class BlueFilterState extends State<BlurFilter> {
 
-  double blurX   = 0.0;
-  double blurY   = 0.0;
-  double opacity = 0.0;
+  late double blurX;
+  late double blurY;
+  late double opacity;
 
   List<Widget> children = [];
+
+  @override
+  void initState() {
+    blurX   = widget.blurX ?? 0.0;
+    blurY   = widget.blurY ?? 0.0;
+    opacity = widget.opacity ?? 0.0;
+    super.initState();
+  }
 
   void setBlurAmount(double amountX, double amountY) {
     blurX = amountX;
