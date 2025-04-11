@@ -53,11 +53,15 @@ class MyApp extends StatelessWidget {
       subtitleProperty: "subtitle",
     );
 
-    handle.types.swipeSheetInfo = SwipeSheetInfo(children: sheetContent);
+    handle.types.swipeSheetInfos.addAll(
+      {
+        "main": SwipeSheetInfo(children: sheetContent)
+      }
+    );
     
     List<Widget> stackContent = [ 
       const Center(child: Text("HELLO!")),
-      handle.types.swipeSheetInfo.widget,
+      handle.types.swipeSheetInfos["main"]!.widget,
       searchBar.widget,
     ];
 

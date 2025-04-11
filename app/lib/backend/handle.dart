@@ -52,7 +52,6 @@ class Types {
   late NavBarInfo      navBarInfo;
   late ProfileViewInfo profileViewInfo;
   late UserHeaderInfo  userHeaderInfo;
-  late SwipeSheetInfo  swipeSheetInfo;
 
   //late Map<String, DashboardInfo>   dashboardInfos;
   //late Map<String, DrawerInfo>      drawerInfos;
@@ -61,7 +60,7 @@ class Types {
   //late Map<String, NavBarInfo>      navBarInfos;
   //late Map<String, ProfileViewInfo> profileViewInfos;
   //late Map<String, UserHeaderInfo>  userHeaderInfos;
-  //late Map<String, SwipeSheetInfo>  swipeSheetInfos;
+  late Map<String, SwipeSheetInfo>  swipeSheetInfos;
 
 }
 
@@ -84,7 +83,8 @@ class Handle {
     types.navBarInfo      = NavBarInfo     (handle: this);
     types.profileViewInfo = ProfileViewInfo(handle: this);
     types.userHeaderInfo  = UserHeaderInfo (handle: this);
-    types.swipeSheetInfo  = SwipeSheetInfo (handle: this);
+
+    types.swipeSheetInfos = {};
   
     WidgetsFlutterBinding.ensureInitialized();
   }

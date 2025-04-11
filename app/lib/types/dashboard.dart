@@ -50,7 +50,7 @@ class DashboardState extends State<Dashboard> {
     bottomNavigationBar : widget.handle.types.navBarInfo.widget,
     //drawer              : widget.handle.types.drawerInfo.widget, 
     body                : widget.handle.types.navPageInfo.widget,
-    bottomSheet         : widget.handle.types.swipeSheetInfo.widget,
+    //bottomSheet         : widget.handle.types.swipeSheetInfo.widget,
   );
 
     return scaffold;
