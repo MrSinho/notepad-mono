@@ -1,31 +1,22 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../handle.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'queries.dart';
+import '../../new_primitives/list_tiles_view.dart';
+
+import '../../types/list_tile_view.dart';
+import '../../static/note_bottom_sheet.dart';
+
+import '../app_data.dart';
 
 
 
-int listenToProfile(
-  Handle handle
-) {
+int listenToProfile() {
 
   try {
 
-    queryPublicProfilesTable().stream(primaryKey: ["id"]).listen(
-
-      (List<Map<String, dynamic>> profiles) async {
-        
-        Map<String, dynamic> profile = profiles.first;
-
-        handle.profile.public.username   = profile["username"];
-        handle.profile.public.bio        = profile["bio"];
-        handle.profile.public.created_at = profile["created_at"];
-        handle.profile.public.status     = profile["status"];
-
-      }
-
-    );
+    //something
 
     return 1;
 
@@ -36,3 +27,5 @@ int listenToProfile(
   }
 
 }
+
+

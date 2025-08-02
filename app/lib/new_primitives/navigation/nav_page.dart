@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../backend/handle.dart';
+import 'handle.dart';
 
 
 
@@ -18,7 +18,7 @@ class NavPage extends StatefulWidget {
 
 class NavPageInfo {
   late GlobalKey<NavPageState> key;
-  late NavPage                  widget;
+  late NavPage                 widget;
 
   NavPageInfo({required Handle handle}) {
     
@@ -30,47 +30,47 @@ class NavPageInfo {
 }
 
 class NavPageState extends State<NavPage> {
-  late PageController page_controller;
-  int page_index = 0;
+  late PageController pageController;
+  int pageIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    page_controller = PageController(initialPage: page_index);
+    pageController = PageController(initialPage: pageIndex);
   }
 
   @override
   void dispose() {
-    page_controller.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
   void selectPage(int page_idx) {
-    page_index = page_idx;
-    page_controller.jumpToPage(page_idx);
+    pageIndex = page_idx;
+    pageController.jumpToPage(page_idx);
   }
 
   int getCurrentPageIndex() {
-    return page_index;
+    return pageIndex;
   }
 
-  void graphics_selectPage(int page_idx) {
+  void graphicsSelectPage(int page_idx) {
     setState(() => selectPage(page_idx));
   }
 
   @override
   Widget build(BuildContext context) {
 
-    PageView page_view = PageView(
-      controller: page_controller,
+    PageView pageView = PageView(
+      controller: pageController,
       children: [
         const Center(child: Text("First")),
         const Center(child: Text("Second")),
-        Center(child: widget.handle.types.profileViewInfo.widget)
+        //Center(child: widget.handle.types.profileViewInfo.widget)
       ],
-      onPageChanged: (int page_idx) => () {}
+      onPageChanged: (int pageIdx) => () {}
     );
 
-    return page_view;
+    return pageView;
   }
 }

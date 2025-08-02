@@ -35,3 +35,5 @@ app/linux
 app/macos
 app/ios
 app/android
+
+*.env

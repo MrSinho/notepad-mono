@@ -3,21 +3,21 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:template/backend/check.dart';
 
-import '../backend/handle.dart';
+//import '../backend/handle.dart';
 
 
 
 class BlurFilter extends StatefulWidget {
   const BlurFilter({
       super.key,
-      this.handle,
+      //this.handle,
       this.blurX,
       this.blurY,
       this.opacity
     }
   );
 
-  final Handle? handle;
+  //final Handle? handle;
 
   final double? blurX;
   final double? blurY;
@@ -32,10 +32,10 @@ class BlurFilterInfo {
   late GlobalKey<BlurFilterState> key;
   late BlurFilter                  widget;
 
-  BlurFilterInfo({Handle? handle, double? blurX, double? blurY, double? opacity}) {
+  BlurFilterInfo({/*Handle? handle,*/ double? blurX, double? blurY, double? opacity}) {
     
     key    = GlobalKey<BlurFilterState>();
-    widget = BlurFilter(key: key, handle: handle, blurX: blurX, blurY: blurY, opacity: opacity);
+    widget = BlurFilter(key: key, /*handle: handle,*/ blurX: blurX, blurY: blurY, opacity: opacity);
 
   }
 
@@ -74,7 +74,7 @@ class BlurFilterState extends State<BlurFilter> {
     setState(() => setBlurAmount(amountX, amountY));
   }
 
-  void graphics_setChildren(List<Widget> newChildren) {
+  void graphicsSetChildren(List<Widget> newChildren) {
     setState(() => children = newChildren);
   }
 

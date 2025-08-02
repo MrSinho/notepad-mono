@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:template/backend/check.dart';
 import 'package:template/static/utils.dart';
 
-import '../backend/handle.dart';
+//import '../backend/handle.dart';
 
 
 
 class DynamicStack extends StatefulWidget {
   DynamicStack({
       Key? key,
-      this.handle,
+      //this.handle,
       this.children
     }
   );
 
-  final Handle?       handle;
+  //final Handle?       handle;
   final List<Widget>? children;
 
   @override
@@ -30,9 +30,9 @@ class DynamicStackInfo {
   late GlobalKey<DynamicStackState> key;
   late DynamicStack                 widget;
 
-  DynamicStackInfo({Handle? handle, List<Widget>? children}) {
+  DynamicStackInfo({/*Handle? handle,*/ List<Widget>? children}) {
     key    = GlobalKey<DynamicStackState>();
-    widget = DynamicStack(key: key, handle: handle, children: children);
+    widget = DynamicStack(key: key, /*handle: handle,*/ children: children);
 
   }
 

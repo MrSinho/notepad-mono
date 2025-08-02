@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../types/blur_filter.dart';
-import '../types/dynamic_stack.dart';
+import 'blur_filter_view.dart';
+import 'navigation/dynamic_stack.dart';
 
 import '../backend/check.dart';
-import '../backend/handle.dart';
 
 import '../static/utils.dart';
 
@@ -13,7 +12,7 @@ import '../static/utils.dart';
 class SwipeSheet extends StatefulWidget {
   SwipeSheet({
       Key? key,
-      this.handle,
+      //this.handle,
       this.pageContents,
       this.children,
       this.minChildSize,
@@ -25,7 +24,7 @@ class SwipeSheet extends StatefulWidget {
     }
   );
 
-  final Handle? handle;
+  //final Handle? handle;
 
   final List<Widget>? pageContents;
 
@@ -48,7 +47,6 @@ class SwipeSheetInfo {
   late SwipeSheet                  widget;
 
   SwipeSheetInfo({
-      Handle?       handle,
       List<Widget>? pageContents,
       List<Widget>? children,
       double?       minChildSize,
@@ -64,15 +62,14 @@ class SwipeSheetInfo {
 
     widget = SwipeSheet(
       key: key,
-      handle: handle,
       pageContents: pageContents,
-      children: children,
       minChildSize: minChildSize,
       initialChildSize: initialChildSize,
       maxChildSize: maxChildSize,
       triggerSwipeVelocity: triggerSwipeVelocity,
       maximizeThreshold: maximizeThreshold,
-      minimizeThreshold: minimizeThreshold
+      minimizeThreshold: minimizeThreshold,
+      children: children
     );
 
   }
@@ -135,11 +132,11 @@ class SwipeSheetState extends State<SwipeSheet> {
       builder: scrollableSheetBuilder
     );
 
-    blurFilterInfo = BlurFilterInfo(handle: widget.handle);
+    blurFilterInfo = BlurFilterInfo();
 
     WidgetsBinding.instance.addPostFrameCallback(//otherwise keys are invalid
       (Duration duration) {
-        blurFilterInfo.key.currentState!.graphics_setChildren([sheet]);
+        blurFilterInfo.key.currentState!.graphicsSetChildren([sheet]);
       }
     );
 
@@ -160,14 +157,14 @@ class SwipeSheetState extends State<SwipeSheet> {
     setState(() { controller.animateTo(maxChildSize, duration: const Duration(milliseconds: 200), curve: Curves.linear); });
     isMinimized = false;
 
-    graphics_moveBlurFilterToLast();
+    graphicsMoveBlurFilterToLast();
   }
 
   void graphics_minimize() {
     setState(() { controller.animateTo(minChildSize, duration: const Duration(milliseconds: 200), curve: Curves.linear); });
     if (widget.pageContents == null) { return; }
 
-    graphics_moveBlurFilterToFirst();
+    graphicsMoveBlurFilterToFirst();
   }
 
   void moveBlurFilterToLast() {
@@ -190,11 +187,11 @@ class SwipeSheetState extends State<SwipeSheet> {
 
   }
 
-  void graphics_moveBlurFilterToLast() {
+  void graphicsMoveBlurFilterToLast() {
     setState(() => moveBlurFilterToLast());
   }
 
-  void graphics_moveBlurFilterToFirst() {
+  void graphicsMoveBlurFilterToFirst() {
     setState(() => moveBlurFilterToFirst());
   }
 
@@ -230,7 +227,7 @@ class SwipeSheetState extends State<SwipeSheet> {
       graphics_minimize();
     }
     else {
-      graphics_moveBlurFilterToLast();
+      graphicsMoveBlurFilterToLast();
     }
 
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_icons/simple_icons.dart';
 
-import '../backend/handle.dart';
 import '../backend/supabase/login.dart';
 
 
@@ -16,12 +15,12 @@ InkWell wrapIconTextButton(Icon icon, Text text, VoidCallback callback) {
   return inkwell;
 }
 
-Widget signInProviderContent(Handle handle) {
+Widget signInProviderContent() {
 
   Row row = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      wrapIconTextButton(const Icon(SimpleIcons.google), const Text("Sign In with Google"), () => googleLogin(handle)), 
+      wrapIconTextButton(const Icon(SimpleIcons.google), const Text("Sign In with Google"), () => googleLogin()), 
       const SizedBox(width: 30),
-      wrapIconTextButton(const Icon(SimpleIcons.github), const Text("Sign In with Github"), () => githubLogin(handle)), 
+      wrapIconTextButton(const Icon(SimpleIcons.github), const Text("Sign In with Github"), () => githubLogin()), 
     ]
   );
 
@@ -32,6 +31,7 @@ Padding wrapIconText(Icon icon, Text text) {
   Padding result = Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           icon,
           const Padding(

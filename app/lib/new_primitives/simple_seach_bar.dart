@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-import "../backend/handle.dart";
 
 
-
-class SwipeSearchBar extends StatefulWidget {
+class SimpleSearchBar extends StatefulWidget {
   
-  SwipeSearchBar({
+  SimpleSearchBar({
       Key? key,
-      this.handle,
       this.srcData,
       this.titleProperty,
       this.subtitleProperty,
@@ -17,7 +14,7 @@ class SwipeSearchBar extends StatefulWidget {
     }
   );
   
-  final Handle? handle;
+  //final Handle? handle;
 
   final List<Map<String, dynamic>>? srcData;
 
@@ -29,25 +26,25 @@ class SwipeSearchBar extends StatefulWidget {
 
 
   @override
-  SwipeSearchBarState createState() {
-    return SwipeSearchBarState(); 
+  SimpleSearchBarState createState() {
+    return SimpleSearchBarState(); 
   }
 }
 
-class SwipeSearchBarInfo {
-  late GlobalKey<SwipeSearchBarState> key;
-  late SwipeSearchBar                  widget;
+class SimpleSearchBarInfo {
+  late GlobalKey<SimpleSearchBarState> key;
+  late SimpleSearchBar                 widget;
 
-  SwipeSearchBarInfo({Handle? handle, List<Map<String, dynamic>>? srcData, String? titleProperty, String? subtitleProperty, List<Widget>? leftChildren, List<Widget>? rightChildren, }) {
+  SimpleSearchBarInfo({List<Map<String, dynamic>>? srcData, String? titleProperty, String? subtitleProperty, List<Widget>? leftChildren, List<Widget>? rightChildren, }) {
     
-    key    = GlobalKey<SwipeSearchBarState>();
-    widget = SwipeSearchBar(key: key, handle: handle, srcData: srcData, titleProperty: titleProperty, subtitleProperty: subtitleProperty, leftChildren: leftChildren, rightChildren: rightChildren);
+    key    = GlobalKey<SimpleSearchBarState>();
+    widget = SimpleSearchBar(key: key, /*handle: handle,*/ srcData: srcData, titleProperty: titleProperty, subtitleProperty: subtitleProperty, leftChildren: leftChildren, rightChildren: rightChildren);
 
   }
 
 }
 
-class SwipeSearchBarState extends State<SwipeSearchBar> {
+class SimpleSearchBarState extends State<SimpleSearchBar> {
 
   late List<Map<String, dynamic>> srcData;
     

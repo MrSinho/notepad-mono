@@ -1,78 +1,91 @@
 import 'package:flutter/material.dart';
 
-import 'types/swipe_seach_bar.dart';
-import 'types/swipe_sheet.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:template/builders/text_builder.dart';
+import 'package:template/builders/text_field_builder.dart';
+import 'package:template/types/text_field_view.dart';
+import 'package:template/types/text_view.dart';
 
-import 'backend/handle.dart';
+import 'types/list_tile_view.dart';
+import 'types/app_bar_view.dart';
+
+import 'new_primitives/list_tiles_view.dart';
+import 'types/scaffold_view.dart';
+import 'new_primitives/login_page.dart';
+
+import 'static/note_bottom_sheet.dart';
+
+import 'builders/app_bar_builder.dart';
+
+
+import 'backend/supabase/supabase.dart';
+import 'backend/supabase/listen.dart';
+import 'backend/supabase/queries.dart';
+import 'backend/app_data.dart';
 
 
 
-void main() {
-  runApp(const MyApp());
+
+
+void main() async {
+  //No need to initialize AppData
+  await initializeSupabase();
+  runApp(const NNoteApp());
+}
+
+LoginInfo makeLogin() {
+
+  TextViewInfo titleViewInfo = TextViewInfo(
+    text: loginTitleBuilder()
+  );
+
+  TextViewInfo subtitleViewInfo = TextViewInfo(
+    text: loginSubtitleBuilder()
+  );
+
+  LoginInfo login = LoginInfo(
+      authProviders: LoginAuthProviders.google | LoginAuthProviders.github,
+      title:    titleViewInfo.widget.text,
+      subtitle: subtitleViewInfo.widget.text
+    );
+
+  return login;
 }
 
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+class NNoteApp extends StatelessWidget {
+  const NNoteApp({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    List<Widget> cards = List.generate(6, (index) {
-      return const Card(
-        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        elevation: 4,
-        child: ListTile(),
-      );
-    });
+    LoginInfo login = makeLogin();
 
-    List<Widget> sheetContent = [
-      const Text("Swipe sheet example")
-    ];
-
-    sheetContent.addAll(cards);
-
-    Handle handle = Handle();
-
-    handle.initAll();
-
-    List<Map<String, dynamic>> searchSrc = [
-      {
-        "title": "hello", 
-        "subtitle": "miao"
-      },
-      {
-        "title": "house", 
-        "subtitle": "docker"
-      }
-    ];
-
-    SwipeSearchBarInfo searchBar = SwipeSearchBarInfo(
-      srcData: searchSrc,
-      titleProperty: "title",
-      subtitleProperty: "subtitle",
-    );
-
-    List<Widget> stackContent = [ 
-      const Center(child: Text("HELLO!")),
-      searchBar.widget,
-    ];
-
-    handle.types.swipeSheetInfos.addAll(
-      {
-        "main": SwipeSheetInfo(children: sheetContent, pageContents: stackContent)
-      }
-    );
-    
     MaterialApp app = MaterialApp(
-      title: 'Draggable Bottom Sheet',
-      home: Scaffold(
-        backgroundColor: Colors.amber,
-        body: assertSwipeSheetInfoMemory(handle.types.swipeSheetInfos["main"]).widget,
+      debugShowCheckedModeBanner: false,
+
+      home: StreamBuilder<AuthState>(
+
+        stream: Supabase.instance.client.auth.onAuthStateChange,
+
+        builder: (context, snapshot) {
+
+          if (snapshot.data != null && snapshot.data!.session != null) {
+
+            return AppData.instance.enterDashboard();
+          }
+          else {
+            return login.widget;
+          }
+
+        }
       )
     );
 
     return app; 
   }
+
 }
 

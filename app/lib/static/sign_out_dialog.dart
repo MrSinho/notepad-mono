@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../backend/handle.dart';
 import '../backend/supabase/logout.dart';
 
 
 
-Dialog signOutDialog(
-  Handle       handle,
-  BuildContext context
-) {
+Dialog signOutDialog(BuildContext context) {
 
-  Column dialog_content = Column(
+  Column dialogContent = Column(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      const Text("Confirm Sign Out", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+      Text("Confirm Sign Out", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
       const SizedBox(height: 20),
-      const Text(
-        "Are you sure you want to Sign Out?", 
-        //style: TextStyle(fontWeight: FontWeight.bold),
+      Text(
+        "Are you sure you want to Sign Out?",
+        style: GoogleFonts.robotoMono()
       ),
       const SizedBox(height: 40),
       Row(
@@ -29,11 +27,12 @@ Dialog signOutDialog(
             child: const Text("Cancel"),
             onPressed: () => Navigator.pop(context),
           ),
+          const SizedBox(width: 20.0),
           TextButton(
             child: const Text("Confirm"),
             onPressed: () async {
-              await logout(handle);
               Navigator.pop(context);
+              await Supabase.instance.client.auth.signOut();
             } 
           )
         ],
@@ -45,7 +44,7 @@ Dialog signOutDialog(
   Dialog dialog = Dialog(
     child: Padding(
       padding: const EdgeInsets.all(48.0),
-      child: dialog_content,
+      child: dialogContent,
     )
   );
 

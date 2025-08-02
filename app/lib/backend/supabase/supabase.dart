@@ -1,24 +1,22 @@
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../handle.dart';
+import '../../new_primitives/navigation/handle.dart';
 
 import 'queries.dart';
 
 
 
-Future<int> initializeSupabase(
-  Handle handle
-) async {
+Future<int> initializeSupabase() async {
 
-  handle.supabase_objects = SupabaseObjects();
-  
   try {
+    await dotenv.load(fileName: ".env");
 
-    handle.supabase_objects.instance = await Supabase.initialize(
-      url: 'https://oofcqqefirmebbwdztvk.supabase.co',
-      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9vZmNxcWVmaXJtZWJid2R6dHZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQxOTI4MDQsImV4cCI6MjAzOTc2ODgwNH0.pdjyubgLmJiMr3ZEBvPYjFE5lCT5avvGLNcHFkmXOZ8',
+    await Supabase.initialize(
+      url: dotenv.env['SUPABASE_URL']!,
+      anonKey: dotenv.env['SUPABASE_KEY']!,
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
       ),
@@ -29,9 +27,6 @@ Future<int> initializeSupabase(
         retryAttempts: 10,
       ),
     );
-
-    handle.supabase_objects.client = Supabase.instance.client;
-    handle.supabase_objects.auth   = Supabase.instance.client.auth;
 
     return 1;
 
@@ -60,18 +55,6 @@ Future<bool> checkIfUserExists(User user) async {
 
   }
 
-}
-
-
-
-Future<int> checkUserInfo(
-  Handle handle,
-) async {
-
-  await queryCreateUserProfile(handle);
-  await queryProfileInfo(handle);
-
-  return 1;
 }
 
 

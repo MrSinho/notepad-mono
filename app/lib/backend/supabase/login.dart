@@ -1,17 +1,16 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
-
-import '../handle.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
-Future<int> googleLogin(
-  Handle handle
-) async {
 
-  bool r = await handle.supabase_objects.auth.signInWithOAuth(
+Future<int> googleLogin() async {
+
+  await dotenv.load(fileName: ".env");
+
+  bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.google,
-    redirectTo: "https://oofcqqefirmebbwdztvk.supabase.co/auth/v1/callback"
+    redirectTo: dotenv.env['GOOGLE_REDIRECT_URL']
   );
 
   if (!r) {
@@ -21,13 +20,13 @@ Future<int> googleLogin(
   return 1;
 }
 
-Future<int> githubLogin(
-  Handle handle
-) async {
+Future<int> githubLogin() async {
 
-  bool r = await handle.supabase_objects.auth.signInWithOAuth(
+  await dotenv.load(fileName: ".env");
+
+  bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.github,
-    redirectTo: "https://oofcqqefirmebbwdztvk.supabase.co/auth/v1/callback"
+    redirectTo: dotenv.env['GITHUB_REDIRECT_URL']
   );
 
   if (!r) {
