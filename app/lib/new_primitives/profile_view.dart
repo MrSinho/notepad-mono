@@ -4,7 +4,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'navigation/handle.dart';
 import '../backend/supabase/queries.dart';
 
-import '../static/easy_dialogs.dart';
+import '../static/info_settings_dialogs.dart';
 
 
 

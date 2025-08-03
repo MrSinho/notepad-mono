@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:template/backend/app_data.dart';
 
-import '../static/easy_dialogs.dart';
+import '../static/info_settings_dialogs.dart';
 
 
 class AppBarView extends StatefulWidget {
@@ -44,7 +45,6 @@ class AppBarViewState extends State<AppBarView> {
   }
 
   void graphicsSetAppBar(AppBar newAppBar) {
-    print("NEW APP BARR");
     setState(() {
       appBar = newAppBar;
     });
@@ -53,10 +53,8 @@ class AppBarViewState extends State<AppBarView> {
   @override
   Widget build(BuildContext context) {
 
-    print("APP BAR HAS BEEN BUILT");
-
     AppBar appBar = AppBar(
-      title: Text("NNotes", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
+      title: Text(AppData.instance.version["name"] ?? "none", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
       actions: [ 
         //IconButton(icon: const Icon(Icons.menu_outlined), onPressed: () => showDialog(context: context, builder: (BuildContext context) => easySettingsDialog(context)))
       ],

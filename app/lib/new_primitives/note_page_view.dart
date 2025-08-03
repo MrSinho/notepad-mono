@@ -1,10 +1,13 @@
+import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:template/builders/app_bar_builder.dart';
+import 'package:template/builders/input_field_builder.dart';
 
 import '../backend/app_data.dart';
 
-import '../static/easy_dialogs.dart';
+import '../static/info_settings_dialogs.dart';
 
 import '../types/app_bar_view.dart';
 import '../types/text_field_view.dart';
@@ -13,14 +16,9 @@ import '../types/text_field_view.dart';
 class NotePageView extends StatefulWidget {
   const NotePageView({
       super.key,
-      required this.appBar,
-      required this.textField,
     }
   );
 
-  final AppBar appBar;
-  final TextField textField;
-  
   @override
   State<NotePageView> createState() => NotePageViewState();
 }
@@ -30,10 +28,10 @@ class NotePageViewInfo {
   late GlobalKey<NotePageViewState> key;
   late NotePageView                 widget;
 
-  NotePageViewInfo({required AppBar appBar, required TextField textField}) {
+  NotePageViewInfo({required CodeField noteCodeField}) {
     
     key    = GlobalKey<NotePageViewState>();
-    widget = NotePageView(key: key, appBar: appBar, textField: textField);
+    widget = NotePageView(key: key);
 
   }
 
@@ -43,41 +41,55 @@ class NotePageViewInfo {
 
 class NotePageViewState extends State<NotePageView> {
 
-  late AppBar appBar;
-  late TextField textField;
+  int copiedLength = 0;
+  int copiedLines = 0;
+
+  int cursorRow = 0;
+  int cursorColumn = 0;
+
+  int selectionLength = 0;
+  int selectionLines = 0;
+  
+  //Saved length and lines are already updated when listening to the notes table
 
   @override
   void initState() {
-    appBar = widget.appBar;
-    textField = widget.textField;
     super.initState();
   }
 
-  void graphicsSetAppBar(AppBar newAppBar) {
-    setState(() {
-      appBar = newAppBar;
-    });
+  //void graphicsSetAppBar(AppBar newAppBar) {
+  //  setState(() {
+  //    appBar = newAppBar;
+  //  });
+  //}
+
+  void graphicsUpdateNotePageView() {//to update the title in case of unsaved buffers
+    setState((){});
   }
 
-  void graphicsSetTextField(TextField newTextField) {
+  void graphicsSetCursorInfo(int newCursorRow, int newCursorColumn, int newSelectionLength, int newSelectionLines) {
     setState(() {
-      textField = newTextField;
+      cursorRow = newCursorRow;
+      cursorColumn = newCursorColumn;
+      selectionLength = newSelectionLength;
+      selectionLines = newSelectionLines;
     });
   }
 
   @override
   Widget build(BuildContext context) {
 
-    print("BUILDING NOTE PAGE!!");
-
     Padding textFieldPad = Padding(
       padding: const EdgeInsets.all(16.0),
-      child: textField
+      child: noteCodeFieldBuilder(AppData.instance.noteCodeController, context)
     );
 
-    String noteLength = AppData.instance.noteTextEditingController.text.length.toString();
-    String rowCount = ('\n'.allMatches(AppData.instance.noteTextEditingController.text).length + 1).toString();
-    String selectionLenth = AppData.instance.noteTextEditingController.selection.toString().length.toString();
+    int bufferLength = AppData.instance.noteCodeController.text.length;
+    int bufferLines = '\n'.allMatches(AppData.instance.noteCodeController.text).length + 1;
+
+    String savedContent = (AppData.instance.selectedNote["content"] ?? "").toString();
+    int savedLength = savedContent.length;
+    int savedLines = "\n".allMatches(savedContent).length + 1;
 
     Row noteInfo = Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -85,51 +97,42 @@ class NotePageViewState extends State<NotePageView> {
         Expanded(
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text("Row 8, col. 23")
+            child: Text("Row $cursorRow, column $cursorColumn")
           ) 
         ),
         Expanded(
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text("${rowCount} lines")
-          ) 
+            child: Text("Selected $selectionLength characters, $selectionLines lines")
+          )
         ),
         Expanded(
           child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text("Selection length ${selectionLenth}")
-          ) 
-        ),
-        Expanded(
-          child: Align(
-            //alignment: Alignment.centerLeft,
-            child: Text("Saved ${noteLength} characters")
-          ) 
-        ),
-        Expanded(
-          child: Align(
-            //alignment: Alignment.centerLeft,
-            child: Text("Auth provider: ${Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "none"}")
+            alignment: Alignment.centerRight,
+            child: Text("Buffer with $bufferLength characters, $bufferLines lines")
           ) 
         ),
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
-            child: Text("UTF-8")
+            child: Text("Saved $savedLength characters, $savedLines lines")
           ) 
-        )
+        ),
       ],
     );
 
     Column noteBody = Column(
       children: [
         Expanded(child: textFieldPad),
-        noteInfo,
+        Padding(
+          padding: const EdgeInsetsGeometry.directional(start: 4.0, end: 4.0),
+          child: noteInfo,
+        ),
       ],
     );
 
     Scaffold scaffold = Scaffold(
-      appBar: appBar,
+      appBar: noteAppBarBuilder(context),
       body: noteBody,
     );
 

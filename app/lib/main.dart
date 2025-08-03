@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:template/builders/text_builder.dart';
-import 'package:template/builders/text_field_builder.dart';
+import 'package:template/builders/input_field_builder.dart';
+import 'package:template/themes.dart';
 import 'package:template/types/text_field_view.dart';
 import 'package:template/types/text_view.dart';
 
@@ -45,10 +46,10 @@ LoginInfo makeLogin() {
   );
 
   LoginInfo login = LoginInfo(
-      authProviders: LoginAuthProviders.google | LoginAuthProviders.github,
-      title:    titleViewInfo.widget.text,
-      subtitle: subtitleViewInfo.widget.text
-    );
+    authProviders: LoginAuthProviders.google | LoginAuthProviders.github,
+    title:    titleViewInfo.widget.text,
+    subtitle: subtitleViewInfo.widget.text
+  );
 
   return login;
 }
@@ -81,7 +82,15 @@ class NNoteApp extends StatelessWidget {
           }
 
         }
-      )
+      ),
+
+      theme: brightTheme(),
+
+      darkTheme: darkTheme(),
+//
+      //highContrastTheme: darkHighContrastTheme(),
+
+      //themeMode: ThemeMode.system,
     );
 
     return app; 

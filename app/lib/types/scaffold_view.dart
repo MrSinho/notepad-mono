@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:template/backend/note_edit.dart';
 import 'package:template/builders/app_bar_builder.dart';
+import 'package:template/static/utils.dart';
 
 import 'app_bar_view.dart';
 import 'bottom_navigation_bar_view.dart';
@@ -24,13 +25,21 @@ class ScaffoldView extends StatefulWidget {
     this.body,
     this.drawerViewInfo,
     this.bottomSheetViewInfo,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
+    this.floatingActionButtonAnimator
   });
 
   final AppBarViewInfo? appBarViewInfo;
   final BottomNavigationBarViewInfo? bottomNavigationBarViewInfo;
-  final Widget? body;//should be a xxxInfo
+  final Widget? body;
   final DrawerViewInfo? drawerViewInfo;
   final BottomSheetViewInfo? bottomSheetViewInfo;
+
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final FloatingActionButtonAnimator? floatingActionButtonAnimator;
+
 
   @override
   State<ScaffoldView> createState() {
@@ -44,9 +53,28 @@ class ScaffoldViewInfo {
   late GlobalKey<ScaffoldViewState> key;
   late ScaffoldView                 widget;
 
-  ScaffoldViewInfo({AppBarViewInfo? appBarViewInfo, BottomNavigationBarViewInfo? bottomNavigationBarViewInfo, Widget? body, DrawerViewInfo? drawerViewInfo, BottomSheetViewInfo? bottomSheetViewInfo}) {
+  ScaffoldViewInfo({
+    AppBarViewInfo? appBarViewInfo,
+    BottomNavigationBarViewInfo? bottomNavigationBarViewInfo,
+    Widget? body,
+    DrawerViewInfo? drawerViewInfo,
+    BottomSheetViewInfo? bottomSheetViewInfo,
+    Widget? floatingActionButton,
+    FloatingActionButtonLocation? floatingActionButtonLocation,
+    FloatingActionButtonAnimator? floatingActionButtonAnimator
+  }) {
     key    = GlobalKey<ScaffoldViewState>();
-    widget = ScaffoldView(key: key, appBarViewInfo: appBarViewInfo, bottomNavigationBarViewInfo: bottomNavigationBarViewInfo, body: body, drawerViewInfo: drawerViewInfo, bottomSheetViewInfo: bottomSheetViewInfo);
+    widget = ScaffoldView(
+      key: key,
+      appBarViewInfo: appBarViewInfo,
+      bottomNavigationBarViewInfo: bottomNavigationBarViewInfo,
+      body: body,
+      drawerViewInfo: drawerViewInfo,
+      bottomSheetViewInfo: bottomSheetViewInfo,
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: floatingActionButtonLocation,
+      floatingActionButtonAnimator: floatingActionButtonAnimator,
+    );
   }
 
 }
@@ -59,6 +87,10 @@ class ScaffoldViewState extends State<ScaffoldView> {
   DrawerViewInfo? drawerViewInfo;
   BottomSheetViewInfo? bottomSheetViewInfo;
 
+  Widget? floatingActionButton;
+  FloatingActionButtonLocation? floatingActionButtonLocation;
+  FloatingActionButtonAnimator? floatingActionButtonAnimator;
+
   @override
   void initState() {
     appBarViewInfo = widget.appBarViewInfo;
@@ -66,6 +98,9 @@ class ScaffoldViewState extends State<ScaffoldView> {
     body = widget.body;
     drawerViewInfo = widget.drawerViewInfo;
     bottomSheetViewInfo = widget.bottomSheetViewInfo;
+    floatingActionButton = widget.floatingActionButton;
+    floatingActionButtonLocation = widget.floatingActionButtonLocation;
+    floatingActionButtonAnimator = widget.floatingActionButtonAnimator;
     super.initState();
     listenToNotes(context);
   }
@@ -110,6 +145,13 @@ class ScaffoldViewState extends State<ScaffoldView> {
 
         (List<Map<String, dynamic>> notes) async {
           
+
+          notes.sort((a, b) {
+            final aTime = DateTime.tryParse(a['last_edit'] ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
+            final bTime = DateTime.tryParse(b['last_edit'] ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
+            return bTime.compareTo(aTime);
+          });
+
           AppData.instance.notes = notes;
 
           List<ListTile> notesUI = [];
@@ -117,8 +159,8 @@ class ScaffoldViewState extends State<ScaffoldView> {
           for (Map<String, dynamic> note in notes) {
             notesUI.add(
               ListTile(
-                title: Text(note["title"], style: GoogleFonts.robotoMono()),
-                trailing: Text("Last edit ${note["last_edit"]}", style: GoogleFonts.robotoMono()),
+                title: Text(note["title"] ?? "", style: GoogleFonts.robotoMono()),
+                trailing: Text("Last edit ${formatDateTime(note["last_edit"] ?? "")}", style: GoogleFonts.robotoMono()),
                 onTap: () { 
 
                   Navigator.push(
@@ -136,8 +178,6 @@ class ScaffoldViewState extends State<ScaffoldView> {
               ),
             );
           }
-
-          print("Notes " + notes.toString());
 
           //Only update the state of the ListTilesView, never replace with a new ListTilesView widget!
           AppData.instance.notesViewInfo.key.currentState?.graphicsSetChildren(notesUI);
@@ -175,16 +215,15 @@ class ScaffoldViewState extends State<ScaffoldView> {
   @override
   Widget build(BuildContext context) {
 
-    print("BUILD HAS BEEN CALLED");
-
-    print("Scaffold view info check from ScaffoldView " + AppData.instance.mainScaffoldViewInfo.key.toString());
-
     Scaffold scaffold = Scaffold(
       appBar:              appBarViewInfo?.widget.appBar, 
       bottomNavigationBar: bottomNavigationBarViewInfo?.widget.bottomNavigationBar, 
       drawer:              drawerViewInfo?.widget.drawer, 
       body:                body,//If you want to change the state of the body you better save the Stateful widget data in AppData
       bottomSheet:         bottomSheetViewInfo?.widget.bottomSheet, 
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: floatingActionButtonLocation,
+      floatingActionButtonAnimator: floatingActionButtonAnimator
     );
 
     return scaffold;

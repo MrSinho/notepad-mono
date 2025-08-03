@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:template/themes.dart';
 
 import '../backend/supabase/logout.dart';
 
@@ -15,7 +16,7 @@ Dialog signOutDialog(BuildContext context) {
       Text("Confirm Sign Out", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
       const SizedBox(height: 20),
       Text(
-        "Are you sure you want to Sign Out?",
+        "Are you sure you want to sign out and leave this session?",
         style: GoogleFonts.robotoMono()
       ),
       const SizedBox(height: 40),
@@ -24,14 +25,24 @@ Dialog signOutDialog(BuildContext context) {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextButton(
-            child: const Text("Cancel"),
+            child: Text(
+              "Cancel",
+              style: GoogleFonts.robotoMono(
+                color: getCurrentThemePalette(context).primaryVividColor
+              )
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           const SizedBox(width: 20.0),
           TextButton(
-            child: const Text("Confirm"),
+            child: Text(
+              "Confirm",
+              style: GoogleFonts.robotoMono(
+                color: getCurrentThemePalette(context).primaryVividColor
+              )
+            ),
             onPressed: () async {
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route) => route.isFirst);
               await Supabase.instance.client.auth.signOut();
             } 
           )

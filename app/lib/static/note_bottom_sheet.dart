@@ -6,7 +6,8 @@ import '../backend/app_data.dart';
 
 import '../builders/app_bar_builder.dart';
 
-import './easy_dialogs.dart';
+import 'info_settings_dialogs.dart';
+import 'supabase_dialogs.dart';
 
 
 

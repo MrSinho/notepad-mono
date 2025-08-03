@@ -1,9 +1,10 @@
 import 'package:simple_icons/simple_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:template/themes.dart';
 
 import '../backend/supabase/supabase.dart';
 import '../backend/supabase/login.dart';
-import '../static/utils.dart';
+import '../static/ui_utils.dart';
 
 
 
@@ -127,7 +128,12 @@ class LoginState extends State<Login> {
       child: signupBox,
     );
 
-    return signupCenter;
+    Scaffold scaffold = Scaffold(
+      backgroundColor: getCurrentThemePalette(context).secondaryBackgroundColor,
+      body: signupCenter,
+    );
+
+    return scaffold;
   }
 
 }
