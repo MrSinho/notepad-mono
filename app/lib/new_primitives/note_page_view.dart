@@ -1,16 +1,11 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:template/builders/app_bar_builder.dart';
-import 'package:template/builders/input_field_builder.dart';
+
+import '../builders/app_bar_builder.dart';
+import '../builders/input_field_builder.dart';
 
 import '../backend/app_data.dart';
 
-import '../static/info_settings_dialogs.dart';
-
-import '../types/app_bar_view.dart';
-import '../types/text_field_view.dart';
 
 
 class NotePageView extends StatefulWidget {

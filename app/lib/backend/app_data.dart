@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:template/backend/note_edit.dart';
-import 'package:template/new_primitives/note_page_view.dart';
-import 'package:template/themes.dart';
+import 'package:code_text_field/code_text_field.dart';
+
 import '../backend/supabase/queries.dart';
 
-import 'package:template/new_primitives/list_tiles_view.dart';
-import 'package:template/types/scaffold_view.dart';
-
+import '../types/scaffold_view.dart';
 import '../types/app_bar_view.dart';
-import '../types/text_field_view.dart';
 
 import '../builders/app_bar_builder.dart';
 import '../builders/input_field_builder.dart';
 
-import 'package:code_text_field/code_text_field.dart';
-import 'package:highlight/languages/dart.dart';
-import 'package:highlight/languages/cpp.dart';
+import '../new_primitives/notes_view_info.dart';
+import '../new_primitives/note_page_view.dart';
 
+import 'note_edit.dart';
 
 
 class AppData {
   static final AppData instance = AppData._internal();
 
-  late Map<String, dynamic> version = {};
+  Map<String, dynamic> version = {};
 
-  late List<Map<String, dynamic>> notes = [];
+  List<Map<String, dynamic>> notes = [];
 
   late ScaffoldViewInfo mainScaffoldViewInfo;
   late AppBarViewInfo mainAppBarViewInfo;
-  late ListTilesViewInfo notesViewInfo;
+  late NotesViewInfo notesViewInfo;
 
-  late Map<String, dynamic> selectedNote;
+  Map<String, dynamic> selectedNote = {};
 
   late NotePageViewInfo notePageViewInfo;
   late CodeController noteCodeController;
@@ -40,16 +36,15 @@ class AppData {
   //before every widget is built (no BuildContext is available, so you cannot initialize complex responsive widgets)
   AppData._internal() {
     
-    notesViewInfo = ListTilesViewInfo(children: []);
+    notesViewInfo = NotesViewInfo();
     
-    noteCodeController = CodeController(//set language and theme
-    );
+    noteCodeController = CodeController();//set language and theme
 
     noteCodeController.addListener(
       setNoteCursorData
     );
     
-    selectedNote = { "title": "Empty" };
+    selectedNote = { "title": "note" };
   }
 
 

@@ -1,8 +1,7 @@
-import 'package:simple_icons/simple_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:template/themes.dart';
+import 'package:simple_icons/simple_icons.dart';
+import '../themes.dart';
 
-import '../backend/supabase/supabase.dart';
 import '../backend/supabase/login.dart';
 import '../static/ui_utils.dart';
 

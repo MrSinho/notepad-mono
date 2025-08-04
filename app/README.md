@@ -1,6 +1,6 @@
-# template
+# NNotes
 
-A new Flutter project.
+Write simple monospace notes.
 
 ## Getting Started
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:code_text_field/code_text_field.dart';
-import 'package:template/themes.dart';
+
+import '../themes.dart';
 
 
 

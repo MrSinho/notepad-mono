@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:template/themes.dart';
 
-import '../backend/supabase/logout.dart';
+import '../backend/navigator.dart';
+
+import '../themes.dart';
+
 
 
 
@@ -31,7 +33,7 @@ Dialog signOutDialog(BuildContext context) {
                 color: getCurrentThemePalette(context).primaryVividColor
               )
             ),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => NavigatorInfo.key.currentState!.pop(context),
           ),
           const SizedBox(width: 20.0),
           TextButton(

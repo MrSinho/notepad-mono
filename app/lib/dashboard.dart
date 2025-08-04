@@ -33,7 +33,7 @@ class AppDataUIViewInfo {
 
 class AppDataUIViewState extends State<AppDataUIView> {
 
-  Widget appDataUI = Text("");
+  Widget appDataUI = const Text("");
 
   @override
   void initState() {

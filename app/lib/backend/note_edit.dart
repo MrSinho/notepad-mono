@@ -1,11 +1,7 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:template/builders/input_field_builder.dart';
 
 import 'app_data.dart';
-
-import '../builders/app_bar_builder.dart';
 
 
 
@@ -14,15 +10,6 @@ void selectNote(BuildContext context, Map<String, dynamic> note) {
 
   AppData.instance.noteCodeController.text = note["content"] ?? "";
 
-  //AppData.instance.noteCodeController.addListener(
-  //    setNoteCursorData
-  //);
-
-  //Cannot update immediately the noteAppBarViewInfo app bar because the key current state will always be null before pushing to the navigator
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    //AppData.instance.notePageViewInfo.key.currentState?.graphicsSetAppBar(noteAppBarBuilder(context));
-    AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdateNotePageView();//It will check alone the selected note and make the correct app bar
-  });
 }
 
 String getNoteSelectionText() {
@@ -46,6 +33,10 @@ String getNoteSelectionText() {
 void setNoteCursorData() {
 
   CodeController controller = AppData.instance.noteCodeController;
+
+  if (!controller.selection.isValid || controller.selection.start < 0 || controller.selection.end < 0) {
+    return; //Too early
+  }
 
   //Selection and cursor info
 

@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:template/builders/text_builder.dart';
-import 'package:template/builders/input_field_builder.dart';
-import 'package:template/themes.dart';
-import 'package:template/types/text_field_view.dart';
-import 'package:template/types/text_view.dart';
 
-import 'types/list_tile_view.dart';
-import 'types/app_bar_view.dart';
+import 'backend/app_data.dart';
+import 'backend/navigator.dart';
+import 'backend/supabase/supabase.dart';
 
-import 'new_primitives/list_tiles_view.dart';
-import 'types/scaffold_view.dart';
 import 'new_primitives/login_page.dart';
 
-import 'static/note_bottom_sheet.dart';
+import 'builders/text_builder.dart';
 
-import 'builders/app_bar_builder.dart';
+import 'types/text_view.dart';
 
-
-import 'backend/supabase/supabase.dart';
-import 'backend/supabase/listen.dart';
-import 'backend/supabase/queries.dart';
-import 'backend/app_data.dart';
-
+import 'themes.dart';
 
 
 
@@ -66,6 +53,7 @@ class NNoteApp extends StatelessWidget {
 
     MaterialApp app = MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: NavigatorInfo.key,
 
       home: StreamBuilder<AuthState>(
 

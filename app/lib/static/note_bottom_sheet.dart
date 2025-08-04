@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:template/backend/note_edit.dart';
 
 import '../backend/app_data.dart';
+import '../backend/navigator.dart';
 
-import '../builders/app_bar_builder.dart';
-
-import 'info_settings_dialogs.dart';
 import 'supabase_dialogs.dart';
 
 
 
-void noteBottomSheet(BuildContext context, Map<String, dynamic> note) {
+void showNoteBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     builder: (context) {
@@ -22,8 +19,7 @@ void noteBottomSheet(BuildContext context, Map<String, dynamic> note) {
             leading: const Icon(Icons.title_sharp),
             title: Text("Rename", style: GoogleFonts.robotoMono()),
             onTap: () { 
-              Navigator.pop(context);
-              selectNote(context, note);
+              NavigatorInfo.key.currentState!.pop(context);
               showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context));
             },
           ),
@@ -31,12 +27,16 @@ void noteBottomSheet(BuildContext context, Map<String, dynamic> note) {
             leading: const Icon(Icons.edit_note_outlined),
             title: Text("Edit", style: GoogleFonts.robotoMono()),
             onTap: () { 
-              Navigator.pop(context);
-              selectNote(context, note);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AppData.instance.notePageViewInfo.widget),
-              );
+              NavigatorInfo.key.currentState!.pop(context);
+              
+              Future.microtask(() {
+
+                NavigatorInfo.key.currentState!.push(
+                  MaterialPageRoute(builder: (context) => AppData.instance.notePageViewInfo.widget)
+                );
+
+                AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdateNotePageView();//It will check alone the selected note and make the correct app bar
+              });
 
             },
           ),
@@ -44,8 +44,7 @@ void noteBottomSheet(BuildContext context, Map<String, dynamic> note) {
             leading: const Icon(Icons.delete_outlined),
             title: Text("Delete", style: GoogleFonts.robotoMono()),
             onTap: () { 
-              Navigator.pop(context);
-              selectNote(context, note);
+              NavigatorInfo.key.currentState!.pop(context);
               showDialog(context: context, builder: (context) => deleteNoteDialog(context));
             },
           ),

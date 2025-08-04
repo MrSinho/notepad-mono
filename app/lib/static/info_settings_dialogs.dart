@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:template/backend/app_data.dart';
-import 'package:template/backend/supabase/queries.dart';
-import 'package:template/static/sign_out_dialog.dart';
-import 'package:template/static/ui_utils.dart';
-import 'package:template/themes.dart';
+
+import '../backend/app_data.dart';
+import '../backend/navigator.dart';
+
+import 'sign_out_dialog.dart';
+import 'ui_utils.dart';
+
+import '../themes.dart';
 
 
 
 Dialog userInfoDialog(BuildContext context) {
 
-  String provider = Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "none";
-  String username = Supabase.instance.client.auth.currentUser?.userMetadata?["user_name"] ?? "empty";
-  String email = Supabase.instance.client.auth.currentUser?.email ?? "empty";
+  String provider = Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "provider";
+  String username = Supabase.instance.client.auth.currentUser?.userMetadata?["user_name"] ?? "user";
+  String email = Supabase.instance.client.auth.currentUser?.email ?? "email";
 
   Row userRow = Row(
     mainAxisSize: MainAxisSize.min,
@@ -30,7 +33,7 @@ Dialog userInfoDialog(BuildContext context) {
           const SizedBox(height: 4),
           Text(email, style: GoogleFonts.robotoMono(fontSize: 14)),
           const SizedBox(height: 4),
-          Text("Auth provider: ${provider}", style: GoogleFonts.robotoMono(fontSize: 14), textAlign: TextAlign.left)
+          Text("Auth provider: $provider", style: GoogleFonts.robotoMono(fontSize: 14), textAlign: TextAlign.left)
         ],
       )
     ],
@@ -43,7 +46,7 @@ Dialog userInfoDialog(BuildContext context) {
       const Icon(Icons.logout_outlined),
       Text("Log out", style: GoogleFonts.robotoMono()),
       () {
-        Navigator.pop(context);
+        NavigatorInfo.key.currentState!.pop(context);
         showDialog(context: context, builder: (BuildContext context) => signOutDialog(context));
       }
     )

@@ -1,4 +1,4 @@
-# Flutter-template
+# NNotes
 
 ```shell
 flutter create --project-name template app

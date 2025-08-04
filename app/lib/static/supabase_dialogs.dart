@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:template/backend/app_data.dart';
-import 'package:template/backend/supabase/queries.dart';
-import 'package:template/static/sign_out_dialog.dart';
-import 'package:template/static/ui_utils.dart';
-import 'package:template/themes.dart';
+
+import '../backend/app_data.dart';
+import '../backend/navigator.dart';
+import '../backend/supabase/queries.dart';
+
+import '../themes.dart';
 
 
 
@@ -31,7 +31,7 @@ Dialog newNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () async {
-      Navigator.pop(context);
+      NavigatorInfo.key.currentState!.pop(context);
       await createNewNote(controller.text);
     }
   );
@@ -44,7 +44,7 @@ Dialog newNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () {
-      Navigator.pop(context);
+      NavigatorInfo.key.currentState!.pop(context);
     }
   );
 
@@ -100,7 +100,7 @@ Dialog renameNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () async {
-      Navigator.pop(context);
+      NavigatorInfo.key.currentState!.pop(context);
       await renameNote(renameController.text);
     }
   );
@@ -113,7 +113,7 @@ Dialog renameNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () {
-      Navigator.pop(context);
+      NavigatorInfo.key.currentState!.pop(context);
     }
   );
 
@@ -157,7 +157,7 @@ Dialog deleteNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () async {
-      Navigator.pop(context);
+      NavigatorInfo.key.currentState!.pop(context);
       await deleteSelectedNote();
     }
   );
@@ -170,7 +170,7 @@ Dialog deleteNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () {
-      Navigator.pop(context);
+      NavigatorInfo.key.currentState!.pop(context);
     }
   );
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:template/backend/app_data.dart';
 
-import '../static/info_settings_dialogs.dart';
+import '../backend/app_data.dart';
+
 
 
 class AppBarView extends StatefulWidget {
