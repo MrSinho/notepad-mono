@@ -5,7 +5,7 @@ import 'app_data.dart';
 
 
 
-void selectNote(BuildContext context, Map<String, dynamic> note) {
+void selectNote(Map<String, dynamic> note) {
   AppData.instance.selectedNote = note;
 
   AppData.instance.noteCodeController.text = note["content"] ?? "";

@@ -25,7 +25,7 @@ Future<int> googleLogin() async {
   );
 
   if (!r) {
-    debugPrint("Google login failed");
+    debugPrint("[NNotes] Google login failed");
   }
 
   return 1;
@@ -41,7 +41,7 @@ Future<int> githubLogin() async {
   );
 
   if (!r) {
-    debugPrint("Github login failed");
+    debugPrint("[NNotes] Github login failed");
   }
 
   return 1;

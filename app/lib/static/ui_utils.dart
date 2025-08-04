@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../backend/app_data.dart';
 import '../backend/supabase/auth_access.dart';
 
 
@@ -44,6 +46,60 @@ Padding wrapIconText(Icon icon, Text text) {
     );
 
   return result;
+}
+
+Widget wrapIconTextIcon(Icon leftIcon, Text text, rightIcon) {
+  DecoratedBox result = DecoratedBox(
+      //padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Colors.amber,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: leftIcon,
+          ),
+          text,
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: rightIcon
+          ),
+          
+        ],
+      )
+    );
+
+  return result;
+}
+
+Widget connectionErrorWidget(String errorMessage, Function() dismissCallback) {
+  Widget widget = wrapIconTextIcon(
+    const Icon(
+      Icons.warning_amber_sharp,
+      color: Colors.black,
+      size: 14,
+    ),
+    Text(
+      errorMessage,
+      style: GoogleFonts.robotoMono(
+        color: Colors.black,
+        fontSize: 12
+      ),
+    ),
+    IconButton(
+      icon: const Icon(
+        Icons.close,
+        color: Colors.black,
+        size: 14,
+      ),
+      onPressed: dismissCallback
+    )
+  );
+
+  return widget;
 }
 
 FutureBuilder futureBuilderWidget(

@@ -1,4 +1,9 @@
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
+import '../backend/app_data.dart';
+import '../backend/note_edit.dart';
+
 
 
 String formatDateTime(String src) {
@@ -9,3 +14,26 @@ String formatDateTime(String src) {
 
   return formatted;
 }
+
+Future<void> copySelectionToClipboardOrNot() async {
+  
+  String buffer = getNoteSelectionText();
+
+  if (buffer != "") {
+    await Clipboard.setData(ClipboardData(text: buffer));
+  }
+  
+  return;
+}
+
+Future<void> copyNoteToClipboardOrNot() async {
+  
+  String buffer = AppData.instance.noteCodeController.text;
+
+  if (buffer != "") {
+    await Clipboard.setData(ClipboardData(text: buffer));
+  }
+  
+  return;
+}
+

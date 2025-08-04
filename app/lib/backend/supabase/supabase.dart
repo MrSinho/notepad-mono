@@ -28,7 +28,7 @@ Future<int> initializeSupabase() async {
 
   }
   catch (exception) {
-    debugPrint('Failed to initialize Supabase: $exception');
+    debugPrint("[NNotes] Failed to initialize Supabase: $exception");
     return 0;
   }
   

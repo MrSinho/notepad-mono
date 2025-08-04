@@ -6,17 +6,39 @@ import '../note_edit.dart';
 
 
 
-void listenToProfile() {
+void listenToVersions(BuildContext context) {
 
   try {
 
-    //Nothing to do here...
+    SupabaseQueryBuilder table = Supabase.instance.client.from("Versions");
 
+    table.stream(primaryKey: ["id"]).listen(
+
+      (dynamic data) async {
+
+        List<Map<String, dynamic>> versions = (data as List).whereType<Map<String, dynamic>>().toList();
+
+        versions.sort((a, b) {
+          final aTime = DateTime.tryParse(a["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
+          final bTime = DateTime.tryParse(b["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
+          return bTime.compareTo(aTime);
+        });
+
+        AppData.instance.version = versions.first;
+
+        AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
+      },
+
+      onError: (error) {
+        AppData.instance.notePageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
+        AppData.instance.notesPageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
+      }
+
+    );
     return;
-
   }
   catch (exception) {
-    debugPrint('Failed listening to new profile: $exception');
+    debugPrint("[NNotes] Failed listening to new notes: $exception");
   }
 
 }
@@ -35,35 +57,40 @@ void listenToNotes(BuildContext context) {
           List<Map<String, dynamic>> notes = (data as List).whereType<Map<String, dynamic>>().toList();
 
           notes.sort((a, b) {
-            final aTime = DateTime.tryParse(a['last_edit'] ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
-            final bTime = DateTime.tryParse(b['last_edit'] ?? '') ?? DateTime.fromMillisecondsSinceEpoch(0);
+            final aTime = DateTime.tryParse(a["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
+            final bTime = DateTime.tryParse(b["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
             return bTime.compareTo(aTime);
           });
 
           AppData.instance.notes = notes;
 
-          //Only update the state of the ListTilesView, never replace with a new ListTilesView widget!
-          AppData.instance.notesViewInfo.key.currentState?.graphicsUpdate();
+          AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
           
           //Update selected note
           for (Map<String, dynamic> note in notes) {
-            if (note['id'] == AppData.instance.selectedNote['id']) {
-              selectNote(context, note);
-              WidgetsBinding.instance.addPostFrameCallback((_) {//In case we are editing the note while listening...
+            if (note["id"] == AppData.instance.selectedNote["id"]) {
+              
+              if (note["content"] != AppData.instance.noteCodeController.text) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {//Notify changes to the editor
+                  AppData.instance.notePageViewInfo.key.currentState?.graphicsSetWarningMessage("Changes from new device!");
+                });
+              }
+
+              selectNote(note);
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {//Apply changes to the editor
                 AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdateNotePageView();//It will check alone the selected note and make the correct app bar
               });
             }
           }
+        },
 
-          /*
-            Don't do this! You are replacing a widget in the tree with a brand new widget with it's own state, wrong.
-              graphicsSetBody(
-                ListTilesView(children: notesUI)
-              );
-            Nesting StatefulWidgets is not the problem.
-            The real issue was replacing a StatefulWidget instance entirely instead of updating its internal state.
-          */
-
+        onError: (error) {
+          //In case the error appeared while editing...
+          AppData.instance.notePageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
+          
+          //In case the error appeared the notes list view...
+          AppData.instance.notesPageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
         }
 
       );
@@ -72,7 +99,7 @@ void listenToNotes(BuildContext context) {
 
     }
     catch (exception) {
-      debugPrint('Failed listening to new notes: $exception');
+      debugPrint("[NNotes] Failed listening to new notes: $exception");
     }
 
   }
