@@ -14,8 +14,6 @@ class SimpleSearchBar extends StatefulWidget {
     }
   );
   
-  //final Handle? handle;
-
   final List<Map<String, dynamic>>? srcData;
 
   final String? titleProperty;
@@ -94,10 +92,8 @@ class SimpleSearchBarState extends State<SimpleSearchBar> {
     ListTile tile = ListTile(
       title: Text(
         title,
-        //style: const TextStyle(color: Colors.white),
       ),
       subtitle: Text(subtitle),
-      //leading: const Icon(Icons.desktop_windows_rounded),
     );
 
     InkWell inkWell = InkWell(
@@ -137,15 +133,7 @@ class SimpleSearchBarState extends State<SimpleSearchBar> {
         child: SearchBar(
           hintText: "Search...",
           leading: const Icon(Icons.search),
-          //backgroundColor:
-          //    WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
-          //  if (states.contains(WidgetState.focused)) {
-          //    return const Color.fromRGBO(15, 15, 15, 1.0);
-          //  } else {
-          //    return const Color.fromRGBO(5, 5, 5, 1.0);
-          //  }
-          //}),
-          onChanged: filterResultsFromQuery, // Handle the search query
+          onChanged: filterResultsFromQuery,
         ),
       ),
     );

@@ -21,10 +21,8 @@ class WidgetViewInfo {
   late WidgetView                 widget;
 
   WidgetViewInfo({required Widget widgetData}) {
-    
     key    = GlobalKey<WidgetViewState>();
     widget = WidgetView(key: key, widgetData: widgetData);
-
   }
 
 }
@@ -46,8 +44,6 @@ class WidgetViewState extends State<WidgetView> {
 
   @override
   Widget build(BuildContext context) {
-        
     return widgetData;
-
   }
 }

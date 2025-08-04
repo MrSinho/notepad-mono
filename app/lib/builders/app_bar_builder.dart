@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../backend/app_data.dart';
 import '../backend/note_edit.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/utils.dart';
-import '../themes.dart';
-
-
-import '../backend/app_data.dart';
 
 import '../static/info_settings_dialogs.dart';
 import '../static/supabase_dialogs.dart';
+
+import '../themes.dart';
 
 
 
@@ -20,7 +20,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
   AppBar appBar = AppBar(
     title: Text(AppData.instance.version["name"] ?? "none", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
     leading: IconButton(
-      icon: Icon(Icons.add),
+      icon: const Icon(Icons.add),
       onPressed: () => showDialog(context: context, builder: (BuildContext context) => newNoteDialog(context))
     ),
     actions: [
@@ -95,7 +95,6 @@ AppBar noteAppBarBuilder(BuildContext context) {
         icon: const Icon(Icons.save_outlined),
         onPressed: () async => await saveNoteContent()
       ),
-      //TODO: save as button
       IconButton(
         icon: ClipOval(
           child: Image.network(Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? ""),

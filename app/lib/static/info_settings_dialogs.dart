@@ -52,7 +52,7 @@ Dialog userInfoDialog(BuildContext context) {
     )
   ];
 
-  //While waiting for future updates
+  //While waiting for future updates...
   userInfoContents.addAll(footerWidgets(context));
 
   Column column = Column(
@@ -82,10 +82,6 @@ List<Widget> footerWidgets(BuildContext context) {
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ),
-    //TextButton(
-    //  child: Text("About ${AppData.instance.version["author"] ?? ""}", style: TextStyle(fontSize: 14)),
-    //  onPressed: (){}
-    //),
     Text(
       AppData.instance.version["copyright_notice"] ?? "",
       style: TextStyle(
@@ -100,7 +96,7 @@ List<Widget> footerWidgets(BuildContext context) {
 
 Dialog settingsDialog(BuildContext context) {
 
-  List<Widget> settingsContents = [
+  List<Widget> settingsContents = [//Waiting for future updates...
     //THEME SETTINGS
     //DELETED NOTES SETTINGS
   ];

@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-
-import 'navigation/handle.dart';
-import '../backend/supabase/queries.dart';
-
-import '../static/info_settings_dialogs.dart';
+//import 'package:flutter/material.dart';
+//import 'package:flutter_markdown/flutter_markdown.dart';
+//
+//import '../backend/supabase/queries.dart';
+//
+//import '../static/info_settings_dialogs.dart';
 
 
 

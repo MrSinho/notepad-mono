@@ -3,10 +3,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../../new_primitives/navigation/handle.dart';
-
-import 'queries.dart';
-
 
 
 Future<int> initializeSupabase() async {
@@ -36,25 +32,6 @@ Future<int> initializeSupabase() async {
     return 0;
   }
   
-}
-
-Future<bool> checkIfUserExists(User user) async {
-  final session = Supabase.instance.client.auth.currentSession;
-
-  if (session?.user != null) {
-
-    debugPrint("User already authenticated: ${session!.user.email}");
-
-    return true;
-
-  } else {
-
-    debugPrint("User not authenticated");
-
-    return false;
-
-  }
-
 }
 
 

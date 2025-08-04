@@ -29,8 +29,6 @@ class BottomNavigationBarViewInfo {
 
 }
 
-
-
 class BottomNavigationBarViewState extends State<BottomNavigationBarView> {
 
   BottomNavigationBar bottomNavigationBar = BottomNavigationBar(items: const []);

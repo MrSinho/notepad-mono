@@ -24,15 +24,11 @@ class NotePageViewInfo {
   late NotePageView                 widget;
 
   NotePageViewInfo({required CodeField noteCodeField}) {
-    
     key    = GlobalKey<NotePageViewState>();
     widget = NotePageView(key: key);
-
   }
 
 }
-
-
 
 class NotePageViewState extends State<NotePageView> {
 
@@ -52,13 +48,7 @@ class NotePageViewState extends State<NotePageView> {
     super.initState();
   }
 
-  //void graphicsSetAppBar(AppBar newAppBar) {
-  //  setState(() {
-  //    appBar = newAppBar;
-  //  });
-  //}
-
-  void graphicsUpdateNotePageView() {//to update the title in case of unsaved buffers
+  void graphicsUpdateNotePageView() {//To update the title in case of unsaved buffers
     setState((){});
   }
 

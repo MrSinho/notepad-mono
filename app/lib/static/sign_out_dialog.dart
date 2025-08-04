@@ -8,7 +8,6 @@ import '../themes.dart';
 
 
 
-
 Dialog signOutDialog(BuildContext context) {
 
   Column dialogContent = Column(

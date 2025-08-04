@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../backend/check.dart';
-
 
 
 class ListTileView extends StatefulWidget {
@@ -23,19 +21,9 @@ class ListTileViewInfo {
   late ListTileView                 widget;
 
   ListTileViewInfo({required ListTile listTile}) {
-    
     key    = GlobalKey<ListTileViewState>();
     widget = ListTileView(key: key, listTile: listTile);
-
   }
-
-}
-
-ListTileViewInfo assertTilesListMemory(ListTileViewInfo? src) {
-
-  ListTileViewInfo defaultValue = ListTileViewInfo(listTile: const ListTile());
-
-  return assertMemory(src, defaultValue);
 
 }
 

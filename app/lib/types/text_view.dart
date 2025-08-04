@@ -29,8 +29,6 @@ class TextViewInfo {
 
 }
 
-
-
 class TextViewState extends State<TextView> {
 
   Text text = const Text("");
@@ -47,8 +45,6 @@ class TextViewState extends State<TextView> {
 
   @override
   Widget build(BuildContext context) {
-        
     return text;
-
   }
 }

@@ -166,15 +166,7 @@ ThemeData brightThemeHighContrast() {
 
   ThemeData data = ThemeData(
     brightness: Brightness.light,
-    //primarySwatch: Colors.blue,
-    //fontFamily: "RobotoMono",
-//
-    //primaryColorLight: Colors.black,
-    //primaryColor: Colors.white60,
-    //primaryColorDark: Colors.white10,
-
     colorScheme: const ColorScheme.highContrastLight()
-
   );
 
   return data;

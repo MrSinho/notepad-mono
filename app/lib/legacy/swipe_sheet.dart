@@ -1,6 +1,7 @@
+/*
 import 'package:flutter/material.dart';
 
-import 'blur_filter_view.dart';
+import '../legacy/blur_filter_view.dart';
 import 'navigation/dynamic_stack.dart';
 
 import '../backend/check.dart';
@@ -237,7 +238,7 @@ class SwipeSheetState extends State<SwipeSheet> {
 
     if (controller.size == minChildSize) { amount = 0.0; }
 
-    blurFilterInfo.key.currentState!.graphics_setBlurAmount(amount, amount);
+    blurFilterInfo.key.currentState!.graphicsSetBlurAmount(amount, amount);
   }
 
   Widget scrollableSheetBuilder(BuildContext context, ScrollController scrollController) {
@@ -306,3 +307,4 @@ class SwipeSheetState extends State<SwipeSheet> {
 
   }
 }
+*/

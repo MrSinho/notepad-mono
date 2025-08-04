@@ -1,21 +1,22 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../new_primitives/navigation/handle.dart';
-
 import '../app_data.dart';
 
 
 
-Future<int> pingDb() async {
+Future<void> pingDb() async {
 
-  return 1;
+  //Nothing to do here...
+
+  return;
 }
 
-Future<int> pullVersion() async {
+Future<void> pullVersion() async {
 
   List<Map<String, dynamic>> versions = await Supabase.instance.client.from("Versions").select();
 
+  //Sort notes by last edit date
   versions.sort((a, b) {
     final aTime = DateTime.tryParse(a["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
     final bTime = DateTime.tryParse(b["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
@@ -26,10 +27,10 @@ Future<int> pullVersion() async {
 
   AppData.instance.version = latest;
 
-  return 1;
+  return;
 }
 
-Future<int> queryNotes() async {
+Future<void> queryNotes() async {
   
   try {
 
@@ -37,12 +38,11 @@ Future<int> queryNotes() async {
 
     AppData.instance.notes = notes;
 
-    return 1;
+    return;
 
   }
   catch (exception) {
     debugPrint("Failed listening to new notes: $exception");
-    return 0;
   }
 
 

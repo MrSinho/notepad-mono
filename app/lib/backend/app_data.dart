@@ -32,8 +32,8 @@ class AppData {
   late CodeController noteCodeController;
 
 
-  //This will be called once and only once... 
-  //before every widget is built (no BuildContext is available, so you cannot initialize complex responsive widgets)
+  //This will be called once and only once, before every widget is built...
+  //No BuildContext is available, you cannot initialize complex responsive widgets
   AppData._internal() {
     
     notesViewInfo = NotesViewInfo();
@@ -54,9 +54,8 @@ class AppData {
     FutureBuilder builder = FutureBuilder(
 
       future: pullVersion(),
-
-      //Here a BuildContext is available, so you initialize some complex and responsive widgets
-      builder: (context, futureSnapshot) {
+      
+      builder: (context, futureSnapshot) {//Here a BuildContext is available, so you initialize some complex and responsive widgets
           
         mainAppBarViewInfo = AppBarViewInfo(appBar: mainAppBarBuilder(context)); 
 

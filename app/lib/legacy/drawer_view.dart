@@ -29,8 +29,6 @@ class DrawerViewInfo {
 
 }
 
-
-
 class DrawerViewState extends State<DrawerView> {
 
   Drawer drawer = const Drawer();
@@ -47,8 +45,6 @@ class DrawerViewState extends State<DrawerView> {
 
   @override
   Widget build(BuildContext context) {
-        
     return drawer;
-
   }
 }

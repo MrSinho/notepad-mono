@@ -1,13 +1,10 @@
+/*
 import 'package:flutter/material.dart';
-
-import 'navigation/handle.dart';
 
 
 
 class UserHeader extends StatefulWidget {
-  const UserHeader({super.key, required this.handle});
-
-  final Handle handle;
+  const UserHeader({super.key});
 
   @override
   State<UserHeader> createState() {
@@ -20,10 +17,10 @@ class UserHeaderInfo {
   late GlobalKey<UserHeaderState> key;
   late UserHeader                  widget;
 
-  UserHeaderInfo({required Handle handle}) {
+  UserHeaderInfo() {
     
     key    = GlobalKey<UserHeaderState>();
-    widget = UserHeader(key: key, handle: handle);
+    widget = UserHeader(key: key);
 
   }
 
@@ -53,5 +50,4 @@ class UserHeaderState extends State<UserHeader> {
   }
 
 }
-
-
+*/

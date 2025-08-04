@@ -1,23 +1,17 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:template/backend/check.dart';
-
-//import '../backend/handle.dart';
 
 
 
 class BlurFilter extends StatefulWidget {
   const BlurFilter({
       super.key,
-      //this.handle,
       this.blurX,
       this.blurY,
       this.opacity
     }
   );
-
-  //final Handle? handle;
 
   final double? blurX;
   final double? blurY;
@@ -38,14 +32,6 @@ class BlurFilterInfo {
     widget = BlurFilter(key: key, /*handle: handle,*/ blurX: blurX, blurY: blurY, opacity: opacity);
 
   }
-
-}
-
-BlurFilterInfo assertBlurFilterInfoMemory(BlurFilterInfo? src) {
-
-  BlurFilterInfo defaultValue = BlurFilterInfo();
-
-  return assertMemory(src, defaultValue);
 
 }
 
@@ -70,7 +56,7 @@ class BlurFilterState extends State<BlurFilter> {
     blurY = amountY;
   }
 
-  void graphics_setBlurAmount(double amountX, double amountY) {
+  void graphicsSetBlurAmount(double amountX, double amountY) {
     setState(() => setBlurAmount(amountX, amountY));
   }
 
@@ -83,7 +69,7 @@ class BlurFilterState extends State<BlurFilter> {
     BackdropFilter filter = BackdropFilter(
       filter: ImageFilter.blur(sigmaX: blurX, sigmaY: blurY),
       child: Container(
-        color: Colors.black.withOpacity(opacity),
+        color: Colors.black54,//missing opacity regulation here
       ),
     );
 

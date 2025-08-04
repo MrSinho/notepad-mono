@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'app_bar_view.dart';
-import 'bottom_navigation_bar_view.dart';
-import 'bottom_sheet_view.dart';
-import 'drawer_view.dart';
+import '../legacy/bottom_navigation_bar_view.dart';
+import '../legacy/bottom_sheet_view.dart';
+import '../legacy/drawer_view.dart';
 
 import '../backend/supabase/listen.dart';
 
@@ -131,12 +131,12 @@ class ScaffoldViewState extends State<ScaffoldView> {
   Widget build(BuildContext context) {
 
     Scaffold scaffold = Scaffold(
-      appBar:              appBarViewInfo?.widget.appBar, 
-      bottomNavigationBar: bottomNavigationBarViewInfo?.widget.bottomNavigationBar, 
-      drawer:              drawerViewInfo?.widget.drawer, 
-      body:                body,//If you want to change the state of the body you better save the Stateful widget data in AppData
-      bottomSheet:         bottomSheetViewInfo?.widget.bottomSheet, 
-      floatingActionButton: floatingActionButton,
+      appBar:                       appBarViewInfo?.widget.appBar, 
+      bottomNavigationBar:          bottomNavigationBarViewInfo?.widget.bottomNavigationBar, 
+      drawer:                       drawerViewInfo?.widget.drawer, 
+      body:                         body,//If you want to change the state of the body you better save the Stateful widget data in AppData
+      bottomSheet:                  bottomSheetViewInfo?.widget.bottomSheet, 
+      floatingActionButton:         floatingActionButton,
       floatingActionButtonLocation: floatingActionButtonLocation,
       floatingActionButtonAnimator: floatingActionButtonAnimator
     );

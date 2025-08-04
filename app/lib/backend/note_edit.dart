@@ -41,12 +41,8 @@ void setNoteCursorData() {
   //Selection and cursor info
 
   int cursorStart = controller.selection.start;
-  int cursorEnd = controller.selection.end;
 
-  int selectionStart = cursorStart < cursorEnd ? cursorStart : cursorEnd;
-  int selectionEnd = cursorStart > cursorEnd ? cursorStart : cursorEnd;
-
-  String selection = controller.text.substring(selectionStart, selectionEnd);
+  String selection = getNoteSelectionText();
 
   int selectionLength = selection.length;
   int selectionLines = "\n".allMatches(selection).length;
@@ -61,6 +57,6 @@ void setNoteCursorData() {
   //Note is already selected (widgets already built, no need for a post frame callback)
     
   AppData.instance.notePageViewInfo.key.currentState?.graphicsSetCursorInfo(cursorRow, cursorColumn, selectionLength, selectionLines);
-  //During note page rebuild it will also check for the app bar title, so no need to do more
+  //During the note page rebuilding process it will also check for the app bar title, so no need to do more
 
 }

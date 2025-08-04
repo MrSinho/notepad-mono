@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:simple_icons/simple_icons.dart';
-import '../themes.dart';
 
-import '../backend/supabase/login.dart';
+import '../backend/supabase/auth_access.dart';
+
 import '../static/ui_utils.dart';
+
+import '../themes.dart';
 
 
 
@@ -13,19 +15,17 @@ class LoginAuthProviders {
 }
 
 class Login extends StatefulWidget {
-  Login({
+  const Login({
       super.key,
-      //required this.handle
       required this.title,
       required this.subtitle,
       required this.authProviders
     }
   );
 
-  //final Handle handle;
-  final int             authProviders;
-  final Widget          title;
-  final Widget          subtitle;
+  final int    authProviders;
+  final Widget title;
+  final Widget subtitle;
 
   @override
   State<Login> createState() {
@@ -39,10 +39,8 @@ class LoginInfo {
   late Login                 widget;
 
   LoginInfo({required int authProviders, required Widget title, required Widget subtitle}) {
-    
     key    = GlobalKey<LoginState>();
     widget = Login(key: key, authProviders: authProviders, title: title, subtitle: subtitle);
-
   }
 
 }
@@ -91,7 +89,7 @@ class LoginState extends State<Login> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.rocket_launch_rounded),
+            const Icon(Icons.rocket_launch_rounded),
             widget.title
           ]
           

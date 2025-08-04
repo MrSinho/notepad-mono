@@ -29,7 +29,6 @@ class TextFieldViewInfo {
 
 }
 
-
 class TextFieldViewState extends State<TextFieldView> {
 
   TextField textField = const TextField();
@@ -46,8 +45,6 @@ class TextFieldViewState extends State<TextFieldView> {
 
   @override
   Widget build(BuildContext context) {
-        
     return textField;
-
   }
 }

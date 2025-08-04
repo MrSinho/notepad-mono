@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../backend/supabase/login.dart';
-
+import '../backend/supabase/auth_access.dart';
 
 
 
@@ -55,11 +54,11 @@ FutureBuilder futureBuilderWidget(
     future: asyncWidget, 
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(child: CircularProgressIndicator()); // Loading state
+        return const Center(child: CircularProgressIndicator()); //Loading state
       } else if (snapshot.hasError) {
-        return Center(child: Text('Error: ${snapshot.error}')); // Error state
+        return Center(child: Text('Error: ${snapshot.error}')); //Error state
       } else {
-        return snapshot.data; // Render the dialog once async is done
+        return snapshot.data;
       }
     }
   );  
@@ -83,7 +82,7 @@ Text warningText(String msg) {
 Widget userImageInkWell(GestureTapCallback callback) {
   return ClipOval(
     child: Material(
-      color: Colors.transparent, // Needed to make Ink splash work
+      color: Colors.transparent, //Needed to make Ink splash work
       child: Ink.image(
         image: NetworkImage(
           Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? ""

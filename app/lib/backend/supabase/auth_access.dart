@@ -4,6 +4,17 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
 
+Future<int> logout() async {
+
+  try {
+    await Supabase.instance.client.auth.signOut();
+  } catch (error) {
+    debugPrint('Error signing out: $error');
+  }
+
+  return 1;
+}
+
 Future<int> googleLogin() async {
 
   await dotenv.load(fileName: ".env");
@@ -35,3 +46,4 @@ Future<int> githubLogin() async {
 
   return 1;
 }
+

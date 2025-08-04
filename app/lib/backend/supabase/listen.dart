@@ -6,30 +6,31 @@ import '../note_edit.dart';
 
 
 
-int listenToProfile() {
+void listenToProfile() {
 
   try {
 
-    //something
+    //Nothing to do here...
 
-    return 1;
+    return;
 
   }
   catch (exception) {
     debugPrint('Failed listening to new profile: $exception');
-    return 0;
   }
 
 }
 
-int listenToNotes(BuildContext context) {
+void listenToNotes(BuildContext context) {
 
     try {
 
       SupabaseQueryBuilder table = Supabase.instance.client.from("Notes");
 
       table.stream(primaryKey: ["id"]).listen(
+
         (dynamic data) async {
+
           //safely cast data as a List<Map<String, dynamic>>
           List<Map<String, dynamic>> notes = (data as List).whereType<Map<String, dynamic>>().toList();
 
@@ -40,8 +41,6 @@ int listenToNotes(BuildContext context) {
           });
 
           AppData.instance.notes = notes;
-
-          // FIX HERE
 
           //Only update the state of the ListTilesView, never replace with a new ListTilesView widget!
           AppData.instance.notesViewInfo.key.currentState?.graphicsUpdate();
@@ -69,12 +68,11 @@ int listenToNotes(BuildContext context) {
 
       );
 
-      return 1;
+      return;
 
     }
     catch (exception) {
       debugPrint('Failed listening to new notes: $exception');
-      return 0;
     }
 
   }

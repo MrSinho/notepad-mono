@@ -24,15 +24,11 @@ class AppBarViewInfo {
   late AppBarView                 widget;
 
   AppBarViewInfo({required AppBar appBar}) {
-    
     key    = GlobalKey<AppBarViewState>();
     widget = AppBarView(key: key, appBar: appBar);
-
   }
 
 }
-
-
 
 class AppBarViewState extends State<AppBarView> {
 
@@ -54,10 +50,7 @@ class AppBarViewState extends State<AppBarView> {
   Widget build(BuildContext context) {
 
     AppBar appBar = AppBar(
-      title: Text(AppData.instance.version["name"] ?? "none", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
-      actions: [ 
-        //IconButton(icon: const Icon(Icons.menu_outlined), onPressed: () => showDialog(context: context, builder: (BuildContext context) => easySettingsDialog(context)))
-      ],
+      title: Text(AppData.instance.version["name"] ?? "Title", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
     );
         
     return appBar;
