@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'backend/supabase/supabase.dart';
 
 import 'app.dart';
