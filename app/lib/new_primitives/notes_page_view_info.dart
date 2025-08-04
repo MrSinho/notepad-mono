@@ -1,3 +1,5 @@
+import 'package:NNotes/backend/supabase/listen.dart';
+import 'package:NNotes/builders/app_bar_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,43 +8,61 @@ import '../backend/navigator.dart';
 import '../backend/utils.dart';
 import '../backend/note_edit.dart';
 
+import '../types/app_bar_view.dart';
+
 import '../static/note_bottom_sheet.dart';
 
 
 
-class NotesView extends StatefulWidget {
-  const NotesView({
+class NotesPageView extends StatefulWidget {
+  const NotesPageView({
       super.key
     }
   );
 
   @override
-  State<NotesView> createState() => NotesViewState();
+  State<NotesPageView> createState() => NotesPageViewState();
 }
 
-class NotesViewInfo {
+class NotesPageViewInfo {
   
-  late GlobalKey<NotesViewState> key;
-  late NotesView                 widget;
+  late GlobalKey<NotesPageViewState> key;
+  late NotesPageView                 widget;
 
-  NotesViewInfo() {
-    
-    key    = GlobalKey<NotesViewState>();
-    widget = NotesView(key: key);
-
+  NotesPageViewInfo() {
+    key    = GlobalKey<NotesPageViewState>();
+    widget = NotesPageView(key: key);
   }
 
 }
 
-class NotesViewState extends State<NotesView> {
+class NotesPageViewState extends State<NotesPageView> {
+
+  AppBarViewInfo appBarViewInfo = AppBarViewInfo(appBar: AppBar());
+
+  String errorMessage = "";
 
   @override
   void initState() {
     super.initState();
+    listenToNotes(context);
+    listenToVersions(context);
   }
   
   void graphicsUpdate() {
     setState(() {});
+  }
+
+  void graphicsSetWarningMessage(String errorMsg) {
+    setState(() {
+      errorMessage = errorMsg; 
+    });
+  }
+
+  void graphicsDismissWarningMessage() {
+    setState(() {
+      errorMessage = "";
+    });
   }
 
   @override
@@ -51,6 +71,7 @@ class NotesViewState extends State<NotesView> {
     List<ListTile> notesUI = [];
 
     for (Map<String, dynamic> note in AppData.instance.notes) {
+
       notesUI.add(
         ListTile(
           title: Text(note["title"] ?? "", style: GoogleFonts.robotoMono()),
@@ -68,16 +89,16 @@ class NotesViewState extends State<NotesView> {
               AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdateNotePageView();//It will check alone the selected note and make the correct app bar
             });
 
-            selectNote(context, note);
+            selectNote(note);
           },
           onLongPress: () {
-            selectNote(context, note);
+            selectNote(note);
             showNoteBottomSheet(context);
           }
         ),
       );
     }
-    
+
     Column view = Column(
       children: [
         Expanded(
@@ -93,8 +114,13 @@ class NotesViewState extends State<NotesView> {
         )
       ],
     );
+
+    Scaffold scaffold = Scaffold(
+      appBar: mainAppBarBuilder(context, errorMessage),
+      body: view
+    );
     
-    return view;
+    return scaffold;
 
   }
 }

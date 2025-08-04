@@ -40,6 +40,10 @@ class NotePageViewState extends State<NotePageView> {
 
   int selectionLength = 0;
   int selectionLines = 0;
+
+  String errorMessage = ""; //if empty string no error
+
+  bool newEditNotification = false;
   
   //Saved length and lines are already updated when listening to the notes table
 
@@ -58,6 +62,34 @@ class NotePageViewState extends State<NotePageView> {
       cursorColumn = newCursorColumn;
       selectionLength = newSelectionLength;
       selectionLines = newSelectionLines;
+    });
+  }
+
+  void graphicsSetWarningMessage(String errorMsg) {
+    setState(() {
+      errorMessage = errorMsg; 
+      //ScaffoldMessenger.of(context).showMaterialBanner(
+      //  errorMaterialBannerBuilder(errorMessage)
+      //);
+    });
+  }
+
+  void graphicsDismissWarningMessage() {
+    setState(() {
+      errorMessage = "";
+      //ScaffoldMessenger.of(context).clearMaterialBanners();
+    });
+  }
+
+  void graphicsNotifyNewEdit() {
+    setState(() {
+      newEditNotification = true;
+    });
+  }
+
+  void graphicsDismissNewEditNotification() {
+    setState(() {
+      newEditNotification = false;
     });
   }
 
@@ -117,7 +149,7 @@ class NotePageViewState extends State<NotePageView> {
     );
 
     Scaffold scaffold = Scaffold(
-      appBar: noteAppBarBuilder(context),
+      appBar: noteAppBarBuilder(context, errorMessage),
       body: noteBody,
     );
 

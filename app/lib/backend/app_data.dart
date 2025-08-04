@@ -9,7 +9,7 @@ import '../types/app_bar_view.dart';
 import '../builders/app_bar_builder.dart';
 import '../builders/input_field_builder.dart';
 
-import '../new_primitives/notes_view_info.dart';
+import '../new_primitives/notes_page_view_info.dart';
 import '../new_primitives/note_page_view.dart';
 
 import 'note_edit.dart';
@@ -22,9 +22,9 @@ class AppData {
 
   List<Map<String, dynamic>> notes = [];
 
-  late ScaffoldViewInfo mainScaffoldViewInfo;
-  late AppBarViewInfo mainAppBarViewInfo;
-  late NotesViewInfo notesViewInfo;
+  late NotesPageViewInfo notesPageViewInfo;
+  //late AppBarViewInfo mainAppBarViewInfo;
+  //late NotesViewInfo notesViewInfo;
 
   Map<String, dynamic> selectedNote = {};
 
@@ -35,8 +35,6 @@ class AppData {
   //This will be called once and only once, before every widget is built...
   //No BuildContext is available, you cannot initialize complex responsive widgets
   AppData._internal() {
-    
-    notesViewInfo = NotesViewInfo();
     
     noteCodeController = CodeController();//set language and theme
 
@@ -57,21 +55,13 @@ class AppData {
       
       builder: (context, futureSnapshot) {//Here a BuildContext is available, so you initialize some complex and responsive widgets
           
-        mainAppBarViewInfo = AppBarViewInfo(appBar: mainAppBarBuilder(context)); 
-
-        //link ListTileViewInfo as body of ScaffoldViewInfo
-        //if any of those widgets needs to change, update ONLY the state of ListTilesViewInfo, NEVER replace with a new widget, which carries also a new key and may be outside of the widget tree
-        //took me a lot of time to realize my mistakes...
-        mainScaffoldViewInfo = ScaffoldViewInfo(
-          appBarViewInfo: mainAppBarViewInfo,
-          body: notesViewInfo.widget,
-        );
+        notesPageViewInfo = NotesPageViewInfo();
 
         notePageViewInfo = NotePageViewInfo(
           noteCodeField: noteCodeFieldBuilder(noteCodeController, context)
         );
 
-        return mainScaffoldViewInfo.widget;
+        return notesPageViewInfo.widget;
       }
 
     );

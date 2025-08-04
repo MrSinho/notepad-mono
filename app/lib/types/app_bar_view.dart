@@ -1,3 +1,4 @@
+import 'package:NNotes/builders/app_bar_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,9 +50,16 @@ class AppBarViewState extends State<AppBarView> {
   @override
   Widget build(BuildContext context) {
 
-    AppBar appBar = AppBar(
-      title: Text(AppData.instance.version["name"] ?? "Title", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
-    );
+    //AppBar appBar = AppBar(
+    //  title: Text(AppData.instance.version["name"] ?? "Title", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
+    //);
+
+    print("REBUILDING APP BAR!!");
+
+
+    //AppBar appBar = AppBar(
+    //  title: mainAppBarBuilder(context, errorMessage)
+    //);
         
     return appBar;
 
