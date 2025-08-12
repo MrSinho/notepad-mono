@@ -1,12 +1,13 @@
-import 'package:NNotes/backend/supabase/listen.dart';
-import 'package:NNotes/builders/app_bar_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../backend/supabase/listen.dart';
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
 import '../backend/utils.dart';
 import '../backend/note_edit.dart';
+
+import '../builders/app_bar_builder.dart';
 
 import '../types/app_bar_view.dart';
 

@@ -1,12 +1,8 @@
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
-
 Future<int> initializeSupabase() async {
-
   try {
     await dotenv.load(fileName: ".env");
 
@@ -25,22 +21,8 @@ Future<int> initializeSupabase() async {
     );
 
     return 1;
-
-  }
-  catch (exception) {
+  } catch (exception) {
     debugPrint("[NNotes] Failed to initialize Supabase: $exception");
     return 0;
   }
-  
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,3 @@
-import 'package:NNotes/static/ui_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +8,7 @@ import '../backend/note_edit.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/utils.dart';
 
+import '../static/ui_utils.dart';
 import '../static/info_settings_dialogs.dart';
 import '../static/supabase_dialogs.dart';
 
