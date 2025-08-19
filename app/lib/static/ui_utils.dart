@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../backend/app_data.dart';
 import '../backend/supabase/auth_access.dart';
 
 
