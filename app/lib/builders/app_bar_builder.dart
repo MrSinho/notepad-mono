@@ -9,6 +9,7 @@ import '../backend/note_edit.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/utils.dart';
 
+import '../static/ui_utils.dart';
 import '../static/info_settings_dialogs.dart';
 import '../static/supabase_dialogs.dart';
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -47,3 +49,13 @@ Future<int> githubLogin() async {
   return 1;
 }
 
+void authListenRedirectCallback() async {
+    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000); // Listen on port 3000 for incoming auth requests 
+    await for (HttpRequest request in server) {
+      await authExchangeCodeForSession(request);
+    }
+  }
+
+Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
+  Supabase.instance.client.auth.exchangeCodeForSession(authRequest.uri.queryParameters['code']!);
+}
