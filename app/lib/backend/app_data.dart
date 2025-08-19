@@ -6,7 +6,6 @@ import '../backend/supabase/queries.dart';
 import '../builders/input_field_builder.dart';
 
 import '../new_primitives/notes_page_view_info.dart';
-import '../new_primitives/notes_page_view_info.dart';
 import '../new_primitives/note_page_view.dart';
 
 import 'note_edit.dart';
@@ -18,9 +17,6 @@ class AppData {
 
   List<Map<String, dynamic>> notes = [];
 
-  late NotesPageViewInfo notesPageViewInfo;
-  //late AppBarViewInfo mainAppBarViewInfo;
-  //late NotesViewInfo notesViewInfo;
   late NotesPageViewInfo notesPageViewInfo;
   //late AppBarViewInfo mainAppBarViewInfo;
   //late NotesViewInfo notesViewInfo;
