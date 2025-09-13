@@ -10,6 +10,8 @@ import '../new_primitives/note_page_view.dart';
 
 import 'note_edit.dart';
 
+
+
 class AppData {
   static final AppData instance = AppData._internal();
 
@@ -21,7 +23,22 @@ class AppData {
   //late AppBarViewInfo mainAppBarViewInfo;
   //late NotesViewInfo notesViewInfo;
 
+  NoteEditStatusValue noteEditStatus = NoteEditStatus.uninitialized;
+  Color noteEditColor = Colors.brown;
+  String noteEditMessage = "";
   Map<String, dynamic> selectedNote = {};
+
+  int savedContentLength = 0;
+  int savedContentLines = 0;
+  int selectionLength = 0;
+  int selectionLines = 0;
+  int bufferLength = 0;
+  int bufferLines = 0;
+  int unsavedBytes = 0;
+  int cursorRow = 0;
+  int cursorColumn = 0;
+
+  String errorMessage = "";
 
   late NotePageViewInfo notePageViewInfo;
   late CodeController noteCodeController;

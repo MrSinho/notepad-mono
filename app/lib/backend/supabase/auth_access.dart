@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../utils.dart';
 
 
 
@@ -11,7 +12,7 @@ Future<int> logout() async {
   try {
     await Supabase.instance.client.auth.signOut();
   } catch (error) {
-    debugPrint('Error signing out: $error');
+    appLog("Error signing out: $error");
   }
 
   return 1;
@@ -27,7 +28,7 @@ Future<int> googleLogin() async {
   );
 
   if (!r) {
-    debugPrint("[NNotes] Google login failed");
+    appLog("Google login failed");
   }
 
   return 1;
@@ -43,7 +44,7 @@ Future<int> githubLogin() async {
   );
 
   if (!r) {
-    debugPrint("[NNotes] Github login failed");
+    appLog("Github login failed");
   }
 
   return 1;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../backend/utils.dart';
 
 
 
@@ -31,20 +32,17 @@ class AppBarViewState extends State<AppBarView> {
   }
 
   void graphicsSetAppBar(AppBar newAppBar) {
-    setState(() {
-      appBar = newAppBar;
-    });
+    appBar = newAppBar;
+    graphicsUpdate();
+  }
+
+  void graphicsUpdate() {
+    appLog("Updating graphics for AppBarView");
+    setState((){});
   }
 
   @override
   Widget build(BuildContext context) {
-    //AppBar appBar = AppBar(
-    //  title: Text(AppData.instance.version["name"] ?? "Title", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
-    //);
-
-    //AppBar appBar = AppBar(
-    //  title: mainAppBarBuilder(context, errorMessage)
-    //);
 
     return appBar;
   }

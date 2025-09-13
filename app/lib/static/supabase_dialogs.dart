@@ -178,7 +178,7 @@ Dialog deleteNoteDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text("Confirm delete", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
+      Text("Confirm delete ${AppData.instance.selectedNote["title"]}", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
       const SizedBox(height: 20),
       Text("Are you sure you want to delete this note?", style: GoogleFonts.robotoMono(fontSize: 12),),
       const SizedBox(height: 20),

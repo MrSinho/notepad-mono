@@ -7,6 +7,8 @@ import '../static/ui_utils.dart';
 
 import '../themes.dart';
 
+
+
 class LoginAuthProviders {
   static const int google = 1 << 0;
   static const int github = 1 << 1;

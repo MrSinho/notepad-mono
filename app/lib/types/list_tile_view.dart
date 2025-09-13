@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../backend/utils.dart';
+
 
 
 class ListTileView extends StatefulWidget {
@@ -38,7 +40,13 @@ class ListTileViewState extends State<ListTileView> {
   }
   
   void graphicsSetListTile(ListTile newListTile) {
-    setState(() => listTile = newListTile);
+    listTile = newListTile;
+    graphicsUpdate();
+  }
+
+  void graphicsUpdate() {
+    appLog("Updating graphics for ListTileView");
+    setState(() {});
   }
 
   @override

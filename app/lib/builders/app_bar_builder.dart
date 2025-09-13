@@ -5,8 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../backend/app_data.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/utils.dart';
+import '../backend/note_edit.dart';
 
-import '../static/ui_utils.dart';
 import '../static/info_settings_dialogs.dart';
 import '../static/supabase_dialogs.dart';
 
@@ -14,7 +14,7 @@ import '../themes.dart';
 
 
 
-AppBar mainAppBarBuilder(BuildContext context, String errorMessage) {
+AppBar mainAppBarBuilder(BuildContext context) {
 
   List<Widget> mainAppBarLeftChildren = [
     Text(AppData.instance.version["name"] ?? "none", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
@@ -34,11 +34,20 @@ AppBar mainAppBarBuilder(BuildContext context, String errorMessage) {
     )
   ];
 
-  if (errorMessage != "") {
-    mainAppBarLeftChildren.addAll([
-      const SizedBox(width: 12),
-      connectionErrorWidget(errorMessage, AppData.instance.notesPageViewInfo.key.currentState!.graphicsDismissWarningMessage)
-    ]);
+  if (AppData.instance.noteEditStatus == NoteEditStatus.lostConnection) {
+    mainAppBarLeftChildren.add(
+      Padding(
+        padding: const EdgeInsetsGeometry.only(left: 12),
+        child: IconButton(
+          icon: const Icon(Icons.signal_wifi_connected_no_internet_4_rounded),
+          onPressed: () {
+            AppData.instance.noteEditStatus = NoteEditStatus.dismissedErrors;
+            AppData.instance.notesPageViewInfo.key.currentState!.graphicsUpdate();
+          }
+        )
+          
+      )
+    );
   }
 
   AppBar appBar = AppBar(
@@ -57,7 +66,8 @@ AppBar mainAppBarBuilder(BuildContext context, String errorMessage) {
           child: Image.network(Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? ""),
         ),
         onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
-      )
+      ),
+      const SizedBox(width: 8.0)
     ],
   );
 
@@ -68,11 +78,20 @@ AppBar noteAppBarBuilder(BuildContext context, String errorMessage) {
 
   String title = AppData.instance.selectedNote["title"] ?? "";
 
-  if (AppData.instance.noteCodeController.text != AppData.instance.selectedNote["content"]) {
-    title = "*$title";
-  }
+
+  //if (AppData.instance.noteCodeController.text != AppData.instance.selectedNote["content"]) {
+  //  leftColor = Colors.yellow;
+  //}
+
+  //if (errorMessage != "") {
+  //  leftColor = Colors.red;
+  //}
 
   List<Widget> noteAppBarLeftChildren = [
+    Padding(
+      padding: const EdgeInsetsGeometry.only(bottom: 8.0, right: 4.0),
+      child: Icon(Icons.circle, color: AppData.instance.noteEditColor, size: 14.0,),
+    ),
     TextButton(
       child: Text(
         title, 
@@ -84,28 +103,28 @@ AppBar noteAppBarBuilder(BuildContext context, String errorMessage) {
       ),
       onPressed: () => showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context)),
     ),
-    Column(
-      children: [
-        Wrap(
-          children: [
-            const SizedBox(width: 12.0),
-            Text(
-              "Last edit ${formatDateTime(AppData.instance.selectedNote["last_edit"] ?? "")}",
-              style: GoogleFonts.robotoMono(fontSize: 10),
-            ),
-          ] 
-        ),
-        const SizedBox(height: 6)
-      ]
-    )
+    //Column(
+    //  children: [
+    //    Wrap(
+    //      children: [
+    //        const SizedBox(width: 12.0),
+    //        Text(
+    //          "Last edit ${formatDateTime(AppData.instance.selectedNote["last_edit"] ?? "")}",
+    //          style: GoogleFonts.robotoMono(fontSize: 10),
+    //        ),
+    //      ] 
+    //    ),
+    //    const SizedBox(height: 6)
+    //  ]
+    //)
   ];
 
-  if (errorMessage != "") {
-    noteAppBarLeftChildren.addAll([
-      const SizedBox(width: 12.0),
-      connectionErrorWidget(errorMessage, AppData.instance.notePageViewInfo.key.currentState!.graphicsDismissWarningMessage)
-    ]);
-  }
+  //if (errorMessage != "") {
+  //  noteAppBarLeftChildren.addAll([
+  //    const SizedBox(width: 12.0),
+  //    connectionErrorWidget(errorMessage, AppData.instance.notePageViewInfo.key.currentState!.graphicsDismissWarningMessage)
+  //  ]);
+  //}
 
   AppBar appBar = AppBar(
     title: Wrap(
@@ -134,6 +153,7 @@ AppBar noteAppBarBuilder(BuildContext context, String errorMessage) {
         ),
         onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
       ),
+      const SizedBox(width: 8.0)
       //For future updates
       //IconButton(
       //  icon: const Icon(Icons.menu_outlined),

@@ -30,7 +30,7 @@ MaterialBanner errorMaterialBannerBuilder(String errorMessage) {
           color: Colors.black,
         ),
         onPressed: () {
-          AppData.instance.notePageViewInfo.key.currentState!.graphicsDismissWarningMessage();
+          //AppData.instance.notePageViewInfo.key.currentState!.graphicsDismissWarningMessage();
         },
       )  
     ]

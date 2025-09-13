@@ -1,7 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/foundation.dart';
 
 import '../app_data.dart';
+import '../note_edit.dart';
+import '../utils.dart';
 
 
 
@@ -42,7 +43,7 @@ Future<void> queryNotes() async {
 
   }
   catch (exception) {
-    debugPrint("[NNotes] Failed listening to new notes: $exception");
+    appLog("Failed listening to new notes: $exception");
   }
 
 
@@ -72,14 +73,25 @@ Future<void> createNewNote(String title) async {
 Future<void> renameNote(String title) async {
   await Supabase.instance.client.from("Notes").update(
     {
-      "title": title
-      //it"s just a rename, no need to change date time
+      "title": title,
+      "content": AppData.instance.noteCodeController.text,
+      "last_edit": DateTime.now().toUtc().toString()
     }
   ).eq("id", AppData.instance.selectedNote["id"]??"");
+
+  setNoteEditStatus(NoteEditStatus.renamedNote);
 }
 
 Future<void> deleteSelectedNote() async {
   await Supabase.instance.client.from("Notes").delete(
+  ).eq("id", AppData.instance.selectedNote["id"]??"");
+}
+
+Future<void> flipFavoriteNote() async {
+  await Supabase.instance.client.from("Notes").update(
+    {
+      "is_favorite": !AppData.instance.selectedNote["is_favorite"],
+    }
   ).eq("id", AppData.instance.selectedNote["id"]??"");
 }
 

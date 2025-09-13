@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
 import '../note_edit.dart';
-
+import '../utils.dart';
 
 
 void listenToVersions(BuildContext context) {
@@ -30,15 +30,15 @@ void listenToVersions(BuildContext context) {
       },
 
       onError: (error) {
-        AppData.instance.notePageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
-        AppData.instance.notesPageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
+        setNoteEditStatus(NoteEditStatus.lostConnection);
+        //AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
       }
 
     );
     return;
   }
   catch (exception) {
-    debugPrint("[NNotes] Failed listening to new notes: $exception");
+    appLog("Failed listening to new notes: $exception");
   }
 
 }
@@ -65,32 +65,36 @@ void listenToNotes(BuildContext context) {
           AppData.instance.notes = notes;
 
           AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
+
+          appLog("Pulled notes from listen callback");
           
           //Update selected note
           for (Map<String, dynamic> note in notes) {
             if (note["id"] == AppData.instance.selectedNote["id"]) {
+
+              selectNote(note, false);
               
               if (note["content"] != AppData.instance.noteCodeController.text) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {//Notify changes to the editor
-                  AppData.instance.notePageViewInfo.key.currentState?.graphicsSetWarningMessage("Changes from new device!");
-                });
+                setNoteEditStatus(NoteEditStatus.pulledChanges);
               }
 
-              selectNote(note);
 
-              WidgetsBinding.instance.addPostFrameCallback((_) {//Apply changes to the editor
-                AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdateNotePageView();//It will check alone the selected note and make the correct app bar
-              });
+              //if (changeStatus) {
+              //  WidgetsBinding.instance.addPostFrameCallback((_) {//Notify changes to the editor
+              //    setNoteEditStatus(NoteEditStatus.pulledChanges);
+              //  });
+              //}
+
+              //WidgetsBinding.instance.addPostFrameCallback((_) {//Apply changes to the editor
+              //  AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdate();//It will check alone the selected note and make the correct app bar
+              //});
             }
           }
         },
 
         onError: (error) {
-          //In case the error appeared while editing...
-          AppData.instance.notePageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
-          
-          //In case the error appeared the notes list view...
-          AppData.instance.notesPageViewInfo.key.currentState?.graphicsSetWarningMessage("Connection lost!");
+          setNoteEditStatus(NoteEditStatus.lostConnection);
+          //AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
         }
 
       );
@@ -99,7 +103,7 @@ void listenToNotes(BuildContext context) {
 
     }
     catch (exception) {
-      debugPrint("[NNotes] Failed listening to new notes: $exception");
+      appLog("Failed listening to new notes: $exception");
     }
 
   }

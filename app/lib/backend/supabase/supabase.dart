@@ -1,6 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../utils.dart';
+
+
 
 Future<int> initializeSupabase() async {
   try {
@@ -11,6 +14,7 @@ Future<int> initializeSupabase() async {
       anonKey: dotenv.env['SUPABASE_KEY']!,
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
+        autoRefreshToken: true,
       ),
       realtimeClientOptions: const RealtimeClientOptions(
         logLevel: RealtimeLogLevel.info,
@@ -22,7 +26,7 @@ Future<int> initializeSupabase() async {
 
     return 1;
   } catch (exception) {
-    debugPrint("[NNotes] Failed to initialize Supabase: $exception");
+    appLog("Failed to initialize Supabase: $exception");
     return 0;
   }
 }

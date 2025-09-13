@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../backend/app_data.dart';
@@ -19,6 +20,8 @@ Future<void> copySelectionToClipboardOrNot() async {
   
   String buffer = getNoteSelectionText();
 
+  setNoteEditStatus(NoteEditStatus.copiedSelection);
+
   if (buffer != "") {
     await Clipboard.setData(ClipboardData(text: buffer));
   }
@@ -30,6 +33,8 @@ Future<void> copyNoteToClipboardOrNot() async {
   
   String buffer = AppData.instance.noteCodeController.text;
 
+  setNoteEditStatus(NoteEditStatus.copiedNote);
+
   if (buffer != "") {
     await Clipboard.setData(ClipboardData(text: buffer));
   }
@@ -37,3 +42,6 @@ Future<void> copyNoteToClipboardOrNot() async {
   return;
 }
 
+void appLog(String log) {
+  debugPrint("[${AppData.instance.version["name"]}][${AppData.instance.version["version"]}] $log");
+}

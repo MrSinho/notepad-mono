@@ -12,6 +12,7 @@ class SimplePalette {
   late Color primaryBackgroundColor;
   late Color secondaryBackgroundColor;
   late Color tertiaryBackgroundColor;
+  late Color quaternaryBackgroundColor;
   
   late Color primaryVividColor;
   late Color secondaryVividColor;
@@ -26,6 +27,7 @@ class SimplePalette {
     required this.primaryBackgroundColor,
     required this.secondaryBackgroundColor,
     required this.tertiaryBackgroundColor,
+    required this.quaternaryBackgroundColor,
 
     required this.primaryVividColor,
     required this.secondaryVividColor,
@@ -45,6 +47,7 @@ class ThemesPalettes {
     primaryBackgroundColor: Colors.white,
     secondaryBackgroundColor: Colors.grey[200]!,
     tertiaryBackgroundColor: Colors.grey[300]!,
+    quaternaryBackgroundColor: Colors.grey[400]!,
 
     primaryVividColor: Colors.blue,
     secondaryVividColor: Colors.blue[800]!,
@@ -59,8 +62,9 @@ class ThemesPalettes {
     quaternaryForegroundColor: Colors.grey[500]!,
 
     primaryBackgroundColor: Colors.black,
-    secondaryBackgroundColor: Colors.grey[800]!,
+    secondaryBackgroundColor: const Color(0xff222222),
     tertiaryBackgroundColor: Colors.grey[900]!,
+    quaternaryBackgroundColor: Colors.grey[800]!,
 
     primaryVividColor: Colors.purpleAccent,
     secondaryVividColor: Colors.purpleAccent[400]!,
@@ -78,6 +82,7 @@ class ThemesPalettes {
     primaryBackgroundColor: Colors.black,
     secondaryBackgroundColor: Colors.grey[800]!,
     tertiaryBackgroundColor: Colors.grey[900]!,
+    quaternaryBackgroundColor: Colors.grey[1000]!,
 
     primaryVividColor: Colors.red,
     secondaryVividColor: Colors.red[800]!,
@@ -95,6 +100,7 @@ class ThemesPalettes {
     primaryBackgroundColor: Colors.black,
     secondaryBackgroundColor: Colors.grey[800]!,
     tertiaryBackgroundColor: Colors.grey[900]!,
+    quaternaryBackgroundColor: Colors.grey[1000]!,
 
     primaryVividColor: Colors.yellow,
     secondaryVividColor: Colors.yellow[800]!,

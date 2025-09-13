@@ -1,10 +1,13 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 
+import '../themes.dart';
+
 import '../builders/app_bar_builder.dart';
 import '../builders/input_field_builder.dart';
 
 import '../backend/app_data.dart';
+import '../backend/utils.dart';
 
 
 
@@ -35,14 +38,6 @@ class NotePageViewState extends State<NotePageView> {
   int copiedLength = 0;
   int copiedLines = 0;
 
-  int cursorRow = 0;
-  int cursorColumn = 0;
-
-  int selectionLength = 0;
-  int selectionLines = 0;
-
-  String errorMessage = ""; //if empty string no error
-
   bool newEditNotification = false;
   
   //Saved length and lines are already updated when listening to the notes table
@@ -52,104 +47,116 @@ class NotePageViewState extends State<NotePageView> {
     super.initState();
   }
 
-  void graphicsUpdateNotePageView() {//To update the title in case of unsaved buffers
+  void graphicsUpdate() {
+    appLog("Updating graphics for NotePageView");
     setState((){});
   }
 
   void graphicsSetCursorInfo(int newCursorRow, int newCursorColumn, int newSelectionLength, int newSelectionLines) {
-    setState(() {
-      cursorRow = newCursorRow;
-      cursorColumn = newCursorColumn;
-      selectionLength = newSelectionLength;
-      selectionLines = newSelectionLines;
-    });
   }
 
-  void graphicsSetWarningMessage(String errorMsg) {
-    setState(() {
-      errorMessage = errorMsg; 
-      //ScaffoldMessenger.of(context).showMaterialBanner(
-      //  errorMaterialBannerBuilder(errorMessage)
-      //);
-    });
-  }
 
-  void graphicsDismissWarningMessage() {
-    setState(() {
-      errorMessage = "";
-      //ScaffoldMessenger.of(context).clearMaterialBanners();
-    });
-  }
+  //void graphicsSetWarningMessage(String errorMsg) {
+  //  setState(() {
+  //    AppData.instance.errorMessage = errorMsg; 
+  //    //ScaffoldMessenger.of(context).showMaterialBanner(
+  //    //  errorMaterialBannerBuilder(errorMessage)
+  //    //);
+  //  });
+  //}
 
-  void graphicsNotifyNewEdit() {
-    setState(() {
-      newEditNotification = true;
-    });
-  }
+  //void graphicsDismissWarningMessage() {
+  //  setState(() {
+  //    AppData.instance.errorMessage = "";
+  //    //ScaffoldMessenger.of(context).clearMaterialBanners();
+  //  });
+  //}
 
-  void graphicsDismissNewEditNotification() {
-    setState(() {
-      newEditNotification = false;
-    });
-  }
+  //void graphicsNotifyNewEdit() {
+  //  setState(() {
+  //    newEditNotification = true;
+  //  });
+  //}
+
+  //void graphicsDismissNewEditNotification() {
+  //  setState(() {
+  //    newEditNotification = false;
+  //  });
+  //}
 
   @override
   Widget build(BuildContext context) {
 
     Padding textFieldPad = Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: noteCodeFieldBuilder(AppData.instance.noteCodeController, context)
     );
 
-    int bufferLength = AppData.instance.noteCodeController.text.length;
-    int bufferLines = '\n'.allMatches(AppData.instance.noteCodeController.text).length + 1;
+    AppData.instance.bufferLength = AppData.instance.noteCodeController.text.length;
+    AppData.instance.bufferLines = '\n'.allMatches(AppData.instance.noteCodeController.text).length + 1;
 
     String savedContent = (AppData.instance.selectedNote["content"] ?? "").toString();
-    int savedLength = savedContent.length;
-    int savedLines = "\n".allMatches(savedContent).length + 1;
+    AppData.instance.savedContentLength = savedContent.length;
+    AppData.instance.savedContentLines = "\n".allMatches(savedContent).length + 1;
 
-    Row noteInfo = Row(
+    AppData.instance.unsavedBytes = (AppData.instance.bufferLength - AppData.instance.selectedNote["content"].toString().length).abs();
+
+    Row noteBottomInfo = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text("Row $cursorRow, column $cursorColumn")
+            child: Text("Row ${AppData.instance.cursorRow}, column ${AppData.instance.cursorColumn}")
           ) 
         ),
         Expanded(
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text("Selected $selectionLength characters, $selectionLines lines")
+            child: Text("Selected ${AppData.instance.selectionLength} characters, ${AppData.instance.selectionLines} lines")
           )
         ),
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
-            child: Text("Buffer with $bufferLength characters, $bufferLines lines")
+            child: Text("Buffer with ${AppData.instance.bufferLength} characters, ${AppData.instance.bufferLines} lines")
           ) 
         ),
         Expanded(
           child: Align(
             alignment: Alignment.centerRight,
-            child: Text("Saved $savedLength characters, $savedLines lines")
+            child: Text("Saved ${AppData.instance.savedContentLength} characters, ${AppData.instance.savedContentLines} lines")
           ) 
         ),
       ],
     );
 
+    Center noteTopInfo = Center(
+      child: Card(
+        shadowColor: AppData.instance.noteEditColor,
+        child: Padding(
+          padding: const EdgeInsetsGeometry.all(8.0),
+          child: Text(AppData.instance.noteEditMessage, style: TextStyle(color: getCurrentThemePalette(context).primaryForegroundColor, fontWeight: FontWeight.normal)),
+        ),
+      )
+    );
+    
     Column noteBody = Column(
       children: [
+        Padding(
+          padding: const EdgeInsetsGeometry.directional(start: 8.0, end: 8.0),
+          child: noteTopInfo,
+        ),
         Expanded(child: textFieldPad),
         Padding(
-          padding: const EdgeInsetsGeometry.directional(start: 4.0, end: 4.0),
-          child: noteInfo,
+          padding: const EdgeInsetsGeometry.directional(start: 8.0, end: 8.0),
+          child: noteBottomInfo,
         ),
       ],
     );
 
     Scaffold scaffold = Scaffold(
-      appBar: noteAppBarBuilder(context, errorMessage),
+      appBar: noteAppBarBuilder(context, AppData.instance.errorMessage),
       body: noteBody,
     );
 

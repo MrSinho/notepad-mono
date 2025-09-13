@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../backend/supabase/listen.dart';
+import '../backend/supabase/queries.dart';
+
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
 import '../backend/utils.dart';
@@ -12,6 +14,8 @@ import '../builders/app_bar_builder.dart';
 import '../types/app_bar_view.dart';
 
 import '../static/note_bottom_sheet.dart';
+
+import '../themes.dart';
 
 
 
@@ -41,8 +45,6 @@ class NotesPageViewState extends State<NotesPageView> {
 
   AppBarViewInfo appBarViewInfo = AppBarViewInfo(appBar: AppBar());
 
-  String errorMessage = "";
-
   @override
   void initState() {
     super.initState();
@@ -51,19 +53,8 @@ class NotesPageViewState extends State<NotesPageView> {
   }
   
   void graphicsUpdate() {
+    appLog("Updating graphics for NotesPageView");
     setState(() {});
-  }
-
-  void graphicsSetWarningMessage(String errorMsg) {
-    setState(() {
-      errorMessage = errorMsg; 
-    });
-  }
-
-  void graphicsDismissWarningMessage() {
-    setState(() {
-      errorMessage = "";
-    });
   }
 
   @override
@@ -73,27 +64,34 @@ class NotesPageViewState extends State<NotesPageView> {
 
     for (Map<String, dynamic> note in AppData.instance.notes) {
 
+      Widget leadingIcon = const Icon(Icons.star_rounded, color: Colors.amber);
+
+      if (note["is_favorite"] == false) {
+        leadingIcon = Icon(Icons.star_outline_rounded, color: getCurrentThemePalette(context).quaternaryForegroundColor);
+      }
+
       notesUI.add(
         ListTile(
+          leading: IconButton(
+            icon: leadingIcon,
+            onPressed: () async {
+              selectNote(note, false);
+              await flipFavoriteNote();
+            } 
+          ),
           title: Text(note["title"] ?? "", style: GoogleFonts.robotoMono()),
           trailing: Text("Last edit ${formatDateTime(note["last_edit"] ?? "")}", style: GoogleFonts.robotoMono()),
           onTap: () {
 
-            //if you push too early the notePageViewInfo widget might not be built yet, so better add to a post frame callback to avoid null exceptions
-            Future.microtask(() {//A post frame callback didn't work, a future microtask did
+            NavigatorInfo.key.currentState!.push(
+              MaterialPageRoute(builder: (context) => AppData.instance.notePageViewInfo.widget)
+            );
 
-              NavigatorInfo.key.currentState!.push(
-                MaterialPageRoute(builder: (context) => AppData.instance.notePageViewInfo.widget)
-              );
+            selectNote(note, false);
 
-              //Cannot update immediately the noteAppBarViewInfo app bar because the key current state will always be null before pushing to the navigator
-              AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdateNotePageView();//It will check alone the selected note and make the correct app bar
-            });
-
-            selectNote(note);
           },
           onLongPress: () {
-            selectNote(note);
+            selectNote(note, false);
             showNoteBottomSheet(context);
           }
         ),
@@ -117,7 +115,7 @@ class NotesPageViewState extends State<NotesPageView> {
     );
 
     Scaffold scaffold = Scaffold(
-      appBar: mainAppBarBuilder(context, errorMessage),
+      appBar: mainAppBarBuilder(context),
       body: view
     );
     
