@@ -31,8 +31,7 @@ class NNoteApp extends StatelessWidget {
         builder: (context, snapshot) {
 
           if (snapshot.data != null && snapshot.data!.session != null) {
-
-            return AppData.instance.enterDashboard();
+            return AppData.instance.homePage;
           }
           else {
             return login.widget;

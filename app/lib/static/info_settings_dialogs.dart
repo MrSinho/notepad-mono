@@ -46,7 +46,7 @@ Dialog userInfoDialog(BuildContext context) {
       const Icon(Icons.logout_outlined),
       Text("Log out", style: GoogleFonts.robotoMono()),
       () {
-        NavigatorInfo.key.currentState!.pop(context);
+        NavigatorInfo.getState()?.pop(context);
         showDialog(context: context, builder: (BuildContext context) => signOutDialog(context));
       }
     )
@@ -76,14 +76,14 @@ List<Widget> footerWidgets(BuildContext context) {
   List<Widget> footer = [
     const SizedBox(height: 40),
     Text(
-      "${AppData.instance.version["name"] ?? ""}, build version: ${AppData.instance.version["version"] ?? ""}",
+      "${AppData.instance.queriesData.version["name"] ?? ""}, build version: ${AppData.instance.queriesData.version["version"] ?? ""}",
       style: TextStyle(
         fontSize: 12,
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ),
     Text(
-      AppData.instance.version["copyright_notice"] ?? "",
+      AppData.instance.queriesData.version["copyright_notice"] ?? "",
       style: TextStyle(
         fontSize: 12,
         color: getCurrentThemePalette(context).quaternaryForegroundColor

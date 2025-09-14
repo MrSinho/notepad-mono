@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../app_data.dart';
 import '../note_edit.dart';
 import '../utils.dart';
+import '../notify_ui.dart';
 
 
 void listenToVersions(BuildContext context) {
@@ -24,14 +25,14 @@ void listenToVersions(BuildContext context) {
           return bTime.compareTo(aTime);
         });
 
-        AppData.instance.version = versions.first;
+        AppData.instance.queriesData.version = versions.first;
+        notifyNotesPageViewUpdate();
 
-        AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
       },
 
       onError: (error) {
         setNoteEditStatus(NoteEditStatus.lostConnection);
-        //AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
+        notifyNotesPageViewUpdate();
       }
 
     );
@@ -62,39 +63,28 @@ void listenToNotes(BuildContext context) {
             return bTime.compareTo(aTime);
           });
 
-          AppData.instance.notes = notes;
+          AppData.instance.queriesData.notes = notes;
 
-          AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
+          notifyNotesPageViewUpdate();
 
-          appLog("Pulled notes from listen callback");
+          appLog("Pulled ${notes.length} notes from listen callback");
           
           //Update selected note
           for (Map<String, dynamic> note in notes) {
-            if (note["id"] == AppData.instance.selectedNote["id"]) {
+            if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
 
               selectNote(note, false);
               
-              if (note["content"] != AppData.instance.noteCodeController.text) {
+              if (note["content"] != AppData.instance.noteEditData.controller.text) {
                 setNoteEditStatus(NoteEditStatus.pulledChanges);
               }
 
-
-              //if (changeStatus) {
-              //  WidgetsBinding.instance.addPostFrameCallback((_) {//Notify changes to the editor
-              //    setNoteEditStatus(NoteEditStatus.pulledChanges);
-              //  });
-              //}
-
-              //WidgetsBinding.instance.addPostFrameCallback((_) {//Apply changes to the editor
-              //  AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdate();//It will check alone the selected note and make the correct app bar
-              //});
             }
           }
         },
 
         onError: (error) {
           setNoteEditStatus(NoteEditStatus.lostConnection);
-          //AppData.instance.notesPageViewInfo.key.currentState?.graphicsUpdate();
         }
 
       );

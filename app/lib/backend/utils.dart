@@ -31,7 +31,7 @@ Future<void> copySelectionToClipboardOrNot() async {
 
 Future<void> copyNoteToClipboardOrNot() async {
   
-  String buffer = AppData.instance.noteCodeController.text;
+  String buffer = AppData.instance.noteEditData.controller.text;
 
   setNoteEditStatus(NoteEditStatus.copiedNote);
 
@@ -43,5 +43,5 @@ Future<void> copyNoteToClipboardOrNot() async {
 }
 
 void appLog(String log) {
-  debugPrint("[${AppData.instance.version["name"]}][${AppData.instance.version["version"]}] $log");
+  debugPrint("[${AppData.instance.queriesData.version["name"]}][${AppData.instance.queriesData.version["version"]}] $log");
 }

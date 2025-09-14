@@ -5,6 +5,7 @@ import '../backend/supabase/queries.dart';
 
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
+import '../backend/notify_ui.dart';
 
 import 'supabase_dialogs.dart';
 
@@ -14,7 +15,7 @@ void showNoteBottomSheet(BuildContext context) {
 
   String favoriteText = "Add to favorites";
 
-  if (AppData.instance.selectedNote["is_favorite"]) {
+  if (AppData.instance.queriesData.selectedNote["is_favorite"]) {
     favoriteText = "Remove from favorites";
   }
 
@@ -26,9 +27,9 @@ void showNoteBottomSheet(BuildContext context) {
         children: [
           ListTile(
             leading: const Icon(Icons.title_sharp),
-            title: Text("Rename ${AppData.instance.selectedNote["title"]}", style: GoogleFonts.robotoMono()),
+            title: Text("Rename ${AppData.instance.queriesData.selectedNote["title"]}", style: GoogleFonts.robotoMono()),
             onTap: () { 
-              NavigatorInfo.key.currentState!.pop(context);
+              NavigatorInfo.getState()?.pop(context);
               showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context));
             },
           ),
@@ -36,15 +37,16 @@ void showNoteBottomSheet(BuildContext context) {
             leading: const Icon(Icons.edit_note_outlined),
             title: Text("Edit", style: GoogleFonts.robotoMono()),
             onTap: () { 
-              NavigatorInfo.key.currentState!.pop(context);
+              NavigatorInfo.getState()?.pop(context);
               
               Future.microtask(() {
 
-                NavigatorInfo.key.currentState!.push(
-                  MaterialPageRoute(builder: (context) => AppData.instance.notePageViewInfo.widget)
+                NavigatorInfo.getState()?.push(
+                  MaterialPageRoute(builder: (context) => AppData.instance.noteEditPage)
                 );
 
-                AppData.instance.notePageViewInfo.key.currentState?.graphicsUpdate();//It will check alone the selected note and make the correct app bar
+                notifyNotesPageViewUpdate();
+                
               });
 
             },
@@ -53,7 +55,7 @@ void showNoteBottomSheet(BuildContext context) {
             leading: const Icon(Icons.star_rounded),
             title: Text(favoriteText, style: GoogleFonts.robotoMono()),
             onTap: () async {
-              NavigatorInfo.key.currentState!.pop(context);
+              NavigatorInfo.getState()?.pop(context);
               flipFavoriteNote();
             }
           ),
@@ -61,7 +63,7 @@ void showNoteBottomSheet(BuildContext context) {
             leading: const Icon(Icons.delete_outlined),
             title: Text("Delete", style: GoogleFonts.robotoMono()),
             onTap: () { 
-              NavigatorInfo.key.currentState!.pop(context);
+              NavigatorInfo.getState()?.pop(context);
               showDialog(context: context, builder: (context) => deleteNoteDialog(context));
             },
           ),

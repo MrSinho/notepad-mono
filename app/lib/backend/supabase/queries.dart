@@ -26,7 +26,7 @@ Future<void> pullVersion() async {
 
   Map<String, dynamic> latest = versions.first;
 
-  AppData.instance.version = latest;
+  AppData.instance.queriesData.version = latest;
 
   return;
 }
@@ -37,7 +37,7 @@ Future<void> queryNotes() async {
 
     List<Map<String, dynamic>> notes = await Supabase.instance.client.from("Notes").select();
 
-    AppData.instance.notes = notes;
+    AppData.instance.queriesData.notes = notes;
 
     return;
 
@@ -53,10 +53,10 @@ Future<void> saveNoteContent() async {
 
   await Supabase.instance.client.from("Notes").update(
     {
-      "content": AppData.instance.noteCodeController.text,
+      "content": AppData.instance.noteEditData.controller.text,
       "last_edit": DateTime.now().toUtc().toString()
     }
-  ).eq("id", AppData.instance.selectedNote["id"]??"");
+  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 
 }
 
@@ -74,24 +74,24 @@ Future<void> renameNote(String title) async {
   await Supabase.instance.client.from("Notes").update(
     {
       "title": title,
-      "content": AppData.instance.noteCodeController.text,
+      "content": AppData.instance.noteEditData.controller.text,
       "last_edit": DateTime.now().toUtc().toString()
     }
-  ).eq("id", AppData.instance.selectedNote["id"]??"");
+  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 
   setNoteEditStatus(NoteEditStatus.renamedNote);
 }
 
 Future<void> deleteSelectedNote() async {
   await Supabase.instance.client.from("Notes").delete(
-  ).eq("id", AppData.instance.selectedNote["id"]??"");
+  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 }
 
 Future<void> flipFavoriteNote() async {
   await Supabase.instance.client.from("Notes").update(
     {
-      "is_favorite": !AppData.instance.selectedNote["is_favorite"],
+      "is_favorite": !AppData.instance.queriesData.selectedNote["is_favorite"],
     }
-  ).eq("id", AppData.instance.selectedNote["id"]??"");
+  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 }
 

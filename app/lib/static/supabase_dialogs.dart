@@ -31,7 +31,7 @@ Dialog newNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () async {
-      NavigatorInfo.key.currentState!.pop(context);
+      NavigatorInfo.getState()?.pop(context);
       await createNewNote(controller.text);
     }
   );
@@ -44,7 +44,7 @@ Dialog newNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () {
-      NavigatorInfo.key.currentState!.pop(context);
+      NavigatorInfo.getState()?.pop(context);
     }
   );
 
@@ -80,7 +80,7 @@ Dialog newNoteDialog(BuildContext context) {
 
 Dialog renameNoteDialog(BuildContext context) {
 
-  TextEditingController renameController = TextEditingController(text: AppData.instance.selectedNote["title"] ?? "");
+  TextEditingController renameController = TextEditingController(text: AppData.instance.queriesData.selectedNote["title"] ?? "");
 
   TextField renameField = TextField(
     controller: renameController,
@@ -100,7 +100,7 @@ Dialog renameNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () async {
-      NavigatorInfo.key.currentState!.pop(context);
+      NavigatorInfo.getState()?.pop(context);
       await renameNote(renameController.text);
     }
   );
@@ -113,7 +113,7 @@ Dialog renameNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () {
-      NavigatorInfo.key.currentState!.pop(context);
+      NavigatorInfo.getState()?.pop(context);
     }
   );
 
@@ -157,7 +157,7 @@ Dialog deleteNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () async {
-      NavigatorInfo.key.currentState!.pop(context);
+      NavigatorInfo.getState()?.pop(context);
       await deleteSelectedNote();
     }
   );
@@ -170,7 +170,7 @@ Dialog deleteNoteDialog(BuildContext context) {
       )
     ), 
     onPressed: () {
-      NavigatorInfo.key.currentState!.pop(context);
+      NavigatorInfo.getState()?.pop(context);
     }
   );
 
@@ -178,7 +178,7 @@ Dialog deleteNoteDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text("Confirm delete ${AppData.instance.selectedNote["title"]}", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
+      Text("Confirm delete ${AppData.instance.queriesData.selectedNote["title"]}", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
       const SizedBox(height: 20),
       Text("Are you sure you want to delete this note?", style: GoogleFonts.robotoMono(fontSize: 12),),
       const SizedBox(height: 20),

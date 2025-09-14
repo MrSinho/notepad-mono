@@ -23,27 +23,15 @@ class AppBarViewInfo {
 }
 
 class AppBarViewState extends State<AppBarView> {
-  AppBar appBar = AppBar();
 
   @override
   void initState() {
-    appBar = widget.appBar;
     super.initState();
-  }
-
-  void graphicsSetAppBar(AppBar newAppBar) {
-    appBar = newAppBar;
-    graphicsUpdate();
-  }
-
-  void graphicsUpdate() {
-    appLog("Updating graphics for AppBarView");
-    setState((){});
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return appBar;
+    
+    return const Text("HI");
   }
 }

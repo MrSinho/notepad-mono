@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,7 +31,7 @@ MaterialBanner errorMaterialBannerBuilder(String errorMessage) {
           color: Colors.black,
         ),
         onPressed: () {
-          //AppData.instance.notePageViewInfo.key.currentState!.graphicsDismissWarningMessage();
+          //AppData.instance.notePageViewInfo.getState()?.graphicsDismissWarningMessage();
         },
       )  
     ]
@@ -39,3 +40,4 @@ MaterialBanner errorMaterialBannerBuilder(String errorMessage) {
 
   return banner;
 }
+*/

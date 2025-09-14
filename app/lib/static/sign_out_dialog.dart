@@ -32,7 +32,7 @@ Dialog signOutDialog(BuildContext context) {
                 color: getCurrentThemePalette(context).primaryVividColor
               )
             ),
-            onPressed: () => NavigatorInfo.key.currentState!.pop(context),
+            onPressed: () => NavigatorInfo.getState()?.pop(context),
           ),
           const SizedBox(width: 20.0),
           TextButton(
