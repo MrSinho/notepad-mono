@@ -79,7 +79,7 @@ void setNoteEditStatus(NoteEditStatusValue noteEditStatus) {
       AppData.instance.noteEditStatusData.message = "Renamed note";
       break;
     case NoteEditStatus.savedChanges:
-      AppData.instance.noteEditStatusData.message = "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines.        Last save ${formatDateTime(AppData.instance.queriesData.selectedNote["last_edit"] ?? "")}";
+      AppData.instance.noteEditStatusData.message = "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${formatDateTime(AppData.instance.queriesData.selectedNote["last_edit"] ?? "")}";
       break;
     case NoteEditStatus.typingCharacters:
       AppData.instance.noteEditStatusData.message = "Typing characters";
@@ -144,6 +144,8 @@ void getNoteTextData() {
 }
 
 String getNoteSelectionText() {
+
+  appLog("Getting note selection data");
 
   CodeController controller = AppData.instance.noteEditData.controller;
   String text = controller.text;
@@ -216,5 +218,6 @@ void checkCursorNoteEditStatus() {
 void listenToCursor() {
   appLog("Cursor listen callback triggered");
   getNoteCursorData();
+  getNoteTextData();
   checkCursorNoteEditStatus();
 }
