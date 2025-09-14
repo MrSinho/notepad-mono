@@ -73,7 +73,7 @@ class AppData {
     editBottomBar     = const EditBottomBar();
 
     noteEditData.controller = CodeController();
-    noteEditData.controller.addListener(listenToCursor);
+    noteEditData.controller.addListener(noteEditCallback);
 
     queriesData.selectedNote = {"title": "note"};
   }

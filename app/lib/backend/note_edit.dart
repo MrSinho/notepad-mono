@@ -215,7 +215,7 @@ void checkCursorNoteEditStatus() {
   }
 }
 
-void listenToCursor() {
+void noteEditCallback() {
   appLog("Cursor listen callback triggered");
   getNoteCursorData();
   getNoteTextData();
