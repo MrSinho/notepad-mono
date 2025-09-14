@@ -2,26 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
 import '../backend/note_edit.dart';
+import '../backend/utils.dart';
 
 import 'app_bar_builder.dart';
 import 'input_field_builder.dart';
-import 'edit_bottom_bar_builder.dart';
 
 
 
-Widget notePageViewBuilder(BuildContext context) {
-  getNoteTextData();
-  getNoteCursorData();
+Widget noteEditPageBuilder(BuildContext context) {
+
+  appLog("Note edit page builder triggered");
 
   Padding textFieldPad = Padding(
     padding: const EdgeInsets.all(8.0),
     child: noteCodeFieldBuilder(AppData.instance.noteEditData.controller, context)
   );
 
-  
-
-  
-    
   Column noteBody = Column(
     children: [
       Padding(

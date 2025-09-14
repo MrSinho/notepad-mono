@@ -20,8 +20,8 @@ class NoteEditPageState extends State<NoteEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    Widget builder = notePageViewBuilder(context);
+
+    Widget builder = noteEditPageBuilder(context);
 
     return builder;
 
