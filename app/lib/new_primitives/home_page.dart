@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../backend/supabase/listen.dart';
 import '../backend/app_data.dart';
 
-import '../builders/notes_page_view_builder.dart';
+import '../builders/home_page_builder.dart';
 
 
 
@@ -30,7 +30,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     ValueListenableBuilder builder = ValueListenableBuilder(
-      valueListenable: AppData.instance.homePageViewUpdates,
+      valueListenable: AppData.instance.homePageUpdates,
       builder: (context, value, child) => notesPageViewBuilder(context)
     );
 

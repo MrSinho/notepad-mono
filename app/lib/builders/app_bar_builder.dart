@@ -43,7 +43,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
           icon: const Icon(Icons.signal_wifi_connected_no_internet_4_rounded),
           onPressed: () {
             AppData.instance.noteEditStatusData.status = NoteEditStatus.dismissedErrors;
-            notifyNotesPageViewUpdate();
+            notifyHomePageUpdate();
           }
         )
           
@@ -75,11 +75,12 @@ AppBar mainAppBarBuilder(BuildContext context) {
   return appBar;
 }
 
-AppBar noteAppBarBuilder(BuildContext context) {
+Widget editAppBarContentBuilder(BuildContext context) {
+  appLog("Updating edit app bar content");
 
   String title = AppData.instance.queriesData.selectedNote["title"] ?? "";
 
-  List<Widget> noteAppBarLeftChildren = [
+  List<Widget> leftChildren = [
     Padding(
       padding: const EdgeInsetsGeometry.only(bottom: 8.0, right: 4.0),
       child: Icon(Icons.circle, color: AppData.instance.noteEditStatusData.color, size: 14.0,),
@@ -97,12 +98,19 @@ AppBar noteAppBarBuilder(BuildContext context) {
     ),
   ];
 
+  Wrap content = Wrap(
+    direction: Axis.horizontal,
+    crossAxisAlignment: WrapCrossAlignment.end,
+    children: leftChildren
+  );
+
+  return content;
+}
+
+AppBar editAppBarBuilder(BuildContext context) {
+
   AppBar appBar = AppBar(
-    title: Wrap(
-      direction: Axis.horizontal,
-      crossAxisAlignment: WrapCrossAlignment.end,
-      children: noteAppBarLeftChildren
-    ),
+    title: AppData.instance.editAppBarContent,
     actions: [ 
       IconButton(
         icon: const Icon(Icons.copy_sharp),

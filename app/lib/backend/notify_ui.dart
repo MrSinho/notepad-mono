@@ -3,18 +3,12 @@ import 'utils.dart';
 
 
 
-class Notifiers {
-
-
-
+void notifyNoteEditUpdate() {
+  appLog("Notifying builder update for note edit page");
+  AppData.instance.noteEditUpdates.value++;
 }
 
-void notifyNotePageViewUpdate() {
-  appLog("Notifying builder update for NotePageView");
-  AppData.instance.notePageViewUpdates.value++;
-}
-
-void notifyNotesPageViewUpdate() {
-  appLog("Notifying builder update for NotesPageView");
-  AppData.instance.homePageViewUpdates.value++; 
+void notifyHomePageUpdate() {
+  appLog("Notifying builder update for home page");
+  AppData.instance.homePageUpdates.value++; 
 }

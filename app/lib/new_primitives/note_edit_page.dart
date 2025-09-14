@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../backend/app_data.dart';
+//import '../backend/app_data.dart';
 
-import '../builders/note_page_view_builder.dart';
+import '../builders/note_edit_page_builder.dart';
 
 
 
@@ -20,11 +20,8 @@ class NoteEditPageState extends State<NoteEditPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    ValueListenableBuilder<int> builder = ValueListenableBuilder<int>(
-      valueListenable: AppData.instance.notePageViewUpdates,
-      builder: (context, value, child) => notePageViewBuilder(context)
-    );
+    
+    Widget builder = notePageViewBuilder(context);
 
     return builder;
 

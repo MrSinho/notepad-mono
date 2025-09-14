@@ -26,13 +26,13 @@ void listenToVersions(BuildContext context) {
         });
 
         AppData.instance.queriesData.version = versions.first;
-        notifyNotesPageViewUpdate();
+        notifyHomePageUpdate();
 
       },
 
       onError: (error) {
         setNoteEditStatus(NoteEditStatus.lostConnection);
-        notifyNotesPageViewUpdate();
+        notifyHomePageUpdate();
       }
 
     );
@@ -65,7 +65,7 @@ void listenToNotes(BuildContext context) {
 
           AppData.instance.queriesData.notes = notes;
 
-          notifyNotesPageViewUpdate();
+          notifyHomePageUpdate();
 
           appLog("Pulled ${notes.length} notes from listen callback");
           

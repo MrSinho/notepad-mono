@@ -45,7 +45,7 @@ void showNoteBottomSheet(BuildContext context) {
                   MaterialPageRoute(builder: (context) => AppData.instance.noteEditPage)
                 );
 
-                notifyNotesPageViewUpdate();
+                notifyHomePageUpdate();
                 
               });
 

@@ -103,7 +103,7 @@ void setNoteEditStatus(NoteEditStatusValue noteEditStatus) {
 
   appLog("New note edit status: ${AppData.instance.noteEditStatusData.message}");
   
-  notifyNotePageViewUpdate();
+  notifyNoteEditUpdate();
 }
 
 void setNoteControllerText(String text) {

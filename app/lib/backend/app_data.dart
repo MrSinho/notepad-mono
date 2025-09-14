@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:code_text_field/code_text_field.dart';
 
-import '../new_primitives/notes_page_view.dart';
-import '../new_primitives/note_page_view.dart';
+import '../new_primitives/home_page.dart';
+import '../new_primitives/note_edit_page.dart';
+import '../new_primitives/edit_app_bar_content.dart';
+import '../new_primitives/edit_status_bar.dart';
+import '../new_primitives/edit_bottom_bar.dart';
 
 import 'note_edit.dart';
 
@@ -48,11 +51,14 @@ class AppData {
   late final NoteEditStatusData noteEditStatusData;
   late final NoteEditData       noteEditData;
 
-  late final HomePage     homePage;
-  late final NoteEditPage noteEditPage;
+  late final HomePage          homePage;
+  late final NoteEditPage      noteEditPage;
+  late final EditAppBarContent editAppBarContent;
+  late final EditStatusBar     editStatusBar;
+  late final EditBottomBar     editBottomBar;
   
-  final ValueNotifier<int> notePageViewUpdates = ValueNotifier(0);
-  final ValueNotifier<int> homePageViewUpdates = ValueNotifier(0);
+  final ValueNotifier<int> noteEditUpdates = ValueNotifier(0);
+  final ValueNotifier<int> homePageUpdates = ValueNotifier(0);
 
   AppData._internal() {//Called once and only once, no BuildContext available
     
@@ -60,8 +66,11 @@ class AppData {
     noteEditStatusData = NoteEditStatusData();
     noteEditData       = NoteEditData();
 
-    homePage = const HomePage();
-    noteEditPage = const NoteEditPage();
+    homePage          = const HomePage();
+    noteEditPage      = const NoteEditPage();
+    editAppBarContent = const EditAppBarContent();
+    editStatusBar     = const EditStatusBar();
+    editBottomBar     = const EditBottomBar();
 
     noteEditData.controller = CodeController();
     noteEditData.controller.addListener(listenToCursor);
