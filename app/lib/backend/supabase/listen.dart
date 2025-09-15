@@ -27,12 +27,10 @@ void listenToVersions(BuildContext context) {
 
         AppData.instance.queriesData.version = versions.first;
         notifyHomePageUpdate();
-
       },
 
       onError: (error) {
         setNoteEditStatus(NoteEditStatus.lostConnection);
-        notifyHomePageUpdate();
       }
 
     );
@@ -71,16 +69,18 @@ void listenToNotes(BuildContext context) {
           
           //Update selected note
           for (Map<String, dynamic> note in notes) {
-            if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
 
-              selectNote(note, false);
-              
-              if (note["content"] != AppData.instance.noteEditData.controller.text) {
-                setNoteEditStatus(NoteEditStatus.pulledChanges);
-              }
+            if (
+              note["id"] == AppData.instance.queriesData.selectedNote["id"] &&
+              note["content"] != AppData.instance.noteEditData.controller.text
+            ) {
 
+              setNoteEditStatus(NoteEditStatus.pulledChanges);
+            
             }
+            
           }
+
         },
 
         onError: (error) {

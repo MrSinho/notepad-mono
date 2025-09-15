@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +7,24 @@ import 'package:intl/intl.dart';
 import '../backend/app_data.dart';
 import '../backend/note_edit.dart';
 
+
+
+Future<String> readFile(String path) async {
+  
+  String text = "";
+
+  try {
+
+    final File file = File(path);
+    text = await file.readAsString();
+
+  } catch (error) {
+
+    appLog("Couldn't read file: $error");
+
+  }
+  return text;
+}
 
 
 String formatDateTime(String src) {

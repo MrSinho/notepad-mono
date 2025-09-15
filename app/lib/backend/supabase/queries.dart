@@ -51,12 +51,17 @@ Future<void> queryNotes() async {
 
 Future<void> saveNoteContent() async {
 
-  await Supabase.instance.client.from("Notes").update(
+  try {
+    await Supabase.instance.client.from("Notes").update(
     {
       "content": AppData.instance.noteEditData.controller.text,
       "last_edit": DateTime.now().toUtc().toString()
     }
   ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+  }
+  catch (error) {
+    setNoteEditStatus(NoteEditStatus.failedSave);
+  }
 
 }
 

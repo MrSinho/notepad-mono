@@ -7,103 +7,83 @@ import 'app_data.dart';
 
 
 
-typedef NoteEditStatusValue = int; 
+class NoteEditStatusData {
+  
+  late int    code;
+  late Color  color;
+  late String message;
 
-class NoteEditStatus {
-
-  static const NoteEditStatusValue uninitialized       =  0;
-  static const NoteEditStatusValue lostConnection      =  1;
-  static const NoteEditStatusValue selectedNote        =  2;
-  static const NoteEditStatusValue savedChanges        =  3;
-  static const NoteEditStatusValue typingCharacters    =  4;
-  static const NoteEditStatusValue selectedCharacters  =  5;
-  static const NoteEditStatusValue unsavedChanges      =  6;
-  static const NoteEditStatusValue pulledChanges       =  7;
-  static const NoteEditStatusValue copiedSelection     =  8;
-  static const NoteEditStatusValue copiedNote          =  9;
-  static const NoteEditStatusValue renamedNote         = 10;
-  static const NoteEditStatusValue dismissedErrors     = 11;
+  NoteEditStatusData(
+    {
+      required this.code,
+      required this.color,
+      required this.message
+    }
+  );
 
 }
 
-void setNoteEditStatus(NoteEditStatusValue noteEditStatus) {
+class NoteEditStatus {
 
-  AppData.instance.noteEditStatusData.status = noteEditStatus;
+  static NoteEditStatusData uninitialized = NoteEditStatusData(
+    code:  0, color: Colors.deepOrange,
+    message: "Uninitialized"
+  );
+  static NoteEditStatusData lostConnection = NoteEditStatusData(
+    code:  1, color: Colors.red,
+    message: "Lost connection"
+  );
+  static NoteEditStatusData selectedNote = NoteEditStatusData(
+    code:  2, color: Colors.lightGreenAccent,
+    message: "Selected note, ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${formatDateTime(AppData.instance.queriesData.selectedNote["last_edit"] ?? "")}"
+  );
+  static NoteEditStatusData renamedNote = NoteEditStatusData(
+    code:  3, color: Colors.greenAccent,
+    message: "Renamed note"
+  );
+  static NoteEditStatusData savedChanges = NoteEditStatusData(
+    code:  4, color: Colors.green,
+    message: "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${formatDateTime(AppData.instance.queriesData.selectedNote["last_edit"] ?? "")}"
+  );
+  static NoteEditStatusData failedSave = NoteEditStatusData(
+    code: 5, color: Colors.red,
+    message: "Failed saving note, connection lost"
+  );
+  static NoteEditStatusData selectedCharacters = NoteEditStatusData(
+    code:  6, color: Colors.lime,
+    message: "Selected ${AppData.instance.noteEditData.selectionLength} characters, ${AppData.instance.noteEditData.selectionLines} lines"
+  );
+  static NoteEditStatusData unsavedChanges = NoteEditStatusData(
+    code:  7, color: Colors.orange,
+    message: "Buffer with ${AppData.instance.noteEditData.bufferLength} characters, ${AppData.instance.noteEditData.bufferLines} lines"
+  );
+  static NoteEditStatusData pulledChanges = NoteEditStatusData(
+    code:  8, color: Colors.lightBlue,
+    message: "Pulled changes from another device"
+  );
+  static NoteEditStatusData copiedNote = NoteEditStatusData(
+    code: 10, color: Colors.purple,
+    message: "Copied note to clipboard"
+  );
+  static NoteEditStatusData copiedSelection = NoteEditStatusData(
+    code:  9, color: Colors.deepPurpleAccent,
+    message: "Copied selection to clipboard"
+  );
+  static NoteEditStatusData dismissedErrors = NoteEditStatusData(
+    code: 11, color: Colors.brown,
+    message: "Dismissed errors"
+  );
 
-  switch (AppData.instance.noteEditStatusData.status) {
-    case NoteEditStatus.uninitialized:
-      AppData.instance.noteEditStatusData.color = Colors.deepOrange;
-      break;
-    case NoteEditStatus.lostConnection:
-      AppData.instance.noteEditStatusData.color = Colors.red;
-      break;
-    case NoteEditStatus.selectedNote:
-      AppData.instance.noteEditStatusData.color = Colors.lightGreenAccent;
-      break;
-    case NoteEditStatus.renamedNote:
-      AppData.instance.noteEditStatusData.color = Colors.greenAccent;
-      break;
-    case NoteEditStatus.savedChanges:
-      AppData.instance.noteEditStatusData.color = Colors.green;
-      break;
-    case NoteEditStatus.typingCharacters:
-      AppData.instance.noteEditStatusData.color = Colors.yellow;
-      break;
-    case NoteEditStatus.selectedCharacters:
-      AppData.instance.noteEditStatusData.color = Colors.lime;
-      break;
-    case NoteEditStatus.unsavedChanges:
-      AppData.instance.noteEditStatusData.color = Colors.orange;
-      break;
-    case NoteEditStatus.pulledChanges:
-      AppData.instance.noteEditStatusData.color = Colors.lightBlue;
-      break;
-    case NoteEditStatus.copiedNote:
-      AppData.instance.noteEditStatusData.color = Colors.purple;
-      break;
-    case NoteEditStatus.copiedSelection:
-      AppData.instance.noteEditStatusData.color = Colors.deepPurpleAccent;
-      break;
-    default:
-      AppData.instance.noteEditStatusData.color = Colors.brown;
-  }
+}
 
-  switch (AppData.instance.noteEditStatusData.status) {
-    case NoteEditStatus.lostConnection:
-      AppData.instance.noteEditStatusData.message = "Lost connection";
-      break;
-    case NoteEditStatus.selectedNote:
-      AppData.instance.noteEditStatusData.message = "Selected note";
-      break;
-    case NoteEditStatus.renamedNote:
-      AppData.instance.noteEditStatusData.message = "Renamed note";
-      break;
-    case NoteEditStatus.savedChanges:
-      AppData.instance.noteEditStatusData.message = "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${formatDateTime(AppData.instance.queriesData.selectedNote["last_edit"] ?? "")}";
-      break;
-    case NoteEditStatus.typingCharacters:
-      AppData.instance.noteEditStatusData.message = "Typing characters";
-      break;
-    case NoteEditStatus.selectedCharacters:
-      AppData.instance.noteEditStatusData.message = "Selected ${AppData.instance.noteEditData.selectionLength} characters, ${AppData.instance.noteEditData.selectionLines} lines";
-      break;
-    case NoteEditStatus.unsavedChanges:
-      AppData.instance.noteEditStatusData.message = "Buffer with ${AppData.instance.noteEditData.bufferLength} characters, ${AppData.instance.noteEditData.bufferLines} lines";
-      break;
-    case NoteEditStatus.pulledChanges:
-      AppData.instance.noteEditStatusData.message = "Pulled changes from another device";
-      break;
-    case NoteEditStatus.copiedNote:
-      AppData.instance.noteEditStatusData.message = "Copied note to clipboard";
-      break;
-    case NoteEditStatus.copiedSelection:
-      AppData.instance.noteEditStatusData.message = "Copied selection to clipboard";
-      break;
-  }
+void setNoteEditStatus(NoteEditStatusData data) {
+
+  AppData.instance.noteEditStatusData = data;
 
   appLog("New note edit status: ${AppData.instance.noteEditStatusData.message}");
   
   notifyNoteEditUpdate();
+  notifyHomePageUpdate();
 }
 
 void setNoteControllerText(String text) {
@@ -115,7 +95,7 @@ void setNoteControllerText(String text) {
 
 }
 
-void selectNote(Map<String, dynamic> note, bool changeNoteEditStatus) {
+void selectNote(Map<String, dynamic> note) {
   AppData.instance.queriesData.selectedNote = note;
 
   appLog("Selected note ${note["title"]}");
@@ -124,10 +104,7 @@ void selectNote(Map<String, dynamic> note, bool changeNoteEditStatus) {
   getNoteTextData();
   getNoteCursorData();
 
-  if (!changeNoteEditStatus && AppData.instance.noteEditStatusData.status != NoteEditStatus.pulledChanges) {
-    appLog("Changing note edit status after note selection");
-    setNoteEditStatus(NoteEditStatus.savedChanges);
-  }
+  setNoteEditStatus(NoteEditStatus.selectedNote);
 }
 
 void getNoteTextData() {
@@ -202,10 +179,10 @@ void checkCursorNoteEditStatus() {
     setNoteEditStatus(NoteEditStatus.unsavedChanges);
   }
   else if (
-    AppData.instance.noteEditStatusData.status != NoteEditStatus.renamedNote &&
-    AppData.instance.noteEditStatusData.status != NoteEditStatus.pulledChanges &&
-    AppData.instance.noteEditStatusData.status != NoteEditStatus.savedChanges &&
-    AppData.instance.noteEditStatusData.status != NoteEditStatus.selectedNote &&
+    AppData.instance.noteEditStatusData != NoteEditStatus.renamedNote &&
+    AppData.instance.noteEditStatusData != NoteEditStatus.pulledChanges &&
+    AppData.instance.noteEditStatusData != NoteEditStatus.savedChanges &&
+    AppData.instance.noteEditStatusData != NoteEditStatus.selectedNote &&
     controller.text == AppData.instance.queriesData.selectedNote["content"]?.toString()
   ) {
     setNoteEditStatus(NoteEditStatus.savedChanges);

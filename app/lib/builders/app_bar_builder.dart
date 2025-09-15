@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nnotes/backend/notify_ui.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../backend/app_data.dart';
@@ -35,18 +34,22 @@ AppBar mainAppBarBuilder(BuildContext context) {
     )
   ];
 
-  if (AppData.instance.noteEditStatusData.status == NoteEditStatus.lostConnection) {
+  if (
+    AppData.instance.noteEditStatusData == NoteEditStatus.lostConnection || 
+    AppData.instance.noteEditStatusData == NoteEditStatus.failedSave
+  ) {
     mainAppBarLeftChildren.add(
       Padding(
-        padding: const EdgeInsetsGeometry.only(left: 12),
+        padding: const EdgeInsetsGeometry.only(left: 4),
         child: IconButton(
-          icon: const Icon(Icons.signal_wifi_connected_no_internet_4_rounded),
+          icon: Icon(
+            Icons.signal_wifi_connected_no_internet_4_rounded,
+            color: NoteEditStatus.lostConnection.color,
+          ),
           onPressed: () {
-            AppData.instance.noteEditStatusData.status = NoteEditStatus.dismissedErrors;
-            notifyHomePageUpdate();
+            setNoteEditStatus(NoteEditStatus.dismissedErrors);
           }
-        )
-          
+        )   
       )
     );
   }
@@ -97,6 +100,28 @@ Widget editAppBarContentBuilder(BuildContext context) {
       onPressed: () => showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context)),
     ),
   ];
+
+  if (
+    AppData.instance.noteEditStatusData == NoteEditStatus.lostConnection || 
+    AppData.instance.noteEditStatusData == NoteEditStatus.failedSave
+  ) {
+
+    leftChildren.add(
+      Padding(
+        padding: const EdgeInsetsGeometry.only(left: 4),
+        child: IconButton(
+          icon: Icon(
+            Icons.signal_wifi_connected_no_internet_4_rounded,
+            color: NoteEditStatus.lostConnection.color,
+          ),
+          onPressed: () {
+            setNoteEditStatus(NoteEditStatus.dismissedErrors);
+          }
+        )
+      )
+    );
+
+  }
 
   Wrap content = Wrap(
     direction: Axis.horizontal,

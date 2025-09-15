@@ -51,12 +51,6 @@ class LoginInfo {
 class LoginState extends State<Login> {
   Widget errorMessage = const Text("");
 
-  @override
-  void initState() {
-    authListenRedirectCallback();
-    super.initState();
-  }
-
   void writeError(Widget errorMsg) {
     setState(() {
       errorMessage = errorMsg;

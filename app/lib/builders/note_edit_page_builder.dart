@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
-import '../backend/note_edit.dart';
 import '../backend/utils.dart';
 
 import 'app_bar_builder.dart';
