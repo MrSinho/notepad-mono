@@ -37,7 +37,7 @@ void listenToVersions(BuildContext context) {
     return;
   }
   catch (exception) {
-    appLog("Failed listening to new notes: $exception");
+    appLog("Failed listening to app versions: $exception");
   }
 
 }
@@ -69,21 +69,21 @@ void listenToNotes(BuildContext context) {
           
           //Update selected note
           for (Map<String, dynamic> note in notes) {
+            if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
 
-            if (
-              note["id"] == AppData.instance.queriesData.selectedNote["id"] &&
-              note["content"] != AppData.instance.noteEditData.controller.text
-            ) {
+              
+              //if (note["content"] != AppData.instance.noteEditData.controller.text) {
+              //}
 
+              selectNote(note, false);
               setNoteEditStatus(NoteEditStatus.pulledChanges);
-            
             }
-            
           }
 
         },
 
         onError: (error) {
+          appLog("Failed listening to notes");
           setNoteEditStatus(NoteEditStatus.lostConnection);
         }
 

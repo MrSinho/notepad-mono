@@ -32,21 +32,22 @@ Widget notesPageViewBuilder(BuildContext context) {
         leading: IconButton(
           icon: leadingIcon,
           onPressed: () async {
-            selectNote(note);
+            selectNote(note, true);
             await flipFavoriteNote();
           } 
         ),
         title: Text(note["title"] ?? "", style: GoogleFonts.robotoMono()),
         trailing: Text("Last edit ${formatDateTime(note["last_edit"] ?? "")}", style: GoogleFonts.robotoMono()),
         onTap: () {
-          selectNote(note);
+          debugPrint("CLICKED NOTE $note");
+          selectNote(note, true);
           NavigatorInfo.getState()?.push(
             MaterialPageRoute(builder: (context) => AppData.instance.noteEditPage)
           );
 
         },
         onLongPress: () {
-          selectNote(note);
+          selectNote(note, true);
           showNoteBottomSheet(context);
         }
       ),

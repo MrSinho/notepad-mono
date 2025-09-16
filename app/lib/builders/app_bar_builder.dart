@@ -86,7 +86,7 @@ Widget editAppBarContentBuilder(BuildContext context) {
   List<Widget> leftChildren = [
     Padding(
       padding: const EdgeInsetsGeometry.only(bottom: 8.0, right: 4.0),
-      child: Icon(Icons.circle, color: AppData.instance.noteEditStatusData.color, size: 14.0,),
+      child: Icon(Icons.circle, color: AppData.instance.noteEditStatusData.status.color, size: 14.0,),
     ),
     TextButton(
       child: Text(

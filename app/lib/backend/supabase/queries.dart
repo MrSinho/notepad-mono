@@ -53,11 +53,14 @@ Future<void> saveNoteContent() async {
 
   try {
     await Supabase.instance.client.from("Notes").update(
-    {
-      "content": AppData.instance.noteEditData.controller.text,
-      "last_edit": DateTime.now().toUtc().toString()
-    }
-  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+      {
+        "content": AppData.instance.noteEditData.controller.text,
+        "last_edit": DateTime.now().toUtc().toString()
+      }
+    ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+
+    setNoteEditStatus(NoteEditStatus.savedChanges);
+
   }
   catch (error) {
     setNoteEditStatus(NoteEditStatus.failedSave);

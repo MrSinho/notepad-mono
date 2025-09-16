@@ -58,7 +58,7 @@ class AppData {
   AppData._internal() {//Called once and only once, no BuildContext available
     
     queriesData        = QueriesData();
-    noteEditStatusData = NoteEditStatus.uninitialized;
+    noteEditStatusData = NoteEditStatusData();
     noteEditData       = NoteEditData();
 
     homePage          = const HomePage();
