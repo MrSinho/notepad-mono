@@ -6,13 +6,6 @@ import '../utils.dart';
 
 
 
-Future<void> pingDb() async {
-
-  //Nothing to do here...
-
-  return;
-}
-
 Future<void> pullVersion() async {
 
   List<Map<String, dynamic>> versions = await Supabase.instance.client.from("Versions").select();
@@ -96,10 +89,20 @@ Future<void> deleteSelectedNote() async {
 }
 
 Future<void> flipFavoriteNote() async {
+
+  bool isFavorite = AppData.instance.queriesData.selectedNote["is_favorite"];
+
   await Supabase.instance.client.from("Notes").update(
     {
-      "is_favorite": !AppData.instance.queriesData.selectedNote["is_favorite"],
+      "is_favorite": !isFavorite,
     }
   ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+
+  if (!isFavorite) {//was favorite
+    setNoteEditStatus(NoteEditStatus.addedToFavorites);
+  }
+  else {
+    setNoteEditStatus(NoteEditStatus.removedFromFavorites);
+  }
 }
 

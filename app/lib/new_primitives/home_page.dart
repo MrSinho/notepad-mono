@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../backend/supabase/listen.dart';
 import '../backend/app_data.dart';
+import '../backend/utils.dart';
 
 import '../builders/home_page_builder.dart';
 
@@ -24,6 +25,7 @@ class HomePageState extends State<HomePage> {
     super.initState();
     listenToNotes(context);
     listenToVersions(context);
+    appLog("Initialzed HomePageState");
   }
   
   @override

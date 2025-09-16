@@ -9,6 +9,7 @@ import '../backend/note_edit.dart';
 
 import '../static/info_settings_dialogs.dart';
 import '../static/supabase_dialogs.dart';
+import '../static/ui_utils.dart';
 
 import '../themes.dart';
 
@@ -35,8 +36,8 @@ AppBar mainAppBarBuilder(BuildContext context) {
   ];
 
   if (
-    AppData.instance.noteEditStatusData == NoteEditStatus.lostConnection || 
-    AppData.instance.noteEditStatusData == NoteEditStatus.failedSave
+    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.lostConnection.code || 
+    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.failedSave.code
   ) {
     mainAppBarLeftChildren.add(
       Padding(
@@ -85,9 +86,11 @@ Widget editAppBarContentBuilder(BuildContext context) {
 
   List<Widget> leftChildren = [
     Padding(
-      padding: const EdgeInsetsGeometry.only(bottom: 8.0, right: 4.0),
+      //padding: const EdgeInsetsGeometry.only(bottom: 8.0, right: 4.0),
+      padding: const EdgeInsetsGeometry.all(12.0),
       child: Icon(Icons.circle, color: AppData.instance.noteEditStatusData.status.color, size: 14.0,),
     ),
+    favoriteButton(AppData.instance.queriesData.selectedNote, context),
     TextButton(
       child: Text(
         title, 
@@ -102,8 +105,8 @@ Widget editAppBarContentBuilder(BuildContext context) {
   ];
 
   if (
-    AppData.instance.noteEditStatusData == NoteEditStatus.lostConnection || 
-    AppData.instance.noteEditStatusData == NoteEditStatus.failedSave
+    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.lostConnection.code || 
+    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.failedSave.code
   ) {
 
     leftChildren.add(

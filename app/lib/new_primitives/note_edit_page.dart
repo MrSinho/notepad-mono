@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//import '../backend/app_data.dart';
+import '../backend/utils.dart';
 
 import '../builders/note_edit_page_builder.dart';
 
@@ -17,6 +17,12 @@ class NoteEditPage extends StatefulWidget {
 }
 
 class NoteEditPageState extends State<NoteEditPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    appLog("Initialized NoteEditPageState");
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -64,6 +64,7 @@ void listenToNotes(BuildContext context) {
           AppData.instance.queriesData.notes = notes;
 
           notifyHomePageUpdate();
+          notifyNoteEditUpdate();
 
           appLog("Pulled ${notes.length} notes from listen callback");
           
@@ -72,11 +73,11 @@ void listenToNotes(BuildContext context) {
             if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
 
               
-              //if (note["content"] != AppData.instance.noteEditData.controller.text) {
-              //}
+              if (note["content"] != AppData.instance.noteEditData.controller.text) {
+                setNoteEditStatus(NoteEditStatus.pulledChanges);
+              }
 
               selectNote(note, false);
-              setNoteEditStatus(NoteEditStatus.pulledChanges);
             }
           }
 

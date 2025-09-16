@@ -3,7 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../backend/supabase/queries.dart';
 import '../backend/supabase/auth_access.dart';
+
+import '../backend/note_edit.dart';
+
+import '../themes.dart';
 
 
 
@@ -153,4 +158,23 @@ Widget userImageInkWell(GestureTapCallback callback) {
       ),
     ),
   );
+}
+
+Widget favoriteButton(Map<String, dynamic> note, BuildContext context) {
+
+  Widget icon = const Icon(Icons.star_rounded, color: Colors.amber);
+
+  if (note["is_favorite"] == false) {
+    icon = Icon(Icons.star_outline_rounded, color: getCurrentThemePalette(context).quaternaryForegroundColor);
+  }
+
+  IconButton button = IconButton(
+    icon: icon,
+    onPressed: () async {
+      selectNote(note, false);
+      await flipFavoriteNote();
+    } 
+  );
+
+  return button;
 }

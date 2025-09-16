@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
+import '../backend/utils.dart';
 
 import '../builders/edit_bottom_bar_builder.dart';
 
@@ -17,6 +18,12 @@ class EditBottomBar extends StatefulWidget {
 }
 
 class EditBottomBarState extends State<EditBottomBar> {
+
+  @override
+  void initState() {
+    super.initState();
+    appLog("Initialized EditBottomBarState");
+  }
 
   @override
   Widget build(BuildContext context) {

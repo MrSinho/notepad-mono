@@ -34,7 +34,9 @@ enum NoteEditStatus {
   pulledChanges(8, Colors.lightBlue),
   copiedSelection(9, Colors.deepPurpleAccent),
   copiedNote(10, Colors.purple),
-  dismissedErrors(11, Colors.brown);
+  addedToFavorites(11, Colors.amber),
+  removedFromFavorites(12, Colors.amberAccent),
+  dismissedErrors(13, Colors.brown);
 
   final int   code;
   final Color color;
@@ -74,7 +76,6 @@ void setNoteEditStatus(NoteEditStatus status) {
       message = "Buffer with ${AppData.instance.noteEditData.bufferLength} characters, ${AppData.instance.noteEditData.bufferLines} lines";
       break;
     case NoteEditStatus.pulledChanges:
-      debugPrint("AAAAAAAAAAAA");//ARRIVATO QUI!!!!
       message = "Pulled changes from another device";
       break;
     case NoteEditStatus.copiedNote:
@@ -82,6 +83,12 @@ void setNoteEditStatus(NoteEditStatus status) {
       break;
     case NoteEditStatus.copiedSelection:
       message = "Copied selection to clipboard";
+      break;
+    case NoteEditStatus.addedToFavorites:
+      message = "Note added to favorites";
+      break;
+    case NoteEditStatus.removedFromFavorites:
+      message = "Note removed favorites";
       break;
     case NoteEditStatus.dismissedErrors:
       message = "Dismissed errors";
@@ -199,7 +206,8 @@ void checkCursorNoteEditStatus() {
     AppData.instance.noteEditStatusData.status.code != NoteEditStatus.renamedNote.code &&
     AppData.instance.noteEditStatusData.status.code != NoteEditStatus.pulledChanges.code &&
     AppData.instance.noteEditStatusData.status.code != NoteEditStatus.savedChanges.code &&
-    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.selectedNote.code
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.selectedNote.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.addedToFavorites.code 
   ) {
     setNoteEditStatus(NoteEditStatus.savedChanges);
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
+import '../backend/utils.dart';
 
 import '../builders/app_bar_builder.dart';
 
@@ -17,6 +18,12 @@ class EditAppBarContent extends StatefulWidget {
 }
 
 class EditAppBarContentState extends State<EditAppBarContent> {
+
+  @override
+  void initState() {
+    super.initState();
+    appLog("Initialized EditAppBarContentState");
+  }
 
   @override
   Widget build(BuildContext context) {
