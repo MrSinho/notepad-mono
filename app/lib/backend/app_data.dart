@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:code_text_field/code_text_field.dart';
 
 import 'supabase/auth_access.dart';
+import 'supabase/queries.dart';
 
+import '../new_primitives/login_page.dart';
 import '../new_primitives/home_page.dart';
 import '../new_primitives/note_edit_page.dart';
 import '../new_primitives/edit_app_bar_content.dart';
@@ -15,35 +17,16 @@ import 'note_edit.dart';
 
 
 
-class NoteEditData {
-
-  late CodeController controller;
-
-  int savedContentLength = 0;
-  int savedContentLines  = 0;
-  int selectionLength    = 0;
-  int selectionLines     = 0;
-  int bufferLength       = 0;
-  int bufferLines        = 0;
-  int unsavedBytes       = 0;
-  int cursorRow          = 0;
-  int cursorColumn       = 0;
-}
-
-class QueriesData {
-  Map<String, dynamic>       version      = {};
-  List<Map<String, dynamic>> notes        = [];
-  Map<String, dynamic>       selectedNote = {};
-}
-
 class AppData {
   static final AppData instance = AppData._internal();
 
   late HttpServer authServer;
 
-  late final QueriesData        queriesData;
-  late final NoteEditData       noteEditData;
+  late final LoginData    loginData;
+  late final QueriesData  queriesData;
+  late final NoteEditData noteEditData;
 
+  late final LoginPage         loginPage;
   late final HomePage          homePage;
   late final NoteEditPage      noteEditPage;
   late final EditAppBarContent editAppBarContent;
@@ -52,15 +35,18 @@ class AppData {
   
   late NoteEditStatusData noteEditStatusData;
 
-  final ValueNotifier<int> noteEditUpdates = ValueNotifier(0);
-  final ValueNotifier<int> homePageUpdates = ValueNotifier(0);
+  final ValueNotifier<int> loginPageUpdates = ValueNotifier(0);
+  final ValueNotifier<int> homePageUpdates  = ValueNotifier(0);
+  final ValueNotifier<int> noteEditUpdates  = ValueNotifier(0);
 
   AppData._internal() {//Called once and only once, no BuildContext available
     
+    loginData          = LoginData();
     queriesData        = QueriesData();
     noteEditStatusData = NoteEditStatusData();
     noteEditData       = NoteEditData();
 
+    loginPage         = const LoginPage();
     homePage          = const HomePage();
     noteEditPage      = const NoteEditPage();
     editAppBarContent = const EditAppBarContent();

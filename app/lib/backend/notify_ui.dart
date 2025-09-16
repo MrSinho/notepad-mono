@@ -12,3 +12,8 @@ void notifyHomePageUpdate() {
   appLog("Notifying builder update for home page");
   AppData.instance.homePageUpdates.value++; 
 }
+
+void notifyLoginPageUpdate() {
+  appLog("Notifying builder update for login page");
+  AppData.instance.loginPageUpdates.value++;
+}

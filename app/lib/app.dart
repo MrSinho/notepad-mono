@@ -6,7 +6,7 @@ import 'backend/navigator.dart';
 
 import 'new_primitives/login_page.dart';
 
-import 'builders/login_builder.dart';
+import 'builders/login_page_builder.dart';
 
 import 'themes.dart';
 
@@ -17,8 +17,6 @@ class NNoteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    LoginInfo login = loginBuilder();
 
     MaterialApp app = MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -34,7 +32,7 @@ class NNoteApp extends StatelessWidget {
             return AppData.instance.homePage;
           }
           else {
-            return login.widget;
+            return AppData.instance.loginPage;
           }
 
         }

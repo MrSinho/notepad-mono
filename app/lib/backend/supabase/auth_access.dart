@@ -7,6 +7,9 @@ import '../app_data.dart';
 import '../utils.dart';
 
 
+class LoginData {
+  String errorMessage = "";
+}
 
 Future<int> logout() async {
 

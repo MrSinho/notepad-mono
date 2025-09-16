@@ -27,6 +27,7 @@ void listenToVersions(BuildContext context) {
 
         AppData.instance.queriesData.version = versions.first;
         notifyHomePageUpdate();
+        notifyLoginPageUpdate();
       },
 
       onError: (error) {

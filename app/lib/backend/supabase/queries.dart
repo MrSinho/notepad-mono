@@ -6,6 +6,12 @@ import '../utils.dart';
 
 
 
+class QueriesData {
+  Map<String, dynamic>       version      = {};
+  List<Map<String, dynamic>> notes        = [];
+  Map<String, dynamic>       selectedNote = {};
+}
+
 Future<void> pullVersion() async {
 
   List<Map<String, dynamic>> versions = await Supabase.instance.client.from("Versions").select();

@@ -21,6 +21,20 @@ class NoteEditStatusData {
 
 }
 
+class NoteEditData {
+
+  late CodeController controller;
+
+  int savedContentLength = 0;
+  int savedContentLines  = 0;
+  int selectionLength    = 0;
+  int selectionLines     = 0;
+  int bufferLength       = 0;
+  int bufferLines        = 0;
+  int unsavedBytes       = 0;
+  int cursorRow          = 0;
+  int cursorColumn       = 0;
+}
 
 enum NoteEditStatus {
   uninitialized(0, Colors.deepOrange),
