@@ -96,12 +96,10 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
 
     htmlResponse = htmlResponse.replaceAll("\$appName",   appName);
     htmlResponse = htmlResponse.replaceAll("\$copyright", copyright);
-    htmlResponse = htmlResponse.replaceAll("\$color1",    colorsList[0]);
-    htmlResponse = htmlResponse.replaceAll("\$color2",    colorsList[1]);
-    htmlResponse = htmlResponse.replaceAll("\$color3",    colorsList[2]);
-    htmlResponse = htmlResponse.replaceAll("\$color4",    colorsList[3]);
-    htmlResponse = htmlResponse.replaceAll("\$color5",    colorsList[4]);
-    htmlResponse = htmlResponse.replaceAll("\$color6",    colorsList[5]);
+
+    for (int i = 0; i < colorsList.length; i++) {
+      htmlResponse = htmlResponse.replaceAll("\$color${i+1}", colorsList[i]);
+    }
 
     authRequest.response.statusCode = HttpStatus.ok;
     authRequest.response.headers.contentType = ContentType.html;
@@ -123,11 +121,6 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
   
   }
 
-}
-
-Color hexToColor(String hex) {
-  hex = hex.replaceAll('#', '');
-  return Color(int.parse('FF$hex', radix: 16)); // FF = full opacity
 }
 
 List<String> colorPaletteToStringList(ColorPalette palette) {

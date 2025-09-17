@@ -58,6 +58,9 @@ Future<void> saveNoteContent() async {
       }
     ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 
+    AppData.instance.noteEditData.savedContentLength = AppData.instance.noteEditData.bufferLength;
+    AppData.instance.noteEditData.savedContentLines  = AppData.instance.noteEditData.bufferLines;
+
     setNoteEditStatus(NoteEditStatus.savedChanges);
 
   }

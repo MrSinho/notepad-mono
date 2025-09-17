@@ -12,7 +12,7 @@ import '../themes.dart';
 
 
 
-InkWell wrapIconTextButton(Icon icon, Text text, VoidCallback callback) {
+InkWell wrapIconTextButton(Icon icon, Widget text, VoidCallback callback) {
 
   InkWell inkwell = InkWell(
     onTap: callback,
@@ -34,7 +34,7 @@ Widget signInProviderContent() {
   return row;
 }
 
-Padding wrapIconText(Icon icon, Text text) {
+Padding wrapIconText(Icon icon, Widget text) {
   Padding result = Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(

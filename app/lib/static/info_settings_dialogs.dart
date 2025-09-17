@@ -39,9 +39,17 @@ Dialog userInfoDialog(BuildContext context) {
     ],
   );
 
+  // Different encryption key icon if encryption is enabled or disabled
+
   List<Widget> userInfoContents = [
     userRow,
-    const SizedBox(height: 20),//While waiting for future updates...
+    //const SizedBox(height: 20),
+    //wrapIconTextButton(
+    //  const Icon(Icons.key_rounded),
+    //  Text("Setup encryption key", style: GoogleFonts.robotoMono()),
+    //  () {}
+    //),
+    const SizedBox(height: 20),
     wrapIconTextButton(
       const Icon(Icons.logout_outlined),
       Text("Log out", style: GoogleFonts.robotoMono()),
@@ -52,7 +60,6 @@ Dialog userInfoDialog(BuildContext context) {
     )
   ];
 
-  //While waiting for future updates...
   userInfoContents.addAll(footerWidgets(context));
 
   Column column = Column(

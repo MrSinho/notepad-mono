@@ -44,7 +44,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
         padding: const EdgeInsetsGeometry.only(left: 4),
         child: IconButton(
           icon: Icon(
-            Icons.signal_wifi_connected_no_internet_4_rounded,
+            Icons.sync_rounded,
             color: NoteEditStatus.lostConnection.color,
           ),
           onPressed: () {
@@ -114,7 +114,7 @@ Widget editAppBarContentBuilder(BuildContext context) {
         padding: const EdgeInsetsGeometry.only(left: 4),
         child: IconButton(
           icon: Icon(
-            Icons.signal_wifi_connected_no_internet_4_rounded,
+            Icons.sync_rounded,
             color: NoteEditStatus.lostConnection.color,
           ),
           onPressed: () {

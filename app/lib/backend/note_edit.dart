@@ -37,8 +37,8 @@ class NoteEditData {
 }
 
 enum NoteEditStatus {
-  uninitialized(0, Colors.deepOrange),
-  lostConnection(1, Colors.red),
+  uninitialized(0, Colors.brown),
+  lostConnection(1, Colors.deepOrange),
   selectedNote(2, Colors.lightGreenAccent),
   renamedNote(3, Colors.greenAccent),
   savedChanges(4, Colors.green),
