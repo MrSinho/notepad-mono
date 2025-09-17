@@ -4,16 +4,16 @@ import 'utils.dart';
 
 
 void notifyNoteEditUpdate() {
-  appLog("Notifying builder update for note edit page");
+  appLog("Notifying builder update for note edit page", true);
   AppData.instance.noteEditUpdates.value++;
 }
 
 void notifyHomePageUpdate() {
-  appLog("Notifying builder update for home page");
+  appLog("Notifying builder update for home page", true);
   AppData.instance.homePageUpdates.value++; 
 }
 
 void notifyLoginPageUpdate() {
-  appLog("Notifying builder update for login page");
+  appLog("Notifying builder update for login page", true);
   AppData.instance.loginPageUpdates.value++;
 }

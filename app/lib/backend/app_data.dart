@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:code_text_field/code_text_field.dart';
+import 'package:color_palette_generator/color_palette_generator.dart';
 
 import 'supabase/auth_access.dart';
 import 'supabase/queries.dart';
@@ -12,6 +13,8 @@ import '../new_primitives/note_edit_page.dart';
 import '../new_primitives/edit_app_bar_content.dart';
 import '../new_primitives/edit_status_bar.dart';
 import '../new_primitives/edit_bottom_bar.dart';
+
+import 'utils.dart';
 
 import 'note_edit.dart';
 

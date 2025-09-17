@@ -24,7 +24,7 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     listenToNotes(context);
-    appLog("Initialzed HomePageState");
+    appLog("Initialzed HomePageState", true);
   }
   
   @override

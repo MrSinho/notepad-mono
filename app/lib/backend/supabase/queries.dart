@@ -42,7 +42,7 @@ Future<void> queryNotes() async {
 
   }
   catch (exception) {
-    appLog("Failed listening to new notes: $exception");
+    appLog("Failed listening to new notes: $exception", true);
   }
 
 

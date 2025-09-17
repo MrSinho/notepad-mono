@@ -10,7 +10,7 @@ import 'input_field_builder.dart';
 
 Widget noteEditPageBuilder(BuildContext context) {
 
-  appLog("Note edit page builder triggered");
+  appLog("Note edit page builder triggered", true);
 
   Padding textFieldPad = Padding(
     padding: const EdgeInsets.all(8.0),

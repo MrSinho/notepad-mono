@@ -112,7 +112,7 @@ void setNoteEditStatus(NoteEditStatus status) {
   AppData.instance.noteEditStatusData.status  = status;
   AppData.instance.noteEditStatusData.message = message;
 
-  appLog("New note edit status: $message");
+  appLog("New note edit status: $message", true);
   
   notifyNoteEditUpdate();
   notifyHomePageUpdate();
@@ -130,7 +130,7 @@ void setNoteControllerText(String text) {
 void selectNote(Map<String, dynamic> note, bool changeStatus) {
   AppData.instance.queriesData.selectedNote = note;
 
-  appLog("Selected note ${note["title"]}");
+  appLog("Selected note ${note["title"]}", true);
 
   setNoteControllerText(note["content"] ?? "");
   getNoteTextData();
@@ -142,7 +142,7 @@ void selectNote(Map<String, dynamic> note, bool changeStatus) {
 }
 
 void getNoteTextData() {
-  appLog("Getting note text data");
+  appLog("Getting note text data", true);
 
   AppData.instance.noteEditData.bufferLength = AppData.instance.noteEditData.controller.text.length;
   AppData.instance.noteEditData.bufferLines = '\n'.allMatches(AppData.instance.noteEditData.controller.text).length + 1;
@@ -153,8 +153,8 @@ void getNoteTextData() {
 
   AppData.instance.noteEditData.unsavedBytes = (AppData.instance.noteEditData.bufferLength - AppData.instance.queriesData.selectedNote["content"].toString().length).abs();
 
-  appLog("Buffer length: ${AppData.instance.noteEditData.bufferLength}, lines: ${AppData.instance.noteEditData.bufferLines}");
-  appLog("Saved content length: ${AppData.instance.noteEditData.savedContentLength}, lines: ${AppData.instance.noteEditData.savedContentLines}");
+  appLog("Buffer length: ${AppData.instance.noteEditData.bufferLength}, lines: ${AppData.instance.noteEditData.bufferLines}", true);
+  appLog("Saved content length: ${AppData.instance.noteEditData.savedContentLength}, lines: ${AppData.instance.noteEditData.savedContentLines}", true);
 
 }
 
@@ -200,8 +200,8 @@ void getNoteCursorData() {
   int lastNewlineIndex = textBeforeCursor.lastIndexOf('\n');
   AppData.instance.noteEditData.cursorColumn = cursorStart - (lastNewlineIndex + 1);
 
-  appLog("Cursor row: ${AppData.instance.noteEditData.cursorRow}, column: ${AppData.instance.noteEditData.cursorColumn}");
-  appLog("Selection length: ${AppData.instance.noteEditData.selectionLength}, lines: ${AppData.instance.noteEditData.selectionLines}");
+  appLog("Cursor row: ${AppData.instance.noteEditData.cursorRow}, column: ${AppData.instance.noteEditData.cursorColumn}", true);
+  appLog("Selection length: ${AppData.instance.noteEditData.selectionLength}, lines: ${AppData.instance.noteEditData.selectionLines}", true);
 }
 
 void checkCursorNoteEditStatus() {
@@ -232,7 +232,7 @@ void checkCursorNoteEditStatus() {
 }
 
 void noteEditCallback() {
-  appLog("Cursor listen callback triggered");
+  appLog("Cursor listen callback triggered", true);
   getNoteCursorData();
   getNoteTextData();
   checkCursorNoteEditStatus();

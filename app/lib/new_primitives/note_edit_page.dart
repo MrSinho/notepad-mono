@@ -21,7 +21,7 @@ class NoteEditPageState extends State<NoteEditPage> {
   @override
   void initState() {
     super.initState();
-    appLog("Initialized NoteEditPageState");
+    appLog("Initialized NoteEditPageState", true);
   }
 
   @override

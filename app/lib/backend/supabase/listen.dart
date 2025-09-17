@@ -38,65 +38,65 @@ void listenToVersions(BuildContext context) {
     return;
   }
   catch (exception) {
-    appLog("Failed listening to app versions: $exception");
+    appLog("Failed listening to app versions: $exception", true);
   }
 
 }
 
 void listenToNotes(BuildContext context) {
 
-    try {
+  try {
 
-      SupabaseQueryBuilder table = Supabase.instance.client.from("Notes");
+    SupabaseQueryBuilder table = Supabase.instance.client.from("Notes");
 
-      table.stream(primaryKey: ["id"]).listen(
+    table.stream(primaryKey: ["id"]).listen(
 
-        (dynamic data) async {
+    (dynamic data) async {
 
-          //safely cast data as a List<Map<String, dynamic>>
-          List<Map<String, dynamic>> notes = (data as List).whereType<Map<String, dynamic>>().toList();
+      //safely cast data as a List<Map<String, dynamic>>
+      List<Map<String, dynamic>> notes = (data as List).whereType<Map<String, dynamic>>().toList();
 
-          notes.sort((a, b) {
-            final aTime = DateTime.tryParse(a["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-            final bTime = DateTime.tryParse(b["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-            return bTime.compareTo(aTime);
-          });
+        notes.sort((a, b) {
+          final aTime = DateTime.tryParse(a["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
+          final bTime = DateTime.tryParse(b["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
+          return bTime.compareTo(aTime);
+        });
 
-          AppData.instance.queriesData.notes = notes;
+        AppData.instance.queriesData.notes = notes;
 
-          notifyHomePageUpdate();
-          notifyNoteEditUpdate();
+        notifyHomePageUpdate();
+        notifyNoteEditUpdate();
 
-          appLog("Pulled ${notes.length} notes from listen callback");
+        appLog("Pulled ${notes.length} notes from listen callback", true);
           
-          //Update selected note
-          for (Map<String, dynamic> note in notes) {
-            if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
+        //Update selected note
+        for (Map<String, dynamic> note in notes) {
+          if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
 
               
-              if (note["content"] != AppData.instance.noteEditData.controller.text) {
-                setNoteEditStatus(NoteEditStatus.pulledChanges);
-              }
-
-              selectNote(note, false);
+            if (note["content"] != AppData.instance.noteEditData.controller.text) {
+              setNoteEditStatus(NoteEditStatus.pulledChanges);
             }
+
+            selectNote(note, false);
           }
-
-        },
-
-        onError: (error) {
-          appLog("Failed listening to notes");
-          setNoteEditStatus(NoteEditStatus.lostConnection);
         }
 
-      );
+      },
 
-      return;
+      onError: (error) {
+        appLog("Failed listening to notes", true);
+        setNoteEditStatus(NoteEditStatus.lostConnection);
+      }
 
-    }
-    catch (exception) {
-      appLog("Failed listening to new notes: $exception");
-    }
+    );
+
+    return;
 
   }
+  catch (exception) {
+    appLog("Failed listening to new notes: $exception", true);
+  }
+
+}
 

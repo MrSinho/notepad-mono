@@ -22,7 +22,7 @@ class EditAppBarContentState extends State<EditAppBarContent> {
   @override
   void initState() {
     super.initState();
-    appLog("Initialized EditAppBarContentState");
+    appLog("Initialized EditAppBarContentState", true);
   }
 
   @override

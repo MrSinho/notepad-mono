@@ -80,7 +80,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
 }
 
 Widget editAppBarContentBuilder(BuildContext context) {
-  appLog("Updating edit app bar content");
+  appLog("Updating edit app bar content", true);
 
   String title = AppData.instance.queriesData.selectedNote["title"] ?? "";
 

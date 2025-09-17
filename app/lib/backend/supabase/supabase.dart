@@ -26,7 +26,7 @@ Future<int> initializeSupabase() async {
 
     return 1;
   } catch (exception) {
-    appLog("Failed to initialize Supabase: $exception");
+    appLog("Failed to initialize Supabase: $exception", true);
     return 0;
   }
 }

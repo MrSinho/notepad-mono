@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:color_palette_generator/color_palette_generator.dart';
 
 import '../app_data.dart';
 import '../utils.dart';
@@ -19,7 +21,7 @@ Future<int> logout() async {
 
   } catch (error) {
 
-    appLog("Error signing out: $error");
+    appLog("Error signing out: $error", true);
 
   }
 
@@ -36,7 +38,7 @@ Future<int> googleLogin() async {
   );
 
   if (!r) {
-    appLog("Google login failed");
+    appLog("Google login failed", true);
   }
 
   return 1;
@@ -52,7 +54,7 @@ Future<int> githubLogin() async {
   );
 
   if (!r) {
-    appLog("Github login failed");
+    appLog("Github login failed", true);
   }
 
   return 1;
@@ -62,7 +64,10 @@ void startAuthServer() async {
   final authServer = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000); // Listen on port 3000 for incoming auth requests 
   
   await for (HttpRequest request in authServer) {
-    await authExchangeCodeForSession(request);
+    appLog("Found request: ${request.toString()}", true);
+    if (request.uri.queryParameters["code"] != null) {
+      await authExchangeCodeForSession(request);
+    }
   }
 
 }
@@ -74,15 +79,29 @@ void stopAuthServer() async {
 Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
   try {
 
-    await Supabase.instance.client.auth.exchangeCodeForSession(authRequest.uri.queryParameters['code']!);
+    String authCode = authRequest.uri.queryParameters["code"] ?? "invalid";
 
-    String appName   = AppData.instance.queriesData.version["name"];
-    String copyright = AppData.instance.queriesData.version["copyright_notice"];
+    await Supabase.instance.client.auth.exchangeCodeForSession(authCode);
+
+    String appName   = AppData.instance.queriesData.version["name"] ?? "NNotes";
+    String copyright = AppData.instance.queriesData.version["copyright_notice"] ?? "";
 
     String htmlResponse = await readFile("assets/login_success.html");
 
+    ColorPalette palette = generateRandomColorPalette(6);
+    appLog("Current color palette: ${palette.toString()}", true);
+
+    List<String> colorsList = colorPaletteToStringList(palette);
+    appLog("Colors list: $colorsList", true);
+
     htmlResponse = htmlResponse.replaceAll("\$appName",   appName);
     htmlResponse = htmlResponse.replaceAll("\$copyright", copyright);
+    htmlResponse = htmlResponse.replaceAll("\$color1",    colorsList[0]);
+    htmlResponse = htmlResponse.replaceAll("\$color2",    colorsList[1]);
+    htmlResponse = htmlResponse.replaceAll("\$color3",    colorsList[2]);
+    htmlResponse = htmlResponse.replaceAll("\$color4",    colorsList[3]);
+    htmlResponse = htmlResponse.replaceAll("\$color5",    colorsList[4]);
+    htmlResponse = htmlResponse.replaceAll("\$color6",    colorsList[5]);
 
     authRequest.response.statusCode = HttpStatus.ok;
     authRequest.response.headers.contentType = ContentType.html;
@@ -90,16 +109,35 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
 
     await authRequest.response.close();
 
-    appLog("Login with auth provider successfull, sending http response");
+    appLog("Login with auth provider successfull, sending http response", true);
 
   } catch (error) {
-
-    appLog("Failed getting json web token for session");
-
+  
+    String errorMessage = "Failed getting json web token for session: $error";
+  
+    appLog(errorMessage, true);
+  
     authRequest.response.statusCode = HttpStatus.badRequest;
-    authRequest.response.write("Missing \"\" query parameter");
+    authRequest.response.write(errorMessage);
     await authRequest.response.close();
-
+  
   }
 
+}
+
+Color hexToColor(String hex) {
+  hex = hex.replaceAll('#', '');
+  return Color(int.parse('FF$hex', radix: 16)); // FF = full opacity
+}
+
+List<String> colorPaletteToStringList(ColorPalette palette) {
+
+  List<String> list = palette.toString()
+    .replaceAll('[', '')
+    .replaceAll(']', '')
+    .split(',')
+    .map((s) => s.trim()) // clean whitespace
+    .toList();
+
+  return list;
 }

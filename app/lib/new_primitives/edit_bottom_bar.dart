@@ -22,7 +22,7 @@ class EditBottomBarState extends State<EditBottomBar> {
   @override
   void initState() {
     super.initState();
-    appLog("Initialized EditBottomBarState");
+    appLog("Initialized EditBottomBarState", true);
   }
 
   @override

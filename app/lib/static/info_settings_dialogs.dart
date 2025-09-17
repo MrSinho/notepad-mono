@@ -73,10 +73,14 @@ Dialog userInfoDialog(BuildContext context) {
 
 List<Widget> footerWidgets(BuildContext context) {
 
+  String appName    = AppData.instance.queriesData.version["name"] ?? "NNotes";
+  String version    = AppData.instance.queriesData.version["version"] ?? "0.1.0";
+  String versionTag = AppData.instance.queriesData.version["tag"] ?? "vanilla";
+
   List<Widget> footer = [
     const SizedBox(height: 40),
     Text(
-      "${AppData.instance.queriesData.version["name"] ?? ""}, build version: ${AppData.instance.queriesData.version["version"] ?? ""}",
+      "$appName, build version: $version, tag: $versionTag",
       style: TextStyle(
         fontSize: 12,
         color: getCurrentThemePalette(context).quaternaryForegroundColor
