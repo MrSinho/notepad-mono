@@ -30,7 +30,6 @@ class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    listenToVersions(context);
   }
 
   @override

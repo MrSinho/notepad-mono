@@ -6,6 +6,7 @@ import '../backend/app_data.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/utils.dart';
 import '../backend/note_edit.dart';
+import '../backend/color_palette.dart';
 
 import '../static/info_settings_dialogs.dart';
 import '../static/supabase_dialogs.dart';
@@ -18,7 +19,16 @@ import '../themes.dart';
 AppBar mainAppBarBuilder(BuildContext context) {
 
   List<Widget> mainAppBarLeftChildren = [
-    Text(AppData.instance.queriesData.version["name"] ?? "none", style: GoogleFonts.robotoMono(fontSize: 25, fontWeight: FontWeight.bold)),
+    paletteGradientShaderMask(
+      generateRandomColorPalette(2),
+      Text(
+        AppData.instance.queriesData.version["name"] ?? "",
+        style: GoogleFonts.robotoMono(
+          fontSize: 25, 
+          fontWeight: FontWeight.bold
+        )
+      )
+    ),
     const SizedBox(width: 12),
     Column(
       children: [
@@ -84,22 +94,26 @@ Widget editAppBarContentBuilder(BuildContext context) {
 
   String title = AppData.instance.queriesData.selectedNote["title"] ?? "";
 
+  ShaderMask titleGradientMask = paletteGradientShaderMask(
+    AppData.instance.editColorPaletteData,
+    Text(
+      title, 
+      style: GoogleFonts.robotoMono(
+        fontSize: 25,
+        fontWeight: FontWeight.bold, 
+        //color: getCurrentThemePalette(context).primaryVividColor,
+      )
+    )
+  );
+
   List<Widget> leftChildren = [
     Padding(
-      //padding: const EdgeInsetsGeometry.only(bottom: 8.0, right: 4.0),
       padding: const EdgeInsetsGeometry.all(12.0),
       child: Icon(Icons.circle, color: AppData.instance.noteEditStatusData.status.color, size: 14.0,),
     ),
     favoriteButton(AppData.instance.queriesData.selectedNote, context),
     TextButton(
-      child: Text(
-        title, 
-        style: GoogleFonts.robotoMono(
-          fontSize: 25,
-          fontWeight: FontWeight.bold, 
-          color: getCurrentThemePalette(context).primaryVividColor
-        )
-      ),
+      child: titleGradientMask,
       onPressed: () => showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context)),
     ),
   ];

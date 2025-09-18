@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nnotes/backend/color_palette.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
@@ -68,6 +69,8 @@ void listenToNotes(BuildContext context) {
         notifyNoteEditUpdate();
 
         appLog("Pulled ${notes.length} notes from listen callback", true);
+
+        AppData.instance.editColorPaletteData = generateRandomColorPalette(2);
           
         //Update selected note
         for (Map<String, dynamic> note in notes) {

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:code_text_field/code_text_field.dart';
-import 'package:color_palette_generator/color_palette_generator.dart';
 
+import 'supabase/listen.dart';
 import 'supabase/auth_access.dart';
 import 'supabase/queries.dart';
 
@@ -14,10 +14,8 @@ import '../new_primitives/edit_app_bar_content.dart';
 import '../new_primitives/edit_status_bar.dart';
 import '../new_primitives/edit_bottom_bar.dart';
 
-import 'utils.dart';
-
 import 'note_edit.dart';
-
+import 'color_palette.dart';
 
 
 class AppData {
@@ -25,9 +23,9 @@ class AppData {
 
   late HttpServer authServer;
 
-  late final LoginData    loginData;
-  late final QueriesData  queriesData;
-  late final NoteEditData noteEditData;
+  late final LoginData        loginData;
+  late final QueriesData      queriesData;
+  late final NoteEditData     noteEditData;
 
   late final LoginPage         loginPage;
   late final HomePage          homePage;
@@ -37,6 +35,7 @@ class AppData {
   late final EditBottomBar     editBottomBar;
   
   late NoteEditStatusData noteEditStatusData;
+  late ColorPaletteData   editColorPaletteData;
 
   final ValueNotifier<int> loginPageUpdates = ValueNotifier(0);
   final ValueNotifier<int> homePageUpdates  = ValueNotifier(0);
@@ -48,6 +47,7 @@ class AppData {
     queriesData        = QueriesData();
     noteEditStatusData = NoteEditStatusData();
     noteEditData       = NoteEditData();
+    //colorPaletteData   = ColorPaletteData();
 
     loginPage         = const LoginPage();
     homePage          = const HomePage();
@@ -58,8 +58,14 @@ class AppData {
 
     noteEditData.controller = CodeController();
     noteEditData.controller.addListener(noteEditCallback);
-    startAuthServer();
-
     queriesData.selectedNote = {"title": "note"};
+
+    startAuthServer();
   }
+
+  void initWithContext(BuildContext context) {
+    listenToVersions(context);
+    listenToNotes(context);
+  }
+
 }

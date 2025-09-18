@@ -1,5 +1,6 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:nnotes/backend/color_palette.dart';
 
 import 'utils.dart';
 import 'notify_ui.dart';
@@ -135,6 +136,8 @@ void selectNote(Map<String, dynamic> note, bool changeStatus) {
   setNoteControllerText(note["content"] ?? "");
   getNoteTextData();
   getNoteCursorData();
+
+  AppData.instance.editColorPaletteData = generateRandomColorPalette(2);
 
   if (changeStatus) {
     setNoteEditStatus(NoteEditStatus.selectedNote);

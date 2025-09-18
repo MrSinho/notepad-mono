@@ -8,5 +8,5 @@ import 'app.dart';
 
 void main() async {
   await initializeSupabase();
-  runApp(const NNoteApp());
+  runApp(const NoteApp());
 }

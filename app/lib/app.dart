@@ -8,8 +8,8 @@ import 'themes.dart';
 
 
 
-class NNoteApp extends StatelessWidget {
-  const NNoteApp({super.key});
+class NoteApp extends StatelessWidget {
+  const NoteApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,7 @@ class NNoteApp extends StatelessWidget {
         builder: (context, snapshot) {
 
           if (snapshot.data != null && snapshot.data!.session != null) {
+            AppData.instance.initWithContext(context);
             return AppData.instance.homePage;
           }
           else {

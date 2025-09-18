@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:color_palette_generator/color_palette_generator.dart';
 
 import '../app_data.dart';
 import '../utils.dart';
+import '../color_palette.dart';
+
 
 
 class LoginData {
@@ -88,17 +88,13 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
 
     String htmlResponse = await readFile("assets/login_success.html");
 
-    ColorPalette palette = generateRandomColorPalette(6);
-    appLog("Current color palette: ${palette.toString()}", true);
-
-    List<String> colorsList = colorPaletteToStringList(palette);
-    appLog("Colors list: $colorsList", true);
-
     htmlResponse = htmlResponse.replaceAll("\$appName",   appName);
     htmlResponse = htmlResponse.replaceAll("\$copyright", copyright);
 
-    for (int i = 0; i < colorsList.length; i++) {
-      htmlResponse = htmlResponse.replaceAll("\$color${i+1}", colorsList[i]);
+    ColorPaletteData paletteData = generateRandomColorPalette(6);
+
+    for (int i = 0; i < paletteData.colorCount; i++) {
+      htmlResponse = htmlResponse.replaceAll("\$color${i+1}", paletteData.asStrings[i]);
     }
 
     authRequest.response.statusCode = HttpStatus.ok;
@@ -121,16 +117,4 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
   
   }
 
-}
-
-List<String> colorPaletteToStringList(ColorPalette palette) {
-
-  List<String> list = palette.toString()
-    .replaceAll('[', '')
-    .replaceAll(']', '')
-    .split(',')
-    .map((s) => s.trim()) // clean whitespace
-    .toList();
-
-  return list;
 }

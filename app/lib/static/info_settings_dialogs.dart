@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nnotes/backend/color_palette.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../backend/app_data.dart';
@@ -29,7 +30,16 @@ Dialog userInfoDialog(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(username, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
+          paletteGradientShaderMask(
+            generateRandomColorPalette(2),
+            Text(
+              username,
+              style: GoogleFonts.robotoMono(
+                fontSize: 24, 
+                fontWeight: FontWeight.bold
+              )
+            )
+          ),
           const SizedBox(height: 4),
           Text(email, style: GoogleFonts.robotoMono(fontSize: 14)),
           const SizedBox(height: 4),

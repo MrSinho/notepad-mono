@@ -3,14 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_icons/simple_icons.dart';
 
 import '../backend/supabase/auth_access.dart';
-
+import '../backend/color_palette.dart';
 import '../backend/app_data.dart';
 
 import '../new_primitives/login_page.dart';
 
 import '../static/ui_utils.dart';
-
-import '../themes.dart';
 
 
 
@@ -71,8 +69,8 @@ Widget loginPageBuilder(BuildContext context) {
     );
 
     FractionallySizedBox signupBox = FractionallySizedBox(
-      widthFactor: 0.8,
-      heightFactor: 0.8,
+      widthFactor: 0.6,
+      heightFactor: 0.6,
       child: Card(child: signupPad),
     );
 
@@ -80,9 +78,19 @@ Widget loginPageBuilder(BuildContext context) {
       child: signupBox,
     );
 
+    Container container = Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: generateRandomColorPalette(2).asColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: signupCenter
+    );
+
     Scaffold scaffold = Scaffold(
-      backgroundColor: getCurrentThemePalette(context).secondaryBackgroundColor,
-      body: signupCenter,
+      body: container,
     );
 
   return scaffold;
