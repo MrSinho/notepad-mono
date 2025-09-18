@@ -29,7 +29,7 @@ Dialog signOutDialog(BuildContext context) {
             child: Text(
               "Cancel",
               style: GoogleFonts.robotoMono(
-                color: getCurrentThemePalette(context).primaryVividColor
+                color: getCurrentThemePalette(context).quaternaryForegroundColor
               )
             ),
             onPressed: () => NavigatorInfo.getState()?.pop(context),
@@ -39,7 +39,7 @@ Dialog signOutDialog(BuildContext context) {
             child: Text(
               "Confirm",
               style: GoogleFonts.robotoMono(
-                color: getCurrentThemePalette(context).primaryVividColor
+                color: getCurrentThemePalette(context).quaternaryForegroundColor
               )
             ),
             onPressed: () async {

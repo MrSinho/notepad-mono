@@ -9,7 +9,7 @@ import '../backend/note_edit.dart';
 import '../backend/color_palette.dart';
 
 import '../static/info_settings_dialogs.dart';
-import '../static/supabase_dialogs.dart';
+import '../static/note_dialogs.dart';
 import '../static/ui_utils.dart';
 
 import '../themes.dart';

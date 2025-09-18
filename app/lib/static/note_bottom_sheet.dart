@@ -7,7 +7,7 @@ import '../backend/app_data.dart';
 import '../backend/navigator.dart';
 import '../backend/notify_ui.dart';
 
-import 'supabase_dialogs.dart';
+import 'note_dialogs.dart';
 
 
 

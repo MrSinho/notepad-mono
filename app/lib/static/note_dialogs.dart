@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../backend/supabase/queries.dart';
+
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
-import '../backend/supabase/queries.dart';
+import '../backend/color_palette.dart';
 
 import '../themes.dart';
 
@@ -92,13 +94,16 @@ Dialog renameNoteDialog(BuildContext context) {
     ),
   );
 
-  TextButton saveButton = TextButton(
-    child: Text(
+  ShaderMask renameMask = paletteGradientShaderMask(
+    generateRandomColorPalette(2),
+    Text(
       "Done",
-      style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).primaryVividColor
-      )
-    ), 
+      style: GoogleFonts.robotoMono()
+    )
+  );
+
+  TextButton renameButton = TextButton(
+    child: renameMask, 
     onPressed: () async {
       NavigatorInfo.getState()?.pop(context);
       await renameNote(renameController.text);
@@ -109,7 +114,7 @@ Dialog renameNoteDialog(BuildContext context) {
     child: Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).primaryVividColor
+        color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
     onPressed: () {
@@ -121,7 +126,7 @@ Dialog renameNoteDialog(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.min,
     children: [
-      Text("Rename note", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
+      Text("Rename note", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
       const SizedBox(height: 20),
       IntrinsicWidth(child: renameField),
       const SizedBox(height: 20),
@@ -131,7 +136,7 @@ Dialog renameNoteDialog(BuildContext context) {
         children: [
           noButton,
           const SizedBox(width: 12),
-          saveButton
+          renameButton
         ]
       )
     ]
@@ -153,7 +158,7 @@ Dialog deleteNoteDialog(BuildContext context) {
     child: Text(
       "Yes, delete",
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).primaryVividColor
+        color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
     onPressed: () async {
@@ -162,13 +167,16 @@ Dialog deleteNoteDialog(BuildContext context) {
     }
   );
 
-  TextButton noButton = TextButton(
-    child: Text(
+  ShaderMask noMask = paletteGradientShaderMask(
+    generateRandomColorPalette(2),
+    Text(
       "Cancel",
-      style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).primaryVividColor
-      )
-    ), 
+      style: GoogleFonts.robotoMono()
+    )
+  );
+
+  TextButton noButton = TextButton(
+    child: noMask, 
     onPressed: () {
       NavigatorInfo.getState()?.pop(context);
     }
