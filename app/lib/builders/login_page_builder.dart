@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nnotes/themes.dart';
 import 'package:simple_icons/simple_icons.dart';
 
 import '../backend/supabase/auth_access.dart';
@@ -17,7 +18,7 @@ Widget loginPageBuilder(BuildContext context) {
   String appName     = AppData.instance.queriesData.version["name"] ?? "NNotes";
   String description = AppData.instance.queriesData.version["description"] ?? "Write simple monospace notes everywhere";
 
-  Text title = Text(" $appName!", style: GoogleFonts.robotoMono(fontSize: 36, fontWeight: FontWeight.bold));
+  Text title = Text(" $appName!", style: GoogleFonts.robotoMono(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white));
 
   Text subtitle = Text(description, style: GoogleFonts.robotoMono(fontWeight: FontWeight.bold));
 
@@ -39,15 +40,21 @@ Widget loginPageBuilder(BuildContext context) {
       );
     }
 
+    ShaderMask titleRow = paletteGradientShaderMask(
+      generateRandomColorPalette(2, isThemeBright(context)),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //const Icon(Icons.rocket_launch_rounded, color: Colors.white), 
+            title
+          ]
+      )
+    );
+
     Column column = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.rocket_launch_rounded), title
-            ]
-        ),
+        titleRow,
         const SizedBox(height: 20.0),
         subtitle,
         const SizedBox(height: 60.0),
