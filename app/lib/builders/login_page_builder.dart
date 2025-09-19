@@ -81,7 +81,7 @@ Widget loginPageBuilder(BuildContext context) {
     Container container = Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: generateRandomColorPalette(2).asColors,
+          colors: generateRandomColorPalette(2, false).asColors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

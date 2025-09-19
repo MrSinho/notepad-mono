@@ -15,17 +15,17 @@ import '../static/ui_utils.dart';
 import '../themes.dart';
 
 
-
 AppBar mainAppBarBuilder(BuildContext context) {
 
   List<Widget> mainAppBarLeftChildren = [
     paletteGradientShaderMask(
-      generateRandomColorPalette(2),
+      generateRandomColorPalette(2, isThemeBright(context)),
       Text(
         AppData.instance.queriesData.version["name"] ?? "",
         style: GoogleFonts.robotoMono(
           fontSize: 25, 
-          fontWeight: FontWeight.bold
+          fontWeight: FontWeight.bold,
+          color: Colors.white
         )
       )
     ),
@@ -100,8 +100,8 @@ Widget editAppBarContentBuilder(BuildContext context) {
       title, 
       style: GoogleFonts.robotoMono(
         fontSize: 25,
-        fontWeight: FontWeight.bold, 
-        //color: getCurrentThemePalette(context).primaryVividColor,
+        fontWeight: FontWeight.bold,
+        color: Colors.white
       )
     )
   );

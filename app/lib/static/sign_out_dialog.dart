@@ -3,12 +3,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../backend/navigator.dart';
+import '../backend/color_palette.dart';
 
 import '../themes.dart';
 
 
 
 Dialog signOutDialog(BuildContext context) {
+
+  ShaderMask confirmMask = paletteGradientShaderMask(
+    generateRandomColorPalette(2, isThemeBright(context)),
+    Text(
+      "Confirm",
+      style: GoogleFonts.robotoMono(
+        color: Colors.white
+      )
+    )
+  );
 
   Column dialogContent = Column(
     mainAxisSize: MainAxisSize.min,
@@ -36,12 +47,7 @@ Dialog signOutDialog(BuildContext context) {
           ),
           const SizedBox(width: 20.0),
           TextButton(
-            child: Text(
-              "Confirm",
-              style: GoogleFonts.robotoMono(
-                color: getCurrentThemePalette(context).quaternaryForegroundColor
-              )
-            ),
+            child: confirmMask,
             onPressed: () async {
               Navigator.of(context).popUntil((route) => route.isFirst);
               await Supabase.instance.client.auth.signOut();

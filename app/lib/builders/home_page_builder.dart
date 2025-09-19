@@ -24,14 +24,14 @@ Widget notesPageViewBuilder(BuildContext context) {
         title: Text(note["title"] ?? "", style: GoogleFonts.robotoMono()),
         trailing: Text("Last edit ${formatDateTime(note["last_edit"] ?? "")}", style: GoogleFonts.robotoMono()),
         onTap: () {
-          selectNote(note, true);
+          selectNote(note, true, context);
           NavigatorInfo.getState()?.push(
             MaterialPageRoute(builder: (context) => AppData.instance.noteEditPage)
           );
 
         },
         onLongPress: () {
-          selectNote(note, true);
+          selectNote(note, true, context);
           showNoteBottomSheet(context);
         }
       ),

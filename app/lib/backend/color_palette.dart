@@ -41,17 +41,25 @@ List<String> colorPaletteToStringList(ColorPalette palette) {
   return list;
 }
 
-ColorPaletteData generateRandomColorPalette(int outputColorCount) {
+ColorPaletteData generateRandomColorPalette(int outputColorCount, bool isThemeBright) {
   
   Random random = Random();
 
   ColorPaletteData data = ColorPaletteData();
   data.colorCount = outputColorCount;
 
+  int minimumBrightness = 100;
+  int maximumBrightness = 156;
+
+  if (isThemeBright) {
+    minimumBrightness = 70;
+    maximumBrightness = 140;
+  }
+
   for (int i = 0; i < outputColorCount; i++) {
-    int r = 100 + random.nextInt(156);
-    int g = 100 + random.nextInt(156);
-    int b = 100 + random.nextInt(156);
+    int r = minimumBrightness + random.nextInt(maximumBrightness);
+    int g = minimumBrightness + random.nextInt(maximumBrightness);
+    int b = minimumBrightness + random.nextInt(maximumBrightness);
 
     data.asColors.add(Color.fromARGB(255, r, g, b));
     data.asHtmlColors.add("rgba($r, $g, $b, 1.0)");

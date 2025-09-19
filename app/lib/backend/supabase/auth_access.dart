@@ -83,7 +83,7 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
 
     await Supabase.instance.client.auth.exchangeCodeForSession(authCode);
 
-    String appName   = AppData.instance.queriesData.version["name"] ?? "NNotes";
+    String appName   = AppData.instance.queriesData.version["name"] ?? "Application";
     String copyright = AppData.instance.queriesData.version["copyright_notice"] ?? "";
 
     String htmlResponse = await readFile("assets/login_success.html");
@@ -91,7 +91,7 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
     htmlResponse = htmlResponse.replaceAll("\$appName",   appName);
     htmlResponse = htmlResponse.replaceAll("\$copyright", copyright);
 
-    ColorPaletteData paletteData = generateRandomColorPalette(6);
+    ColorPaletteData paletteData = generateRandomColorPalette(6, false);
 
     for (int i = 0; i < paletteData.colorCount; i++) {
       htmlResponse = htmlResponse.replaceAll("\$color${i+1}", paletteData.asStrings[i]);

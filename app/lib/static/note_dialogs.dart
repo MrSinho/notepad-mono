@@ -95,10 +95,12 @@ Dialog renameNoteDialog(BuildContext context) {
   );
 
   ShaderMask renameMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2),
+    generateRandomColorPalette(2, isThemeBright(context)),
     Text(
       "Done",
-      style: GoogleFonts.robotoMono()
+      style: GoogleFonts.robotoMono(
+        color: Colors.white
+      )
     )
   );
 
@@ -168,10 +170,12 @@ Dialog deleteNoteDialog(BuildContext context) {
   );
 
   ShaderMask noMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2),
+    generateRandomColorPalette(2, isThemeBright(context)),
     Text(
       "Cancel",
-      style: GoogleFonts.robotoMono()
+      style: GoogleFonts.robotoMono(
+        color: Colors.white
+      )
     )
   );
 

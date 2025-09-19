@@ -1,6 +1,7 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:nnotes/backend/color_palette.dart';
+import 'package:nnotes/themes.dart';
 
 import 'utils.dart';
 import 'notify_ui.dart';
@@ -128,7 +129,7 @@ void setNoteControllerText(String text) {
 
 }
 
-void selectNote(Map<String, dynamic> note, bool changeStatus) {
+void selectNote(Map<String, dynamic> note, bool changeStatus, BuildContext context) {
   AppData.instance.queriesData.selectedNote = note;
 
   appLog("Selected note ${note["title"]}", true);
@@ -137,7 +138,7 @@ void selectNote(Map<String, dynamic> note, bool changeStatus) {
   getNoteTextData();
   getNoteCursorData();
 
-  AppData.instance.editColorPaletteData = generateRandomColorPalette(2);
+  AppData.instance.editColorPaletteData = generateRandomColorPalette(2, isThemeBright(context));
 
   if (changeStatus) {
     setNoteEditStatus(NoteEditStatus.selectedNote);

@@ -171,7 +171,7 @@ Widget favoriteButton(Map<String, dynamic> note, BuildContext context) {
   IconButton button = IconButton(
     icon: icon,
     onPressed: () async {
-      selectNote(note, false);
+      selectNote(note, false, context);
       await flipFavoriteNote();
     } 
   );

@@ -138,6 +138,14 @@ SimplePalette getCurrentThemePalette(BuildContext context) {
   return ThemesPalettes.dark;
 }
 
+bool isThemeBright(BuildContext context) {
+  return (getCurrentThemePalette(context) == ThemesPalettes.bright) ? true : false;
+}
+
+bool isThemeDark(BuildContext context) {
+  return (getCurrentThemePalette(context) == ThemesPalettes.dark) ? true : false;
+}
+
 ThemeData brightTheme() {
 
   ThemeData data = ThemeData(

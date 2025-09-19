@@ -31,12 +31,13 @@ Dialog userInfoDialog(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           paletteGradientShaderMask(
-            generateRandomColorPalette(2),
+            generateRandomColorPalette(2, isThemeBright(context)),
             Text(
               username,
               style: GoogleFonts.robotoMono(
                 fontSize: 24, 
-                fontWeight: FontWeight.bold
+                fontWeight: FontWeight.bold,
+                color: Colors.white
               )
             )
           ),
