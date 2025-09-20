@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nnotes/backend/color_palette.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:nnotes/backend/utils.dart';
 
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
@@ -15,16 +15,12 @@ import '../themes.dart';
 
 Dialog userInfoDialog(BuildContext context) {
 
-  String provider = Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "provider";
-  String username = Supabase.instance.client.auth.currentUser?.userMetadata?["user_name"] ?? "user";
-  String email = Supabase.instance.client.auth.currentUser?.email ?? "email";
-
   Row userRow = Row(
     mainAxisSize: MainAxisSize.min,
     children: [
       Padding(
         padding: const EdgeInsetsGeometry.all(16.0),
-        child: userImageInkWell((){}) 
+        child: getProfilePicture(true)
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +29,7 @@ Dialog userInfoDialog(BuildContext context) {
           paletteGradientShaderMask(
             generateRandomColorPalette(2, isThemeBright(context)),
             Text(
-              username,
+              AppData.instance.loginData.username,
               style: GoogleFonts.robotoMono(
                 fontSize: 24, 
                 fontWeight: FontWeight.bold,
@@ -42,9 +38,9 @@ Dialog userInfoDialog(BuildContext context) {
             )
           ),
           const SizedBox(height: 4),
-          Text(email, style: GoogleFonts.robotoMono(fontSize: 14)),
+          Text(AppData.instance.loginData.email, style: GoogleFonts.robotoMono(fontSize: 14)),
           const SizedBox(height: 4),
-          Text("Auth provider: $provider", style: GoogleFonts.robotoMono(fontSize: 14), textAlign: TextAlign.left)
+          Text("First auth provider: ${AppData.instance.loginData.authProvider}", style: GoogleFonts.robotoMono(fontSize: 14), textAlign: TextAlign.left)
         ],
       )
     ],
@@ -91,7 +87,7 @@ Dialog userInfoDialog(BuildContext context) {
 
 List<Widget> footerWidgets(BuildContext context) {
 
-  String appName    = AppData.instance.queriesData.version["name"] ?? "NNotes";
+  String appName    = AppData.instance.queriesData.version["name"] ?? "Notepad Mono";
   String version    = AppData.instance.queriesData.version["version"] ?? "0.1.0";
   String versionTag = AppData.instance.queriesData.version["tag"] ?? "vanilla";
 

@@ -7,22 +7,22 @@ import '../backend/supabase/auth_access.dart';
 import '../backend/color_palette.dart';
 import '../backend/app_data.dart';
 
-import '../new_primitives/login_page.dart';
-
 import '../static/ui_utils.dart';
 
 
 
 Widget loginPageBuilder(BuildContext context) {
 
-  String appName     = AppData.instance.queriesData.version["name"] ?? "NNotes";
+  String appName     = AppData.instance.queriesData.version["name"] ?? "";
   String description = AppData.instance.queriesData.version["description"] ?? "Write simple monospace notes everywhere";
 
   Text title = Text(" $appName!", style: GoogleFonts.robotoMono(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white));
 
   Text subtitle = Text(description, style: GoogleFonts.robotoMono(fontWeight: FontWeight.bold));
 
-  int authProviders = LoginAuthProviders.google | LoginAuthProviders.github;
+  int authProviders = LoginAuthProviders.google | LoginAuthProviders.github | LoginAuthProviders.azure;
+
+  ColorPaletteData loginPalette = generateRandomColorPalette(2, isThemeBright(context));
 
   List<Widget> authProvidersWidgets = [];
 
@@ -40,8 +40,15 @@ Widget loginPageBuilder(BuildContext context) {
       );
     }
 
+    if (authProviders & LoginAuthProviders.azure != 0) {
+      authProvidersWidgets.add(
+        wrapIconTextButton(const Icon(SimpleIcons.microsoft),
+            const Text("Sign In with Microsoft"), () => azureLogin()),
+      );
+    }
+
     ShaderMask titleRow = paletteGradientShaderMask(
-      generateRandomColorPalette(2, isThemeBright(context)),
+      loginPalette,
       Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -88,7 +95,7 @@ Widget loginPageBuilder(BuildContext context) {
     Container container = Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: generateRandomColorPalette(2, false).asColors,
+          colors: loginPalette.asColors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

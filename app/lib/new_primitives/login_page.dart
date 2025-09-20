@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../backend/supabase/listen.dart';
 import '../backend/app_data.dart';
 
 import '../builders/login_page_builder.dart';
 
 
-
-class LoginAuthProviders {
-  static const int google = 1 << 0;
-  static const int github = 1 << 1;
-}
 
 class LoginPage extends StatefulWidget {
   const LoginPage(

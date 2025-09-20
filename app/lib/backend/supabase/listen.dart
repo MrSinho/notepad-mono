@@ -15,7 +15,12 @@ void listenToVersions(BuildContext context) {
 
     SupabaseQueryBuilder table = Supabase.instance.client.from("Versions");
 
-    table.stream(primaryKey: ["id"]).listen(
+    if (AppData.instance.queriesData.versionsSubscription != null) {
+      appLog("Cancelling versions stream from previous session", true);
+      AppData.instance.queriesData.versionsSubscription!.cancel();
+    }
+
+    AppData.instance.queriesData.versionsSubscription = table.stream(primaryKey: ["id"]).listen(
 
       (dynamic data) async {
 
@@ -51,7 +56,12 @@ void listenToNotes(BuildContext context) {
 
     SupabaseQueryBuilder table = Supabase.instance.client.from("Notes");
 
-    table.stream(primaryKey: ["id"]).listen(
+    if (AppData.instance.queriesData.streamSubscription != null) {
+      appLog("Canceling notes stream subscription from the previous session", true);
+      AppData.instance.queriesData.streamSubscription!.cancel();
+    }
+
+    AppData.instance.queriesData.streamSubscription = table.stream(primaryKey: ["id"]).listen(
 
     (dynamic data) async {
 

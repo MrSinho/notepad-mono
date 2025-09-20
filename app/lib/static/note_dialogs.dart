@@ -25,13 +25,18 @@ Dialog newNoteDialog(BuildContext context) {
     ),
   );
 
-  TextButton confirmButton = TextButton(
-    child: Text(
+  ShaderMask doneMask = paletteGradientShaderMask(
+    generateRandomColorPalette(2, isThemeBright(context)),
+    Text(
       "Done", 
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).primaryVividColor
+        color: Colors.white
       )
-    ), 
+    )
+  );
+
+  TextButton confirmButton = TextButton(
+    child: doneMask, 
     onPressed: () async {
       NavigatorInfo.getState()?.pop(context);
       await createNewNote(controller.text);
@@ -42,7 +47,7 @@ Dialog newNoteDialog(BuildContext context) {
     child: Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).primaryVividColor
+        color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
     onPressed: () {
@@ -198,9 +203,9 @@ Dialog deleteNoteDialog(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          noButton,
+          yesButton,
           const SizedBox(width: 12),
-          yesButton
+          noButton
         ]
       )
     ]

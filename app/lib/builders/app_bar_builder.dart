@@ -65,6 +65,10 @@ AppBar mainAppBarBuilder(BuildContext context) {
     );
   }
 
+
+  
+
+
   AppBar appBar = AppBar(
     leading: IconButton(
       icon: const Icon(Icons.add),
@@ -77,9 +81,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
     ),
     actions: [
       IconButton(
-        icon: ClipOval(
-          child: Image.network(Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? ""),
-        ),
+        icon: getProfilePicture(false),
         onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
       ),
       const SizedBox(width: 8.0)
@@ -167,9 +169,7 @@ AppBar editAppBarBuilder(BuildContext context) {
         onPressed: () async => await saveNoteContent()
       ),
       IconButton(
-        icon: ClipOval(
-          child: Image.network(Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? ""),
-        ),
+        icon: getProfilePicture(false),
         onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
       ),
       const SizedBox(width: 8.0)

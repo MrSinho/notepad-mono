@@ -13,7 +13,7 @@ import 'app_bar_builder.dart';
 
 
 
-Widget notesPageViewBuilder(BuildContext context) {
+Widget homePageBuilder(BuildContext context) {
   List<ListTile> notesUI = [];
 
   for (Map<String, dynamic> note in AppData.instance.queriesData.notes) {

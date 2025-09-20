@@ -36,6 +36,8 @@ class NoteEditData {
   int unsavedBytes       = 0;
   int cursorRow          = 0;
   int cursorColumn       = 0;
+
+  String lastEdit = "";
 }
 
 enum NoteEditStatus {
@@ -74,13 +76,13 @@ void setNoteEditStatus(NoteEditStatus status) {
       message = "Lost connection";
       break;
     case NoteEditStatus.selectedNote:
-      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${formatDateTime(AppData.instance.queriesData.selectedNote["last_edit"] ?? "")}";
+      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${AppData.instance.noteEditData.lastEdit}";
       break;
     case NoteEditStatus.renamedNote:
       message = "Renamed note";
       break;
     case NoteEditStatus.savedChanges:
-      message = "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${formatDateTime(AppData.instance.queriesData.selectedNote["last_edit"] ?? "")}";
+      message = "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${AppData.instance.noteEditData.lastEdit}";
       break;
     case NoteEditStatus.failedSave:
       message = "Failed saving note, connection lost";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
 import '../backend/utils.dart';
+import '../backend/supabase/auth_access.dart';
 
 import '../builders/home_page_builder.dart';
 
@@ -30,7 +31,7 @@ class HomePageState extends State<HomePage> {
 
     ValueListenableBuilder builder = ValueListenableBuilder(
       valueListenable: AppData.instance.homePageUpdates,
-      builder: (context, value, child) => notesPageViewBuilder(context)
+      builder: (context, value, child) => homePageBuilder(context)
     );
 
     return builder;

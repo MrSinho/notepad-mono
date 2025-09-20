@@ -23,9 +23,10 @@ class AppData {
 
   late HttpServer authServer;
 
-  late final LoginData        loginData;
-  late final QueriesData      queriesData;
-  late final NoteEditData     noteEditData;
+  late LoginData          loginData;
+  late QueriesData        queriesData;
+  late NoteEditData       noteEditData;
+  late NoteEditStatusData noteEditStatusData;
 
   late final LoginPage         loginPage;
   late final HomePage          homePage;
@@ -34,7 +35,6 @@ class AppData {
   late final EditStatusBar     editStatusBar;
   late final EditBottomBar     editBottomBar;
   
-  late NoteEditStatusData noteEditStatusData;
   late ColorPaletteData   editColorPaletteData;
 
   final ValueNotifier<int> loginPageUpdates = ValueNotifier(0);
@@ -63,7 +63,7 @@ class AppData {
     startAuthServer();
   }
 
-  void initWithContext(BuildContext context) {
+  void setupWithContext(BuildContext context) {
     listenToVersions(context);
     listenToNotes(context);
   }

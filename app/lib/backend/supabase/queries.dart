@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:nnotes/backend/notify_ui.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
@@ -10,6 +13,9 @@ class QueriesData {
   Map<String, dynamic>       version      = {};
   List<Map<String, dynamic>> notes        = [];
   Map<String, dynamic>       selectedNote = {};
+
+  StreamSubscription? streamSubscription;
+  StreamSubscription? versionsSubscription;
 }
 
 Future<void> pullVersion() async {
@@ -26,6 +32,8 @@ Future<void> pullVersion() async {
   Map<String, dynamic> latest = versions.first;
 
   AppData.instance.queriesData.version = latest;
+
+  notifyLoginPageUpdate();
 
   return;
 }
@@ -51,15 +59,19 @@ Future<void> queryNotes() async {
 Future<void> saveNoteContent() async {
 
   try {
+
+    String lastEdit = DateTime.now().toUtc().toString();
+
     await Supabase.instance.client.from("Notes").update(
       {
         "content": AppData.instance.noteEditData.controller.text,
-        "last_edit": DateTime.now().toUtc().toString()
+        "last_edit": lastEdit
       }
     ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 
     AppData.instance.noteEditData.savedContentLength = AppData.instance.noteEditData.bufferLength;
     AppData.instance.noteEditData.savedContentLines  = AppData.instance.noteEditData.bufferLines;
+    AppData.instance.noteEditData.lastEdit           = formatDateTime(lastEdit);
 
     setNoteEditStatus(NoteEditStatus.savedChanges);
 
