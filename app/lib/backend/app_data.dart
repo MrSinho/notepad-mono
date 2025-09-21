@@ -25,7 +25,7 @@ class AppData {
 
   late HttpServer authServer;
 
-  late LoginData          loginData;
+  late SessionData        sessionData;
   late QueriesData        queriesData;
   late NoteEditData       noteEditData;
   late NoteEditStatusData noteEditStatusData;
@@ -46,7 +46,7 @@ class AppData {
 
   AppData._internal() {//Called once and only once, no BuildContext available
     
-    loginData          = LoginData();
+    sessionData          = SessionData();
     queriesData        = QueriesData();
     noteEditStatusData = NoteEditStatusData();
     noteEditData       = NoteEditData();

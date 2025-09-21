@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nnotes/backend/color_palette.dart';
 import 'package:nnotes/backend/utils.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
-import 'package:sentry/sentry.dart';
 
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
@@ -33,7 +33,7 @@ Widget userInfoDialog(BuildContext context) {
           paletteGradientShaderMask(
             generateRandomColorPalette(2, isThemeBright(context)),
             Text(
-              AppData.instance.loginData.username,
+              AppData.instance.sessionData.username,
               style: GoogleFonts.robotoMono(
                 fontSize: 24, 
                 fontWeight: FontWeight.bold,
@@ -42,9 +42,9 @@ Widget userInfoDialog(BuildContext context) {
             )
           ),
           const SizedBox(height: 4),
-          Text(AppData.instance.loginData.email, style: GoogleFonts.robotoMono(fontSize: 14)),
+          Text(AppData.instance.sessionData.email, style: GoogleFonts.robotoMono(fontSize: 14)),
           const SizedBox(height: 4),
-          Text("First auth provider: ${AppData.instance.loginData.authProvider}", style: GoogleFonts.robotoMono(fontSize: 14), textAlign: TextAlign.left)
+          Text("First auth provider: ${AppData.instance.sessionData.authProvider}", style: GoogleFonts.robotoMono(fontSize: 14), textAlign: TextAlign.left)
         ],
       )
     ],
@@ -58,12 +58,10 @@ Widget userInfoDialog(BuildContext context) {
     wrapIconTextButton(
       const Icon(Icons.bug_report_rounded),
       Text("Report a bug", style: GoogleFonts.robotoMono()),
-      () {
-        BetterFeedback.of(context).showAndUploadToSentry(
-          name: AppData.instance.loginData.username,
-          email: AppData.instance.loginData.email
-        );
-      }
+      () => BetterFeedback.of(context).showAndUploadToSentry( // https://xxx-xxx.sentry.io/issues/feedback/
+          name:  AppData.instance.sessionData.username,
+          email: AppData.instance.sessionData.email,
+        )
     ),
     const SizedBox(height: 20),
     wrapIconTextButton(

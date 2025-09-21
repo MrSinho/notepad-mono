@@ -14,7 +14,7 @@ import '../color_palette.dart';
 
 
 
-class LoginData {
+class SessionData {
   String accessToken = "";
 
   String errorMessage = "";
@@ -51,8 +51,6 @@ Future<int> logout() async {
 
 Future<int> googleLogin() async {
 
-  await dotenv.load(fileName: ".env");
-
   bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.google,
     redirectTo: dotenv.env['GOOGLE_REDIRECT_URL']
@@ -67,8 +65,6 @@ Future<int> googleLogin() async {
 
 Future<int> githubLogin() async {
 
-  await dotenv.load(fileName: ".env");
-
   bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.github,
     redirectTo: dotenv.env['GITHUB_REDIRECT_URL']
@@ -82,8 +78,6 @@ Future<int> githubLogin() async {
 }
 
 Future<int> azureLogin() async {
-
-  await dotenv.load(fileName: ".env");
 
   bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.azure,
@@ -158,7 +152,7 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
     authRequest.response.statusCode = HttpStatus.badRequest;
     authRequest.response.write(errorMessage);
 
-    AppData.instance.loginData.errorMessage = errorMessage;
+    AppData.instance.sessionData.errorMessage = errorMessage;
     notifyLoginPageUpdate();
 
     await authRequest.response.close();
@@ -168,20 +162,20 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
 }
 
 void clearSessionInfo() {
-  AppData.instance.loginData = LoginData();
+  AppData.instance.sessionData = SessionData();
 }
 
 void copySessionInfo() {
   Session session = Supabase.instance.client.auth.currentSession!;
-  AppData.instance.loginData.accessToken = session.providerToken ?? "";
+  AppData.instance.sessionData.accessToken = session.providerToken ?? "";
 
-  AppData.instance.loginData.authProvider      = Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "";
-  AppData.instance.loginData.email             = Supabase.instance.client.auth.currentUser?.email ?? "";
-  AppData.instance.loginData.username          = Supabase.instance.client.auth.currentUser?.userMetadata?["user_name"] ?? "";
-  AppData.instance.loginData.profilePictureUrl = Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? "";
+  AppData.instance.sessionData.authProvider      = Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "";
+  AppData.instance.sessionData.email             = Supabase.instance.client.auth.currentUser?.email ?? "";
+  AppData.instance.sessionData.username          = Supabase.instance.client.auth.currentUser?.userMetadata?["user_name"] ?? "";
+  AppData.instance.sessionData.profilePictureUrl = Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? "";
 
-  if (AppData.instance.loginData.username == "") {
-    AppData.instance.loginData.username = AppData.instance.loginData.email.split("@")[0];
+  if (AppData.instance.sessionData.username == "") {
+    AppData.instance.sessionData.username = AppData.instance.sessionData.email.split("@")[0];
   }
 }
 
@@ -189,34 +183,34 @@ Future<void> storeUserData() async {
 
   copySessionInfo();
 
-  if (AppData.instance.loginData.profilePictureUrl != "") {
+  if (AppData.instance.sessionData.profilePictureUrl != "") {
 
     appLog("Retrieving profile picture through URL", true);
 
-    var response = await http.get(Uri.parse(AppData.instance.loginData.profilePictureUrl));
+    var response = await http.get(Uri.parse(AppData.instance.sessionData.profilePictureUrl));
 
     if (response.statusCode == 200) {
       appLog("Download successfull, storing profile picture", true);
-      AppData.instance.loginData.profilePicture = MemoryImage(response.bodyBytes);
+      AppData.instance.sessionData.profilePicture = MemoryImage(response.bodyBytes);
     }
     else {
       appLog("Failed downloading profile picture through url: ${response.body.toString()}", true);
     }
   }
 
-  if (AppData.instance.loginData.authProvider == "azure") { // Get profile picture with Microsoft Graph
+  if (AppData.instance.sessionData.authProvider == "azure") { // Get profile picture with Microsoft Graph
 
     appLog("Using Microsoft Graph to retrieve profile picture", true);
 
     // For a valid response, see the requisites https://learn.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0&tabs=http
     var response = await http.get(
       Uri.parse("https://graph.microsoft.com/v1.0/me/photo/\$value"),
-      headers: {"Authorization": "Bearer ${AppData.instance.loginData.accessToken}"},
+      headers: {"Authorization": "Bearer ${AppData.instance.sessionData.accessToken}"},
     );
 
     if (response.statusCode == 200) {
       appLog("Download successfull, storing profile picture from Microsoft Graph", true);
-      AppData.instance.loginData.profilePicture = MemoryImage(response.bodyBytes);
+      AppData.instance.sessionData.profilePicture = MemoryImage(response.bodyBytes);
     }
     else {
       appLog("Cannot retrieve profile picture with Microsoft graph: ${response.body.toString()}", true);

@@ -111,7 +111,7 @@ Widget getProfilePicture(bool wrapInsideAvatar) {
       break;
   }
 
-  BoringAvatar boringAvatar = BoringAvatar(name: AppData.instance.loginData.username, type: type);
+  BoringAvatar boringAvatar = BoringAvatar(name: AppData.instance.sessionData.username, type: type);
 
   Widget fill = Positioned.fill(
     child: Material(
@@ -124,7 +124,7 @@ Widget getProfilePicture(bool wrapInsideAvatar) {
     ),
   );
 
-  if (AppData.instance.loginData.profilePicture != null) {
+  if (AppData.instance.sessionData.profilePicture != null) {
     
     Widget stack = Stack(
       fit: StackFit.expand,
@@ -140,7 +140,7 @@ Widget getProfilePicture(bool wrapInsideAvatar) {
     
     CircleAvatar avatar = CircleAvatar(
       radius: 50,
-      backgroundImage: AppData.instance.loginData.profilePicture!,
+      backgroundImage: AppData.instance.sessionData.profilePicture!,
       backgroundColor: Colors.transparent,
       child: clip
     );
@@ -150,7 +150,7 @@ Widget getProfilePicture(bool wrapInsideAvatar) {
     }
     else {
       return ClipOval(
-        child: Image(image: AppData.instance.loginData.profilePicture!)
+        child: Image(image: AppData.instance.sessionData.profilePicture!)
       );
     }
   }

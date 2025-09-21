@@ -65,7 +65,7 @@ Widget loginPageBuilder(BuildContext context) {
         const SizedBox(height: 20.0),
         subtitle,
         const SizedBox(height: 60.0),
-        Text(AppData.instance.loginData.errorMessage),
+        Text(AppData.instance.sessionData.errorMessage),
         const SizedBox(height: 16.0),
         Wrap(
           direction: Axis.horizontal,
