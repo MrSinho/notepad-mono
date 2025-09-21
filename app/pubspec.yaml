@@ -63,6 +63,12 @@ dependencies:
 
   flutter_boring_avatars: ^2.0.1
 
+  feedback: ^3.2.0
+
+  feedback_sentry: ^3.2.0
+
+  sentry_flutter: ^9.6.0
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8

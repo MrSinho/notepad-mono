@@ -73,7 +73,7 @@ Widget loginPageBuilder(BuildContext context) {
           runSpacing: 8,
           children: authProvidersWidgets
         ),
-        const SizedBox(height: 60.0),
+        const Padding(padding: EdgeInsetsGeometry.only(bottom: 60.0)),
       ]
     );
 
@@ -83,8 +83,8 @@ Widget loginPageBuilder(BuildContext context) {
     );
 
     FractionallySizedBox signupBox = FractionallySizedBox(
-      widthFactor: 0.6,
-      heightFactor: 0.6,
+      widthFactor: 0.65,
+      heightFactor: 0.65,
       child: Card(child: signupPad),
     );
 

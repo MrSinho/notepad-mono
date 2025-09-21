@@ -16,6 +16,8 @@ import '../new_primitives/edit_bottom_bar.dart';
 
 import 'note_edit.dart';
 import 'color_palette.dart';
+import 'inputs.dart';
+
 
 
 class AppData {
@@ -27,6 +29,7 @@ class AppData {
   late QueriesData        queriesData;
   late NoteEditData       noteEditData;
   late NoteEditStatusData noteEditStatusData;
+  late InputData          inputData;
 
   late final LoginPage         loginPage;
   late final HomePage          homePage;
@@ -34,9 +37,9 @@ class AppData {
   late final EditAppBarContent editAppBarContent;
   late final EditStatusBar     editStatusBar;
   late final EditBottomBar     editBottomBar;
-  
-  late ColorPaletteData   editColorPaletteData;
 
+  late ColorPaletteData editColorPaletteData;
+  
   final ValueNotifier<int> loginPageUpdates = ValueNotifier(0);
   final ValueNotifier<int> homePageUpdates  = ValueNotifier(0);
   final ValueNotifier<int> noteEditUpdates  = ValueNotifier(0);
@@ -47,7 +50,7 @@ class AppData {
     queriesData        = QueriesData();
     noteEditStatusData = NoteEditStatusData();
     noteEditData       = NoteEditData();
-    //colorPaletteData   = ColorPaletteData();
+    inputData          = InputData();
 
     loginPage         = const LoginPage();
     homePage          = const HomePage();

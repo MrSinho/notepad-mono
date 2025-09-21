@@ -5,12 +5,12 @@ import '../backend/app_data.dart';
 import '../backend/note_edit.dart';
 import '../backend/utils.dart';
 import '../backend/navigator.dart';
+import '../backend/inputs.dart';
 
 import '../static/note_bottom_sheet.dart';
 import '../static/ui_utils.dart';
 
 import 'app_bar_builder.dart';
-
 
 
 Widget homePageBuilder(BuildContext context) {
@@ -28,7 +28,6 @@ Widget homePageBuilder(BuildContext context) {
           NavigatorInfo.getState()?.push(
             MaterialPageRoute(builder: (context) => AppData.instance.noteEditPage)
           );
-
         },
         onLongPress: () {
           selectNote(note, true, context);
@@ -59,5 +58,12 @@ Widget homePageBuilder(BuildContext context) {
     body: view
   );
     
-  return scaffold;
+  KeyboardListener listener = KeyboardListener(
+    autofocus: true,
+    focusNode: FocusNode(),
+    child: scaffold,
+    onKeyEvent: (KeyEvent event) => homeInputListener(context, event),
+  );
+
+  return listener;
 }

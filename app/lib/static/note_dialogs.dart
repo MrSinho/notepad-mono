@@ -6,12 +6,13 @@ import '../backend/supabase/queries.dart';
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
 import '../backend/color_palette.dart';
+import '../backend/inputs.dart';
 
 import '../themes.dart';
 
 
 
-Dialog newNoteDialog(BuildContext context) {
+Widget newNoteDialog(BuildContext context) {
 
   TextEditingController controller = TextEditingController(text: "New note");
 
@@ -82,10 +83,17 @@ Dialog newNoteDialog(BuildContext context) {
     )
   );
 
-  return dialog;
+  KeyboardListener listener = KeyboardListener(
+    autofocus: true,
+    focusNode: FocusNode(),
+    child: dialog,
+    onKeyEvent: (KeyEvent event) => newNoteInputListener(context, event, controller)
+  );
+
+  return listener;
 }
 
-Dialog renameNoteDialog(BuildContext context) {
+Widget renameNoteDialog(BuildContext context) {
 
   TextEditingController renameController = TextEditingController(text: AppData.instance.queriesData.selectedNote["title"] ?? "");
 
@@ -156,10 +164,17 @@ Dialog renameNoteDialog(BuildContext context) {
     )
   );
 
-  return dialog;
+  KeyboardListener listener = KeyboardListener(
+    autofocus: true,
+    focusNode: FocusNode(),
+    child: dialog,
+    onKeyEvent: (KeyEvent event) => renameInputListener(context, event, renameController),
+  );
+
+  return listener;
 }
 
-Dialog deleteNoteDialog(BuildContext context) {
+Widget deleteNoteDialog(BuildContext context) {
 
   TextButton yesButton = TextButton(
     child: Text(

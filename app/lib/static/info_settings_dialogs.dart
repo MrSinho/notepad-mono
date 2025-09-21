@@ -1,10 +1,14 @@
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nnotes/backend/color_palette.dart';
 import 'package:nnotes/backend/utils.dart';
+import 'package:feedback_sentry/feedback_sentry.dart';
+import 'package:sentry/sentry.dart';
 
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
+import '../backend/inputs.dart';
 
 import 'sign_out_dialog.dart';
 import 'ui_utils.dart';
@@ -13,7 +17,7 @@ import '../themes.dart';
 
 
 
-Dialog userInfoDialog(BuildContext context) {
+Widget userInfoDialog(BuildContext context) {
 
   Row userRow = Row(
     mainAxisSize: MainAxisSize.min,
@@ -50,12 +54,17 @@ Dialog userInfoDialog(BuildContext context) {
 
   List<Widget> userInfoContents = [
     userRow,
-    //const SizedBox(height: 20),
-    //wrapIconTextButton(
-    //  const Icon(Icons.key_rounded),
-    //  Text("Setup encryption key", style: GoogleFonts.robotoMono()),
-    //  () {}
-    //),
+    const SizedBox(height: 20),
+    wrapIconTextButton(
+      const Icon(Icons.bug_report_rounded),
+      Text("Report a bug", style: GoogleFonts.robotoMono()),
+      () {
+        BetterFeedback.of(context).showAndUploadToSentry(
+          name: AppData.instance.loginData.username,
+          email: AppData.instance.loginData.email
+        );
+      }
+    ),
     const SizedBox(height: 20),
     wrapIconTextButton(
       const Icon(Icons.logout_outlined),
@@ -82,7 +91,14 @@ Dialog userInfoDialog(BuildContext context) {
     )
   );
 
-  return dialog;
+  KeyboardListener listener = KeyboardListener(
+    autofocus: true,
+    focusNode: FocusNode(),
+    child: dialog,
+    onKeyEvent: (KeyEvent event) => userInfoInputListener(context, event),
+  );
+
+  return listener;
 }
 
 List<Widget> footerWidgets(BuildContext context) {
