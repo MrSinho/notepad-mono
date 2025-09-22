@@ -1,24 +1,15 @@
-# NNotes
+# Notepad Mono
 
-
-First time:
-
-```shell
-flutter create --project-name template app
-```
+Write and sync your monospace notes everywhere.
 
 ## Run
 
-Debug mode (only chrome is supported to debug web applications)
-
 ```shell
 cd app
-flutter run -d chrome --web-port 3000 # seems for debugging only chrome is supported
+flutter run -d windows #--release for release mode
 ```
 
-Release mode
-
 ```shell
 cd app
-flutter run -d chrome --web-port 3000 # seems for debugging only chrome is supported
+flutter run -d windows #--release for release mode
 ```
