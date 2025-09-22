@@ -1,14 +1,14 @@
-import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nnotes/backend/color_palette.dart';
-import 'package:nnotes/backend/utils.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
+import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/app_data.dart';
 import '../backend/navigator.dart';
 import '../backend/inputs.dart';
+import '../backend/utils.dart';
+import '../backend/color_palette.dart';
 
 import 'sign_out_dialog.dart';
 import 'ui_utils.dart';
@@ -41,9 +41,9 @@ Widget userInfoDialog(BuildContext context) {
               )
             )
           ),
-          const SizedBox(height: 4),
+          const Gap(4),
           Text(AppData.instance.sessionData.email, style: GoogleFonts.robotoMono(fontSize: 14)),
-          const SizedBox(height: 4),
+          const Gap(4),
           Text("First auth provider: ${AppData.instance.sessionData.authProvider}", style: GoogleFonts.robotoMono(fontSize: 14), textAlign: TextAlign.left)
         ],
       )
@@ -54,7 +54,7 @@ Widget userInfoDialog(BuildContext context) {
 
   List<Widget> userInfoContents = [
     userRow,
-    const SizedBox(height: 20),
+    const Gap(20),
     wrapIconTextButton(
       const Icon(Icons.bug_report_rounded),
       Text("Report a bug", style: GoogleFonts.robotoMono()),
@@ -63,7 +63,7 @@ Widget userInfoDialog(BuildContext context) {
           email: AppData.instance.sessionData.email,
         )
     ),
-    const SizedBox(height: 20),
+    const Gap(20),
     wrapIconTextButton(
       const Icon(Icons.logout_outlined),
       Text("Log out", style: GoogleFonts.robotoMono()),
@@ -101,12 +101,15 @@ Widget userInfoDialog(BuildContext context) {
 
 List<Widget> footerWidgets(BuildContext context) {
 
+  String author     = AppData.instance.queriesData.version["author"] ?? "mrsinho";
   String appName    = AppData.instance.queriesData.version["name"] ?? "Notepad Mono";
   String version    = AppData.instance.queriesData.version["version"] ?? "0.1.0";
   String versionTag = AppData.instance.queriesData.version["tag"] ?? "vanilla";
+  String appWebsite = AppData.instance.queriesData.version["app_website"] ?? "https://www.github.com/mrsinho/nnotes";
+  String devWebsite = AppData.instance.queriesData.version["developer_website"] ?? "https://www.github.com/mrsinho";
 
   List<Widget> footer = [
-    const SizedBox(height: 40),
+    const Gap(40),
     Text(
       "$appName, build version: $version, tag: $versionTag",
       style: TextStyle(
@@ -120,6 +123,20 @@ List<Widget> footerWidgets(BuildContext context) {
         fontSize: 12,
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       ),
+    ),
+    const Gap(8),
+    Wrap(
+      children: [
+        InkWell(
+          child: Text(appName, style: const TextStyle(fontSize: 12)),
+          onTap: () => launchUrl(Uri.parse(appWebsite)),
+        ),
+        const SizedBox(width: 12),
+        InkWell(
+          child: Text(author, style: const TextStyle(fontSize: 12)),
+          onTap: () => launchUrl(Uri.parse(devWebsite)),
+        )
+      ],
     )
   ];
 

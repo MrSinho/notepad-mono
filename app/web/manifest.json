@@ -1,11 +1,11 @@
 {
-    "name": "template",
-    "short_name": "template",
+    "name": "Notepad Mono",
+    "short_name": "Notepad Mono",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Write and sync your notes everywhere",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

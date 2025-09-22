@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:nnotes/backend/supabase/auth_access.dart';
-import 'package:nnotes/static/ui_utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'backend/supabase/auth_access.dart';
 
 import 'backend/app_data.dart';
 import 'backend/navigator.dart';
+
+import 'static/ui_utils.dart';
 
 import 'themes.dart';
 
@@ -51,7 +53,7 @@ class NoteApp extends StatelessWidget {
                 if (userSnapshot.connectionState == ConnectionState.waiting) {// Loading screen
                   
                   Scaffold loadingScaffold = const Scaffold(
-                    body: SizedBox(width: 2.0, height: 2.0)
+                    body: SizedBox(width: 10.0, height: 10.0)
                   );
                   
                   return loadingScaffold;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
 import '../backend/utils.dart';
-import '../backend/supabase/auth_access.dart';
 
 import '../builders/home_page_builder.dart';
 

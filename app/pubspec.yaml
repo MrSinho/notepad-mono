@@ -1,4 +1,4 @@
-name: nnotes
+name: "notepad_mono"
 description: "Create simple monospace notes"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -68,6 +68,8 @@ dependencies:
   feedback_sentry: ^3.2.0
 
   sentry_flutter: ^9.6.0
+
+  gap: ^3.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -1,12 +1,14 @@
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:nnotes/backend/color_palette.dart';
-import 'package:nnotes/themes.dart';
+
+import '../static/note_dialogs.dart';
 
 import 'utils.dart';
 import 'notify_ui.dart';
 import 'app_data.dart';
+import 'color_palette.dart';
 
+import '../themes.dart';
 
 
 class NoteEditStatusData {
@@ -197,7 +199,7 @@ void getNoteCursorData() {
   int cursorStart = controller.selection.start;
 
   AppData.instance.noteEditData.selectionLength = selection.length;
-  AppData.instance.noteEditData.selectionLines = "\n".allMatches(selection).length;
+  AppData.instance.noteEditData.selectionLines = "\n".allMatches(selection).length + 1;
 
   String textBeforeCursor = controller.text.substring(0, cursorStart);
 
@@ -242,4 +244,16 @@ void noteEditCallback() {
   getNoteCursorData();
   getNoteTextData();
   checkCursorNoteEditStatus();
+}
+
+void exitNoteEditPage(BuildContext context) {
+
+  if (AppData.instance.noteEditData.controller.text != AppData.instance.queriesData.selectedNote["content"]) {
+    appLog("Unsaved changes!!", true);
+    showDialog(context: context, builder: (BuildContext context) => unsavedChangesDialog(context));
+  }
+  else {
+    Navigator.pop(context);
+  }
+
 }

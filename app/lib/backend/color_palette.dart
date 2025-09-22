@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:color_palette_generator/color_palette_generator.dart';
 
-import 'app_data.dart';
-
 
 
 class ColorPaletteData {

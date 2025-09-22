@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:gap/gap.dart';
 
 import '../backend/navigator.dart';
 import '../backend/color_palette.dart';
@@ -26,12 +27,12 @@ Dialog signOutDialog(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Text("Confirm Sign Out", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 20),
+      const Gap(20),
       Text(
         "Are you sure you want to sign out and leave this session?",
         style: GoogleFonts.robotoMono()
       ),
-      const SizedBox(height: 40),
+      const Gap(40),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -45,7 +46,7 @@ Dialog signOutDialog(BuildContext context) {
             ),
             onPressed: () => NavigatorInfo.getState()?.pop(context),
           ),
-          const SizedBox(width: 20.0),
+          const Gap(20.0),
           TextButton(
             child: confirmMask,
             onPressed: () async {

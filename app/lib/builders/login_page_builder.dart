@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nnotes/themes.dart';
 import 'package:simple_icons/simple_icons.dart';
+import 'package:gap/gap.dart';
 
 import '../backend/supabase/auth_access.dart';
 import '../backend/color_palette.dart';
 import '../backend/app_data.dart';
 
 import '../static/ui_utils.dart';
+
+import '../themes.dart';
 
 
 
@@ -16,9 +18,8 @@ Widget loginPageBuilder(BuildContext context) {
   String appName     = AppData.instance.queriesData.version["name"] ?? "";
   String description = AppData.instance.queriesData.version["description"] ?? "Write simple monospace notes everywhere";
 
-  Text title = Text(" $appName!", style: GoogleFonts.robotoMono(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white));
-
-  Text subtitle = Text(description, style: GoogleFonts.robotoMono(fontWeight: FontWeight.bold));
+  Text title    = Text(" $appName!", style: GoogleFonts.robotoMono(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white));
+  Text subtitle = Text(description,  style: GoogleFonts.robotoMono(fontWeight: FontWeight.bold));
 
   int authProviders = LoginAuthProviders.google | LoginAuthProviders.github | LoginAuthProviders.azure;
 
@@ -29,21 +30,21 @@ Widget loginPageBuilder(BuildContext context) {
     if (authProviders & LoginAuthProviders.google != 0) {
       authProvidersWidgets.add(
         wrapIconTextButton(const Icon(SimpleIcons.google),
-            const Text("Sign In with Google"), () => googleLogin()),
+          const Text("Sign In with Google"), () => googleLogin()),
       );
     }
 
     if (authProviders & LoginAuthProviders.github != 0) {
       authProvidersWidgets.add(
         wrapIconTextButton(const Icon(SimpleIcons.github),
-            const Text("Sign In with Github"), () => githubLogin()),
+          const Text("Sign In with Github"), () => githubLogin()),
       );
     }
 
     if (authProviders & LoginAuthProviders.azure != 0) {
       authProvidersWidgets.add(
         wrapIconTextButton(const Icon(SimpleIcons.microsoft),
-            const Text("Sign In with Microsoft"), () => azureLogin()),
+          const Text("Sign In with Microsoft"), () => azureLogin()),
       );
     }
 
@@ -62,18 +63,18 @@ Widget loginPageBuilder(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         titleRow,
-        const SizedBox(height: 20.0),
+        const Gap(20.0),
         subtitle,
-        const SizedBox(height: 60.0),
+        const Gap(60.0),
         Text(AppData.instance.sessionData.errorMessage),
-        const SizedBox(height: 16.0),
+        const Gap(16.0),
         Wrap(
           direction: Axis.horizontal,
           spacing: 30,
           runSpacing: 8,
           children: authProvidersWidgets
         ),
-        const Padding(padding: EdgeInsetsGeometry.only(bottom: 60.0)),
+        const Gap(60.0),
       ]
     );
 

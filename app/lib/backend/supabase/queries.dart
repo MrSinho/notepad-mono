@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:nnotes/backend/notify_ui.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
 import '../note_edit.dart';
+import '../notify_ui.dart';
 import '../utils.dart';
 
 

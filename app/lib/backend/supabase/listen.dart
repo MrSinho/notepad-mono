@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nnotes/backend/color_palette.dart';
-import 'package:nnotes/themes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
 import '../note_edit.dart';
 import '../utils.dart';
 import '../notify_ui.dart';
+import '../color_palette.dart';
+
+import '../../themes.dart';
+
 
 
 void listenToVersions(BuildContext context) {

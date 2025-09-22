@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gap/gap.dart';
 
 import '../backend/supabase/queries.dart';
 
@@ -51,9 +52,7 @@ Widget newNoteDialog(BuildContext context) {
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
-    onPressed: () {
-      NavigatorInfo.getState()?.pop(context);
-    }
+    onPressed: () => NavigatorInfo.getState()?.pop(context)
   );
 
   Column dialogContent = Column(
@@ -61,15 +60,15 @@ Widget newNoteDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     children: [
       Text("Create note", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
-      const SizedBox(height: 20),
+      const Gap(20),
       IntrinsicWidth(child: field),
-      const SizedBox(height: 20),
+      const Gap(20),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           noButton,
-          const SizedBox(width: 12),
+          const Gap(12),
           confirmButton
         ]
       ),
@@ -132,9 +131,7 @@ Widget renameNoteDialog(BuildContext context) {
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
-    onPressed: () {
-      NavigatorInfo.getState()?.pop(context);
-    }
+    onPressed: () => NavigatorInfo.getState()?.pop(context)
   );
 
   Column dialogContent = Column(
@@ -142,15 +139,15 @@ Widget renameNoteDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     children: [
       Text("Rename note", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 20),
+      const Gap(20),
       IntrinsicWidth(child: renameField),
-      const SizedBox(height: 20),
+      const Gap(20),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           noButton,
-          const SizedBox(width: 12),
+          const Gap(12),
           renameButton
         ]
       )
@@ -201,9 +198,7 @@ Widget deleteNoteDialog(BuildContext context) {
 
   TextButton noButton = TextButton(
     child: noMask, 
-    onPressed: () {
-      NavigatorInfo.getState()?.pop(context);
-    }
+    onPressed: () => NavigatorInfo.getState()?.pop(context)
   );
 
   Column dialogContent = Column(
@@ -211,15 +206,15 @@ Widget deleteNoteDialog(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Text("Confirm delete ${AppData.instance.queriesData.selectedNote["title"]}", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
-      const SizedBox(height: 20),
+      const Gap(20),
       Text("Are you sure you want to delete this note?", style: GoogleFonts.robotoMono(fontSize: 12),),
-      const SizedBox(height: 20),
+      const Gap(20),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           yesButton,
-          const SizedBox(width: 12),
+          const Gap(12),
           noButton
         ]
       )
@@ -234,4 +229,90 @@ Widget deleteNoteDialog(BuildContext context) {
   );
 
   return dialog;
+}
+
+Widget unsavedChangesDialog(BuildContext context) {
+
+  TextButton yesButton = TextButton(
+    child: Text(
+      "Discard",
+      style: GoogleFonts.robotoMono(
+        color: getCurrentThemePalette(context).quaternaryForegroundColor
+      )
+    ), 
+    onPressed: () {
+      NavigatorInfo.getState()?.pop(context);
+      NavigatorInfo.getState()?.pop(context);
+    }
+  );
+
+  ShaderMask noMask = paletteGradientShaderMask(
+    generateRandomColorPalette(2, isThemeBright(context)),
+    Text(
+      "Cancel",
+      style: GoogleFonts.robotoMono(
+        color: Colors.white
+      )
+    )
+  );
+
+  TextButton cancelButton = TextButton(
+    child: noMask, 
+    onPressed: () => NavigatorInfo.getState()?.pop(context)
+  );
+
+  ShaderMask saveMask = paletteGradientShaderMask(
+    generateRandomColorPalette(2, isThemeBright(context)),
+    Text(
+      "Save changes",
+      style: GoogleFonts.robotoMono(
+        color: Colors.white
+      )
+    )
+  );
+
+  TextButton saveButton = TextButton(
+    child: saveMask, 
+    onPressed: () {
+      saveNoteContent();
+      NavigatorInfo.getState()?.pop(context);
+      NavigatorInfo.getState()?.pop(context);
+    }
+  );
+
+  Column dialogContent = Column(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Text("Discard unsaved changes?", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
+      const Gap(20),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          cancelButton,
+          const Gap(12),
+          yesButton,
+          const Gap(12),
+          saveButton
+        ]
+      )
+    ]
+  );
+  
+  Dialog dialog = Dialog(
+    child: Padding(
+      padding: const EdgeInsets.all(48.0),
+      child: dialogContent,
+    )
+  );
+
+  KeyboardListener listener = KeyboardListener(
+    autofocus: true,
+    focusNode: FocusNode(),
+    child: dialog,
+    onKeyEvent: (KeyEvent event) => {},
+  );
+
+  return listener;
 }

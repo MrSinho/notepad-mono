@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:nnotes/backend/inputs.dart';
-import 'package:nnotes/backend/note_edit.dart';
-import 'package:nnotes/backend/supabase/queries.dart';
-import 'package:nnotes/static/info_settings_dialogs.dart';
-import 'package:nnotes/static/note_dialogs.dart';
 
 import '../backend/app_data.dart';
 import '../backend/utils.dart';
+import '../backend/inputs.dart';
 
 import 'app_bar_builder.dart';
 import 'input_field_builder.dart';

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nnotes/backend/app_data.dart';
-import 'package:nnotes/backend/utils.dart';
 import 'package:simple_icons/simple_icons.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:gap/gap.dart';
 
 import '../backend/supabase/queries.dart';
 import '../backend/supabase/auth_access.dart';
@@ -28,7 +26,7 @@ Widget signInProviderContent() {
 
   Row row = Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       wrapIconTextButton(const Icon(SimpleIcons.google), const Text("Sign In with Google"), () => googleLogin()), 
-      const SizedBox(width: 30),
+      const Gap(30),
       wrapIconTextButton(const Icon(SimpleIcons.github), const Text("Sign In with Github"), () => githubLogin()), 
     ]
   );
@@ -140,82 +138,6 @@ WidgetBuilder futureBuilder(
 Text warningText(String msg) {
   return Text(msg, style: const TextStyle(color: Colors.red));
 }
-
-/*
-// ChatGPT thank you
-Widget userImageInkWell(GestureTapCallback callback) { 
-
-
-  Widget fill = Positioned.fill(
-    child: Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: callback,
-        splashColor: const Color.fromARGB(25, 0, 0, 0),
-        highlightColor: Colors.transparent,
-      ),
-    ),
-  );
-
-  //ClipOval clip = ClipOval(
-  //  clipBehavior: Clip.antiAlias,
-  //  child: fill,
-  //);
-  //CircleAvatar avatar = CircleAvatar(
-  //  radius: 50,
-  //  backgroundImage: AppData.instance.loginData.profilePicture,
-  //  backgroundColor: Colors.transparent,
-  //  child: clip
-  //);
-
-  Widget stack = Stack(
-    fit: StackFit.expand,
-    children: [
-      getProfilePicture(),
-      fill
-    ],
-  );
-  Widget clip = ClipOval(
-    clipBehavior: Clip.antiAlias,
-    child: stack,
-  );
-  CircleAvatar avatar = CircleAvatar(
-    radius: 50,
-    backgroundColor: Colors.white,
-    child: clip
-  );
-
-  return avatar;
-
-
-
-  //return ClipOval(
-  //  child: Material(
-  //    color: Colors.transparent,
-  //    child: SizedBox(
-  //      width: 100,
-  //      height: 100,
-  //      child: Stack(
-  //        fit: StackFit.expand,
-  //        children: [
-  //          getProfilePicture(),
-  //          Positioned.fill(
-  //            child: Material(
-  //              color: Colors.transparent,
-  //              child: InkWell(
-  //                onTap: callback,
-  //                splashColor: const Color.fromARGB(25, 0, 0, 0),
-  //                highlightColor: Colors.transparent,
-  //              ),
-  //            ),
-  //          ),
-  //        ],
-  //      ),
-  //    ),
-  //  ),
-  //);
-}
-*/
 
 Widget favoriteButton(Map<String, dynamic> note, BuildContext context) {
 

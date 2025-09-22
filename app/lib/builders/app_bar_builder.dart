@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:gap/gap.dart';
 
 import '../backend/app_data.dart';
 import '../backend/supabase/queries.dart';
@@ -29,7 +29,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
         )
       )
     ),
-    const SizedBox(width: 12),
+    const SizedBox(width: 12.0),
     Column(
       children: [
         Wrap(
@@ -40,7 +40,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
             ),
           ] 
         ),
-        const SizedBox(height: 4)
+        const Gap(4)
       ]
     )
   ];
@@ -57,17 +57,11 @@ AppBar mainAppBarBuilder(BuildContext context) {
             Icons.sync_rounded,
             color: NoteEditStatus.lostConnection.color,
           ),
-          onPressed: () {
-            setNoteEditStatus(NoteEditStatus.dismissedErrors);
-          }
+          onPressed: () => setNoteEditStatus(NoteEditStatus.dismissedErrors)
         )   
       )
     );
   }
-
-
-  
-
 
   AppBar appBar = AppBar(
     leading: IconButton(
@@ -84,7 +78,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
         icon: getProfilePicture(false),
         onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
       ),
-      const SizedBox(width: 8.0)
+      const Gap(8.0)
     ],
   );
 
@@ -133,9 +127,7 @@ Widget editAppBarContentBuilder(BuildContext context) {
             Icons.sync_rounded,
             color: NoteEditStatus.lostConnection.color,
           ),
-          onPressed: () {
-            setNoteEditStatus(NoteEditStatus.dismissedErrors);
-          }
+          onPressed: () => setNoteEditStatus(NoteEditStatus.dismissedErrors)
         )
       )
     );
@@ -154,6 +146,10 @@ Widget editAppBarContentBuilder(BuildContext context) {
 AppBar editAppBarBuilder(BuildContext context) {
 
   AppBar appBar = AppBar(
+    leading: IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () => exitNoteEditPage(context)
+    ),
     title: AppData.instance.editAppBarContent,
     actions: [ 
       IconButton(
@@ -172,7 +168,7 @@ AppBar editAppBarBuilder(BuildContext context) {
         icon: getProfilePicture(false),
         onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
       ),
-      const SizedBox(width: 8.0)
+      const Gap(8.0)
     ],
   );
 

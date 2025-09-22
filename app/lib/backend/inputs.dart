@@ -85,8 +85,7 @@ void editInputListener(BuildContext context, KeyEvent event) {
     }
 
     if (alt && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      saveNoteContent();
-      Navigator.pop(context);
+      exitNoteEditPage(context);
       AppData.instance.inputData.keysPressed.clear();
     }
   } 
@@ -102,9 +101,10 @@ void newNoteInputListener(BuildContext context, KeyEvent event, TextEditingContr
     AppData.instance.inputData.keysPressed.add(event.logicalKey);
     appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
       
-    if (AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.enter) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.numpadEnter)) {
-      NavigatorInfo.getState()?.pop(context);
-      createNewNote(controller.text);
+    bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
+    
+    if (ctrl & AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
+      renameNote(controller.text);
       AppData.instance.inputData.keysPressed.clear();
     }
 
@@ -120,10 +120,11 @@ void renameInputListener(BuildContext context, KeyEvent event, TextEditingContro
   if (event is KeyDownEvent) {
     AppData.instance.inputData.keysPressed.add(event.logicalKey);
     appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
+
+    bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       
-    if (AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.enter) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.numpadEnter)) {
+    if (ctrl & AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyR)) {
       NavigatorInfo.getState()?.pop(context);
-      renameNote(controller.text);
       AppData.instance.inputData.keysPressed.clear();
     }
 

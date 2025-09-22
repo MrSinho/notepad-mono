@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
-import 'package:nnotes/backend/notify_ui.dart';
-import 'package:nnotes/backend/supabase/queries.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'package:http/http.dart' as http;
+
 import '../app_data.dart';
 import '../utils.dart';
+import '../notify_ui.dart';
 import '../color_palette.dart';
 
 
