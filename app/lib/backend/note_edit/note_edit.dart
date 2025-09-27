@@ -263,14 +263,7 @@ void checkCursorNoteEditStatus() {
   if (!controller.selection.isValid || controller.selection.start < 0 || controller.selection.end < 0) {
     return; //Too early
   }
-
-  //if (AppData.instance.noteEditData.changeStatusAfterEdit) {
-  //  AppData.instance.noteEditData.changeStatusAfterEdit = false;
-  //  setNoteEditStatus(NoteEditStatus.unsavedChanges);
-  //}
-
-  appLog("BOOL ${AppData.instance.noteEditData.changeStatusAfterEdit}", true);
-
+  
   if (
     AppData.instance.noteEditData.changeStatusAfterEdit ||
     (controller.text != AppData.instance.queriesData.selectedNote["content"]?.toString() &&
