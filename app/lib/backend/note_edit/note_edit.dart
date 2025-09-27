@@ -45,23 +45,32 @@ class NoteEditData {
   int currentCursorStart = 0;
 
   String lastEdit = "";
+  bool   changeStatusAfterEdit = true;
 }
 
 enum NoteEditStatus {
-  uninitialized(0, Colors.brown),
+  uninitialized(-1, Colors.brown),
+  dismissedErrors(0, Colors.brown),  
   lostConnection(1, Colors.deepOrange),
   selectedNote(2, Colors.lightGreenAccent),
   renamedNote(3, Colors.greenAccent),
-  savedChanges(4, Colors.green),
-  failedSave(5, Colors.red),
-  selectedCharacters(6, Colors.lime),
-  unsavedChanges(7, Colors.orange),
-  pulledChanges(8, Colors.lightBlue),
-  copiedSelection(9, Colors.deepPurpleAccent),
-  copiedNote(10, Colors.purple),
-  addedToFavorites(11, Colors.amber),
-  removedFromFavorites(12, Colors.amberAccent),
-  dismissedErrors(13, Colors.brown);
+  addedToFavorites(4, Colors.amber),
+  removedFromFavorites(5, Colors.amberAccent),
+
+  savedChanges(6, Colors.green),
+  failedSave(7, Colors.red),
+  selectedCharacters(8, Colors.lime),
+  unsavedChanges(9, Colors.orange),
+  pulledChanges(10, Colors.lightBlue),
+  copiedSelection(11, Colors.deepPurpleAccent),
+  copiedNote(12, Colors.purple),
+  duplicatedLines(13, Colors.orangeAccent),
+  cutLines(14, Colors.pink),
+  movedLinesUp(15, Colors.indigoAccent),
+  movedLinesDown(16, Colors.indigo),
+  indentLines(17, Colors.limeAccent),
+  outdentLines(18, Colors.orangeAccent);
+
 
   final int   code;
   final Color color;
@@ -72,12 +81,14 @@ enum NoteEditStatus {
 
 void setNoteEditStatus(NoteEditStatus status) {
 
-
   String message = "";
 
   switch (status) {
     case NoteEditStatus.uninitialized:
       message = "Uninitialized";
+      break;
+    case NoteEditStatus.dismissedErrors:
+      message = "Dismissed errors";
       break;
     case NoteEditStatus.lostConnection:
       message = "Lost connection";
@@ -87,6 +98,12 @@ void setNoteEditStatus(NoteEditStatus status) {
       break;
     case NoteEditStatus.renamedNote:
       message = "Renamed note";
+      break;
+    case NoteEditStatus.addedToFavorites:
+      message = "Note added to favorites";
+      break;
+    case NoteEditStatus.removedFromFavorites:
+      message = "Note removed favorites";
       break;
     case NoteEditStatus.savedChanges:
       message = "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${AppData.instance.noteEditData.lastEdit}";
@@ -109,14 +126,23 @@ void setNoteEditStatus(NoteEditStatus status) {
     case NoteEditStatus.copiedSelection:
       message = "Copied selection to clipboard";
       break;
-    case NoteEditStatus.addedToFavorites:
-      message = "Note added to favorites";
+    case NoteEditStatus.duplicatedLines:
+      message = "Duplicated lines";
       break;
-    case NoteEditStatus.removedFromFavorites:
-      message = "Note removed favorites";
+    case NoteEditStatus.cutLines:
+      message = "Lines cut";
       break;
-    case NoteEditStatus.dismissedErrors:
-      message = "Dismissed errors";
+    case NoteEditStatus.movedLinesUp:
+      message = "Moved lines up";
+      break;
+    case NoteEditStatus.movedLinesDown:
+      message = "Moved lines down";
+      break;
+    case NoteEditStatus.indentLines:
+      message = "Indented lines";
+      break;
+    case NoteEditStatus.outdentLines:
+      message = "Outdented lines";
       break;
   }
 
@@ -238,23 +264,79 @@ void checkCursorNoteEditStatus() {
     return; //Too early
   }
 
-  if (controller.text != AppData.instance.queriesData.selectedNote["content"]?.toString()) {
+  //if (AppData.instance.noteEditData.changeStatusAfterEdit) {
+  //  AppData.instance.noteEditData.changeStatusAfterEdit = false;
+  //  setNoteEditStatus(NoteEditStatus.unsavedChanges);
+  //}
+
+  appLog("BOOL ${AppData.instance.noteEditData.changeStatusAfterEdit}", true);
+
+  if (
+    AppData.instance.noteEditData.changeStatusAfterEdit ||
+    (controller.text != AppData.instance.queriesData.selectedNote["content"]?.toString() &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.duplicatedLines.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.cutLines.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.movedLinesUp.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.movedLinesDown.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.indentLines.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.outdentLines.code)
+  ) {
     setNoteEditStatus(NoteEditStatus.unsavedChanges);
   }
-  else if (
+
+  if (
     controller.text == AppData.instance.queriesData.selectedNote["content"]?.toString() &&
-    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.renamedNote.code &&
-    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.pulledChanges.code &&
-    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.savedChanges.code &&
     AppData.instance.noteEditStatusData.status.code != NoteEditStatus.selectedNote.code &&
-    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.addedToFavorites.code 
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.renamedNote.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.addedToFavorites.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.removedFromFavorites.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.pulledChanges.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.savedChanges.code
   ) {
     setNoteEditStatus(NoteEditStatus.savedChanges);
-  }
+  }  
 
-  if (AppData.instance.noteEditData.selectionLength > 0) {
+  if (
+    AppData.instance.noteEditData.changeStatusAfterEdit ||
+    (AppData.instance.noteEditData.selectionLength > 0 &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.duplicatedLines.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.cutLines.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.movedLinesUp.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.movedLinesDown.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.indentLines.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.outdentLines.code)
+  ) {
     setNoteEditStatus(NoteEditStatus.selectedCharacters);
   }
+
+  switch (AppData.instance.noteEditStatusData.status) {
+    case NoteEditStatus.unsavedChanges:
+      AppData.instance.noteEditData.changeStatusAfterEdit = false;
+      break;
+    case NoteEditStatus.duplicatedLines:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
+      break;
+    case NoteEditStatus.cutLines:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
+      break;
+    case NoteEditStatus.movedLinesUp:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
+      break;
+    case NoteEditStatus.movedLinesDown:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
+      break;
+    case NoteEditStatus.indentLines:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
+      break;
+    case NoteEditStatus.outdentLines:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
+      break;
+    case NoteEditStatus.selectedCharacters:
+      AppData.instance.noteEditData.changeStatusAfterEdit = false;
+      break;
+    default:
+  }
+
 }
 
 void noteEditCallback() {

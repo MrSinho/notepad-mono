@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../note_edit/note_edit.dart';
 import '../../app_data.dart';
 
 
@@ -48,4 +49,5 @@ void outdentLines() {
     ),
   );
 
+  setNoteEditStatus(NoteEditStatus.outdentLines);
 }

@@ -9,16 +9,46 @@ import '../themes.dart';
 
 
 
+Widget tableTitle(BuildContext context, String title) {
+
+  Padding titlePad = Padding(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      title,
+      style: const TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Colors.white
+      )
+    )
+  );
+
+  Align align = Align(
+    alignment: AlignmentGeometry.centerLeft,
+    child: titlePad
+  );
+
+  ShaderMask mask = paletteGradientShaderMask(
+    generateRandomColorPalette(2, isThemeBright(context)),
+    align
+  );
+
+  return mask;
+}
+
 TableRow shortcutRow(BuildContext context, String shortcut, String description) {
   
   TableRow row = TableRow(
     children: [
-      Text(
-        shortcut,
-        style: GoogleFonts.robotoMono(
-          fontWeight: FontWeight.bold,
-          color: getCurrentThemePalette(context).quaternaryForegroundColor
-        )
+      Padding(
+        padding: const EdgeInsets.only(right: 16), 
+        child: Text(
+          shortcut,
+          style: GoogleFonts.robotoMono(
+            fontWeight: FontWeight.bold,
+            color: getCurrentThemePalette(context).quaternaryForegroundColor
+          )
+        ),
       ),
       Text(
         description,
@@ -35,6 +65,10 @@ TableRow shortcutRow(BuildContext context, String shortcut, String description) 
 void showShortCutsMapBottomSheet(BuildContext context) {
   
   Table navigationTable = Table(
+    columnWidths: const {
+      0: FlexColumnWidth(),
+      1: FlexColumnWidth(),
+    },
     children: [
       shortcutRow(context, "CTRL + S", "Save note"),
       shortcutRow(context, "CTRL + N", "Shortcuts map"),
@@ -46,6 +80,10 @@ void showShortCutsMapBottomSheet(BuildContext context) {
   );
 
   Table editTable = Table(
+    columnWidths: const {
+      0: FlexColumnWidth(),
+      1: FlexColumnWidth(),
+    },
     children: [
       shortcutRow(context, "CTRL + Z", "Undo"),
       shortcutRow(context, "CTRL + SHIFT + Z", "Redo"),
@@ -71,33 +109,19 @@ void showShortCutsMapBottomSheet(BuildContext context) {
 
   Column content = Column(
     children: [
-      paletteGradientShaderMask(
-        generateRandomColorPalette(2, isThemeBright(context)),
-        const Text(
-          "Navigation shortcuts",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.white
-          )
-        )
+      tableTitle(context, "Navigation shortcuts"),
+      const Gap(12),
+      Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: navigationTable
       ),
       const Gap(12),
-      navigationTable,
+      tableTitle(context, "Edit shortcuts"),
       const Gap(12),
-      paletteGradientShaderMask(
-        generateRandomColorPalette(2, isThemeBright(context)),
-        const Text(
-          "Edit shortcuts",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.white
-          )
-        )
+      Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: editTable
       ),
-      const Gap(12),
-      editTable,
       const Gap(12),
     ],
   );

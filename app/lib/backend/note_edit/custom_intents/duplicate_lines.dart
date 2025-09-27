@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+import '../../note_edit/note_edit.dart';
 import '../../app_data.dart';
 
 
@@ -46,5 +48,7 @@ void duplicateLines() {
       extentOffset: endLine + 1 + selectedText.length,
     )
   );
+
+  setNoteEditStatus(NoteEditStatus.duplicatedLines);
 
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../note_edit/note_edit.dart';
 import '../../app_data.dart';
 
 
@@ -47,5 +48,7 @@ void indentLines() {
       extentOffset: end + 1 * lines.length,
     ),
   );
+
+  setNoteEditStatus(NoteEditStatus.indentLines);
 
 }

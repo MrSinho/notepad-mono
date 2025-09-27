@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../note_edit/note_edit.dart';
 import '../../app_data.dart';
 
 
@@ -107,4 +108,11 @@ void moveSelectionLine(bool up) {
 
   }
 
+  if (up) {
+    setNoteEditStatus(NoteEditStatus.movedLinesUp);
+  }
+  else {
+    setNoteEditStatus(NoteEditStatus.movedLinesDown);
+  }
+  
 }

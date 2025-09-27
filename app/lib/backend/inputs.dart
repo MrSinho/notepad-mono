@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:notepad_mono/static/shortcuts_map.dart';
 
 import 'supabase/queries.dart';
 
@@ -11,6 +10,7 @@ import 'navigator.dart';
 
 import '../static/info_settings_dialogs.dart';
 import '../static/note_dialogs.dart';
+import '../static/shortcuts_map.dart';
 
 
 
