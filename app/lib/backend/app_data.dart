@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:code_text_field/code_text_field.dart';
+//import 'package:code_text_field/code_text_field.dart';
+import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:highlight/languages/markdown.dart';
 
 import 'supabase/listen.dart';
 import 'supabase/auth_access.dart';
@@ -14,7 +16,7 @@ import '../new_primitives/edit_app_bar_content.dart';
 import '../new_primitives/edit_status_bar.dart';
 import '../new_primitives/edit_bottom_bar.dart';
 
-import 'note_edit.dart';
+import 'note_edit/note_edit.dart';
 import 'color_palette.dart';
 import 'inputs.dart';
 
@@ -59,8 +61,15 @@ class AppData {
     editStatusBar     = const EditStatusBar();
     editBottomBar     = const EditBottomBar();
 
-    noteEditData.controller = CodeController();
+    noteEditData.controller = CodeController(
+      language: markdown,
+      namedSectionParser: const BracketsStartEndNamedSectionParser(),
+    );
+    noteEditData.controller.popupController.enabled = true;
+
     noteEditData.controller.addListener(noteEditCallback);
+    noteEditData.focusNode = FocusNode();
+
     queriesData.selectedNote = {"title": "note"};
 
     startAuthServer();

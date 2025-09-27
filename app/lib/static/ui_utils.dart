@@ -6,7 +6,7 @@ import 'package:gap/gap.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/supabase/auth_access.dart';
 
-import '../backend/note_edit.dart';
+import '../backend/note_edit/note_edit.dart';
 
 import '../themes.dart';
 

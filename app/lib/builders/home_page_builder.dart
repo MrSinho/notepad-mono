@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../backend/app_data.dart';
-import '../backend/note_edit.dart';
+import '../backend/note_edit/note_edit.dart';
 import '../backend/utils.dart';
 import '../backend/navigator.dart';
 import '../backend/inputs.dart';

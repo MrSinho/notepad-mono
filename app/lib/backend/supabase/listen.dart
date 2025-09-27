@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
-import '../note_edit.dart';
+import '../note_edit/note_edit.dart';
 import '../utils.dart';
 import '../notify_ui.dart';
 import '../color_palette.dart';
@@ -89,7 +89,6 @@ void listenToNotes(BuildContext context) {
         for (Map<String, dynamic> note in notes) {
           if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
 
-              
             if (note["content"] != AppData.instance.noteEditData.controller.text) {
               setNoteEditStatus(NoteEditStatus.pulledChanges);
             }

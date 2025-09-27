@@ -3,13 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
 
 import '../backend/app_data.dart';
-import '../backend/supabase/queries.dart';
 import '../backend/utils.dart';
-import '../backend/note_edit.dart';
+import '../backend/note_edit/note_edit.dart';
 import '../backend/color_palette.dart';
 
 import '../static/info_settings_dialogs.dart';
 import '../static/note_dialogs.dart';
+import '../static/shortcuts_map.dart';
 import '../static/ui_utils.dart';
 
 import '../themes.dart';
@@ -151,18 +151,26 @@ AppBar editAppBarBuilder(BuildContext context) {
       onPressed: () => exitNoteEditPage(context)
     ),
     title: AppData.instance.editAppBarContent,
-    actions: [ 
+    actions: [
+      //IconButton(
+      //  icon: const Icon(Icons.format_indent_increase_rounded),
+      //  onPressed: () => indentSelection(AppData.instance.noteEditData.controller),
+      //),
+      //IconButton(
+      //  icon: const Icon(Icons.copy_sharp),
+      //  onPressed: () async => await copySelectionToClipboardOrNot()
+      //),
+      //IconButton(
+      //  icon: const Icon(Icons.copy_all_sharp),
+      //  onPressed: () async => await copyNoteToClipboardOrNot()
+      //),
+      //IconButton(
+      //  icon: const Icon(Icons.save_outlined),
+      //  onPressed: () async => await saveNoteContent()
+      //),
       IconButton(
-        icon: const Icon(Icons.copy_sharp),
-        onPressed: () async => await copySelectionToClipboardOrNot()
-      ),
-      IconButton(
-        icon: const Icon(Icons.copy_all_sharp),
-        onPressed: () async => await copyNoteToClipboardOrNot()
-      ),
-      IconButton(
-        icon: const Icon(Icons.save_outlined),
-        onPressed: () async => await saveNoteContent()
+        icon: const Icon(Icons.keyboard_rounded),
+        onPressed: () => showShortCutsMapBottomSheet(context),
       ),
       IconButton(
         icon: getProfilePicture(false),

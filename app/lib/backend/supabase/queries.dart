@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
-import '../note_edit.dart';
+import '../note_edit/note_edit.dart';
 import '../notify_ui.dart';
 import '../utils.dart';
 

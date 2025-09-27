@@ -1,11 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:notepad_mono/static/shortcuts_map.dart';
 
 import 'supabase/queries.dart';
 
 import 'app_data.dart';
 import 'utils.dart';
-import 'note_edit.dart';
+import 'note_edit/note_edit.dart';
 import 'navigator.dart';
 
 import '../static/info_settings_dialogs.dart';
@@ -15,7 +16,7 @@ import '../static/note_dialogs.dart';
 
 class InputData {
 
-  List<LogicalKeyboardKey> keysPressed = [];
+  Set<LogicalKeyboardKey> keysPressed = {};
   
 }
 
@@ -31,18 +32,16 @@ void homeInputListener(BuildContext context, KeyEvent event) {
     bool shift = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shiftLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shiftRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shift);
     bool alt   = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.alt);
 
-    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyI)) {
+    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
       showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context));
-      AppData.instance.inputData.keysPressed.clear();
     }
 
     if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
       showDialog(context: context, builder: (BuildContext context) => newNoteDialog(context));
-      AppData.instance.inputData.keysPressed.clear();
     }
 
   } 
-  else if (event is KeyUpEvent) {
+  else {
     AppData.instance.inputData.keysPressed.remove(event.logicalKey);
   }
 
@@ -50,47 +49,48 @@ void homeInputListener(BuildContext context, KeyEvent event) {
 
 void editInputListener(BuildContext context, KeyEvent event) {
 
-  if (event is KeyDownEvent) {
-    AppData.instance.inputData.keysPressed.add(event.logicalKey);
-    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
-      
-    bool ctrl  = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
-    bool shift = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shiftLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shiftRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shift);
-    bool alt   = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.alt);
+  InputData inputData = AppData.instance.inputData;
 
-    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
+  if (event is KeyDownEvent) {
+    inputData.keysPressed.add(event.logicalKey);
+    appLog("Keys pressed: ${inputData.keysPressed.toString()}", true);
+      
+    bool ctrl = inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || inputData.keysPressed.contains(LogicalKeyboardKey.control);
+    bool alt  = inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || inputData.keysPressed.contains(LogicalKeyboardKey.alt);
+
+    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
       saveNoteContent();
     }
 
-    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {
-      setNoteEditStatus(NoteEditStatus.copiedSelection);          
+    if (ctrl && alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {//create custom intent
+      copyNoteToClipboard();
+      AppData.instance.inputData.keysPressed.clear();
     }
 
-    if (ctrl && alt && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {
-      copyNoteToClipboardOrNot();
-    }
-
-    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyF)) {
+    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyT)) {
       flipFavoriteNote();
     }
 
-    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyR)) {
+    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyR)) {
       showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context));
-      AppData.instance.inputData.keysPressed.clear();
     }
 
-    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyI)) {
+    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
+      showShortCutsMapBottomSheet(context);
+    }
+
+    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
       showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context));
-      AppData.instance.inputData.keysPressed.clear();
     }
 
-    if (alt && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      exitNoteEditPage(context);
+    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyQ)) {
       AppData.instance.inputData.keysPressed.clear();
+      exitNoteEditPage(context);
     }
+
   } 
-  else if (event is KeyUpEvent) {
-    AppData.instance.inputData.keysPressed.remove(event.logicalKey);
+  else {
+    inputData.keysPressed.remove(event.logicalKey);
   }
 
 }
@@ -105,11 +105,10 @@ void newNoteInputListener(BuildContext context, KeyEvent event, TextEditingContr
     
     if (ctrl & AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
       renameNote(controller.text);
-      AppData.instance.inputData.keysPressed.clear();
     }
 
   } 
-  else if (event is KeyUpEvent) {
+  else {
     AppData.instance.inputData.keysPressed.remove(event.logicalKey);
   }
 
@@ -125,11 +124,10 @@ void renameInputListener(BuildContext context, KeyEvent event, TextEditingContro
       
     if (ctrl & AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyR)) {
       NavigatorInfo.getState()?.pop(context);
-      AppData.instance.inputData.keysPressed.clear();
     }
 
   } 
-  else if (event is KeyUpEvent) {
+  else {
     AppData.instance.inputData.keysPressed.remove(event.logicalKey);
   }
 
@@ -143,13 +141,31 @@ void userInfoInputListener(BuildContext context, KeyEvent event) {
 
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       
-    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyI)) {
+    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
       NavigatorInfo.getState()?.pop(context);
-      AppData.instance.inputData.keysPressed.clear();
     }
 
   } 
-  else if (event is KeyUpEvent) {
+  else {
+    AppData.instance.inputData.keysPressed.remove(event.logicalKey);
+  }
+
+}
+
+void shortcutsMapInputListener(BuildContext context, KeyEvent event) {
+
+  if (event is KeyDownEvent) {
+    AppData.instance.inputData.keysPressed.add(event.logicalKey);
+    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
+
+    bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
+      
+    if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
+      NavigatorInfo.getState()?.pop(context);
+    }
+
+  } 
+  else {
     AppData.instance.inputData.keysPressed.remove(event.logicalKey);
   }
 

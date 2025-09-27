@@ -8,7 +8,7 @@ import 'package:material_color_generator/material_color_generator.dart';
 import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 
 import '../backend/app_data.dart';
-import '../backend/note_edit.dart';
+import 'note_edit/note_edit.dart';
 
 
 
@@ -39,7 +39,7 @@ String formatDateTime(String src) {
   return formatted;
 }
 
-Future<void> copySelectionToClipboardOrNot() async {
+Future<void> copySelectionToClipboard() async {
   
   String buffer = getNoteSelectionText();
 
@@ -52,7 +52,7 @@ Future<void> copySelectionToClipboardOrNot() async {
   return;
 }
 
-Future<void> copyNoteToClipboardOrNot() async {
+Future<void> copyNoteToClipboard() async {
   
   String buffer = AppData.instance.noteEditData.controller.text;
 

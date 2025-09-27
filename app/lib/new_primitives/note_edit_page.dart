@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../backend/utils.dart';
 
-import '../builders/note_edit_page_builder.dart';
+import '../builders/edit_page_builder.dart';
 
 
 

@@ -1,14 +1,16 @@
-import 'package:code_text_field/code_text_field.dart';
+import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import '../static/note_dialogs.dart';
+import '../../static/note_dialogs.dart';
 
-import 'utils.dart';
-import 'notify_ui.dart';
-import 'app_data.dart';
-import 'color_palette.dart';
+import '../utils.dart';
+import '../notify_ui.dart';
+import '../app_data.dart';
+import '../color_palette.dart';
+import '../navigator.dart';
 
-import '../themes.dart';
+import '../../themes.dart';
 
 
 class NoteEditStatusData {
@@ -28,6 +30,7 @@ class NoteEditStatusData {
 class NoteEditData {
 
   late CodeController controller;
+  late FocusNode      focusNode;
 
   int savedContentLength = 0;
   int savedContentLines  = 0;
@@ -38,6 +41,8 @@ class NoteEditData {
   int unsavedBytes       = 0;
   int cursorRow          = 0;
   int cursorColumn       = 0;
+
+  int currentCursorStart = 0;
 
   String lastEdit = "";
 }
@@ -126,10 +131,23 @@ void setNoteEditStatus(NoteEditStatus status) {
 
 void setNoteControllerText(String text) {
   
+  int cursorStart = AppData.instance.noteEditData.currentCursorStart;
+
+  if (cursorStart >= text.length) {
+    cursorStart = text.length - 1;
+    AppData.instance.noteEditData.currentCursorStart = cursorStart;
+  }
+
+  appLog("Cursor start: $cursorStart", true);
+
+  AppData.instance.noteEditData.controller.text = text;
+
   AppData.instance.noteEditData.controller.value = TextEditingValue(
     text: text,
-    selection: TextSelection.collapsed(offset: text.length),
+    selection: TextSelection.collapsed(offset: cursorStart),
   );
+
+  AppData.instance.noteEditData.controller.selection = TextSelection.collapsed(offset: cursorStart);
 
 }
 
@@ -196,17 +214,17 @@ void getNoteCursorData() {
 
   String selection = getNoteSelectionText();
 
-  int cursorStart = controller.selection.start;
-
+  AppData.instance.noteEditData.currentCursorStart = controller.selection.start;
+  
   AppData.instance.noteEditData.selectionLength = selection.length;
   AppData.instance.noteEditData.selectionLines = "\n".allMatches(selection).length + 1;
 
-  String textBeforeCursor = controller.text.substring(0, cursorStart);
+  String textBeforeCursor = controller.text.substring(0, AppData.instance.noteEditData.currentCursorStart);
 
   AppData.instance.noteEditData.cursorRow = "\n".allMatches(textBeforeCursor).length + 1;
 
   int lastNewlineIndex = textBeforeCursor.lastIndexOf('\n');
-  AppData.instance.noteEditData.cursorColumn = cursorStart - (lastNewlineIndex + 1);
+  AppData.instance.noteEditData.cursorColumn = AppData.instance.noteEditData.currentCursorStart - (lastNewlineIndex + 1);
 
   appLog("Cursor row: ${AppData.instance.noteEditData.cursorRow}, column: ${AppData.instance.noteEditData.cursorColumn}", true);
   appLog("Selection length: ${AppData.instance.noteEditData.selectionLength}, lines: ${AppData.instance.noteEditData.selectionLines}", true);
@@ -253,7 +271,8 @@ void exitNoteEditPage(BuildContext context) {
     showDialog(context: context, builder: (BuildContext context) => unsavedChangesDialog(context));
   }
   else {
-    Navigator.pop(context);
+    NavigatorInfo.getState()?.pop(context);
   }
 
 }
+
