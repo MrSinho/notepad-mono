@@ -55,35 +55,40 @@ void editInputListener(BuildContext context, KeyEvent event) {
     inputData.keysPressed.add(event.logicalKey);
     appLog("Keys pressed: ${inputData.keysPressed.toString()}", true);
       
-    bool ctrl = inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || inputData.keysPressed.contains(LogicalKeyboardKey.control);
-    bool alt  = inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || inputData.keysPressed.contains(LogicalKeyboardKey.alt);
+    bool ctrl  = inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || inputData.keysPressed.contains(LogicalKeyboardKey.control);
+    bool shift = inputData.keysPressed.contains(LogicalKeyboardKey.shiftLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.shiftRight) || inputData.keysPressed.contains(LogicalKeyboardKey.shift);
+    bool alt   = inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || inputData.keysPressed.contains(LogicalKeyboardKey.alt);
 
-    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
+    if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
       saveNoteContent();
     }
 
-    if (ctrl && alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {//create custom intent
+    if (ctrl && !alt && shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
+      //Save as
+    }
+
+    if (ctrl && alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {//create custom intent
       copyNoteToClipboard();
       AppData.instance.inputData.keysPressed.clear();
     }
 
-    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyT)) {
+    if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyT)) {
       flipFavoriteNote();
     }
 
-    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyR)) {
+    if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyR)) {
       showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context));
     }
 
-    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
+    if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
       showShortCutsMapBottomSheet(context);
     }
 
-    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
+    if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
       showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context));
     }
 
-    if (ctrl && !alt && inputData.keysPressed.contains(LogicalKeyboardKey.keyQ)) {
+    if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyQ)) {
       AppData.instance.inputData.keysPressed.clear();
       exitNoteEditPage(context);
     }
