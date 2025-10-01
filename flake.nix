@@ -11,7 +11,12 @@
     let
       pkgs = import nixpkgs {
         inherit system;
+        config = {
+          android_sdk.accept_license = true;
+          allowUnfree = true;
+        };
       };
+
       notepad-mono = (with pkgs; stdenv.mkDerivation {
           pname = "Notepad Mono";
           version = "1.0.0";
@@ -19,17 +24,20 @@
           #  src = ./.;
           #  filter = path: type: true;  # include everything
           #};
-          src = pkgs.fetchgit {
-            url = "https://github.com/mrsinho/notepad-mono.git";
-            rev = "df81ffb022a99f99a5c48b4eb962fc4697df67d9";
-            sha256 = "0000000000000000000000000000000000000000000000000000";# dummy 0000000000000000000000000000000000000000000000000000
-            fetchSubmodules = true;
-          };
+
+          src = ./.;
+
+          #src = pkgs.fetchgit {
+          #  url = "https://github.com/mrsinho/notepad-mono.git";
+          #  rev = "9b053e06b2aa55ba25d467d284f0ef62dbffdf9c";
+          #  sha256 = "0000000000000000000000000000000000000000000000000000";# dummy 0000000000000000000000000000000000000000000000000000
+          #  fetchSubmodules = true;
+          #};
 
           nativeBuildInputs = [
             pkgs.flutter
-            pkgs.androidSdk
-            pkgs.jdk17
+            pkgs.jdk
+            androidenv.androidPkgs.tools
             #pkgs.pkg-config
           ];
 
@@ -85,9 +93,18 @@
           #];
 
           buildPhase = ''
+            # Writable directory for storing settings and downloaded artifacts
+            export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
+            export XDG_CONFIG_HOME=$TMPDIR/config
+            mkdir -p $FLUTTER_STORAGE_BASE_DIR
+            mkdir -p $XDG_CONFIG_HOME
+
+            # To fetch packages from pub.dev
+            export PUB_HOSTED_URL=https://pub.dev
+            export FLUTTER_STORAGE_BASE_URL=https://storage.googleapis.com
+
             cd app
-            flutter create .
-            flutter build linux --release
+            flutter pub get
           '';
 
           #installPhase = '' # Starts from build directory (equal to $PWD)
@@ -108,6 +125,11 @@
         }
       );
     in rec {
+      defaultApp = flake-utils.lib.mkApp {
+        drv = defaultPackage;
+      };
+
+      defaultPackage = notepad-mono;
     }
   );
 }
