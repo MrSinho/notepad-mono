@@ -33,10 +33,12 @@ void main() async {
   );
   */
 
-  runApp(
-    const BetterFeedback(
-      child: NoteApp()
-    )
-  );
+  //runApp(
+  //  const BetterFeedback(
+  //    child: NoteApp()
+  //  )
+  //);
+
+  runApp(const NoteApp());
 
 }

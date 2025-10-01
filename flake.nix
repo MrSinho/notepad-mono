@@ -101,7 +101,7 @@
 
             cd app
             flutter create .
-            #flutter build linux --release
+            flutter build linux --release
           '';
 
           #installPhase = '' # Starts from build directory (equal to $PWD)
