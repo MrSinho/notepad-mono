@@ -67,9 +67,9 @@ dependencies:
 
   feedback: ^3.2.0
 
-  feedback_sentry: ^3.2.0
+  #feedback_sentry: ^3.2.0
 
-  sentry_flutter: ^9.6.0
+  #sentry_flutter: ^9.6.0
 
   gap: ^3.0.1
 
@@ -80,7 +80,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
-  sentry_dart_plugin: ^3.1.1
+  #sentry_dart_plugin: ^3.1.1
   flutter_test:
     sdk: flutter
 

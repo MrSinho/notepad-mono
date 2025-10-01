@@ -94,17 +94,14 @@
 
           buildPhase = ''
             # Writable directory for storing settings and downloaded artifacts
+            export HOME=$TMPDIR
             export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
             export XDG_CONFIG_HOME=$TMPDIR/config
-            mkdir -p $FLUTTER_STORAGE_BASE_DIR
-            mkdir -p $XDG_CONFIG_HOME
-
-            # To fetch packages from pub.dev
-            export PUB_HOSTED_URL=https://pub.dev
-            export FLUTTER_STORAGE_BASE_URL=https://storage.googleapis.com
+            mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CONFIG_HOME
 
             cd app
-            flutter pub get
+            flutter create .
+            #flutter build linux --release
           '';
 
           #installPhase = '' # Starts from build directory (equal to $PWD)

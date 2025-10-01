@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+//import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:feedback/feedback.dart';
 
 import 'backend/supabase/supabase.dart';
@@ -16,6 +16,7 @@ void main() async {
 
   await dotenv.load(fileName: ".env");
 
+  /*
   await SentryFlutter.init(
     (options) {
       options.dsn = dotenv.env['SENTRY_DSN'];
@@ -28,6 +29,13 @@ void main() async {
           child: NoteApp()
         )
       )
+    )
+  );
+  */
+
+  runApp(
+    const BetterFeedback(
+      child: NoteApp()
     )
   );
 
