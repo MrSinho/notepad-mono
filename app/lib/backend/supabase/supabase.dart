@@ -1,17 +1,16 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../utils.dart';
+import '../environment.dart';
 
 
 
 Future<int> initializeSupabase() async {
   try {
-    await dotenv.load(fileName: ".env");
-
+    
     await Supabase.initialize(
-      url: dotenv.env['SUPABASE_URL']!,
-      anonKey: dotenv.env['SUPABASE_KEY']!,
+      url: getEnvironmentParameterValue('SUPABASE_URL'),
+      anonKey: getEnvironmentParameterValue('SUPABASE_KEY'),
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
         autoRefreshToken: true,

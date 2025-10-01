@@ -99,6 +99,12 @@
             export XDG_CONFIG_HOME=$TMPDIR/config
             mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CONFIG_HOME
 
+            # Write env file dynamically
+            cat > app/.env <<EOF
+            API_URL=${builtins.getEnv "API_URL"}
+            SENTRY_DSN=${builtins.getEnv "SENTRY_DSN"}
+            EOF
+
             cd app
             flutter create .
             flutter build linux --release

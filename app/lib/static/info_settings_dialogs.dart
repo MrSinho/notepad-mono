@@ -51,14 +51,14 @@ Widget userInfoDialog(BuildContext context) {
   List<Widget> userInfoContents = [
     userRow,
     const Gap(20),
-    wrapIconTextButton(
-        const Icon(Icons.bug_report_rounded),
-        Text("Report a bug", style: GoogleFonts.robotoMono()),
-        () => BetterFeedback.of(context).showAndUploadToSentry(
-              // https://xxx-xxx.sentry.io/issues/feedback/
-              name: AppData.instance.sessionData.username,
-              email: AppData.instance.sessionData.email,
-            )),
+    wrapIconTextButton(const Icon(Icons.bug_report_rounded),
+        Text("Report a bug", style: GoogleFonts.robotoMono()), () {}),
+    //() => BetterFeedback.of(context).showAndUploadToSentry(
+    //      // https://xxx-xxx.sentry.io/issues/feedback/
+    //      name: AppData.instance.sessionData.username,
+    //      email: AppData.instance.sessionData.email,
+    //    )),
+
     const Gap(20),
     wrapIconTextButton(const Icon(Icons.logout_outlined),
         Text("Log out", style: GoogleFonts.robotoMono()), () {

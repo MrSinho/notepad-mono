@@ -14,7 +14,10 @@ void main() async {
 
   await initializeSupabase();
 
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(
+    fileName: ".env",
+    isOptional: true
+  );
 
   /*
   await SentryFlutter.init(
