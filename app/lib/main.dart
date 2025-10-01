@@ -11,13 +11,13 @@ import 'app.dart';
 
 
 void main() async {
-
-  await initializeSupabase();
-
+  
   await dotenv.load(
-    fileName: ".env",
+    fileName: ".safeEnv",
     isOptional: true
   );
+
+  await initializeSupabase();
 
   /*
   await SentryFlutter.init(

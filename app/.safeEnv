@@ -1,0 +1,6 @@
+SUPABASE_URL='https://pxtqtkxkkbxoigfklbgw.supabase.co'
+SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4dHF0a3hra2J4b2lnZmtsYmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjQ3NDYsImV4cCI6MjA1OTA0MDc0Nn0.nDRJO9xP7wV-0MC0Iz6cSviz3HKfjxWV_91BrWAVvJY'
+
+GOOGLE_REDIRECT_URL='https://pxtqtkxkkbxoigfklbgw.supabase.co/auth/v1/callback'
+GITHUB_REDIRECT_URL='https://pxtqtkxkkbxoigfklbgw.supabase.co/auth/v1/callback'
+AZURE_REDIRECT_URL='https://pxtqtkxkkbxoigfklbgw.supabase.co/auth/v1/callback'

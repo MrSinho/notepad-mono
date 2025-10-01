@@ -24,7 +24,7 @@ Widget tableTitle(BuildContext context, String title) {
   );
 
   Align align = Align(
-    alignment: AlignmentGeometry.centerLeft,
+    alignment: Alignment.centerLeft,
     child: titlePad
   );
 
