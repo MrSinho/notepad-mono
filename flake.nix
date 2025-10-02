@@ -59,10 +59,14 @@
             
             dir
             mkdir -p $out/bin
-            echo $PWD >> $out/working-directory.txt
+            echo $PWD >> $out/pwd-directory.txt
             tree >> $out/tree.txt
             tree $PWD >> $out/pwd-tree.txt
+            tree $TMP >> $out/tmp-tree.txt
             dir $TMP >> $out/dir-tmp.txt
+
+            # $PWD starts from app directory
+            cp $PWD/../build/linux/x64/release/bundle/notepad_mono $out/bin/notepad_mono
 
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
