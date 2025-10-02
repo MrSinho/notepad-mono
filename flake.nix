@@ -52,7 +52,7 @@
           '';
 
           installPhase = ''
-            dir >> dir-locations.txt
+            dir >> $out/dir-locations.txt
 
             #mkdir -p $out/bin
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
