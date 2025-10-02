@@ -53,6 +53,8 @@
 
           installPhase = ''
             dir >> $out/dir-locations.txt
+            dir >> $TMP/dir-locations.txt
+            dir $TMP >> $TMP/dir-locations.txt
 
             #mkdir -p $out/bin
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
