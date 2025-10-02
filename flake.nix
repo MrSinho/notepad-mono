@@ -58,6 +58,9 @@
             
             dir
             mkdir -p $out/bin
+            echo $PWD >> $out/current-directory.txt
+            dir $TMP >> $out/dir-locations.txt
+
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
             # fix RPATH of all shared libraries
