@@ -35,6 +35,7 @@
             pkgs.jdk
             androidenv.androidPkgs.tools
             pkgs.patchelf
+            pkgs.tree
           ];
 
           buildPhase = ''
