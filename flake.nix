@@ -58,8 +58,8 @@
             #dir $TMP >> $TMP/dir-locations.txt
             
             dir
-            mkdir -p $out/bin
-            mkdir -p $out/bin/lib
+            mkdir -p $out/linux
+            mkdir -p $out/linux/lib
 
             echo $PWD >> $out/pwd-directory.txt
             tree >> $out/tree.txt
@@ -68,8 +68,9 @@
             dir $TMP >> $out/dir-tmp.txt
 
             # $PWD starts from app directory
-            cp    $PWD/build/linux/x64/release/bundle/notepad_mono $out/bin/notepad_mono
-            cp -r $PWD/build/linux/x64/release/bundle $out/bin/lib
+            cp    $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
+            #cp -r $PWD/build/linux/x64/release/bundle              $out/linux/lib
+            cp -r $PWD/build/linux/x64/release/bundle/*             $out/linux/lib/
 
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
