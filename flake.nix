@@ -73,8 +73,13 @@
 
             # $PWD starts from app directory
             cp    $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
-            #cp -r $PWD/build/linux/x64/release/bundle              $out/linux/lib
+            cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
             #cp -r $PWD/build/linux/x64/release/bundle/*             $out/linux/lib/
+
+            # fix RPATHs, very important to remove absolute path references for shared libraries (see readelf -d <binary>)
+            for f in $out/bin/lib/*.so; do
+              patchelf --set-rpath "$out/lib" "$f" || true
+            done
 
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
