@@ -52,6 +52,10 @@
             flutter build linux --release
           '';
 
+          postFixup = ''
+            patchelf --set-rpath $out/lib $out/bin/notepad_mono
+          '';
+
           installPhase = ''
             #dir >> $out/dir-locations.txt
             #dir >> $TMP/dir-locations.txt
@@ -68,9 +72,9 @@
             dir $TMP >> $out/dir-tmp.txt
 
             # $PWD starts from app directory
-            #cp    $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
+            cp    $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
             #cp -r $PWD/build/linux/x64/release/bundle              $out/linux/lib
-            cp -r $PWD/build/linux/x64/release/bundle/*             $out/linux/lib/
+            #cp -r $PWD/build/linux/x64/release/bundle/*             $out/linux/lib/
 
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
