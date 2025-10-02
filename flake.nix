@@ -66,7 +66,7 @@
             dir $TMP >> $out/dir-tmp.txt
 
             # $PWD starts from app directory
-            cp $PWD/../build/linux/x64/release/bundle/notepad_mono $out/bin/notepad_mono
+            cp $PWD/build/linux/x64/release/bundle/notepad_mono $out/bin/notepad_mono
 
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
