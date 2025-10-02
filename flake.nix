@@ -52,9 +52,9 @@
             flutter build linux --release
           '';
 
-          postFixup = ''
-            patchelf --set-rpath $out/lib $out/bin/notepad_mono
-          '';
+          #postFixup = ''
+          #  patchelf --set-rpath $out/lib $out/bin/notepad_mono
+          #'';
 
           installPhase = ''
             #dir >> $out/dir-locations.txt
