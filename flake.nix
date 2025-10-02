@@ -52,12 +52,14 @@
           '';
 
           installPhase = ''
-            mkdir -p $out/bin
-            cp -r app/build/linux/x64/release/bundle/* $out/bin/
+            cp -r $PWD/ $out/
+
+            #mkdir -p $out/bin
+            #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
             # fix RPATH of all shared libraries
-            find $out/bin -name "*.so" -exec patchelf --set-rpath \$ORIGIN {} \;
-            patchelf --set-rpath \$ORIGIN $out/bin/notepad_mono
+            #find $out/bin -name "*.so" -exec patchelf --set-rpath \$ORIGIN {} \;
+            #patchelf --set-rpath \$ORIGIN $out/bin/notepad_mono
           '';
 
         }
