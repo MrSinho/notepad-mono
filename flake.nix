@@ -58,10 +58,10 @@
             
             dir
             mkdir -p $out/bin
-            echo $PWD >> $out/current-directory.txt
-            echo tree >> $out/tree.txt
-            echo tree $PWD >> $out/pwd-tree.txt
-            dir $TMP >> $out/dir-locations.txt
+            echo $PWD >> $out/working-directory.txt
+            tree >> $out/tree.txt
+            tree $PWD >> $out/pwd-tree.txt
+            dir $TMP >> $out/dir-tmp.txt
 
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
 
