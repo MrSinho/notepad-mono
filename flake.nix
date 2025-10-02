@@ -52,7 +52,7 @@
           '';
 
           installPhase = ''
-            cp -r $PWD/ $out/
+            dir >> dir-locations.txt
 
             #mkdir -p $out/bin
             #cp -r app/build/linux/x64/release/bundle/* $out/bin/
