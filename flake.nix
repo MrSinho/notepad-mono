@@ -84,8 +84,8 @@
             #readelf -d $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
-              echo "Required libraries for $(basename "$so")" >> $out/echo.txt
-              echo "Required libraries for $so" >> $out/echo.txt
+              echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
+              readelf -d $so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
             done
 
             patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
