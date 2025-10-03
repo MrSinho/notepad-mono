@@ -107,7 +107,7 @@
                 patchelf --add-rpath ${pkgs.glib}/lib $so
                 patchelf --add-rpath ${pkgs.libepoxy}/lib $so
                 patchelf --add-rpath ${pkgs.fontconfig}/lib $so
-                patchelf --add-rpath ${pkgs.gdk-pixbu}/lib $so
+                patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib $so
                 patchelf --add-rpath ${pkgs.harfbuzz}/lib $so
                 patchelf --add-rpath ${pkgs.xorg.libX1}/lib $so
                 patchelf --add-rpath ${pkgs.libdeflate}/lib $so
