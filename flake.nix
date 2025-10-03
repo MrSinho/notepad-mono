@@ -71,25 +71,33 @@
 
             # Print required libraries for each .so file
             
-            echo "Required libraries for libapp.so" >> $out/readelf.txt
-            readelf -d $PWD/build/linux/x64/release/bundle/lib/libapp.so                       | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+            #echo "Required libraries for libapp.so" >> $out/readelf.txt
+            #readelf -d $PWD/build/linux/x64/release/bundle/lib/libapp.so                       | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
             
-            echo "Required libraries for libflutter_linux_gtk.so" >> $out/readelf.txt
-            readelf -d $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so         | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
-            
-            echo "Required libraries for libgtk_plugin.so" >> $out/readelf.txt
-            readelf -d $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
-            
-            echo "Required libraries for liburl_launcher_linux_plugin.so" >> $out/readelf.txt
-            readelf -d $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+            #echo "Required libraries for libflutter_linux_gtk.so" >> $out/readelf.txt
+            #readelf -d $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so         | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+            #
+            #echo "Required libraries for libgtk_plugin.so" >> $out/readelf.txt
+            #readelf -d $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+            #
+            #echo "Required libraries for liburl_launcher_linux_plugin.so" >> $out/readelf.txt
+            #readelf -d $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
+            for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
+              echo "Required libraries for $(basename "$so")" >> "$outFile"
+              readelf -d "$so" \
+                  | awk -F'[][]' '/RUNPATH/ { gsub(":", "\n", $2); print $2 }' \
+                  >> "$outFile"
+              echo "" >> "$outFile"
+            done
+
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
 
             cp    $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
-            #cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
+            cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
           '';
 
         }
