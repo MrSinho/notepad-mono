@@ -36,6 +36,7 @@
             androidenv.androidPkgs.tools
             pkgs.patchelf
             pkgs.tree
+            pkgs.libepoxy
           ];
 
           buildPhase = ''
