@@ -67,6 +67,7 @@
             pkgs.libdeflate
 
             androidSdk
+            pkgs.gradle
             pkgs.jdk
 
             #pkgs.androidenv.androidPkgs.androidsdk
