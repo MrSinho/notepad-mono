@@ -57,35 +57,25 @@
           #'';
 
           installPhase = ''
-            #dir >> $out/dir-locations.txt
-            #dir >> $TMP/dir-locations.txt
-            #dir $TMP >> $TMP/dir-locations.txt
-            
-            dir
+
             mkdir -p $out/linux
             mkdir -p $out/linux/lib
 
+            # I'll remove this later
             echo $PWD >> $out/pwd-directory.txt
             tree >> $out/tree.txt
             tree $PWD >> $out/pwd-tree.txt
             tree $TMP >> $out/tmp-tree.txt
             dir $TMP >> $out/dir-tmp.txt
 
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
+
             # $PWD starts from app directory
             cp    $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
-            cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
-            #cp -r $PWD/build/linux/x64/release/bundle/*             $out/linux/lib/
-
-            # fix RPATHs, very important to remove absolute path references for shared libraries (see readelf -d <binary>)
-            for f in $out/bin/lib/*.so; do
-              patchelf --set-rpath "$out/lib" "$f" || true
-            done
-
-            #cp -r app/build/linux/x64/release/bundle/* $out/bin/
-
-            # fix RPATH of all shared libraries
-            #find $out/bin -name "*.so" -exec patchelf --set-rpath \$ORIGIN {} \;
-            #patchelf --set-rpath \$ORIGIN $out/bin/notepad_mono
+            #cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
           '';
 
         }
