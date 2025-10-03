@@ -17,6 +17,28 @@
         };
       };
 
+      # https://discourse.nixos.org/t/android-ndk-and-sdk-licenses-not-accepted/68215/2
+      androidComposition = pkgs.androidenv.composeAndroidPackages {
+        buildToolsVersions = [ "34.0.0" "35.0.0" ];
+        platformVersions = [ "35" "36" ];
+        includeCmdlineTools = true;
+        includePlatformTools = true;
+        # includeCmdlineTools and includePlatformTools are true by default
+        # when using composeAndroidPackages like this.
+        # cmdline-tools will be the latest available.
+        #
+        # You can add other components if needed:
+        # includeEmulator = true;
+        # includeSystemImages = true;
+        # systemImageTypes = [ "google_apis_playstore" ]; 
+        # abiVersions = [ "x86_64" ]; # Ensure x86_64 system images are included
+        includeNDK = true;
+        #ndkVersions = ["26.3.11579264"]; # specify the version from grande configs in your project
+        #cmakeVersions = [ "3.22.1" ]; # the same
+      };
+
+      androidSdk = androidComposition.androidsdk;
+
       notepad-mono = (with pkgs; stdenv.mkDerivation {
           pname = "Notepad Mono";
           version = "1.0.0";
@@ -45,10 +67,12 @@
             pkgs.xorg.libX11
             pkgs.libdeflate
 
-            pkgs.androidenv.androidPkgs.androidsdk
-            pkgs.androidenv.androidPkgs.ndk-bundle
-            pkgs.androidenv.androidPkgs.tools
+            androidSdk
             pkgs.jdk
+
+            #pkgs.androidenv.androidPkgs.androidsdk
+            #pkgs.androidenv.androidPkgs.ndk-bundle
+            #pkgs.androidenv.androidPkgs.tools
           ];
 
           buildPhase = ''
