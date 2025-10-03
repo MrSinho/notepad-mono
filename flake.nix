@@ -130,7 +130,7 @@
           '';
           
           postFixup = ''
-            patchelf --add-rpath ${pkgs.libepoxy}/lib $out/bin/notepad_mono
+            patchelf --add-rpath ${pkgs.libepoxy}/lib $out/linux/notepad_mono
           '';
 
         }
