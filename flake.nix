@@ -79,21 +79,6 @@
             tree $TMP >> $out/tmp-tree.txt
             dir $TMP >> $out/dir-tmp.txt
 
-            # Print required libraries for each .so file
-            
-            #echo "Required libraries for libapp.so" >> $out/readelf.txt
-            #readelf -d $PWD/build/linux/x64/release/bundle/lib/libapp.so                       | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
-            
-            #echo "Required libraries for libflutter_linux_gtk.so" >> $out/readelf.txt
-            #readelf -d $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so         | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
-            #
-            #echo "Required libraries for libgtk_plugin.so" >> $out/readelf.txt
-            #readelf -d $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
-            #
-            #echo "Required libraries for liburl_launcher_linux_plugin.so" >> $out/readelf.txt
-            #readelf -d $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
-
-
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
               echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
               
@@ -125,6 +110,7 @@
 
             cp $PWD/build/linux/x64/release/bundle/notepad_mono $out/linux/notepad_mono
             cp -r $PWD/build/linux/x64/release/bundle/lib/* $out/linux/lib
+            cp -r $PWD/build/linux/x64/release/bundle/data/* $out/linux/data
           '';
           
           postFixup = ''# Patch executable to find shared libraries
