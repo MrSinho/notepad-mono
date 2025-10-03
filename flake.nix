@@ -98,6 +98,20 @@
               
               if readelf -d "$so" | grep -q RUNPATH; then
                 readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+
+              echo "Fixing broken paths"
+              patchelf --set-rpath \
+                "${pkgs.pango}/lib:\
+                ${pkgs.cairo}/lib:\
+                ${pkgs.glib}/lib:\
+                ${pkgs.libepoxy}/lib:\
+                ${pkgs.fontconfig}/lib:\
+                ${pkgs.gdk-pixbuf}/lib:\
+                ${pkgs.harfbuzz}/lib:\
+                ${pkgs.xorg.libX11}/lib:\
+                ${pkgs.libdeflate}/lib" \
+                "$so"
+
               else
                   echo "(no RUNPATH)" >> $out/readelf.txt
                   echo " " >> $out/readelf.txt
