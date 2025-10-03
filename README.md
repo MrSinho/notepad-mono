@@ -11,6 +11,7 @@ An open source app to write and sync your monospace notes everywhere.
 
 ![login](./docs/media/login.png)
 
+
 ## Clone repository
 
 ```bash
@@ -44,6 +45,10 @@ networking.firewall = {
   ];
 };
 ```
+
+## Data hosting and transparency
+
+Currently the notes and databases are hosted by [Supabase](https://https://supabase.com/). While the database is encrypted and has RLS enabled, admin devs can still theoretically have access to the notes content. For safety reasons it's highly recommended to NOT save sensitive data such as passwords and personal information.
 
 ## License
 

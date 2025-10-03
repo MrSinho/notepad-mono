@@ -46,6 +46,7 @@
             pkgs.libdeflate
 
             pkgs.androidenv.androidPkgs.androidsdk
+            pkgs.androidenv.androidPkgs.ndk-bundle
             pkgs.androidenv.androidPkgs.tools
             pkgs.jdk
           ];
@@ -61,8 +62,8 @@
 
             cd app
             flutter create .
-            flutter build linux --release
             flutter build apk --release
+            flutter build linux --release
           '';
 
           installPhase = ''# $PWD starts from app directory
