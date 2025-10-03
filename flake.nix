@@ -101,8 +101,7 @@
                 readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
                 #echo "Fixing broken paths"
-                #patchelf --remove-rpath $so
-                patchelf --add-rpath ${pkgs.pango}/lib $so
+                patchelf --set-rpath ${pkgs.pango}/lib $so
                 patchelf --add-rpath ${pkgs.cairo}/lib $so
                 patchelf --add-rpath ${pkgs.glib}/lib $so
                 patchelf --add-rpath ${pkgs.libepoxy}/lib $so
