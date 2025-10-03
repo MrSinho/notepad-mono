@@ -56,7 +56,7 @@
           #  patchelf --set-rpath $out/lib $out/bin/notepad_mono
           #'';
 
-          installPhase = ''
+          installPhase = ''# $PWD starts from app directory
 
             mkdir -p $out/linux
             mkdir -p $out/linux/lib
@@ -73,9 +73,8 @@
             patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
             patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
 
-            # $PWD starts from app directory
             cp    $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
-            #cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
+            cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
           '';
 
         }
