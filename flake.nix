@@ -36,7 +36,16 @@
             androidenv.androidPkgs.tools
             pkgs.patchelf
             pkgs.tree
+
+            pkgs.pango
+            pkgs.cairo
+            pkgs.glib
             pkgs.libepoxy
+            pkgs.fontconfig
+            pkgs.gdk-pixbuf
+            pkgs.harfbuzz
+            pkgs.xorg.libX11
+            pkgs.libdeflate
           ];
 
           buildPhase = ''
@@ -83,9 +92,15 @@
             #echo "Required libraries for liburl_launcher_linux_plugin.so" >> $out/readelf.txt
             #readelf -d $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
+
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
-              echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
-              readelf -d $so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt || true # to avoid failure if no RUNPATH
+              
+              if readelf -d "$so" | grep -q RUNPATH; then
+                readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+              else
+                  echo "  (no RUNPATH)" >> $out/readelf.txt
+              fi
+                            
             done
 
             patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
