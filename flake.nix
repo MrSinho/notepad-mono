@@ -85,7 +85,7 @@
 
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
               echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
-              readelf -d $so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt | true # to avoid failure if no RUNPATH
+              readelf -d $so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt || true # to avoid failure if no RUNPATH
             done
 
             patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
