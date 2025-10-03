@@ -85,6 +85,7 @@
 
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
               echo "Required libraries for $(basename "$so")" >> $out/echo.txt
+              echo "Required libraries for $so" >> $out/echo.txt
             done
 
             patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
