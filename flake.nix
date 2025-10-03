@@ -100,18 +100,17 @@
               if readelf -d "$so" | grep -q RUNPATH; then
                 readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
-              #echo "Fixing broken paths"
-              #patchelf --set-rpath \
-              #  "${pkgs.pango}/lib:\
-              #  ${pkgs.cairo}/lib:\
-              #  ${pkgs.glib}/lib:\
-              #  ${pkgs.libepoxy}/lib:\
-              #  ${pkgs.fontconfig}/lib:\
-              #  ${pkgs.gdk-pixbuf}/lib:\
-              #  ${pkgs.harfbuzz}/lib:\
-              #  ${pkgs.xorg.libX11}/lib:\
-              #  ${pkgs.libdeflate}/lib" \
-              #  "$so"
+                #echo "Fixing broken paths"
+                patchelf --remove-rpath $so
+                patchelf --add-rpath ${pkgs.pango}/lib $so
+                patchelf --add-rpath ${pkgs.cairo}/lib $so
+                patchelf --add-rpath ${pkgs.glib}/lib $so
+                patchelf --add-rpath ${pkgs.libepoxy}/lib $so
+                patchelf --add-rpath ${pkgs.fontconfig}/lib $so
+                patchelf --add-rpath ${pkgs.gdk-pixbu}/lib $so
+                patchelf --add-rpath ${pkgs.harfbuzz}/lib $so
+                patchelf --add-rpath ${pkgs.xorg.libX1}/lib $so
+                patchelf --add-rpath ${pkgs.libdeflate}/lib $so
 
               else
                   echo "(no RUNPATH)" >> $out/readelf.txt
@@ -120,10 +119,10 @@
                             
             done
 
-            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
-            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
-            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
-            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
+            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
+            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
+            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
+            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
 
             cp $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
             cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
