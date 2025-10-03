@@ -129,7 +129,14 @@
           
           postFixup = ''# Patch executable to find shared libraries
             # readelf -d $out/linux/notepad_mono
-            patchelf --add-rpath ${pkgs.libepoxy}/lib $out/linux/notepad_mono
+            patchelf --add-rpath ${pkgs.cairo}/lib $so
+            patchelf --add-rpath ${pkgs.glib}/lib $so
+            patchelf --add-rpath ${pkgs.libepoxy}/lib $so
+            patchelf --add-rpath ${pkgs.fontconfig}/lib $so
+            patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib $so
+            patchelf --add-rpath ${pkgs.harfbuzz}/lib $so
+            patchelf --add-rpath ${pkgs.xorg.libX11}/lib $so
+            patchelf --add-rpath ${pkgs.libdeflate}/lib $so
           '';
 
         }
