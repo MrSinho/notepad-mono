@@ -70,23 +70,14 @@
           installPhase = ''# $PWD starts from app directory
 
             mkdir -p $out/linux
-            mkdir -p $out/linux/lib
-            mkdir -p $out/linux/data
 
-            # I'll remove this later
-            echo $PWD >> $out/pwd-directory.txt
-            tree >> $out/tree.txt
-            tree $PWD >> $out/pwd-tree.txt
-            tree $TMP >> $out/tmp-tree.txt
-            dir $TMP >> $out/dir-tmp.txt
-
+            # Replace broken shared library paths with safe packages from nix store
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
               echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
               
               if readelf -d "$so" | grep -q RUNPATH; then
                 readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
-                #echo "Fixing broken paths"
                 patchelf --set-rpath ${pkgs.pango}/lib $so
                 patchelf --add-rpath ${pkgs.cairo}/lib $so
                 patchelf --add-rpath ${pkgs.glib}/lib $so
@@ -96,7 +87,7 @@
                 patchelf --add-rpath ${pkgs.harfbuzz}/lib $so
                 patchelf --add-rpath ${pkgs.xorg.libX11}/lib $so
                 patchelf --add-rpath ${pkgs.libdeflate}/lib $so
-
+                
               else
                   echo "(no RUNPATH)" >> $out/readelf.txt
                   echo " " >> $out/readelf.txt
@@ -104,17 +95,10 @@
                             
             done
 
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
+            # Copy bundle folder to output
+            cp -r $PWD/build/linux/x64/release/bundle/* $out/linux
 
-            cp $PWD/build/linux/x64/release/bundle/notepad_mono $out/linux/notepad_mono
-            cp -r $PWD/build/linux/x64/release/bundle/lib/* $out/linux/lib
-            cp -r $PWD/build/linux/x64/release/bundle/data/* $out/linux/data
-          '';
-          
-          postFixup = ''# Patch executable to find shared libraries
+            # Patch also executable to find shared libraries
             # readelf -d $out/linux/notepad_mono
             patchelf --add-rpath ${pkgs.cairo}/lib $out/linux/notepad_mono
             patchelf --add-rpath ${pkgs.glib}/lib $out/linux/notepad_mono
