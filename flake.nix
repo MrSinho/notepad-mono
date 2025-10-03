@@ -21,8 +21,7 @@
       androidComposition = pkgs.androidenv.composeAndroidPackages {
         buildToolsVersions = [ "34.0.0" "35.0.0" ];
         platformVersions = [ "35" "36" ];
-        includeCmdlineTools = true;
-        includePlatformTools = true;
+        
         # includeCmdlineTools and includePlatformTools are true by default
         # when using composeAndroidPackages like this.
         # cmdline-tools will be the latest available.
