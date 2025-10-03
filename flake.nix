@@ -71,6 +71,7 @@
 
             mkdir -p $out/linux
             mkdir -p $out/linux/lib
+            mkdir -p $out/linux/data
 
             # I'll remove this later
             echo $PWD >> $out/pwd-directory.txt
