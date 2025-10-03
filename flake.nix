@@ -100,6 +100,7 @@
                 readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
               else
                   echo "(no RUNPATH)" >> $out/readelf.txt
+                  echo " " >> $out/readelf.txt
               fi
                             
             done
