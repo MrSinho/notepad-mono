@@ -94,11 +94,12 @@
 
 
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
+              echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
               
               if readelf -d "$so" | grep -q RUNPATH; then
                 readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
               else
-                  echo "  (no RUNPATH)" >> $out/readelf.txt
+                  echo "(no RUNPATH)" >> $out/readelf.txt
               fi
                             
             done
