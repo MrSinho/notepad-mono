@@ -9,7 +9,7 @@ An open source app to write and sync your monospace notes everywhere.
 * Data syncronization across multiple devices using your Google, Github and Microsoft accounts
 * Pretty UI and status bar
 
-[!login](./docs/media/login.png)
+![login](./docs/media/login.png)
 
 ## Clone repository
 
