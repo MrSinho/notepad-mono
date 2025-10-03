@@ -12,8 +12,8 @@
       pkgs = import nixpkgs {
         inherit system;
         config = {
-          android_sdk.accept_license = true;
           allowUnfree = true;
+          android_sdk.accept_license = true;
         };
       };
 
@@ -32,12 +32,9 @@
 
           nativeBuildInputs = [
             pkgs.flutter
-            pkgs.jdk
-            androidenv.androidPkgs.tools
-            pkgs.patchelf
-            pkgs.tree
 
-            pkgs.makeWrapper
+            pkgs.patchelf
+
             pkgs.pango
             pkgs.cairo
             pkgs.glib
@@ -47,6 +44,10 @@
             pkgs.harfbuzz
             pkgs.xorg.libX11
             pkgs.libdeflate
+
+            pkgs.androidenv.androidPkgs.androidsdk
+            pkgs.androidenv.androidPkgs.tools
+            pkgs.jdk
           ];
 
           buildPhase = ''
@@ -61,11 +62,8 @@
             cd app
             flutter create .
             flutter build linux --release
+            flutter build apk --release
           '';
-
-          #postFixup = ''
-          #  patchelf --set-rpath $out/lib $out/bin/notepad_mono
-          #'';
 
           installPhase = ''# $PWD starts from app directory
 
@@ -73,10 +71,10 @@
 
             # Replace broken shared library paths with safe packages from nix store
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
-              echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
+              echo "Required libraries for $(basename "$so")" >> $out/linux/readelf.txt
               
               if readelf -d "$so" | grep -q RUNPATH; then
-                readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+                readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/linux/readelf.txt
 
                 patchelf --set-rpath ${pkgs.pango}/lib $so
                 patchelf --add-rpath ${pkgs.cairo}/lib $so
@@ -89,8 +87,8 @@
                 patchelf --add-rpath ${pkgs.libdeflate}/lib $so
                 
               else
-                  echo "(no RUNPATH)" >> $out/readelf.txt
-                  echo " " >> $out/readelf.txt
+                  echo "(no RUNPATH)" >> $out/linux/readelf.txt
+                  echo " " >> $out/linux/readelf.txt
               fi
                             
             done
