@@ -70,9 +70,12 @@
             dir $TMP >> $out/dir-tmp.txt
 
             # Print required libraries for each .so file
+            
 
-
-            echo "Required libraries for liburl_launcher_linux_plugin.so\n" >> $out/readelf.txt
+            echo "Required libraries for libgtk_plugin.so" >> $out/readelf.txt
+            readelf -d $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
+            
+            echo "Required libraries for liburl_launcher_linux_plugin.so" >> $out/readelf.txt
             readelf -d $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
             #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
