@@ -120,17 +120,19 @@
                             
             done
 
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
-            #patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libapp.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libflutter_linux_gtk.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/libgtk_plugin.so
+            patchelf --remove-rpath $PWD/build/linux/x64/release/bundle/lib/liburl_launcher_linux_plugin.so
 
             cp $PWD/build/linux/x64/release/bundle/notepad_mono  $out/linux/notepad_mono
-            #cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
+            cp -r $PWD/build/linux/x64/release/bundle/lib/*         $out/linux/lib
           '';
           
-          postFixup = ''
+          postFixup = ''# Patch executable to find shared libraries
+            # patchelf -d $out/linux/notepad_mono
             patchelf --add-rpath ${pkgs.libepoxy}/lib $out/linux/notepad_mono
+            patchelf --add-rpath ${pkgs.libgtk}/lib $out/linux/notepad_mono
           '';
 
         }
