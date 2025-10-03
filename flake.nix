@@ -132,7 +132,6 @@
           postFixup = ''# Patch executable to find shared libraries
             # patchelf -d $out/linux/notepad_mono
             patchelf --add-rpath ${pkgs.libepoxy}/lib $out/linux/notepad_mono
-            patchelf --add-rpath ${pkgs.libgtk}/lib $out/linux/notepad_mono
           '';
 
         }
