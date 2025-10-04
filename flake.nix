@@ -82,7 +82,7 @@
             export XDG_CONFIG_HOME=$TMPDIR/config
             mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CONFIG_HOME
 
-            echo y | sdkmanager --licenses # Accept all Android SDK licenses
+            yes | sdkmanager --licenses # Accept all Android SDK licenses
             flutter doctor
 
             cd app
