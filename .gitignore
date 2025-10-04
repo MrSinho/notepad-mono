@@ -94,8 +94,8 @@ app/android/.gitignore
 app/android/gradle
 app/android/gradlew
 app/android/gradlew.bat
-app/android/gradle.properties
 app/android/local.properties
+app/android/build.gradle.kts
 app/android/settings.gradle.kts
 *.iml
 
