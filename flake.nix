@@ -77,25 +77,35 @@
 
           buildPhase = ''
             # Writable directory for storing settings and downloaded artifacts
-            export HOME=$TMPDIR
-            export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
-            export XDG_CONFIG_HOME=$TMPDIR/config
-            mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CONFIG_HOME
+            #export HOME=$TMPDIR
+            #export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
+            #export XDG_CONFIG_HOME=$TMPDIR/config
+            #mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CONFIG_HOME
 
             #yes | sdkmanager --licenses # Accept all Android SDK licenses
             
-            export CHROME_EXECUTABLE="/home/alex/.nix-profile/bin/chromium"
+            export HOME=$TMPDIR
+            export XDG_CACHE_HOME=$TMPDIR/.cache
+            export GRADLE_USER_HOME=$TMPDIR/.gradle
+            export ANDROID_USER_HOME=$TMPDIR/.android
+            
             export JAVA_HOME="${jdk17}/lib/openjdk"
             export PATH="$JAVA_HOME/bin:$PATH"
+            
             export ANDROID_HOME="${androidSdk}/libexec/android-sdk"
             export PATH="${androidSdk}/platform-tools:$PATH"
             export PATH="${androidSdk}/cmdline-tools/latest/bin:$PATH"
+            
             # Add build-tools so we can use the Nix-packaged aapt2 instead of Maven’s
-            export PATH="${androidSdk}/build-tools/35.0.0:$PATH"
-            export PATH="${androidSdk}/build-tools/34.0.0:$PATH"
+            export PATH="${androidSdk}/build-tools/35.0.0:$PATH" # !
+            export PATH="${androidSdk}/build-tools/34.0.0:$PATH" # !
+
             # Force AGP to use aapt2 from SDK/build-tools rather than Maven cache (fixes NixOS stub-ld issue)
             export GRADLE_OPTS="-Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_HOME/build-tools/35.0.0/aapt2 $GRADLE_OPTS"
-            
+
+            # Ensure directories exist and are writable
+            mkdir -p $HOME $XDG_CACHE_HOME $GRADLE_USER_HOME $ANDROID_USER_HOME
+
             flutter doctor
 
             cd app
