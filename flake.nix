@@ -32,7 +32,7 @@
         # systemImageTypes = [ "google_apis_playstore" ]; 
         # abiVersions = [ "x86_64" ]; # Ensure x86_64 system images are included
         includeNDK = true;
-        #ndkVersions = ["26.3.11579264"]; # specify the version from grande configs in your project
+        ndkVersions = [ "26.3.11579264" ]; # specify the version from grande configs in your project
         #cmakeVersions = [ "3.22.1" ]; # the same
       };
 

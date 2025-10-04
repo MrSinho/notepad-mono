@@ -67,9 +67,9 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+app/android/app/debug
+app/android/app/profile
+app/android/app/release
 
 
 # Sentry
@@ -86,7 +86,19 @@ app/windows
 app/linux
 app/macos
 app/ios
-app/android
+
+# Android files
+app/android/app
+app/android/build
+app/android/.gitignore
+app/android/gradle
+app/android/gradlew
+app/android/gradlew.bat
+app/android/gradle.properties
+app/android/local.properties
+app/android/settings.gradle.kts
+*.iml
+
 
 app/.metadata
 app/.idea
