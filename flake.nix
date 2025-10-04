@@ -32,8 +32,8 @@
         # systemImageTypes = [ "google_apis_playstore" ]; 
         # abiVersions = [ "x86_64" ]; # Ensure x86_64 system images are included
         includeNDK = true;
-        #ndkVersions = [ "26.3.11579264" ]; # specify the version from grande configs in your project
-        #cmakeVersions = [ "3.22.1" ]; # the same
+        ndkVersions = [ "26.3.11579264" ]; # specify the version from grande configs in your project
+        cmakeVersions = [ "3.22.1" ]; # the same
       };
 
       androidSdk = androidComposition.androidsdk;
@@ -82,7 +82,20 @@
             export XDG_CONFIG_HOME=$TMPDIR/config
             mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CONFIG_HOME
 
-            yes | sdkmanager --licenses # Accept all Android SDK licenses
+            #yes | sdkmanager --licenses # Accept all Android SDK licenses
+            
+            export CHROME_EXECUTABLE="/home/alex/.nix-profile/bin/chromium"
+            export JAVA_HOME="${jdk17}/lib/openjdk"
+            export PATH="$JAVA_HOME/bin:$PATH"
+            export ANDROID_HOME="${androidSdk}/libexec/android-sdk"
+            export PATH="${androidSdk}/platform-tools:$PATH"
+            export PATH="${androidSdk}/cmdline-tools/latest/bin:$PATH"
+            # Add build-tools so we can use the Nix-packaged aapt2 instead of Maven’s
+            export PATH="${androidSdk}/build-tools/35.0.0:$PATH"
+            export PATH="${androidSdk}/build-tools/34.0.0:$PATH"
+            # Force AGP to use aapt2 from SDK/build-tools rather than Maven cache (fixes NixOS stub-ld issue)
+            export GRADLE_OPTS="-Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_HOME/build-tools/35.0.0/aapt2 $GRADLE_OPTS"
+            
             flutter doctor
 
             cd app
