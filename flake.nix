@@ -32,7 +32,7 @@
         # systemImageTypes = [ "google_apis_playstore" ]; 
         # abiVersions = [ "x86_64" ]; # Ensure x86_64 system images are included
         includeNDK = true;
-        ndkVersions = [ "26.3.11579264" ]; # specify the version from grande configs in your project
+        ndkVersions = [ "27.0.12077973" ]; # specify the version from grande configs in your project
         cmakeVersions = [ "3.22.1" ]; # the same
       };
 
@@ -77,15 +77,14 @@
 
           buildPhase = ''
             # Writable directory for storing settings and downloaded artifacts
-            #export HOME=$TMPDIR
-            #export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
-            #export XDG_CONFIG_HOME=$TMPDIR/config
-            #mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CONFIG_HOME
-
+            
             #yes | sdkmanager --licenses # Accept all Android SDK licenses
             
+            export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
+
             export HOME=$TMPDIR
             export XDG_CACHE_HOME=$TMPDIR/.cache
+            export XDG_CONFIG_HOME=$TMPDIR/config
             export GRADLE_USER_HOME=$TMPDIR/.gradle
             export ANDROID_USER_HOME=$TMPDIR/.android
             
@@ -104,7 +103,7 @@
             export GRADLE_OPTS="-Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_HOME/build-tools/35.0.0/aapt2 $GRADLE_OPTS"
 
             # Ensure directories exist and are writable
-            mkdir -p $HOME $XDG_CACHE_HOME $GRADLE_USER_HOME $ANDROID_USER_HOME
+            mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR  $XDG_CACHE_HOME $XDG_CONFIG_HOME $GRADLE_USER_HOME $ANDROID_USER_HOME 
 
             flutter doctor
 
