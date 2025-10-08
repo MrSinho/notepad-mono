@@ -31,13 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_dotenv: ^5.2.1
+  flutter_dotenv: ^6.0.0
 
   intl: ^0.20.2
-
-  flutter_markdown: ^0.7.3+1
-
-  #code_text_field: ^1.1.0
 
   flutter_code_editor: ^0.3.4
 
@@ -45,19 +41,13 @@ dependencies:
    
   supabase_flutter: ^2.6.0
 
-  flutter_web_auth: ^0.5.0
-
-  google_sign_in: ^6.2.1
-
-  pwa_install: ^0.0.6
-
-  simple_icons: ^10.1.3
+  simple_icons: ^14.6.1
 
   google_fonts: ^6.1.0
 
   sheet: ^1.0.0
 
-  go_router: ^14.8.1
+  go_router: ^16.2.4
 
   material_color_generator: ^1.1.0
 
@@ -67,13 +57,12 @@ dependencies:
 
   feedback: ^3.2.0
 
+  gap: ^3.0.1
+
   #feedback_sentry: ^3.2.0
 
   #sentry_flutter: ^9.6.0
 
-  gap: ^3.0.1
-
-  keypress_simulator: ^0.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -89,7 +78,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

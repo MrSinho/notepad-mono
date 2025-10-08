@@ -20,7 +20,7 @@
       # https://discourse.nixos.org/t/android-ndk-and-sdk-licenses-not-accepted/68215/2
       androidComposition = pkgs.androidenv.composeAndroidPackages {
         buildToolsVersions = [ "34.0.0" "35.0.0" ];
-        platformVersions = [ "35" "36" ];
+        platformVersions = [ "34" "35" "36" ];
         
         # includeCmdlineTools and includePlatformTools are true by default
         # when using composeAndroidPackages like this.
@@ -116,6 +116,17 @@
           installPhase = ''# $PWD starts from app directory
 
             mkdir -p $out/linux
+            mkdir -p $out/android
+
+            #
+            # ANDROID
+            #
+
+            cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/android/notepad_mono.apk
+
+            #
+            # LINUX
+            #
 
             # Replace broken shared library paths with safe packages from nix store
             for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do

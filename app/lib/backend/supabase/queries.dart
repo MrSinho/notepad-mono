@@ -116,6 +116,7 @@ Future<void> flipFavoriteNote() async {
   await Supabase.instance.client.from("Notes").update(
     {
       "is_favorite": !isFavorite,
+      "content": AppData.instance.noteEditData.controller.text
     }
   ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 

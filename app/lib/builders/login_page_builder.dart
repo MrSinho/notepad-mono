@@ -43,7 +43,8 @@ Widget loginPageBuilder(BuildContext context) {
 
     if (authProviders & LoginAuthProviders.azure != 0) {
       authProvidersWidgets.add(
-        wrapIconTextButton(const Icon(SimpleIcons.microsoft),
+        // https://github.com/simple-icons/simple-icons/issues/11236
+        wrapIconTextButton(const Icon(Icons.window_rounded), // Microsoft being microsoft and their legal team
           const Text("Sign In with Microsoft"), () => azureLogin()),
       );
     }

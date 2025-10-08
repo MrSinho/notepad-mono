@@ -6,6 +6,8 @@ import 'package:gap/gap.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/supabase/auth_access.dart';
 
+import '../backend/app_data.dart';
+
 import '../backend/note_edit/note_edit.dart';
 
 import '../themes.dart';
@@ -150,7 +152,9 @@ Widget favoriteButton(Map<String, dynamic> note, BuildContext context) {
   IconButton button = IconButton(
     icon: icon,
     onPressed: () async {
-      selectNote(note, false, context);
+      if (AppData.instance.queriesData.selectedNote["id"]! != note["id"]!) { // Select note only if not already selected
+        selectNote(note, false, context);
+      }
       await flipFavoriteNote();
     } 
   );

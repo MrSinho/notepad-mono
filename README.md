@@ -26,7 +26,7 @@ The Nix flake will download the required packages, build and patch the Linux and
 
 
 ```shell
-nix build . --option sandbox false
+nix build --option sandbox false --verbose
 ./result/linux/notepad_mono
 ```
 
