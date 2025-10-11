@@ -100,6 +100,8 @@
             #flutter doctor
 
             cd app
+            flutter clean
+            flutter pub get
             flutter create .
             flutter build apk --debug
             flutter build linux --release
