@@ -38,8 +38,10 @@ dependencies:
   flutter_code_editor: ^0.3.4
 
   flutter_highlight: ^0.7.0
-   
+  
   supabase_flutter: ^2.6.0
+
+  app_links: ^6.4.1 # Very important for deep links management
 
   simple_icons: ^14.6.1
 
@@ -95,6 +97,7 @@ flutter:
   assets:
     #- .env
     - .safeEnv
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

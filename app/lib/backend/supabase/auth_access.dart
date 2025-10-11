@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:app_links/app_links.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 import '../app_data.dart';
 import '../environment.dart';
@@ -24,6 +26,10 @@ class SessionData {
 
   String profilePictureUrl = "";
   MemoryImage? profilePicture;
+
+  late HttpServer authServer;
+  late AppLinks appLinks;
+  late StreamSubscription uriListenSubscription;
 }
 
 class LoginAuthProviders {
@@ -48,11 +54,25 @@ Future<int> logout() async {
   return 1;
 }
 
+String getRedirectPath() {
+  /*
+  if (Platform.isAndroid || Platform.isIOS) {
+    return getEnvironmentParameterValue("DEEP_LINK_REDIRECT_URL");
+  }
+  else {
+    return getEnvironmentParameterValue("HTTP_REDIRECT_URL");
+  }
+  */
+  return getEnvironmentParameterValue("DEEP_LINK_REDIRECT_URL");
+}
+
 Future<int> googleLogin() async {
+
+  
 
   bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.google,
-    redirectTo: getEnvironmentParameterValue('GOOGLE_REDIRECT_URL')
+    redirectTo: getRedirectPath()
   );
 
   if (!r) {
@@ -66,7 +86,7 @@ Future<int> githubLogin() async {
 
   bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.github,
-    redirectTo: getEnvironmentParameterValue('GITHUB_REDIRECT_URL')
+    redirectTo: getRedirectPath()
   );
 
   if (!r) {
@@ -80,7 +100,7 @@ Future<int> azureLogin() async {
 
   bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.azure,
-    redirectTo: getEnvironmentParameterValue('AZURE_REDIRECT_URL'),
+    redirectTo: getRedirectPath(),
     // For a valid response, see the requisites https://learn.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0&tabs=http
     scopes: 'email openid profile User.Read ProfilePhoto.Read.All', // very important, see also authorizations on your azure console
   );
@@ -92,38 +112,89 @@ Future<int> azureLogin() async {
   return 1;
 }
 
-void startAuthServer() async {
-  final authServer = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000); // Listen on port 3000 for incoming auth requests 
+Future<void> listenToUriLinks() async {
   
-  await for (HttpRequest request in authServer) {
+  try {
+    appLog("Initializing uri link stream", true);
+    AppData.instance.sessionData.uriListenSubscription = AppData.instance.sessionData.appLinks.uriLinkStream.listen(
+      (Uri? uri) async {
+      
+        if (uri != null && uri.scheme == getEnvironmentParameterValue("URI_SCHEME") && uri.host == getEnvironmentParameterValue("URI_HOST")) {
+          
+          String? authCode = uri.queryParameters["code"];
+
+          if (authCode != null) {
+            await authExchangeCodeForSession(authCode, null);
+          }
+        }
+      }
+    );
+
+  }
+  catch (error) {
+    appLog("Failed initializing uri link stream: $error", true);
+  }
+  
+}
+
+Future<void> cancelUriStream() async {
+  AppData.instance.sessionData.uriListenSubscription.cancel();
+  appLog("Cancelled uri link stream", true);
+}
+
+Future<void> startAuthHttpServer() async {
+
+  appLog("Initializing HTTP auth server", true);
+  
+  int port = int.parse(getEnvironmentParameterValue("HTTP_LISTEN_PORT"));
+  AppData.instance.sessionData.authServer = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
+  
+  await for (HttpRequest request in AppData.instance.sessionData.authServer) {
 
     appLog("Found request. Query parameters: ${request.uri.toString()}. Path: ${request.uri.path.toString()}", true);
 
-    if (request.uri.queryParameters["code"] != null) { // Google and Github
-      await authExchangeCodeForSession(request);
+    String? authCode = request.uri.queryParameters["code"];
+
+    if (authCode != null) {
+      await authExchangeCodeForSession(authCode, request);
     }
 
   }
 
 }
 
-void stopAuthServer() async {
-  await AppData.instance.authServer.close();
+Future<void> stopAuthServer() async {
+  await AppData.instance.sessionData.authServer.close();
+  appLog("Stopped auth http server", true);
 }
 
-Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
+Future<void> authExchangeCodeForSession(String authCode, HttpRequest? authRequest) async {
   try {
-
-    String authCode = authRequest.uri.queryParameters["code"] ?? "invalid";
 
     await Supabase.instance.client.auth.exchangeCodeForSession(authCode);
 
     await storeUserData();
-    
+
+    appLog("Login with auth provider successfull", true);
+
+    if (authRequest != null) {
+      await sendHttpResponse(authRequest);
+    }
+
+  } catch (error) {
+    appLog("Failed getting json web token for session: $error", true);
+  }
+
+}
+
+Future<void> sendHttpResponse(HttpRequest authRequest) async {
+
+  try {
+
     String appName   = AppData.instance.queriesData.version["name"] ?? "Application";
     String copyright = AppData.instance.queriesData.version["copyright_notice"] ?? "";
 
-    String htmlResponse = await readFile("assets/login_success.html");
+    String htmlResponse = await rootBundle.loadString("assets/login_success.html");
 
     htmlResponse = htmlResponse.replaceAll("\$appName",   appName);
     htmlResponse = htmlResponse.replaceAll("\$copyright", copyright);
@@ -140,11 +211,10 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
 
     await authRequest.response.close();
 
-    appLog("Login with auth provider successfull, sending http response", true);
-
-  } catch (error) {
-  
-    String errorMessage = "Failed getting json web token for session: $error";
+    appLog("Successfully sent http response", true);
+  }
+  catch (error) {
+    String errorMessage = "Failed sending http response: $error";
   
     appLog(errorMessage, true);
   
@@ -155,7 +225,6 @@ Future<void> authExchangeCodeForSession(HttpRequest authRequest) async {
     notifyLoginPageUpdate();
 
     await authRequest.response.close();
-  
   }
 
 }

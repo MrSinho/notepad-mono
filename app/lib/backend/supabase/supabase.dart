@@ -9,23 +9,32 @@ Future<int> initializeSupabase() async {
   try {
     
     await Supabase.initialize(
+
       url: getEnvironmentParameterValue('SUPABASE_URL'),
+
       anonKey: getEnvironmentParameterValue('SUPABASE_KEY'),
+
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
         autoRefreshToken: true,
       ),
+
       realtimeClientOptions: const RealtimeClientOptions(
         logLevel: RealtimeLogLevel.info,
       ),
+
       storageOptions: const StorageClientOptions(
         retryAttempts: 10,
       ),
+
     );
 
     return 1;
+    
   } catch (exception) {
+
     appLog("Failed to initialize Supabase: $exception", true);
+
     return 0;
   }
 }

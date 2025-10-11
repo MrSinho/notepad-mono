@@ -26,6 +26,7 @@ The Nix flake will download the required packages, build and patch the Linux and
 
 
 ```shell
+flutter clean
 nix build --option sandbox false --verbose
 ./result/linux/notepad_mono
 ```
@@ -44,6 +45,32 @@ networking.firewall = {
     3000
   ];
 };
+```
+
+## Check Android Manifest in the .apk file
+
+```bash
+# Starting from repo root directory, after nix build
+cd result/android
+aapt dump xmltree notepad_mono.apk AndroidManifest.xml
+```
+
+## Android diagnostic
+
+- Enable the developer options on your Android device
+- Enable USB debug in the developer options
+- Connect the device to a USB data port with a USB data cable
+- From the terminal with the [Android Debug Bridge (adb)](https://developer.android.com/tools/adb) installed these commands might be useful.
+
+```bash
+# Check devices
+adb devices
+
+# Find package relative to the newly installed app
+adb shell pm list packages | grep notepad_mono
+
+# Send redirect action
+adb shell am start -a android.intent.action.VIEW -d "notepad-mono://login-callback"
 ```
 
 ## Data hosting and transparency

@@ -29,8 +29,6 @@ void homeInputListener(BuildContext context, KeyEvent event) {
     appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
       
     bool ctrl  = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
-    bool shift = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shiftLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shiftRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.shift);
-    bool alt   = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.alt);
 
     if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
       showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context));

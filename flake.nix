@@ -69,17 +69,9 @@
             androidSdk
             pkgs.gradle
             pkgs.jdk
-
-            #pkgs.androidenv.androidPkgs.androidsdk
-            #pkgs.androidenv.androidPkgs.ndk-bundle
-            #pkgs.androidenv.androidPkgs.tools
           ];
 
           buildPhase = ''
-            # Writable directory for storing settings and downloaded artifacts
-            
-            #yes | sdkmanager --licenses # Accept all Android SDK licenses
-            
             export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
 
             export HOME=$TMPDIR
@@ -105,11 +97,11 @@
             # Ensure directories exist and are writable
             mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR  $XDG_CACHE_HOME $XDG_CONFIG_HOME $GRADLE_USER_HOME $ANDROID_USER_HOME 
 
-            flutter doctor
+            #flutter doctor
 
             cd app
             flutter create .
-            flutter build apk --release
+            flutter build apk --debug
             flutter build linux --release
           '';
 
@@ -122,7 +114,8 @@
             # ANDROID
             #
 
-            cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/android/notepad_mono.apk
+            #cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/android/notepad_mono-release.apk
+            cp -r $PWD/build/app/outputs/flutter-apk/app-debug.apk $out/android/notepad_mono-debug.apk
 
             #
             # LINUX
