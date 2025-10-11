@@ -100,7 +100,6 @@
             #flutter doctor
 
             cd app
-            flutter clean
             flutter pub get
             flutter create .
             
