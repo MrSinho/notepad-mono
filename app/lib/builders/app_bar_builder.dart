@@ -7,7 +7,7 @@ import '../backend/utils.dart';
 import '../backend/note_edit/note_edit.dart';
 import '../backend/color_palette.dart';
 
-import '../static/info_settings_dialogs.dart';
+import '../static/info_settings_widget.dart';
 import '../static/note_dialogs.dart';
 import '../static/shortcuts_map.dart';
 import '../static/ui_utils.dart';
@@ -77,7 +77,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
     actions: [
       IconButton(
         icon: getProfilePicture(false),
-        onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
+        onPressed: () => showUserInfoWidget(context)
       ),
       const Gap(8.0)
     ],
@@ -99,8 +99,19 @@ Widget editAppBarContentBuilder(BuildContext context) {
         fontSize: 25,
         fontWeight: FontWeight.bold,
         color: Colors.white
-      )
+      ),
+      overflow: TextOverflow.ellipsis, // Important for long titles
+      maxLines: 1
     )
+  );
+
+  TextButton titleButton = TextButton(
+    child: titleGradientMask,
+    onPressed: () => showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context)),
+  );
+
+  Flexible titleFlexible = Flexible(
+    child: titleButton
   );
 
   List<Widget> leftChildren = [
@@ -109,10 +120,7 @@ Widget editAppBarContentBuilder(BuildContext context) {
       child: Icon(Icons.circle, color: AppData.instance.noteEditStatusData.status.color, size: 14.0,),
     ),
     favoriteButton(AppData.instance.queriesData.selectedNote, context),
-    TextButton(
-      child: titleGradientMask,
-      onPressed: () => showDialog(context: context, builder: (BuildContext context) => renameNoteDialog(context)),
-    ),
+    titleFlexible
   ];
 
   if (
@@ -135,9 +143,7 @@ Widget editAppBarContentBuilder(BuildContext context) {
 
   }
 
-  Wrap content = Wrap(
-    direction: Axis.horizontal,
-    crossAxisAlignment: WrapCrossAlignment.end,
+  Row content = Row(
     children: leftChildren
   );
 
@@ -171,11 +177,11 @@ AppBar editAppBarBuilder(BuildContext context) {
       //),
       IconButton(
         icon: const Icon(Icons.keyboard_rounded),
-        onPressed: () => showShortCutsMapBottomSheet(context),
+        onPressed: () => showShortCutsMap(context),
       ),
       IconButton(
         icon: getProfilePicture(false),
-        onPressed: () => showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context))
+        onPressed: () => showUserInfoWidget(context)
       ),
       const Gap(8.0)
     ],

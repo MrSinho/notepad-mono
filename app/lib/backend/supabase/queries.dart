@@ -88,6 +88,7 @@ Future<void> createNewNote(String title) async {
       "title": title,
       "owner": Supabase.instance.client.auth.currentSession!.user.email,
       //date time set automatically
+      "content": "# $title\n\n_Write something..._",
     }
   );
 }

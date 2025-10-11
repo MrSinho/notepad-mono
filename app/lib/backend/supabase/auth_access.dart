@@ -55,21 +55,17 @@ Future<int> logout() async {
 }
 
 String getRedirectPath() {
-  /*
+  
   if (Platform.isAndroid || Platform.isIOS) {
     return getEnvironmentParameterValue("DEEP_LINK_REDIRECT_URL");
   }
-  else {
-    return getEnvironmentParameterValue("HTTP_REDIRECT_URL");
-  }
-  */
-  return getEnvironmentParameterValue("DEEP_LINK_REDIRECT_URL");
+
+  return getEnvironmentParameterValue("HTTP_REDIRECT_URL");
+
 }
 
 Future<int> googleLogin() async {
-
   
-
   bool r = await Supabase.instance.client.auth.signInWithOAuth(
     OAuthProvider.google,
     redirectTo: getRedirectPath()

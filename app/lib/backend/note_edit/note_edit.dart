@@ -85,64 +85,64 @@ void setNoteEditStatus(NoteEditStatus status) {
 
   switch (status) {
     case NoteEditStatus.uninitialized:
-      message = "Uninitialized";
+      message = "Uninitialized.";
       break;
     case NoteEditStatus.dismissedErrors:
-      message = "Dismissed errors";
+      message = "Dismissed errors.";
       break;
     case NoteEditStatus.lostConnection:
-      message = "Lost connection";
+      message = "Lost connection.";
       break;
     case NoteEditStatus.selectedNote:
-      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${AppData.instance.noteEditData.lastEdit}";
+      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} loc.";
       break;
     case NoteEditStatus.renamedNote:
-      message = "Renamed note";
+      message = "Renamed note.";
       break;
     case NoteEditStatus.addedToFavorites:
-      message = "Note added to favorites";
+      message = "Note added to favorites.";
       break;
     case NoteEditStatus.removedFromFavorites:
-      message = "Note removed favorites";
+      message = "Note removed from favorites.";
       break;
     case NoteEditStatus.savedChanges:
-      message = "Saved ${AppData.instance.noteEditData.savedContentLength} characters, ${AppData.instance.noteEditData.savedContentLines} lines. Last save ${AppData.instance.noteEditData.lastEdit}";
+      message = "Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} loc.";
       break;
     case NoteEditStatus.failedSave:
       message = "Failed saving note, connection lost";
       break;
     case NoteEditStatus.selectedCharacters:
-      message = "Selected ${AppData.instance.noteEditData.selectionLength} characters, ${AppData.instance.noteEditData.selectionLines} lines";
+      message = "Selected ${AppData.instance.noteEditData.selectionLength} chars, ${AppData.instance.noteEditData.selectionLines} loc.";
       break;
     case NoteEditStatus.unsavedChanges:
-      message = "Buffer with ${AppData.instance.noteEditData.bufferLength} characters, ${AppData.instance.noteEditData.bufferLines} lines";
+      message = "Buffer with ${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines} loc.";
       break;
     case NoteEditStatus.pulledChanges:
-      message = "Pulled changes from another device";
+      message = "Pulled changes from another device.";
       break;
     case NoteEditStatus.copiedNote:
-      message = "Copied note to clipboard";
+      message = "Copied note to clipboard.";
       break;
     case NoteEditStatus.copiedSelection:
-      message = "Copied selection to clipboard";
+      message = "Copied selection to clipboard.";
       break;
     case NoteEditStatus.duplicatedLines:
-      message = "Duplicated lines";
+      message = "Duplicated lines.";
       break;
     case NoteEditStatus.cutLines:
-      message = "Lines cut";
+      message = "Lines cut.";
       break;
     case NoteEditStatus.movedLinesUp:
-      message = "Moved lines up";
+      message = "Moved lines up.";
       break;
     case NoteEditStatus.movedLinesDown:
-      message = "Moved lines down";
+      message = "Moved lines down.";
       break;
     case NoteEditStatus.indentLines:
-      message = "Indented lines";
+      message = "Indented lines.";
       break;
     case NoteEditStatus.outdentLines:
-      message = "Outdented lines";
+      message = "Outdented lines.";
       break;
   }
 

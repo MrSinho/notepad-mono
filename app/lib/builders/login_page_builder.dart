@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_icons/simple_icons.dart';
@@ -71,6 +73,7 @@ Widget loginPageBuilder(BuildContext context) {
         const Gap(16.0),
         Wrap(
           direction: Axis.horizontal,
+          alignment: WrapAlignment.center,
           spacing: 30,
           runSpacing: 8,
           children: authProvidersWidgets
@@ -90,23 +93,37 @@ Widget loginPageBuilder(BuildContext context) {
       child: Card(child: signupPad),
     );
 
+    const double minWidth = 800;
+    if (MediaQuery.of(context).size.width < minWidth) {
+      signupBox = FractionallySizedBox(
+        child: signupPad,
+      );
+    }
+
     Center signupCenter = Center(
       child: signupBox,
     );
 
-    Container container = Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: loginPalette.asColors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+    BoxDecoration containerDecoration = BoxDecoration(
+      gradient: LinearGradient(
+        colors: loginPalette.asColors,
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
       ),
+    );
+
+    if (MediaQuery.of(context).size.width < minWidth) {
+      containerDecoration = BoxDecoration();// Keep default theme
+    }
+
+    Container container = Container(
+      decoration: containerDecoration,
       child: signupCenter
     );
 
+
     Scaffold scaffold = Scaffold(
-      body: container,
+      body: SafeArea(child: container),
     );
 
   return scaffold;

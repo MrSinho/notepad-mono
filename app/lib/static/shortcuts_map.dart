@@ -62,7 +62,7 @@ TableRow shortcutRow(BuildContext context, String shortcut, String description) 
   return row;
 }
 
-void showShortCutsMapBottomSheet(BuildContext context) {
+void showShortCutsMap(BuildContext context) {
   
   Table navigationTable = Table(
     columnWidths: const {
@@ -142,9 +142,21 @@ void showShortCutsMapBottomSheet(BuildContext context) {
     child: pad
   );
 
-  showModalBottomSheet(
-    context: context,
-    builder: (context) => listener 
-  );
+  const double minWidth  = 760;
+  const double minHeight = 730;
+  if (MediaQuery.of(context).size.width < minWidth || MediaQuery.of(context).size.height < minHeight) {
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (context) => SafeArea(child: listener) 
+    );
+  }
+  else {
+    showDialog(
+      context: context, 
+      builder: (context) => Dialog(child: listener)
+    );
+  }
 
 }

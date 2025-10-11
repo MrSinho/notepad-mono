@@ -53,9 +53,10 @@ void main() async {
   }
   */
 
-  listenToUriLinks();
-
-  if (!Platform.isAndroid && !Platform.isIOS) { // Optional redirect setting for desktop
+  if (Platform.isAndroid || Platform.isIOS) {
+    listenToUriLinks();
+  }
+  else {// Desktop
     startAuthHttpServer();
   }
 

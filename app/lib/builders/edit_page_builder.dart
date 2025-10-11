@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../backend/supabase/queries.dart';
@@ -9,6 +11,7 @@ import '../backend/note_edit/custom_intents/duplicate_lines.dart';
 import '../backend/note_edit/custom_intents/indent_lines.dart';
 import '../backend/note_edit/custom_intents/outdent_lines.dart';
 import '../backend/note_edit/custom_intents/move_lines.dart';
+import '../backend/note_edit/custom_intents/move_cursor_to_line_edge.dart';
 
 import '../static/ui_utils.dart';
 
@@ -16,6 +19,21 @@ import 'app_bar_builder.dart';
 import 'input_field_builder.dart';
 
 
+
+LayoutBuilder iconTextButtonLayoutBuilder(Widget icon, Widget text, VoidCallback onPressed, double minWidth) {
+  return LayoutBuilder(
+    builder: (BuildContext context, BoxConstraints constraints) {
+      if (constraints.maxWidth < minWidth) {
+        return IconButton(
+          icon: icon,
+          tooltip: (text is Text) ? text.data : null,
+          onPressed: onPressed
+        );
+      }
+      return wrapIconTextButton(icon, text, onPressed);
+    }
+  );
+}
 
 Widget noteEditPageBuilder(BuildContext context) {
 
@@ -26,54 +44,14 @@ Widget noteEditPageBuilder(BuildContext context) {
     child: noteCodeEditorBuilder(context, AppData.instance.noteEditData.controller)
   );
 
-  Wrap editBar = Wrap(
-  direction: Axis.horizontal,
-  children: [
-    wrapIconTextButton(
-      const Icon(Icons.save_rounded),
-      const Text("Save"),
-      () => saveNoteContent()
-    ),
-    wrapIconTextButton(
-      const Icon(Icons.copy_rounded),
-      const Text("Copy"),
-      () => copySelectionToClipboard()
-    ),
-    wrapIconTextButton(
-      const Icon(Icons.sticky_note_2_rounded), // better than copy_all
-      const Text("Copy note"),
-      () => copyNoteToClipboard()
-    ),
-    wrapIconTextButton(
-      const Icon(Icons.wrap_text_rounded),
-      const Text("Duplicate line/s"),
-      () => duplicateLines()
-    ),
-    //wrapIconTextButton(
-    //  const Icon(Icons.cut_rounded),
-    //  const Text("Cut"),
-    //  () {}// TODO
-    //),
-    wrapIconTextButton(
-      const Icon(Icons.cut_rounded),
-      const Text("Cut line/s"),
-      () => cutLines()
-    ),
-    //wrapIconTextButton(
-    //  const Icon(Icons.keyboard_arrow_left_rounded),
-    //  const Text("Move cursor to sol"),
-    //  () => moveCursorToLineEdge(false)
-    //),
-    //wrapIconTextButton(
-    //  const Icon(Icons.keyboard_arrow_right_rounded),
-    //  const Text("Move cursor to eol"),
-    //  () => moveCursorToLineEdge(true)
-    //),
-    //wrapIconTextButton(
-    //  const Icon(Icons.keyboard_arrow_left_rounded),
-    //  const Text("Select from cursor to sol"),
-    //  () {}//TODO
-    //),
+  const double minWidth = 900;
+
+  List<Widget> editBarContent = [
+    iconTextButtonLayoutBuilder(const Icon(Icons.save_rounded), Text("Save"), () => saveNoteContent(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.copy_rounded), Text("Copy"), () => copySelectionToClipboard(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.sticky_note_2_rounded), Text("Copy note"), () => copyNoteToClipboard(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.wrap_text_rounded), Text("Duplicate lines/s"), () => duplicateLines(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.cut_rounded), Text("Cut line/s"), () => cutLines(), minWidth),
     //wrapIconTextButton(
     //  const Icon(Icons.keyboard_arrow_right_rounded),
     //  const Text("Select from cursor to eol"),
@@ -89,28 +67,25 @@ Widget noteEditPageBuilder(BuildContext context) {
     //  const Text("Delete from cursor to eol"),
     //  () {}//TODO
     //),
-    wrapIconTextButton(
-      const Icon(Icons.keyboard_arrow_up_rounded),
-      const Text("Move line/s up"),
-      () => moveSelectionLine(true)
-    ),
-    wrapIconTextButton(
-      const Icon(Icons.keyboard_arrow_down_rounded),
-      const Text("Move lines/s down"),
-      () => moveSelectionLine(false)
-    ),
-    wrapIconTextButton(
-      const Icon(Icons.format_indent_increase_rounded),
-      const Text("Indent"),
-      () => indentLines()
-    ),
-    wrapIconTextButton(
-      const Icon(Icons.format_indent_decrease_rounded),
-      const Text("Outdent"),
-      () => outdentLines()
-    ),
-  ],
-);
+    iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_up_rounded), Text("Move line/s up"), () => moveSelectionLine(true), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_down_rounded), Text("Move line/s down"), () => moveSelectionLine(false), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.format_indent_increase_rounded), Text("Indent"), () => indentLines(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.format_indent_decrease_rounded), Text("Outdent"), () => outdentLines(), minWidth), 
+  ];
+
+  if (true) {// Makes sense only on mobile devices
+    editBarContent.addAll([
+        iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_left_rounded), Text("Cursor to sol"), () => moveCursorToLineEdge(false), minWidth), 
+        iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_right_rounded), Text("Cursor to eol"), () => moveCursorToLineEdge(true), minWidth),
+      ]
+    );
+  }
+
+  Wrap editBar = Wrap(
+    direction: Axis.horizontal,
+    alignment: WrapAlignment.center,
+    children: editBarContent 
+  );
 
 
   Column noteBody = Column(
@@ -130,7 +105,7 @@ Widget noteEditPageBuilder(BuildContext context) {
 
   Scaffold scaffold = Scaffold(
     appBar: editAppBarBuilder(context),
-    body: noteBody,
+    body: SafeArea(child: noteBody),
   );
 
   return scaffold;

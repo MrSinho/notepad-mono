@@ -21,6 +21,8 @@ void showNoteBottomSheet(BuildContext context) {
 
   showModalBottomSheet(
     context: context,
+    showDragHandle: true,
+    isScrollControlled: true,
     builder: (context) {
       Column column = Column(
         mainAxisSize: MainAxisSize.min,

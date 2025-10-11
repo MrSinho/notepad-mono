@@ -21,8 +21,8 @@ Widget homePageBuilder(BuildContext context) {
     notesUI.add(
       ListTile(
         leading: favoriteButton(note, context),
-        title: Text(note["title"] ?? "", style: GoogleFonts.robotoMono()),
-        trailing: Text("Last edit ${formatDateTime(note["last_edit"] ?? "")}", style: GoogleFonts.robotoMono()),
+        title: Text(note["title"] ?? "", style: GoogleFonts.robotoMono(fontSize: 14)),
+        trailing: Text(formatDateTime(note["last_edit"] ?? ""), style: GoogleFonts.robotoMono(fontSize: 9)),
         onTap: () {
           selectNote(note, true, context);
           NavigatorInfo.getState()?.push(
@@ -55,7 +55,7 @@ Widget homePageBuilder(BuildContext context) {
 
   Scaffold scaffold = Scaffold(
     appBar: mainAppBarBuilder(context),
-    body: view
+    body: SafeArea(child: view) // Important for mobile devices
   );
     
   KeyboardListener listener = KeyboardListener(

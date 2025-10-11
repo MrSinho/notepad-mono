@@ -8,7 +8,7 @@ import 'utils.dart';
 import 'note_edit/note_edit.dart';
 import 'navigator.dart';
 
-import '../static/info_settings_dialogs.dart';
+import '../static/info_settings_widget.dart';
 import '../static/note_dialogs.dart';
 import '../static/shortcuts_map.dart';
 
@@ -31,7 +31,7 @@ void homeInputListener(BuildContext context, KeyEvent event) {
     bool ctrl  = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
 
     if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
-      showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context));
+      showUserInfoWidget(context);
     }
 
     if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
@@ -79,11 +79,11 @@ void editInputListener(BuildContext context, KeyEvent event) {
     }
 
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
-      showShortCutsMapBottomSheet(context);
+      showShortCutsMap(context);
     }
 
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
-      showDialog(context: context, builder: (BuildContext context) => userInfoDialog(context));
+      showUserInfoWidget(context);
     }
 
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyQ)) {

@@ -79,4 +79,4 @@ Currently the notes and databases are hosted by [Supabase](https://https://supab
 
 ## License
 
-This project is licensed under the [**GNU General Public License v3.0**]
+This project is licensed under the [**GNU General Public License v3.0**](https://github.com/MrSinho/notepad-mono/blob/main/LICENSE)
