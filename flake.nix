@@ -104,7 +104,7 @@
             flutter pub get
             flutter create .
             
-            #flutter build apk --debug
+            flutter build apk --debug
             flutter build linux --release
           '';
 
@@ -117,10 +117,10 @@
             # ANDROID
             #
 
-            cp $PWD/android/app/src/main/AndroidManifest.xml $out/android/AndroidManifest.xml
-            cp $PWD/android/app/manifest/AndroidManifest.xml $out/android/_AndroidManifest.xml
+            cp $PWD/android/app/src/main/AndroidManifest.xml $out/android/main.xml
+            cp $PWD/android/app/src/debug/AndroidManifest.xml $out/android/debug.xml
             #cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/android/notepad_mono-release.apk
-            #cp -r $PWD/build/app/outputs/flutter-apk/app-debug.apk $out/android/notepad_mono-debug.apk
+            cp -r $PWD/build/app/outputs/flutter-apk/app-debug.apk $out/android/notepad_mono-debug.apk
 
             #
             # LINUX
