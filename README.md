@@ -8,7 +8,6 @@
 An open source app to write and sync your monospace notes everywhere.
 
 <p align="center">
-<img src="./docs/media/frame/frameitEditDesktop.png"/>
 <img src="./docs/media/frame/frameitHomeDesktop.png"/>
 </p>
 
@@ -20,8 +19,7 @@ An open source app to write and sync your monospace notes everywhere.
 * Pretty UI and status bar
 
 <p align="center">
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="200"/>
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/editMobile-portrait.png" width="200"/>
+<img src="./docs/media/frame/frameitEditDesktop.png"/>
 </p>
 
 
@@ -30,6 +28,7 @@ An open source app to write and sync your monospace notes everywhere.
 ```bash
 git clone https://github.com/mrsinho/notepad-mono.git
 ```
+
 
 
 ## Build from source with Nix flake
@@ -60,6 +59,11 @@ networking.firewall = {
   ];
 };
 ```
+
+<p align="center">
+<img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="200"/>
+<img src="./docs/media/mockupuphone/googlePixel8Obsidian/editMobile-portrait.png" width="200"/>
+</p>
 
 ## Check Android Manifest in the .apk file
 
