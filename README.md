@@ -1,15 +1,24 @@
 # Notepad Mono
 
+[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/test.yaml?style=for-the-badge&label=Nix%20build&labelColor=grey)](https://github.com/MrSinho/notepad-mono/actions)
+![](https://img.shields.io/github/license/mrsinho/shvulkan?style=for-the-badge)
+
+[![CodeFactor](https://www.codefactor.io/repository/github/mrsinho/notepad-mono/badge)](https://www.codefactor.io/repository/github/mrsinho/notepad-mono)
+
 An open source app to write and sync your monospace notes everywhere.
 
 ## Features
 
-* Vanilla and Monaco code editors for writing notes with the same experience of an IDE
+* Use a simple notepad with the same editing experience of an advanced text editor
 * Cross platform with Windows, Linux and Android binaries
 * Data syncronization across multiple devices using your Google, Github and Microsoft accounts
 * Pretty UI and status bar
 
-![login](./docs/media/login.png)
+![login](./docs/media/frame/frameitEditDesktop.png)
+![login](./docs/media/frame/frameitLoginDesktop.png)
+
+![login](./docs/media/frame/frameitEditMobile.png)
+![login](./docs/media/frame/frameitLoginMobile.png)
 
 
 ## Clone repository
@@ -18,11 +27,11 @@ An open source app to write and sync your monospace notes everywhere.
 git clone https://github.com/mrsinho/notepad-mono.git
 ```
 
-## Build Nix flake for reproducibility
+## Build from source with Nix flake
 
 ![NixOS](https://a11ybadges.com/badge?logo=nixos)
 
-The Nix flake will download the required packages, build and patch the Linux and Android binaries. Since application relies on external packages from [pub.dev](https://pub.dev) you must disable the `sandbox` option.
+The Nix flake will download the required packages, compile and patch the Linux and Android binaries. Since application relies on external packages from [pub.dev](https://pub.dev) you must disable the `sandbox` option.
 
 
 ```shell
