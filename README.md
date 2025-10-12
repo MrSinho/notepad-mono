@@ -8,11 +8,9 @@
 An open source app to write and sync your monospace notes everywhere.
 
 <p align="center">
-<img src="./docs/media/frame/frameitLoginDesktop.png" width="400"/>
-<img src="./docs/media/frame/frameitHomeDesktop.png" width="400"/>
-<img src="./docs/media/frame/frameitEditDesktop.png"/>
+<img src="./docs/media/shots.so/editDesktop.png"/>
+<img src="./docs/media/shots.so/homeDesktop.png"/>
 </p>
-
 
 ## Features
 
@@ -22,9 +20,8 @@ An open source app to write and sync your monospace notes everywhere.
 * Pretty UI and status bar
 
 <p align="center">
-<img src="./docs/media/frame/frameitLoginMobile.png" width="250"/>
-<img src="./docs/media/frame/frameitHomeMobile.png" width="250"/>
-<img src="./docs/media/frame/frameitEditMobile.png" width="250"/>
+<img src="./docs/media/shots.so/editMobile.png" />
+<img src="./docs/media/shots.so/homeMobile.png" />
 </p>
 
 
@@ -63,15 +60,6 @@ networking.firewall = {
   ];
 };
 ```
-
-<p align="center">
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/loginMobile-portrait.png" width="250"/>
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="250"/>
-</p>
-<p align="center">
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/userMobile-portrait.png" width="250"/>
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/editMobile-portrait.png" width="250"/>
-</p>
 
 ## Check Android Manifest in the .apk file
 
