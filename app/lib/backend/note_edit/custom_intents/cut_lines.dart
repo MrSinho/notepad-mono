@@ -22,6 +22,7 @@ class CutLinesAction extends Action<CutLinesIntent> {
 }
 
 void cutLines() {
+  
   TextEditingController controller = AppData.instance.noteEditData.controller;
   String                text       = controller.text;
   TextSelection         selection  = controller.selection;

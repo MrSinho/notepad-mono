@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notepad_mono/backend/supabase/queries.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'backend/supabase/auth_access.dart';
@@ -15,7 +16,7 @@ class NoteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    
     MaterialApp app = MaterialApp(
       title: "Notepad Mono",
       debugShowCheckedModeBanner: false,

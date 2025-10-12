@@ -43,6 +43,7 @@ class NoteEditData {
   int cursorColumn       = 0;
 
   int currentCursorStart = 0;
+  int currentCursorEnd   = 0;
 
   String lastEdit = "";
   bool   changeStatusAfterEdit = true;
@@ -94,7 +95,7 @@ void setNoteEditStatus(NoteEditStatus status) {
       message = "Lost connection.";
       break;
     case NoteEditStatus.selectedNote:
-      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines}lines.";
+      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} lines.";
       break;
     case NoteEditStatus.renamedNote:
       message = "Renamed note.";
@@ -106,16 +107,16 @@ void setNoteEditStatus(NoteEditStatus status) {
       message = "Note removed from favorites.";
       break;
     case NoteEditStatus.savedChanges:
-      message = "Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines}lines.";
+      message = "Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} lines.";
       break;
     case NoteEditStatus.failedSave:
       message = "Failed saving note, connection lost";
       break;
     case NoteEditStatus.selectedCharacters:
-      message = "Selected ${AppData.instance.noteEditData.selectionLength} chars, ${AppData.instance.noteEditData.selectionLines}lines.";
+      message = "Selected ${AppData.instance.noteEditData.selectionLength} chars, ${AppData.instance.noteEditData.selectionLines} lines.";
       break;
     case NoteEditStatus.unsavedChanges:
-      message = "Buffer with ${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines}lines.";
+      message = "Buffer with ${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines} lines.";
       break;
     case NoteEditStatus.pulledChanges:
       message = "Pulled changes from another device.";
@@ -159,7 +160,7 @@ void setNoteControllerText(String text) {
   
   int cursorStart = AppData.instance.noteEditData.currentCursorStart;
 
-  if (cursorStart >= text.length) {
+  if (cursorStart > text.length) {
     cursorStart = text.length - 1;
     AppData.instance.noteEditData.currentCursorStart = cursorStart;
   }
@@ -222,12 +223,37 @@ String getNoteSelectionText() {
   }
 
   int cursorStart = controller.selection.start;
-  int cursorEnd = controller.selection.end;
+  int cursorEnd   = controller.selection.end;
 
   int selectionStart = cursorStart < cursorEnd ? cursorStart : cursorEnd;
-  int selectionEnd = cursorStart > cursorEnd ? cursorStart : cursorEnd;
+  int selectionEnd   = cursorStart > cursorEnd ? cursorStart : cursorEnd;
 
   return text.substring(selectionStart, selectionEnd);
+}
+
+void getCursorPosition() {
+
+  CodeController controller = AppData.instance.noteEditData.controller;
+
+  if (!controller.selection.isValid || controller.selection.start < 0 || controller.selection.end < 0) {
+    return; //Too early
+  }
+
+  TextSelection selection = controller.selection;
+  int cursorOffset = selection.extentOffset;
+  String text = controller.text;
+
+  int safeOffset = cursorOffset.clamp(0, text.length);
+
+  String textBeforeCursor = text.substring(0, safeOffset);
+
+  int row = '\n'.allMatches(textBeforeCursor).length + 1;
+  int lastNewlineIndex = textBeforeCursor.lastIndexOf('\n');
+  int column = safeOffset - (lastNewlineIndex + 1);
+
+  AppData.instance.noteEditData.cursorRow    = row;
+  AppData.instance.noteEditData.cursorColumn = column;
+
 }
 
 
@@ -238,19 +264,15 @@ void getNoteCursorData() {
     return; //Too early
   }
 
-  String selection = getNoteSelectionText();
-
   AppData.instance.noteEditData.currentCursorStart = controller.selection.start;
+  AppData.instance.noteEditData.currentCursorEnd   = controller.selection.end;
+
+  String selection = getNoteSelectionText();
   
   AppData.instance.noteEditData.selectionLength = selection.length;
   AppData.instance.noteEditData.selectionLines = "\n".allMatches(selection).length + 1;
 
-  String textBeforeCursor = controller.text.substring(0, AppData.instance.noteEditData.currentCursorStart);
-
-  AppData.instance.noteEditData.cursorRow = "\n".allMatches(textBeforeCursor).length + 1;
-
-  int lastNewlineIndex = textBeforeCursor.lastIndexOf('\n');
-  AppData.instance.noteEditData.cursorColumn = AppData.instance.noteEditData.currentCursorStart - (lastNewlineIndex + 1);
+  getCursorPosition();
 
   appLog("Cursor row: ${AppData.instance.noteEditData.cursorRow}, column: ${AppData.instance.noteEditData.cursorColumn}", true);
   appLog("Selection length: ${AppData.instance.noteEditData.selectionLength}, lines: ${AppData.instance.noteEditData.selectionLines}", true);
@@ -337,6 +359,7 @@ void noteEditCallback() {
   getNoteCursorData();
   getNoteTextData();
   checkCursorNoteEditStatus();
+  notifyNoteEditUpdate();
 }
 
 void exitNoteEditPage(BuildContext context) {

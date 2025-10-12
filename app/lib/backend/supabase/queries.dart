@@ -18,7 +18,7 @@ class QueriesData {
   StreamSubscription? versionsSubscription;
 }
 
-Future<void> pullVersion() async {
+Future<void> queryVersions() async {
 
   List<Map<String, dynamic>> versions = await Supabase.instance.client.from("Versions").select();
 

@@ -88,7 +88,6 @@ app/macos
 app/ios
 
 # Android files
-app/android/app/build.gradle.kts
 app/android/app/src/main/java
 app/android/app/src/main/kotlin
 app/android/app/src/main/res

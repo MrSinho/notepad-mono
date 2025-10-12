@@ -22,7 +22,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
     paletteGradientShaderMask(
       generateRandomColorPalette(2, isThemeBright(context)),
       Text(
-        AppData.instance.queriesData.version["name"] ?? "",
+        AppData.instance.queriesData.version["name"] ?? "Notepad Mono",
         style: GoogleFonts.robotoMono(
           fontSize: 25, 
           fontWeight: FontWeight.bold,
