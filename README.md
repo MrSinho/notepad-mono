@@ -7,6 +7,12 @@
 
 An open source app to write and sync your monospace notes everywhere.
 
+<img src="./docs/media/frame/frameitLoginDesktop.png" width="380"/>
+<img src="./docs/media/frame/frameitHomeDesktop.png" width="380"/>
+<img src="./docs/media/frame/frameitEditDesktop.png" width="380"/>
+
+
+
 ## Features
 
 * Use a simple notepad with the same editing experience of an advanced text editor
@@ -14,11 +20,9 @@ An open source app to write and sync your monospace notes everywhere.
 * Data syncronization across multiple devices using your Google, Github and Microsoft accounts
 * Pretty UI and status bar
 
-![login](./docs/media/frame/frameitEditDesktop.png)
-![login](./docs/media/frame/frameitLoginDesktop.png)
-
-![login](./docs/media/frame/frameitEditMobile.png)
-![login](./docs/media/frame/frameitLoginMobile.png)
+<img src="./docs/media/frame/frameitLoginMobile.png" width="250"/>
+<img src="./docs/media/frame/frameitHomeMobile.png" width="250"/>
+<img src="./docs/media/frame/frameitEditMobile.png" width="250"/>
 
 
 ## Clone repository
@@ -26,6 +30,7 @@ An open source app to write and sync your monospace notes everywhere.
 ```bash
 git clone https://github.com/mrsinho/notepad-mono.git
 ```
+
 
 ## Build from source with Nix flake
 
@@ -89,3 +94,4 @@ Currently the notes and databases are hosted by [Supabase](https://https://supab
 ## License
 
 This project is licensed under the [**GNU General Public License v3.0**](https://github.com/MrSinho/notepad-mono/blob/main/LICENSE)
+
