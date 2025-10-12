@@ -8,9 +8,9 @@
 An open source app to write and sync your monospace notes everywhere.
 
 <p align="center">
-<img src="./docs/media/frame/frameitLoginDesktop.png" width="380"/>
-<img src="./docs/media/frame/frameitHomeDesktop.png" width="380"/>
-<img src="./docs/media/frame/frameitEditDesktop.png" width="380"/>
+<img src="./docs/media/frame/frameitLoginDesktop.png" width="400"/>
+<img src="./docs/media/frame/frameitHomeDesktop.png" width="400"/>
+<img src="./docs/media/frame/frameitEditDesktop.png"/>
 </p>
 
 
@@ -26,12 +26,6 @@ An open source app to write and sync your monospace notes everywhere.
 <img src="./docs/media/frame/frameitHomeMobile.png" width="250"/>
 <img src="./docs/media/frame/frameitEditMobile.png" width="250"/>
 </p>
-
-<p align="center">
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/loginMobile-portrait.png" width="250"/>
-<img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="250"/>
-</p>
-
 
 
 ## Clone repository
@@ -70,6 +64,10 @@ networking.firewall = {
 };
 ```
 
+<p align="center">
+<img src="./docs/media/mockupuphone/googlePixel8Obsidian/loginMobile-portrait.png" width="250"/>
+<img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="250"/>
+</p>
 <p align="center">
 <img src="./docs/media/mockupuphone/googlePixel8Obsidian/userMobile-portrait.png" width="250"/>
 <img src="./docs/media/mockupuphone/googlePixel8Obsidian/editMobile-portrait.png" width="250"/>
