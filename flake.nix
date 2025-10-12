@@ -116,8 +116,8 @@
             # ANDROID
             #
 
-            #cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/android/notepad_mono-release.apk
-            cp -r $PWD/build/app/outputs/flutter-apk/app-debug.apk $out/android/notepad_mono-debug.apk
+            cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/android/notepad_mono.apk
+            #cp -r $PWD/build/app/outputs/flutter-apk/app-debug.apk $out/android/notepad_mono-debug.apk
 
             #
             # LINUX
