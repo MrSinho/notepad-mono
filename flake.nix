@@ -103,7 +103,7 @@
             flutter pub get
             flutter create .
             
-            flutter build apk --debug
+            flutter build apk --release
             flutter build linux --release
           '';
 

@@ -82,8 +82,8 @@ app/README.md
 
 
 # Other stuff
-app/windows
-app/linux
+app/windows/flutter
+app/linux/flutter
 app/macos
 app/ios
 
