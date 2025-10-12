@@ -77,7 +77,7 @@ void showNoteBottomSheet(BuildContext context) {
         child: column
       );
 
-      return pad;
+      return SafeArea(child: pad);
     }
   );
 }

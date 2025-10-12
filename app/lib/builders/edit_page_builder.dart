@@ -44,9 +44,13 @@ Widget noteEditPageBuilder(BuildContext context) {
     child: noteCodeEditorBuilder(context, AppData.instance.noteEditData.controller)
   );
 
-  const double minWidth = 900;
+  double minWidth = 600;
 
-  List<Widget> editBarContent = [
+  if (Platform.isAndroid || Platform.isIOS) {
+    minWidth = 912;
+  }
+
+  List<Widget> editBarTopContent = [
     iconTextButtonLayoutBuilder(const Icon(Icons.save_rounded), Text("Save"), () => saveNoteContent(), minWidth), 
     iconTextButtonLayoutBuilder(const Icon(Icons.copy_rounded), Text("Copy"), () => copySelectionToClipboard(), minWidth), 
     iconTextButtonLayoutBuilder(const Icon(Icons.sticky_note_2_rounded), Text("Copy note"), () => copyNoteToClipboard(), minWidth), 
@@ -67,16 +71,30 @@ Widget noteEditPageBuilder(BuildContext context) {
     //  const Text("Delete from cursor to eol"),
     //  () {}//TODO
     //),
-    iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_up_rounded), Text("Move line/s up"), () => moveSelectionLine(true), minWidth), 
-    iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_down_rounded), Text("Move line/s down"), () => moveSelectionLine(false), minWidth), 
+    
+  ];
+
+  List<Widget> editBarBottomContent = [
     iconTextButtonLayoutBuilder(const Icon(Icons.format_indent_increase_rounded), Text("Indent"), () => indentLines(), minWidth), 
     iconTextButtonLayoutBuilder(const Icon(Icons.format_indent_decrease_rounded), Text("Outdent"), () => outdentLines(), minWidth), 
   ];
 
-  if (true) {// Makes sense only on mobile devices
-    editBarContent.addAll([
+  if (Platform.isAndroid || Platform.isIOS) {// Makes sense only on mobile devices
+    editBarTopContent.addAll([
+        iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_up_rounded), Text("Move line/s up"), () => moveSelectionLine(true), minWidth), 
+        iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_down_rounded), Text("Move line/s down"), () => moveSelectionLine(false), minWidth), 
+      ]
+    );
+    editBarBottomContent.addAll([
         iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_left_rounded), Text("Cursor to sol"), () => moveCursorToLineEdge(false), minWidth), 
         iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_right_rounded), Text("Cursor to eol"), () => moveCursorToLineEdge(true), minWidth),
+      ]
+    );
+  }
+  else {
+    editBarBottomContent.addAll([
+        iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_up_rounded), Text("Move line/s up"), () => moveSelectionLine(true), minWidth), 
+        iconTextButtonLayoutBuilder(const Icon(Icons.keyboard_arrow_down_rounded), Text("Move line/s down"), () => moveSelectionLine(false), minWidth), 
       ]
     );
   }
@@ -84,7 +102,19 @@ Widget noteEditPageBuilder(BuildContext context) {
   Wrap editBar = Wrap(
     direction: Axis.horizontal,
     alignment: WrapAlignment.center,
-    children: editBarContent 
+    children: [
+      Wrap(
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        children: editBarTopContent
+      ),
+      Wrap(
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        children: editBarBottomContent
+      ),
+      
+    ] 
   );
 
 

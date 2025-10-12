@@ -162,7 +162,7 @@ List<Widget> footerWidgets(BuildContext context) {
   String appName    = AppData.instance.queriesData.version["name"]              ?? "Notepad Mono";
   String version    = AppData.instance.queriesData.version["version"]           ?? "0.1.0";
   String versionTag = AppData.instance.queriesData.version["tag"]               ?? "vanilla";
-  String appWebsite = AppData.instance.queriesData.version["app_website"]       ?? "https://www.github.com/mrsinho/nnotes";
+  String appWebsite = AppData.instance.queriesData.version["app_website"]       ?? "https://www.github.com/mrsinho/notepad-mono";
   String devWebsite = AppData.instance.queriesData.version["developer_website"] ?? "https://www.github.com/mrsinho";
 
   List<Widget> footer = [

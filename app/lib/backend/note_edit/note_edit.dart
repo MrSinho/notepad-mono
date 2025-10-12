@@ -94,7 +94,7 @@ void setNoteEditStatus(NoteEditStatus status) {
       message = "Lost connection.";
       break;
     case NoteEditStatus.selectedNote:
-      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} loc.";
+      message = "Selected note, ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines}lines.";
       break;
     case NoteEditStatus.renamedNote:
       message = "Renamed note.";
@@ -106,16 +106,16 @@ void setNoteEditStatus(NoteEditStatus status) {
       message = "Note removed from favorites.";
       break;
     case NoteEditStatus.savedChanges:
-      message = "Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} loc.";
+      message = "Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines}lines.";
       break;
     case NoteEditStatus.failedSave:
       message = "Failed saving note, connection lost";
       break;
     case NoteEditStatus.selectedCharacters:
-      message = "Selected ${AppData.instance.noteEditData.selectionLength} chars, ${AppData.instance.noteEditData.selectionLines} loc.";
+      message = "Selected ${AppData.instance.noteEditData.selectionLength} chars, ${AppData.instance.noteEditData.selectionLines}lines.";
       break;
     case NoteEditStatus.unsavedChanges:
-      message = "Buffer with ${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines} loc.";
+      message = "Buffer with ${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines}lines.";
       break;
     case NoteEditStatus.pulledChanges:
       message = "Pulled changes from another device.";

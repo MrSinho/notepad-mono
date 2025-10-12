@@ -63,12 +63,12 @@ Widget newNoteDialog(BuildContext context) {
       const Gap(20),
       IntrinsicWidth(child: field),
       const Gap(20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+      Wrap(
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        spacing: 12,
         children: [
           noButton,
-          const Gap(12),
           confirmButton
         ]
       ),
@@ -142,12 +142,12 @@ Widget renameNoteDialog(BuildContext context) {
       const Gap(20),
       IntrinsicWidth(child: renameField),
       const Gap(20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+      Wrap(
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        spacing: 12,
         children: [
           noButton,
-          const Gap(12),
           renameButton
         ]
       )
@@ -209,12 +209,12 @@ Widget deleteNoteDialog(BuildContext context) {
       const Gap(20),
       Text("Are you sure you want to delete this note?", style: GoogleFonts.robotoMono(fontSize: 12),),
       const Gap(20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+      Wrap(
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        spacing: 12,
         children: [
           yesButton,
-          const Gap(12),
           noButton
         ]
       )
@@ -286,14 +286,13 @@ Widget unsavedChangesDialog(BuildContext context) {
     children: [
       Text("Discard unsaved changes?", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
       const Gap(20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+      Wrap(
+        direction: Axis.horizontal,
+        alignment: WrapAlignment.center,
+        spacing: 12,
         children: [
           cancelButton,
-          const Gap(12),
           yesButton,
-          const Gap(12),
           saveButton
         ]
       )

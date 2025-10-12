@@ -17,6 +17,7 @@ class NoteApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     MaterialApp app = MaterialApp(
+      title: "Notepad Mono",
       debugShowCheckedModeBanner: false,
       navigatorKey: NavigatorInfo.key,
 

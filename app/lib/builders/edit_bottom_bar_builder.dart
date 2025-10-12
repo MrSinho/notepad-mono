@@ -27,13 +27,13 @@ Widget editBottomBarBuilder(BuildContext context) {
       Expanded(
         child: Align(
           alignment: Alignment.center,
-          child: Text("*${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines} loc")
+          child: Text("*${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines} lines")
         ) 
       ),
       Expanded(
         child: Align(
           alignment: Alignment.centerRight,
-          child: Text("Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} loc")
+          child: Text("Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} lines")
         ) 
       ),
     ],
