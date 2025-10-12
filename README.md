@@ -20,8 +20,8 @@ An open source app to write and sync your monospace notes everywhere.
 * Pretty UI and status bar
 
 <p align="center">
-<img src="./docs/media/shots.so/editMobile.png" />
-<img src="./docs/media/shots.so/homeMobile.png" />
+<img src="./docs/media/shots.so/editMobile.png" width="400"/>
+<img src="./docs/media/shots.so/homeMobileTilted.png" width="400"/>
 </p>
 
 
