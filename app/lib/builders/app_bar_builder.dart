@@ -47,8 +47,11 @@ AppBar mainAppBarBuilder(BuildContext context) {
   ];
 
   if (
-    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.lostConnection.code || 
-    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.failedSave.code
+    (
+      AppData.instance.noteEditStatusData.status.code == NoteEditStatus.lostConnection.code || 
+      AppData.instance.noteEditStatusData.status.code == NoteEditStatus.failedSave.code
+    ) &&
+    MediaQuery.of(context).size.width > 424
   ) {
     mainAppBarLeftChildren.add(
       Padding(
@@ -124,8 +127,11 @@ Widget editAppBarContentBuilder(BuildContext context) {
   ];
 
   if (
-    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.lostConnection.code || 
-    AppData.instance.noteEditStatusData.status.code == NoteEditStatus.failedSave.code
+    (
+      AppData.instance.noteEditStatusData.status.code == NoteEditStatus.lostConnection.code || 
+      AppData.instance.noteEditStatusData.status.code == NoteEditStatus.failedSave.code
+    ) &&
+    MediaQuery.of(context).size.width > 400
   ) {
 
     leftChildren.add(

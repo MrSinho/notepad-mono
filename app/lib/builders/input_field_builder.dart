@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 
+import '../backend/note_edit/custom_intents/copy_note.dart';
+import '../backend/note_edit/custom_intents/copy_lines.dart';
 import '../backend/note_edit/custom_intents/cut_lines.dart';
 import '../backend/note_edit/custom_intents/duplicate_lines.dart';
 import '../backend/note_edit/custom_intents/move_lines.dart';
@@ -66,15 +68,24 @@ Widget noteCodeEditorBuilder(BuildContext context, CodeController controller) {
       SingleActivator(LogicalKeyboardKey.backspace, control: true, alt: true): DeleteToLineBreakIntent(forward: false),
       SingleActivator(LogicalKeyboardKey.keyK, control: true, alt: true): DeleteToLineBreakIntent(forward: false),
       SingleActivator(LogicalKeyboardKey.keyL, control: true, alt: true): DeleteToLineBreakIntent(forward: true),
+      
       //Custom intents
+      //SingleActivator(LogicalKeyboardKey.keyC, shift: true, control: true, alt: true): CopyNoteIntent(),
+
+      SingleActivator(LogicalKeyboardKey.keyC, control: true, alt: true): CopyLinesIntent(),
       SingleActivator(LogicalKeyboardKey.keyX, control: true, alt: true): CutLinesIntent(),
       SingleActivator(LogicalKeyboardKey.keyD, control: true): DuplicateLinesIntent(),
+
       SingleActivator(LogicalKeyboardKey.keyI, control: true): IndentLinesIntent(),
       SingleActivator(LogicalKeyboardKey.keyO, control: true): OutdentLinesIntent(),
+
       //SingleActivator(LogicalKeyboardKey.): MoveCursorToStartOfLineIntent(),
       //SingleActivator(LogicalKeyboardKey.): MoveCursorToEndOfLineIntent(),
       SingleActivator(LogicalKeyboardKey.arrowUp, control: true, alt: true): MoveLinesUpIntent(),
       SingleActivator(LogicalKeyboardKey.arrowDown, control: true, alt: true): MoveLinesDownIntent(),
+
+      //SingleActivator(LogicalKeyboardKey.keyZ, shift: false, control: true): UndoTextIntent(SelectionChangedCause.keyboard),
+      //SingleActivator(LogicalKeyboardKey.keyZ, shift: true,  control: true): RedoTextIntent(SelectionChangedCause.keyboard),
     },
     child: Actions(
       actions: <Type, Action<Intent>>{//Custom intents

@@ -145,11 +145,19 @@ void showShortCutsMap(BuildContext context) {
   const double minWidth  = 760;
   const double minHeight = 730;
   if (MediaQuery.of(context).size.width < minWidth || MediaQuery.of(context).size.height < minHeight) {
+
+    ConstrainedBox box = ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.8,
+      ),
+      child: listener
+    );
+
     showModalBottomSheet(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (context) => SafeArea(child: listener) 
+      builder: (context) => SafeArea(child: box) 
     );
   }
   else {

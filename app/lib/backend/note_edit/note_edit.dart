@@ -1,6 +1,5 @@
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../static/note_dialogs.dart';
 
@@ -66,11 +65,14 @@ enum NoteEditStatus {
   copiedSelection(11, Colors.deepPurpleAccent),
   copiedNote(12, Colors.purple),
   duplicatedLines(13, Colors.orangeAccent),
-  cutLines(14, Colors.pink),
-  movedLinesUp(15, Colors.indigoAccent),
-  movedLinesDown(16, Colors.indigo),
-  indentLines(17, Colors.limeAccent),
-  outdentLines(18, Colors.orangeAccent);
+  copiedLines(14, Colors.pink),
+  cutLines(15, Colors.pink),
+  pastedContent(16, Colors.pink),
+  movedLinesUp(17, Colors.indigoAccent),
+  movedLinesDown(18, Colors.indigo),
+  indentLines(19, Colors.limeAccent),
+  outdentLines(20, Colors.orangeAccent),
+  cancCharacters(21, Colors.pinkAccent);
 
 
   final int   code;
@@ -130,8 +132,14 @@ void setNoteEditStatus(NoteEditStatus status) {
     case NoteEditStatus.duplicatedLines:
       message = "Duplicated lines.";
       break;
+    case NoteEditStatus.copiedLines:
+      message = "Copied lines.";
+      break;
     case NoteEditStatus.cutLines:
       message = "Lines cut.";
+      break;
+    case NoteEditStatus.pastedContent:
+      message = "Pasted content from clipboard.";
       break;
     case NoteEditStatus.movedLinesUp:
       message = "Moved lines up.";
@@ -144,6 +152,9 @@ void setNoteEditStatus(NoteEditStatus status) {
       break;
     case NoteEditStatus.outdentLines:
       message = "Outdented lines.";
+      break;
+    case NoteEditStatus.cancCharacters:
+      message = "Cancelled character/s.";
       break;
   }
 
@@ -294,7 +305,8 @@ void checkCursorNoteEditStatus() {
     AppData.instance.noteEditStatusData.status.code != NoteEditStatus.movedLinesUp.code &&
     AppData.instance.noteEditStatusData.status.code != NoteEditStatus.movedLinesDown.code &&
     AppData.instance.noteEditStatusData.status.code != NoteEditStatus.indentLines.code &&
-    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.outdentLines.code)
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.outdentLines.code &&
+    AppData.instance.noteEditStatusData.status.code != NoteEditStatus.cancCharacters.code)
   ) {
     setNoteEditStatus(NoteEditStatus.unsavedChanges);
   }
@@ -334,6 +346,9 @@ void checkCursorNoteEditStatus() {
     case NoteEditStatus.cutLines:
       AppData.instance.noteEditData.changeStatusAfterEdit = true;
       break;
+    case NoteEditStatus.pastedContent:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
+      break;
     case NoteEditStatus.movedLinesUp:
       AppData.instance.noteEditData.changeStatusAfterEdit = true;
       break;
@@ -348,6 +363,9 @@ void checkCursorNoteEditStatus() {
       break;
     case NoteEditStatus.selectedCharacters:
       AppData.instance.noteEditData.changeStatusAfterEdit = false;
+      break;
+    case NoteEditStatus.cancCharacters:
+      AppData.instance.noteEditData.changeStatusAfterEdit = true;
       break;
     default:
   }

@@ -6,22 +6,22 @@ import '../../note_edit/note_edit.dart';
 
 
 
-class CutLinesIntent extends Intent {
-  const CutLinesIntent();
+class CopyLinesIntent extends Intent {
+  const CopyLinesIntent();
 }
 
-class CutLinesAction extends Action<CutLinesIntent> {
-  CutLinesAction();
+class CopyLinesAction extends Action<CopyLinesIntent> {
+  CopyLinesAction();
 
   @override
-  Object? invoke(CutLinesIntent intent) {
-    cutLines();
+  Object? invoke(CopyLinesIntent intent) {
+    copyLines();
     return null;
   }
   
 }
 
-void cutLines() {// HERE!
+void copyLines() {
   
   TextEditingController controller = AppData.instance.noteEditData.controller;
   String                text       = controller.text;
@@ -40,18 +40,9 @@ void cutLines() {// HERE!
 
   String line = text.substring(startLine, endLine);
   line += '\n';
-
+  
   Clipboard.setData(ClipboardData(text: line));
 
-  String newText = text.replaceRange(startLine, endLine == text.length ? endLine : endLine + 1, '');
-
-  controller.value = controller.value.copyWith(
-    text: newText,
-    selection: TextSelection.collapsed(
-      offset: startLine.clamp(0, newText.length),
-    )
-  );
-
-  setNoteEditStatus(NoteEditStatus.cutLines);
+  setNoteEditStatus(NoteEditStatus.copiedLines);
 
 }

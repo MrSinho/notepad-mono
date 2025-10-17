@@ -65,10 +65,10 @@ void editInputListener(BuildContext context, KeyEvent event) {
       //Save as
     }
 
-    if (ctrl && alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {//create custom intent
-      copyNoteToClipboard();
-      AppData.instance.inputData.keysPressed.clear();
-    }
+    //if (ctrl && alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {//create custom intent
+    //  copyNoteToClipboard();
+    //  AppData.instance.inputData.keysPressed.clear();
+    //}
 
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyT)) {
       flipFavoriteNote();

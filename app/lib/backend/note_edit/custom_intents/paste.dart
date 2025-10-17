@@ -6,22 +6,22 @@ import '../../note_edit/note_edit.dart';
 
 
 
-class CutLinesIntent extends Intent {
-  const CutLinesIntent();
+class PasteIntent extends Intent {
+  const PasteIntent();
 }
 
-class CutLinesAction extends Action<CutLinesIntent> {
-  CutLinesAction();
+class PasteAction extends Action<PasteIntent> {
+  PasteAction();
 
   @override
-  Object? invoke(CutLinesIntent intent) {
-    cutLines();
+  Object? invoke(PasteIntent intent) {
+    pasteContent();
     return null;
   }
   
 }
 
-void cutLines() {// HERE!
+void pasteContent() async {
   
   TextEditingController controller = AppData.instance.noteEditData.controller;
   String                text       = controller.text;
@@ -34,24 +34,26 @@ void cutLines() {// HERE!
   int start = selection.start;
   int end   = selection.end;
 
-  int startLine    = text.lastIndexOf('\n', start - 1) + 1;
-  int endLineIndex = text.indexOf('\n', end);
-  int endLine      = endLineIndex == -1 ? text.length : endLineIndex;
+  ClipboardData? clipboardData = await Clipboard.getData("text/plain");
 
-  String line = text.substring(startLine, endLine);
-  line += '\n';
+  if (clipboardData == null) {
+    return;
+  }
 
-  Clipboard.setData(ClipboardData(text: line));
+  String clipboardContent = clipboardData.text ?? "";
 
-  String newText = text.replaceRange(startLine, endLine == text.length ? endLine : endLine + 1, '');
+  if (clipboardContent == "") {
+    return;
+  }
+
+  String newText = text.replaceRange(start, end, clipboardContent);
 
   controller.value = controller.value.copyWith(
     text: newText,
     selection: TextSelection.collapsed(
-      offset: startLine.clamp(0, newText.length),
+      offset: start.clamp(0, newText.length),
     )
   );
 
-  setNoteEditStatus(NoteEditStatus.cutLines);
-
+  setNoteEditStatus(NoteEditStatus.pastedContent);
 }

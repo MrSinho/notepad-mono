@@ -32,14 +32,14 @@ Widget loginPageBuilder(BuildContext context) {
     if (authProviders & LoginAuthProviders.google != 0) {
       authProvidersWidgets.add(
         wrapIconTextButton(const Icon(SimpleIcons.google),
-          const Text("Sign In with Google"), () => googleLogin()),
+          const Text("Continue with Google"), () => googleLogin()),
       );
     }
 
     if (authProviders & LoginAuthProviders.github != 0) {
       authProvidersWidgets.add(
         wrapIconTextButton(const Icon(SimpleIcons.github),
-          const Text("Sign In with Github"), () => githubLogin()),
+          const Text("Continue with Github"), () => githubLogin()),
       );
     }
 
@@ -47,7 +47,7 @@ Widget loginPageBuilder(BuildContext context) {
       authProvidersWidgets.add(
         // https://github.com/simple-icons/simple-icons/issues/11236
         wrapIconTextButton(const Icon(Icons.window_rounded), // Microsoft being microsoft and their legal team
-          const Text("Sign In with Microsoft"), () => azureLogin()),
+          const Text("Continue with Microsoft"), () => azureLogin()),
       );
     }
 

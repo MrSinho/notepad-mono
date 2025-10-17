@@ -51,8 +51,9 @@ void showUserInfoWidget(BuildContext context) {
     ],
   );
 
-  const double minWidth = 600;
-  if (MediaQuery.of(context).size.width < minWidth) {
+  const double minWidth  = 600;
+  const double minHeight = 500;
+  if (MediaQuery.of(context).size.width < minWidth || MediaQuery.of(context).size.height < minHeight) {
     userData = Column(
       children: [
         Padding(
@@ -114,7 +115,7 @@ void showUserInfoWidget(BuildContext context) {
     children: userInfoContents
   );
 
-  if (MediaQuery.of(context).size.width < minWidth) {
+  if (MediaQuery.of(context).size.width < minWidth || MediaQuery.of(context).size.height < minHeight) {
 
     SingleChildScrollView scroll = SingleChildScrollView(
       child: Padding(
@@ -130,11 +131,18 @@ void showUserInfoWidget(BuildContext context) {
       onKeyEvent: (KeyEvent event) => userInfoInputListener(context, event),
     );
 
+    ConstrainedBox box = ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.8,
+      ),
+      child: listener
+    );
+
     showModalBottomSheet(
       context: context, 
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (BuildContext context) => SafeArea(child: listener)
+      builder: (BuildContext context) => SafeArea(child: box)
     );
 
     return;
