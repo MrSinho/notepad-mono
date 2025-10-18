@@ -11,7 +11,9 @@
   outputs = { nixpkgs, flake-utils, ... }: flake-utils.lib.eachDefaultSystem (system:
     let
 
-      linuxPipeline = import ./nix/linuxPipeline.nix { inherit system nixpkgs; };
+      linuxPipeline   = import ./nix/linuxPipeline.nix { inherit system nixpkgs; };
+      androidPipeline = import ./nix/androidPipeline.nix { inherit system nixpkgs; };
+      windowsPipeline = import ./nix/windowsPipeline.nix { inherit system nixpkgs; };
 
       buildTarget = 
         let
@@ -21,43 +23,25 @@
           else _buildTarget;
 
       #
-      # Package imports
-      #
-
-      windowsPkgs = import nixpkgs {
-        inherit system;
-      };
-
-      
-
-      #
-      # Build inputs
-      #
-
-      windowsBuildInputs = [
-        windowsPkgs.flutter
-        windowsPkgs.wineWowPackages.full
-        windowsPkgs.wineWowPackages.waylandFull
-        windowsPkgs.winetricks
-      ];
-
-      #
       # Evaluate platform
       #
 
       platformBuildInputs = 
         if buildTarget == "linux" then linuxPipeline.buildInputs
         else if buildTarget == "android" then androidPipeline.buildInputs
+        else if buildTarget == "windows" then windowsPipeline.buildInputs
         else throw "Unsupported target platform: ${buildTarget}";
 
       platformBuildPhase = 
         if buildTarget == "linux" then linuxPipeline.buildPhase
         else if buildTarget == "android" then androidPipeline.buildPhase
+        else if buildTarget == "windows" then windowsPipeline.buildPhase
         else throw "Unsupported target platform: ${buildTarget}";
 
       platformInstallPhase = 
         if buildTarget == "linux" then linuxPipeline.installPhase
         else if buildTarget == "android" then androidPipeline.installPhase
+        else if buildTarget == "windows" then windowsPipeline.installPhase
         else throw "Unsupported target platform: ${buildTarget}";
 
       #
