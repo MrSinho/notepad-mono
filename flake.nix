@@ -9,18 +9,14 @@
   };
 
   outputs = { nixpkgs, flake-utils, ... }: flake-utils.lib.eachDefaultSystem (system:
+    
     let
 
-      linuxPipeline   = import ./nix/linuxPipeline.nix { inherit system nixpkgs; };
-      androidPipeline = import ./nix/androidPipeline.nix { inherit system nixpkgs; };
-      windowsPipeline = import ./nix/windowsPipeline.nix { inherit system nixpkgs; };
+      linuxPipeline   = import ./nix/x86_64-linux-pipeline.nix { inherit system nixpkgs; };
+      windowsPipeline = import ./nix/x86_64-windows-pipeline.nix { inherit system nixpkgs; };
+      androidPipeline = import ./nix/aarch64-android-pipeline.nix { inherit system nixpkgs; };
 
-      buildTarget = 
-        let
-          _buildTarget = builtins.getEnv "build_target";
-        in
-          if _buildTarget == "" || _buildTarget == null then "linux"
-          else _buildTarget;
+      buildTarget = builtins.readFile ./flake-targets;
 
       #
       # Evaluate platform
@@ -28,20 +24,20 @@
 
       platformBuildInputs = 
         if buildTarget == "linux" then linuxPipeline.buildInputs
-        else if buildTarget == "android" then androidPipeline.buildInputs
         else if buildTarget == "windows" then windowsPipeline.buildInputs
+        else if buildTarget == "android" then androidPipeline.buildInputs
         else throw "Unsupported target platform: ${buildTarget}";
 
       platformBuildPhase = 
         if buildTarget == "linux" then linuxPipeline.buildPhase
-        else if buildTarget == "android" then androidPipeline.buildPhase
         else if buildTarget == "windows" then windowsPipeline.buildPhase
+        else if buildTarget == "android" then androidPipeline.buildPhase
         else throw "Unsupported target platform: ${buildTarget}";
 
       platformInstallPhase = 
         if buildTarget == "linux" then linuxPipeline.installPhase
-        else if buildTarget == "android" then androidPipeline.installPhase
         else if buildTarget == "windows" then windowsPipeline.installPhase
+        else if buildTarget == "android" then androidPipeline.installPhase
         else throw "Unsupported target platform: ${buildTarget}";
 
       #

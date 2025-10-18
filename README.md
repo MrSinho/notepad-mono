@@ -39,8 +39,8 @@ The Nix flake will download the required packages, compile and patch the Linux a
 
 
 ```shell
-flutter clean
-nix build --option sandbox false --verbose
+echo x86_64-linux > flake-targets
+nix build --option sandbox false --verbose .
 ./result/linux/notepad_mono
 ```
 

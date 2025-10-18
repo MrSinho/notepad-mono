@@ -104,3 +104,7 @@ app/.metadata
 app/.idea
 
 *.env
+
+# Pipeline
+
+flake-targets
