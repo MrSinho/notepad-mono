@@ -1,4 +1,4 @@
-name: "Notepad Mono flake test"
+name: "Notepad Mono Linux flake build and test"
 on:
   pull_request:
   push:
