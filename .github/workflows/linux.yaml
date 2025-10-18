@@ -16,5 +16,5 @@ jobs:
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix build --option sandbox false --verbose ./nix/x86_64-linux --out-link ./nix/x86_64-linux/result
-    - run: cd nix/x86_64-linux nix flake check
+    - run: cd nix/x86_64-linux && nix flake check
     - run: echo "Build completed successfully"
