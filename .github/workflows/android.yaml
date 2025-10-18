@@ -1,9 +1,9 @@
-name: "Notepad Mono Android flake build and test"
+name: "Android flake"
 on:
   pull_request:
   push:
 jobs:
-  tests:
+  android-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -16,5 +16,5 @@ jobs:
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix build --option sandbox false --verbose ./nix/aarch64-android --out-link ./nix/aarch64-android/result
-    - run: nix flake check
+    - run: cd nix/aarch64-android && nix flake check
     - run: echo "Build completed successfully"
