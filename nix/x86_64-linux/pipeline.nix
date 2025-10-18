@@ -23,6 +23,10 @@ let
     ];
 
     buildPhase = ''
+        export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
+        export HOME=$TMPDIR
+        mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR
+        
         cd app
         flutter pub get
         flutter create .

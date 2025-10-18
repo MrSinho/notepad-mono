@@ -28,8 +28,8 @@ let
     '';
 
 in {
-    pkgs        = pkgs;
-    buildInputs = buildInputs;
-    buildPhase  = buildPhase;
+    pkgs         = pkgs;
+    buildInputs  = buildInputs;
+    buildPhase   = buildPhase;
     installPhase = installPhase;
 }
