@@ -15,6 +15,6 @@ jobs:
         name: mycache
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix build --option sandbox false --verbose
+    - run: nix build --option sandbox false --verbose ./nix/x86_64-linux --out-link ./nix/x86_64-linux/result
     - run: nix flake check
     - run: echo "Build completed successfully"
