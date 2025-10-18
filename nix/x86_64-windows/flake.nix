@@ -21,6 +21,8 @@
             
             src = ./../../.;
 
+            buildInputs = pipeline.buildInputs;
+
             buildPhase = pipeline.buildPhase;
             
             installPhase = pipeline.installPhase;

@@ -40,6 +40,9 @@ let
     ];
 
     buildPhase = ''
+        export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
+        export HOME=$TMPDIR
+
         export XDG_CACHE_HOME=$TMPDIR/.cache
         export XDG_CONFIG_HOME=$TMPDIR/config
         export GRADLE_USER_HOME=$TMPDIR/.gradle
@@ -60,7 +63,7 @@ let
         export GRADLE_OPTS="-Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_HOME/build-tools/35.0.0/aapt2 $GRADLE_OPTS"
 
         # Ensure directories exist and are writable
-        mkdir -p $XDG_CACHE_HOME $XDG_CONFIG_HOME $GRADLE_USER_HOME $ANDROID_USER_HOME 
+        mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CACHE_HOME $XDG_CONFIG_HOME $GRADLE_USER_HOME $ANDROID_USER_HOME 
 
         cd app
         flutter pub get
@@ -70,9 +73,8 @@ let
         '';
 
     installPhase = ''# $PWD starts from app directory
-        mkdir -p $out/android
-        cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/android/notepad_mono.apk
-        #cp -r $PWD/build/app/outputs/flutter-apk/app-debug.apk $out/android/notepad_mono-debug.apk
+        mkdir -p $out
+        cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/notepad_mono.apk
     '';
 
 in {

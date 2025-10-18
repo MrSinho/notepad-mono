@@ -33,15 +33,15 @@ git clone https://github.com/mrsinho/notepad-mono.git
 
 ## Build from source with Nix flake
 
-![NixOS](https://a11ybadges.com/badge?logo=nixos)
-
 The Nix flake will download the required packages, compile and patch the Linux and Android binaries. Since application relies on external packages from [pub.dev](https://pub.dev) you must disable the `sandbox` option.
 
+If you don't have installed nix on your system, you can follow the [official guide](https://nixos.org/download) for all platforms.
+
+### ![](https://a11ybadges.com/badge?logo=linux)
 
 ```shell
-# Linux
-nix build --option sandbox false --verbose .
-./result/linux/notepad_mono
+nix build --option sandbox false --verbose ./nix/x86_64-linux --out-link ./nix/x86_64-linux/result
+./nix/x86_64-linux/result
 ```
 
 > [!NOTE]
@@ -59,6 +59,24 @@ networking.firewall = {
   ];
 };
 ```
+
+### ![](https://a11ybadges.com/badge?logo=windows)
+
+```shell
+nix build --option sandbox false --verbose ./nix/x86_64-windows --out-link ./nix/x86_64-windows/result
+./nix/x86_64-windows/result
+```
+
+### ![](https://a11ybadges.com/badge?logo=android)
+
+```shell
+nix build --option sandbox false --verbose ./nix/aarch64-android --out-link ./nix/aarch64-android/result
+./nix/aarch64-android/result
+```
+
+### Update flake locks (devs only)
+
+
 
 <p align="center">
 <img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="200"/>

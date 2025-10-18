@@ -19,7 +19,9 @@
             pname = "Notepad Mono";
             version = "1.0.0";
             
-            src = ./.;
+            src = ./../../.;
+
+            buildInputs = pipeline.buildInputs;
 
             buildPhase = pipeline.buildPhase;
             

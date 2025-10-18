@@ -12,7 +12,7 @@
     
     let
 
-        pipeline = import ./pipeline.nix { inherit self nixpkgs; };
+        pipeline = import ./pipeline.nix { inherit system nixpkgs; };
 
         notepad-mono = (pipeline.pkgs.stdenv.mkDerivation {
 
@@ -20,6 +20,8 @@
             version = "1.0.0";
             
             src = ./../../.;
+
+            buildInputs = pipeline.buildInputs;
 
             buildPhase = pipeline.buildPhase;
             

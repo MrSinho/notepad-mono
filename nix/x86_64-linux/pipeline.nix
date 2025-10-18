@@ -35,14 +35,14 @@ let
     '';
 
     installPhase = ''# $PWD starts from app directory
-        mkdir -p $out/linux
+        mkdir -p $out
 
         # Replace broken shared library paths with safe packages from nix store
         for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
-          echo "Required libraries for $(basename "$so")" >> $out/linux/readelf.txt
+          echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
           
           if readelf -d "$so" | grep -q RUNPATH; then
-            readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/linux/readelf.txt
+            readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
 
             patchelf --set-rpath ${pkgs.pango}/lib $so
             patchelf --add-rpath ${pkgs.cairo}/lib $so
@@ -55,25 +55,25 @@ let
             patchelf --add-rpath ${pkgs.libdeflate}/lib $so
             
           else
-              echo "(no RUNPATH)" >> $out/linux/readelf.txt
-              echo " " >> $out/linux/readelf.txt
+              echo "(no RUNPATH)" >> $out/readelf.txt
+              echo " " >> $out/readelf.txt
           fi
                         
         done
 
         # Copy bundle folder to output
-        cp -r $PWD/build/linux/x64/release/bundle/* $out/linux
+        cp -r $PWD/build/linux/x64/release/bundle/* $out
 
         # Patch also executable to find shared libraries
-        # readelf -d $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.cairo}/lib $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.glib}/lib $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.libepoxy}/lib $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.fontconfig.lib}/lib $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.harfbuzz}/lib $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.xorg.libX11}/lib $out/linux/notepad_mono
-        patchelf --add-rpath ${pkgs.libdeflate}/lib $out/linux/notepad_mono
+        # readelf -d $out/notepad_mono
+        patchelf --add-rpath ${pkgs.cairo}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.glib}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.libepoxy}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.fontconfig.lib}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.harfbuzz}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.xorg.libX11}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.libdeflate}/lib $out/notepad_mono
 
     '';
 
