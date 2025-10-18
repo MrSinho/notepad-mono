@@ -39,7 +39,7 @@ The Nix flake will download the required packages, compile and patch the Linux a
 
 
 ```shell
-echo x86_64-linux > flake-targets
+# Linux
 nix build --option sandbox false --verbose .
 ./result/linux/notepad_mono
 ```
