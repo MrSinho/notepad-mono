@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:feedback_sentry/feedback_sentry.dart';
@@ -94,7 +92,7 @@ void showUserInfoWidget(BuildContext context) {
     //),
     wrapIconTextButton(
       const Icon(Icons.bug_report_rounded),
-      Text("Report a bug", style: GoogleFonts.robotoMono()),
+      Text("Report an issue", style: GoogleFonts.robotoMono()),
       () => launchUrl(Uri.parse(issuesSite)),
     ),    
     const Gap(20),

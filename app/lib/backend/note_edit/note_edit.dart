@@ -31,6 +31,8 @@ class NoteEditData {
   late CodeController controller;
   late FocusNode      focusNode;
 
+  double fontSize = 16.0;
+
   int savedContentLength = 0;
   int savedContentLines  = 0;
   int selectionLength    = 0;
@@ -163,7 +165,7 @@ void setNoteEditStatus(NoteEditStatus status) {
 
   appLog("New note edit status: $message", true);
   
-  notifyNoteEditUpdate();
+  notifyNoteEditBarsUpdate();
   notifyHomePageUpdate();
 }
 
@@ -377,7 +379,7 @@ void noteEditCallback() {
   getNoteCursorData();
   getNoteTextData();
   checkCursorNoteEditStatus();
-  notifyNoteEditUpdate();
+  notifyNoteEditBarsUpdate();
 }
 
 void exitNoteEditPage(BuildContext context) {
@@ -392,3 +394,7 @@ void exitNoteEditPage(BuildContext context) {
 
 }
 
+void addToEditFontSize(double value) {
+  AppData.instance.noteEditData.fontSize += value;
+  notifyNoteEditFieldUpdate();
+}

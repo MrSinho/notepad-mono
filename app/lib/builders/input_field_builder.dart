@@ -19,17 +19,17 @@ import '../themes.dart';
 
 
 
-
-Widget noteCodeEditorBuilder(BuildContext context, CodeController controller) {
+Widget inputFieldBuilder(BuildContext context) {
 
   CodeField codeField = CodeField(
-    controller: controller,
+    controller: AppData.instance.noteEditData.controller,
     //expands: true,
     //maxLines: null,
     //minLines: null,
 
     textStyle: GoogleFonts.robotoMono(
       color: getCurrentThemePalette(context).primaryForegroundColor,
+      fontSize: AppData.instance.noteEditData.fontSize,
     ),
 
     gutterStyle: const GutterStyle(
@@ -38,7 +38,7 @@ Widget noteCodeEditorBuilder(BuildContext context, CodeController controller) {
       //),
       showLineNumbers: true,
       showFoldingHandles: true,
-      showErrors: false
+      showErrors: false,
     ),
 
     cursorColor: getCurrentThemePalette(context).primaryForegroundColor,
@@ -70,8 +70,8 @@ Widget noteCodeEditorBuilder(BuildContext context, CodeController controller) {
       SingleActivator(LogicalKeyboardKey.keyL, control: true, alt: true): DeleteToLineBreakIntent(forward: true),
       
       //Custom intents
-      //SingleActivator(LogicalKeyboardKey.keyC, shift: true, control: true, alt: true): CopyNoteIntent(),
 
+      SingleActivator(LogicalKeyboardKey.keyC, shift: true, control: true, alt: true): CopyNoteIntent(),
       SingleActivator(LogicalKeyboardKey.keyC, control: true, alt: true): CopyLinesIntent(),
       SingleActivator(LogicalKeyboardKey.keyX, control: true, alt: true): CutLinesIntent(),
       SingleActivator(LogicalKeyboardKey.keyD, control: true): DuplicateLinesIntent(),
@@ -79,16 +79,19 @@ Widget noteCodeEditorBuilder(BuildContext context, CodeController controller) {
       SingleActivator(LogicalKeyboardKey.keyI, control: true): IndentLinesIntent(),
       SingleActivator(LogicalKeyboardKey.keyO, control: true): OutdentLinesIntent(),
 
-      //SingleActivator(LogicalKeyboardKey.): MoveCursorToStartOfLineIntent(),
-      //SingleActivator(LogicalKeyboardKey.): MoveCursorToEndOfLineIntent(),
+      //SingleActivator(LogicalKeyboardKey.): MoveCursorToStartOfLineIntent(),// Already implemented: CTRL + LEFT ARROW
+      //SingleActivator(LogicalKeyboardKey.): MoveCursorToEndOfLineIntent(), // Already implemented: CTRL + RIGHT ARROW
+
       SingleActivator(LogicalKeyboardKey.arrowUp, control: true, alt: true): MoveLinesUpIntent(),
       SingleActivator(LogicalKeyboardKey.arrowDown, control: true, alt: true): MoveLinesDownIntent(),
 
-      //SingleActivator(LogicalKeyboardKey.keyZ, shift: false, control: true): UndoTextIntent(SelectionChangedCause.keyboard),
-      //SingleActivator(LogicalKeyboardKey.keyZ, shift: true,  control: true): RedoTextIntent(SelectionChangedCause.keyboard),
+      //SingleActivator(LogicalKeyboardKey.keyZ, shift: false, control: true): UndoTextIntent(SelectionChangedCause.keyboard), // Already implemented: CTRL + Z
+      //SingleActivator(LogicalKeyboardKey.keyZ, shift: true,  control: true): RedoTextIntent(SelectionChangedCause.keyboard), // Already implemented: CTRL + SHIFT + Z
     },
     child: Actions(
       actions: <Type, Action<Intent>>{//Custom intents
+        CopyNoteIntent: CopyNoteAction(),
+        CopyLinesIntent: CopyLinesAction(),
         CutLinesIntent: CutLinesAction(),
         DuplicateLinesIntent: DuplicateLinesAction(),
         IndentLinesIntent: IndentLinesAction(),

@@ -29,7 +29,7 @@ class EditAppBarContentState extends State<EditAppBarContent> {
   Widget build(BuildContext context) {
 
     ValueListenableBuilder<int> builder = ValueListenableBuilder<int>(
-      valueListenable: AppData.instance.noteEditUpdates,
+      valueListenable: AppData.instance.noteEditBarsUpdates,
       builder: (context, value, child) => editAppBarContentBuilder(context)
     );
 

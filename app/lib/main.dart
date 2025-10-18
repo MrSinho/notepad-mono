@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:notepad_mono/backend/supabase/queries.dart';
 //import 'package:sentry_flutter/sentry_flutter.dart';
 //import 'package:feedback/feedback.dart';
 

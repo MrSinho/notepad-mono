@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 //import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
@@ -16,6 +14,7 @@ import '../new_primitives/note_edit_page.dart';
 import '../new_primitives/edit_app_bar_content.dart';
 import '../new_primitives/edit_status_bar.dart';
 import '../new_primitives/edit_bottom_bar.dart';
+import '../new_primitives/input_field.dart';
 
 import 'note_edit/note_edit.dart';
 import 'color_palette.dart';
@@ -38,12 +37,14 @@ class AppData {
   late final EditAppBarContent editAppBarContent;
   late final EditStatusBar     editStatusBar;
   late final EditBottomBar     editBottomBar;
+  late final NoteInputField    noteInputField;
 
   late ColorPaletteData editColorPaletteData;
 
-  final ValueNotifier<int> loginPageUpdates = ValueNotifier(0);
-  final ValueNotifier<int> homePageUpdates  = ValueNotifier(0);
-  final ValueNotifier<int> noteEditUpdates  = ValueNotifier(0);
+  final ValueNotifier<int> loginPageUpdates    = ValueNotifier(0);
+  final ValueNotifier<int> homePageUpdates     = ValueNotifier(0);
+  final ValueNotifier<int> noteEditBarsUpdates = ValueNotifier(0);
+  final ValueNotifier<int> inputFieldUpdates   = ValueNotifier(0);
 
   AppData._internal() {//Called once and only once, no BuildContext available
 
@@ -59,6 +60,7 @@ class AppData {
     editAppBarContent = const EditAppBarContent();
     editStatusBar     = const EditStatusBar();
     editBottomBar     = const EditBottomBar();
+    noteInputField    = const NoteInputField();
 
     noteEditData.controller = CodeController(
       language: markdown,// currently only markdown linting

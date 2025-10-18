@@ -3,9 +3,14 @@ import 'utils.dart';
 
 
 
-void notifyNoteEditUpdate() {
+void notifyNoteEditBarsUpdate() {
   appLog("Notifying builder update for note edit page", true);
-  AppData.instance.noteEditUpdates.value++;
+  AppData.instance.noteEditBarsUpdates.value++;
+}
+
+void notifyNoteEditFieldUpdate() {
+  appLog("Notifying builder update for note edit page", true);
+  AppData.instance.inputFieldUpdates.value++;
 }
 
 void notifyHomePageUpdate() {

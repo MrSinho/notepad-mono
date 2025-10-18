@@ -88,7 +88,8 @@ void showShortCutsMap(BuildContext context) {
       shortcutRow(context, "CTRL + Z", "Undo"),
       shortcutRow(context, "CTRL + SHIFT + Z", "Redo"),
       shortcutRow(context, "CTRL + C", "Copy selection"),
-      shortcutRow(context, "CTRL + ALT + C", "Copy note"),
+      shortcutRow(context, "CTRL + SHIFT + ALT + C", "Copy note"),
+      shortcutRow(context, "CTRL + ALT + C", "Copy line/s"),
       shortcutRow(context, "CTRL + D", "Duplicate line/s"),
       shortcutRow(context, "CTRL + ALT + X", "Cut line/s"),
       shortcutRow(context, "ALT + ARROW UP", "Move cursor to top of the note"),
@@ -103,7 +104,9 @@ void showShortCutsMap(BuildContext context) {
       shortcutRow(context, "CTRL + ALT + K", "Delete from cursor to the start of the line"),
       shortcutRow(context, "CTRL + ALT + L", "Delete from cursor to the end of the line"),
       shortcutRow(context, "CTRL + I", "Indent line/s"),
-      shortcutRow(context, "CTRL + O", "Outdent line/s")
+      shortcutRow(context, "CTRL + O", "Outdent line/s"),
+      shortcutRow(context, "CTRL + ADD", "Zoom in"),
+      shortcutRow(context, "CTRL + HYPHEN", "Zoom out"),
     ]
   );
 
@@ -145,19 +148,16 @@ void showShortCutsMap(BuildContext context) {
   const double minWidth  = 760;
   const double minHeight = 730;
   if (MediaQuery.of(context).size.width < minWidth || MediaQuery.of(context).size.height < minHeight) {
-
-    ConstrainedBox box = ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.8,
-      ),
-      child: listener
-    );
-
+    
     showModalBottomSheet(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (context) => SafeArea(child: box) 
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.8,
+        maxWidth: MediaQuery.of(context).size.width * 0.8,
+      ),
+      builder: (context) => SafeArea(child: listener) 
     );
   }
   else {

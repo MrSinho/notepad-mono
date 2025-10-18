@@ -22,7 +22,7 @@ class CopyLinesAction extends Action<CopyLinesIntent> {
 }
 
 void copyLines() {
-  
+
   TextEditingController controller = AppData.instance.noteEditData.controller;
   String                text       = controller.text;
   TextSelection         selection  = controller.selection;

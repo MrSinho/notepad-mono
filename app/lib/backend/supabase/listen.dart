@@ -79,7 +79,7 @@ void listenToNotes(BuildContext context) {
         AppData.instance.queriesData.notes = notes;
 
         notifyHomePageUpdate();
-        notifyNoteEditUpdate();
+        notifyNoteEditBarsUpdate();
 
         appLog("Pulled ${notes.length} notes from listen callback", true);
 

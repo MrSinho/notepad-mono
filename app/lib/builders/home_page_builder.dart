@@ -57,7 +57,7 @@ Widget homePageBuilder(BuildContext context) {
     appBar: mainAppBarBuilder(context),
     body: SafeArea(child: view) // Important for mobile devices
   );
-    
+
   KeyboardListener listener = KeyboardListener(
     autofocus: true,
     focusNode: FocusNode(),

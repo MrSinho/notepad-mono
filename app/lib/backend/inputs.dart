@@ -48,7 +48,7 @@ void homeInputListener(BuildContext context, KeyEvent event) {
 void editInputListener(BuildContext context, KeyEvent event) {
 
   InputData inputData = AppData.instance.inputData;
-
+  
   if (event is KeyDownEvent) {
     inputData.keysPressed.add(event.logicalKey);
     appLog("Keys pressed: ${inputData.keysPressed.toString()}", true);
@@ -89,6 +89,24 @@ void editInputListener(BuildContext context, KeyEvent event) {
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyQ)) {
       AppData.instance.inputData.keysPressed.clear();
       exitNoteEditPage(context);
+    }
+
+    if (ctrl && !alt && !shift && 
+        (
+          inputData.keysPressed.contains(LogicalKeyboardKey.add) ||
+          inputData.keysPressed.contains(LogicalKeyboardKey.numpadAdd)
+        )
+    ) {
+      addToEditFontSize(1.0);
+    }
+
+    if (ctrl && !alt && !shift && 
+        (
+          inputData.keysPressed.contains(LogicalKeyboardKey.minus) ||
+          inputData.keysPressed.contains(LogicalKeyboardKey.numpadSubtract)
+        )
+    ) {
+      addToEditFontSize(-1.0);
     }
 
   } 

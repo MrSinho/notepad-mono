@@ -5,9 +5,7 @@ import 'utils.dart';
 String getEnvironmentParameterValue(String parameterName) {
   String? value = dotenv.env[parameterName];
 
-  if (value == null) {
-    value = String.fromEnvironment(parameterName, defaultValue: "");
-  }
+  value ??= String.fromEnvironment(parameterName, defaultValue: "");
 
   if (value == "") {
     appLog("Environment parameter $parameterName not found", true);
