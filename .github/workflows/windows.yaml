@@ -7,7 +7,13 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - name: "Init Flutter project"
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: 'stable'
+        cache: true
+
+    - name: "Download dependencies"
       run: flutter pub get
 
     - name: "Build Windows release"
