@@ -31,7 +31,7 @@ jobs:
       run: cd nix/x86_64-linux && nix flake check
 
     - name: "Create release archive"
-      working_directory: nix/x86_64-linux/result
+      working-directory: nix/x86_64-linux/result
       if: startsWith(github.ref, 'refs/tags/')
       run: zip -r ../../../Notepad_Mono-${{ github.ref_name }}-x86_64-linux.zip ./*
 
