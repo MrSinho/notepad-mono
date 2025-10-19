@@ -10,8 +10,8 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: 'stable'
-        cache: true
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: "stable"
 
     - name: "Download dependencies"
       run: flutter pub get
