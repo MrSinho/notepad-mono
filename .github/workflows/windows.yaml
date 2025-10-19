@@ -1,0 +1,17 @@
+name: "Linux flake"
+on:
+  pull_request:
+  push:
+jobs:
+  windows-build:
+    runs-on: windows-latest
+    steps:
+      
+    - name: "Init Flutter project"
+      run: cd app && flutter create . && flutter pub get
+
+    - name: "Build Windows release"
+      run: flutter build windows --release
+    
+    - name: "Success"
+      run: echo "Build completed successfully"
