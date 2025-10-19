@@ -21,7 +21,7 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
     - name: "Build flake"
-    - run: nix build --option sandbox false --verbose ./nix/aarch64-android --out-link ./nix/aarch64-android/result
+      run: nix build --option sandbox false --verbose ./nix/aarch64-android --out-link ./nix/aarch64-android/result
 
     - name: "Run flake check"
       run: cd nix/aarch64-android && nix flake check
