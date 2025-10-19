@@ -1,0 +1,35 @@
+name: "Windows actions"
+on:
+  pull_request:
+  push:
+  
+jobs:
+  windows-build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: "Checkout repo"
+      uses: actions/checkout@v4
+      
+    - name: "Setup Flutter"
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: "stable"
+
+    - name: "Download dependencies"
+      working-directory: app
+      run: flutter create . && flutter pub get # Later delete flutter create 
+
+    - name: "Build Windows release"
+      working-directory: app
+      run: flutter build windows --release
+
+    - name: "Upload release"
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: app/build/windows/x64/runner/Release/
+      
+    - name: "Success"
+      run: echo "Build completed successfully"
