@@ -1,7 +1,10 @@
 # Notepad Mono
 
-[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/test.yaml?style=for-the-badge&label=Nix%20build&labelColor=grey)](https://github.com/MrSinho/notepad-mono/actions)
-![](https://img.shields.io/github/license/mrsinho/shvulkan?style=for-the-badge)
+[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/linux.yaml?style=for-the-badge&label=Nix%20Linux%20build&labelColor=grey&logo=linux)](https://github.com/MrSinho/notepad-mono/actions)
+[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/android.yaml?style=for-the-badge&label=Nix%20Android%20build&labelColor=grey&logo=android)](https://github.com/MrSinho/notepad-mono/actions)
+[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/windows.yaml?style=for-the-badge&label=Actions%20Windows%20build&labelColor=grey&logo=github)](https://github.com/MrSinho/notepad-mono/actions)
+
+![](https://img.shields.io/github/license/mrsinho/notepad-mono?style=for-the-badge)
 
 [![CodeFactor](https://www.codefactor.io/repository/github/mrsinho/notepad-mono/badge)](https://www.codefactor.io/repository/github/mrsinho/notepad-mono)
 
@@ -29,6 +32,21 @@ An open source app to write and sync your monospace notes everywhere.
 git clone https://github.com/mrsinho/notepad-mono.git
 ```
 
+## Easy flutter build
+
+### ![](https://a11ybadges.com/badge?logo=windows)
+
+```shell
+cd app
+flutter build linux --release
+```
+
+### ![](https://a11ybadges.com/badge?logo=linux)
+
+```shell
+cd app
+flutter build windows --release
+```
 
 
 ## Build from source with Nix flake
@@ -37,7 +55,7 @@ The Nix flake will download the required packages, compile and patch the Linux a
 
 If you don't have installed nix on your system, you can follow the [official guide](https://nixos.org/download) for all platforms.
 
-### ![](https://a11ybadges.com/badge?logo=linux)
+### ![](https://a11ybadges.com/badge?logo=linux) ![](https://a11ybadges.com/badge?logo=nixos)
 
 ```shell
 nix build --option sandbox false --verbose ./nix/x86_64-linux --out-link ./nix/x86_64-linux/result
@@ -58,13 +76,6 @@ networking.firewall = {
     3000
   ];
 };
-```
-
-### ![](https://a11ybadges.com/badge?logo=windows)
-
-```shell
-nix build --option sandbox false --verbose ./nix/x86_64-windows --out-link ./nix/x86_64-windows/result
-./nix/x86_64-windows/result
 ```
 
 ### ![](https://a11ybadges.com/badge?logo=android)

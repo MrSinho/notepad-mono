@@ -21,6 +21,11 @@
             
             src = ./../../.;
 
+            pkgs.dockerTools.buildImage {
+                name = "notepad-mono-image";
+                tag = "latest";
+            }
+
             buildInputs = pipeline.buildInputs;
 
             buildPhase = pipeline.buildPhase;

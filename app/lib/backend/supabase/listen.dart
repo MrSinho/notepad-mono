@@ -40,7 +40,7 @@ void listenToVersions(BuildContext context) {
       },
 
       onError: (error) {
-        setNoteEditStatus(NoteEditStatus.lostConnection);
+        //setNoteEditStatus(NoteEditStatus.lostConnection);
       }
 
     );
