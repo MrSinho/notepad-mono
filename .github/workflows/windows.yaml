@@ -1,12 +1,12 @@
-name: "Linux flake"
+name: "Windows actions"
 on:
   pull_request:
   push:
 jobs:
   windows-build:
     runs-on: windows-latest
+    
     steps:
-      
     - name: "Init Flutter project"
       run: cd app && flutter create . && flutter pub get
 
