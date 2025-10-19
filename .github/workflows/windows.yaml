@@ -2,6 +2,9 @@ name: "Windows actions"
 on:
   pull_request:
   push:
+
+permissions:
+  contents: write
   
 jobs:
   windows-build:
@@ -29,7 +32,8 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: app/build/windows/x64/release/bundle/
+        files: app/build/windows/x64/runner/Release/**
+        overwrite_files: true
       
     - name: "Success"
       run: echo "Build completed successfully"
