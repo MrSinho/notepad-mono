@@ -8,7 +8,7 @@ jobs:
     
     steps:
     - name: "Init Flutter project"
-      run: cd app && flutter create . && flutter pub get
+      run: flutter pub get
 
     - name: "Build Windows release"
       run: flutter build windows --release
