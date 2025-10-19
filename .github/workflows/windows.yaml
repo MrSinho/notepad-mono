@@ -19,7 +19,7 @@ jobs:
 
     - name: "Download dependencies"
       working-directory: app
-      run: flutter pub get
+      run: flutter create . && flutter pub get # Later delete flutter create 
 
     - name: "Build Windows release"
       working-directory: app
