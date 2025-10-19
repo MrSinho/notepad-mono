@@ -74,7 +74,7 @@ let
 
     installPhase = ''# $PWD starts from app directory
         mkdir -p $out
-        cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/notepad_mono.apk
+        cp -r $PWD/build/app/outputs/flutter-apk/app-release.apk $out/Notepad_Mono.apk
     '';
 
 in {

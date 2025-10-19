@@ -39,26 +39,17 @@ let
 
         # Replace broken shared library paths with safe packages from nix store
         for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
-          echo "Required libraries for $(basename "$so")" >> $out/readelf.txt
-          
           if readelf -d "$so" | grep -q RUNPATH; then
-            readelf -d "$so" | grep RUNPATH | tr ":" "\n" | tr "[" "\n" | tr "]" "\n" >> $out/readelf.txt
-
-            patchelf --set-rpath ${pkgs.pango}/lib $so
-            patchelf --add-rpath ${pkgs.cairo}/lib $so
-            patchelf --add-rpath ${pkgs.glib}/lib $so
-            patchelf --add-rpath ${pkgs.libepoxy}/lib $so
-            patchelf --add-rpath ${pkgs.fontconfig.lib}/lib $so
-            patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib $so
-            patchelf --add-rpath ${pkgs.harfbuzz}/lib $so
-            patchelf --add-rpath ${pkgs.xorg.libX11}/lib $so
-            patchelf --add-rpath ${pkgs.libdeflate}/lib $so
-            
-          else
-              echo "(no RUNPATH)" >> $out/readelf.txt
-              echo " " >> $out/readelf.txt
+            patchelf --set-rpath ${pkgs.pango}/lib "$so"
+            patchelf --add-rpath ${pkgs.cairo}/lib "$so"
+            patchelf --add-rpath ${pkgs.glib}/lib "$so"
+            patchelf --add-rpath ${pkgs.libepoxy}/lib "$so"
+            patchelf --add-rpath ${pkgs.fontconfig.lib}/lib "$so"
+            patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib "$so"
+            patchelf --add-rpath ${pkgs.harfbuzz}/lib "$so"
+            patchelf --add-rpath ${pkgs.xorg.libX11}/lib "$so"
+            patchelf --add-rpath ${pkgs.libdeflate}/lib "$so"
           fi
-                        
         done
 
         # Copy bundle folder to output
@@ -74,6 +65,8 @@ let
         patchelf --add-rpath ${pkgs.harfbuzz}/lib $out/notepad_mono
         patchelf --add-rpath ${pkgs.xorg.libX11}/lib $out/notepad_mono
         patchelf --add-rpath ${pkgs.libdeflate}/lib $out/notepad_mono
+
+        mv $out/notepad_mono $out/NotepadMono
 
     '';
 
