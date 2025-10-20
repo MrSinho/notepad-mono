@@ -34,7 +34,7 @@ jobs:
       working-directory: nix/x86_64-linux
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        cp result Notepad_Mono-${{ github.ref_name }}-x86_64-linux
+        cp -r result Notepad_Mono-${{ github.ref_name }}-x86_64-linux
         zip -r ../../Notepad_Mono-${{ github.ref_name }}-x86_64-linux.zip Notepad_Mono-${{ github.ref_name }}-x86_64-linux/*
         rm Notepad_Mono-${{ github.ref_name }}-x86_64-linux
 
