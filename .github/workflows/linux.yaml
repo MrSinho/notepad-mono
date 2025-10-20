@@ -31,9 +31,11 @@ jobs:
       run: cd nix/x86_64-linux && nix flake check
 
     - name: "Create release archive"
-      working-directory: nix/x86_64-linux/result
+      working-directory: nix/x86_64-linux
       if: startsWith(github.ref, 'refs/tags/')
-      run: zip -r ../../../Notepad_Mono-${{ github.ref_name }}-x86_64-linux.zip ./*
+      run: cp result Notepad_Mono-${{ github.ref_name }}-x86_64-linux
+      run: zip -r ../../Notepad_Mono-${{ github.ref_name }}-x86_64-linux.zip Notepad_Mono-${{ github.ref_name }}-x86_64-linux/*
+      run: rm Notepad_Mono-${{ github.ref_name }}-x86_64-linux
 
     - name: "Upload release archive"
       if: startsWith(github.ref, 'refs/tags/')
