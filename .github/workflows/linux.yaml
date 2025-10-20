@@ -29,7 +29,7 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
         
     - name: "Build flake"    
-      run: nix build --option sandbox false --verbose ./nix/${{ matrix.arch }} --out-link ./nix/out/${{ matrix.arch }}/result
+      run: nix build --option sandbox false --verbose ./nix/allarch-linux --out-link ./nix/out/${{ matrix.arch }}/result
 
     - name: "Run flake check"
       run: cd nix/allarch-linux && nix flake check
