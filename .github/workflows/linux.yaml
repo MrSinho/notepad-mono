@@ -9,6 +9,8 @@ permissions:
 jobs:
 
   linux-build:
+    runs-on: ${{ matrix.runner }}
+
     strategy:
       matrix:
         include:
