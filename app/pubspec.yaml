@@ -136,7 +136,7 @@ flutter:
 msix_config:
   display_name: Notepad Mono
   publisher_display_name: Sinho Softworks
-  identity_name: com.github.mrsinho.notepad_mono
+  identity_name: com.github.mrsinho.notepad-mono
   msix_version: 1.0.0.0
   #logo_path: C:\path\to\logo.png
   capabilities: internetClient
