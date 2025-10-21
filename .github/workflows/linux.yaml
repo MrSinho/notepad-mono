@@ -17,7 +17,7 @@ jobs:
           - arch: x86_64-linux
             runner: ubuntu-latest
           - arch: arm64-linux
-            runner: ubuntu-latest-arm
+            runner: ubuntu-24.04-arm
 
     steps:
     - name: "Checkout repo"
@@ -36,11 +36,11 @@ jobs:
         
     - name: "Build flake"    
       run: |
-        mkdir nix/out
-        nix build --option sandbox false --verbose ./nix/allarch-linux --out-link ./nix/out/${{ matrix.arch }}/result
+        mkdir nix/out/${{ matrix.arch }}
+        nix build --option sandbox false --verbose ./nix/linux --out-link ./nix/out/${{ matrix.arch }}/result
 
     - name: "Run flake check"
-      run: cd nix/allarch-linux && nix flake check
+      run: cd nix/linux && nix flake check
 
     - name: "Create release archive"
       working-directory: nix/out/${{ matrix.arch }}

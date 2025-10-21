@@ -58,10 +58,9 @@ If you don't have installed nix on your system, you can follow the [official gui
 ### ![](https://a11ybadges.com/badge?logo=linux) ![](https://a11ybadges.com/badge?logo=nixos)
 
 ```shell
-nix build --option sandbox false --verbose ./nix/allarch-linux --out-link ./nix/out/x86_64-linux/result
-./nix/out/x86_64-linux/result
-
-nix build --option sandbox false --verbose ./nix/allarch-linux --out-link ./nix/out/aarch64-linux/result -E 'with import <nixpkgs> { crossSystem = { config = "aarch64-unknown-linux-gnueabi"; }; }; headscale'
+mkdir -p nix/out/linux | true
+nix build --option sandbox false --verbose ./nix/linux --out-link ./nix/out/linux/result
+./nix/out/linux/result/NotepadMono
 ```
 
 > [!NOTE]
@@ -83,8 +82,8 @@ networking.firewall = {
 ### ![](https://a11ybadges.com/badge?logo=android)
 
 ```shell
-nix build --option sandbox false --verbose ./nix/aarch64-android --out-link ./nix/aarch64-android/result
-./nix/aarch64-android/result
+mkdir -p nix/out/android | true
+nix build --option sandbox false --verbose ./nix/android --out-link ./nix/out/android/result
 ```
 
 ### Update flake locks (devs only)

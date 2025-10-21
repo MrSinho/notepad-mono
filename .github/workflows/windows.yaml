@@ -8,7 +8,17 @@ permissions:
   
 jobs:
   windows-build:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runner }}
+
+    # https://github.com/actions/runner-images
+    # https://github.com/actions/partner-runner-images
+    strategy:
+      matrix:
+        include:
+          - arch: x86_64-windows
+            runner: windows-latest
+          - arch: arm64-linux
+            runner: windows-11-arm
     
     steps:
     - name: "Checkout repo"
