@@ -58,8 +58,10 @@ If you don't have installed nix on your system, you can follow the [official gui
 ### ![](https://a11ybadges.com/badge?logo=linux) ![](https://a11ybadges.com/badge?logo=nixos)
 
 ```shell
-nix build --option sandbox false --verbose ./nix/x86_64-linux --out-link ./nix/x86_64-linux/result
-./nix/x86_64-linux/result
+nix build --option sandbox false --verbose ./nix/allarch-linux --out-link ./nix/out/x86_64-linux/result
+./nix/out/x86_64-linux/result
+
+nix build --option sandbox false --verbose ./nix/allarch-linux --out-link ./nix/out/aarch64-linux/result -E 'with import <nixpkgs> { crossSystem = { config = "aarch64-unknown-linux-gnueabi"; }; }; headscale'
 ```
 
 > [!NOTE]

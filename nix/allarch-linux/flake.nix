@@ -8,27 +8,30 @@
         };
     };
 
-    outputs = { nixpkgs, flake-utils, ... }: flake-utils.lib.eachDefaultSystem (system:
+    outputs = { nixpkgs, flake-utils, ... }:
     
-    let
+    flake-utils.lib.eachDefaultSystem (
+            
+    system: let
 
         pipeline = import ./pipeline.nix { inherit system nixpkgs; };
 
-        notepad-mono = (pipeline.pkgs.stdenv.mkDerivation {
+        notepad-mono = (
+            pipeline.pkgs.stdenv.mkDerivation {
 
-            pname = "Notepad Mono";
-            version = "1.0.0";
-            
-            src = ./../../.;
+                pname = "Notepad Mono";
+                version = "1.0.0";
+                
+                src = ./../../.;
 
-            buildInputs = pipeline.buildInputs;
+                buildInputs = pipeline.buildInputs;
 
-            buildPhase = pipeline.buildPhase;
-            
-            installPhase = pipeline.installPhase;
-
-        });# notepad-mono
-
+                buildPhase = pipeline.buildPhase;
+                
+                installPhase = pipeline.installPhase;
+            }
+        );
+        
     in rec {
 
         defaultPackage = notepad-mono;

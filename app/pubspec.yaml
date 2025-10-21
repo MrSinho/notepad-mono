@@ -81,6 +81,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  msix: ^3.16.12
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -130,3 +132,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+msix_config:
+  display_name: Notepad Mono
+  publisher_display_name: Sinho Softworks
+  identity_name: com.github.mrsinho.notepad_mono
+  msix_version: 1.0.0.0
+  #logo_path: C:\path\to\logo.png
+  capabilities: internetClient
+  install_certificate: false

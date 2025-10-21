@@ -7,11 +7,19 @@ permissions:
   contents: write
   
 jobs:
+
   linux-build:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        arch: [ x86_64-linux, aarch64-linux ]
+        include:
+          - arch: x86_64-linux
+            runner: ubuntu-latest
+          - arch: aarch64-linux
+            runner: ubuntu-24.04-arm
+
+      runs-on: ${{ matrix.runner }}
 
     steps:
     - name: "Checkout repo"
