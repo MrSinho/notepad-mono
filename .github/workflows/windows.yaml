@@ -50,15 +50,26 @@ jobs:
       working-directory: app
       run: dart run msix:create
 
+    - name: "Copy MSI executable"
+      if: startsWith(github.ref, 'refs/tags/')
+      run: cp app/build/windows/x64/runner/Release/notepad_mono.msix Notepad_Mono-${{ github.ref_name }}-${{ matrix.arch }}-windows.msix
+
     - name: "Create release archive"
       if: startsWith(github.ref, 'refs/tags/')
-      run: Compress-Archive -Path app/build/windows/x64/runner/Release/* -DestinationPath Notepad_Mono-${{ github.ref_name }}-x86_64-windows.zip
+      run: Compress-Archive -Path app/build/windows/x64/runner/Release/* -DestinationPath Notepad_Mono-${{ github.ref_name }}-${{ matrix.arch }}-windows.zip
       
+    - name: "Upload MSI executable"
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: Notepad_Mono-${{ github.ref_name }}-${{ matrix.arch }}-windows.msix
+        overwrite_files: true
+
     - name: "Upload release archive"
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: Notepad_Mono-${{ github.ref_name }}-x86_64-windows.zip
+        files: Notepad_Mono-${{ github.ref_name }}-${{ matrix.arch }}-windows.zip
         overwrite_files: true
 
     - name: "Success"
