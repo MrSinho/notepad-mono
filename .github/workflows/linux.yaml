@@ -36,7 +36,7 @@ jobs:
         
     - name: "Build flake"    
       run: |
-        mkdir nix/out/${{ matrix.arch }}
+        mkdir -p nix/out/${{ matrix.arch }}
         nix build --option sandbox false --verbose ./nix/linux --out-link ./nix/out/${{ matrix.arch }}/result
 
     - name: "Run flake check"
