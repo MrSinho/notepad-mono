@@ -17,7 +17,7 @@ jobs:
         include:
           - arch: x86_64-windows
             runner: windows-latest
-          - arch: arm64-linux
+          - arch: arm64-windows
             runner: windows-11-arm
     
     steps:

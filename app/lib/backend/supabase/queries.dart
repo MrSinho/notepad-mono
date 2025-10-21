@@ -56,7 +56,7 @@ Future<void> queryNotes() async {
 
 }
 
-Future<void> saveNoteContent() async {
+Future<bool> saveNoteContent() async {
 
   try {
 
@@ -75,9 +75,12 @@ Future<void> saveNoteContent() async {
 
     setNoteEditStatus(NoteEditStatus.savedChanges);
 
+    return true;
   }
   catch (error) {
     setNoteEditStatus(NoteEditStatus.failedSave);
+
+    return false;
   }
 
 }
@@ -94,15 +97,23 @@ Future<void> createNewNote(String title) async {
 }
 
 Future<void> renameNote(String title) async {
-  await Supabase.instance.client.from("Notes").update(
-    {
-      "title": title,
-      "content": AppData.instance.noteEditData.controller.text,
-      "last_edit": DateTime.now().toUtc().toString()
-    }
-  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 
-  setNoteEditStatus(NoteEditStatus.renamedNote);
+  try {
+    await Supabase.instance.client.from("Notes").update(
+      {
+        "title": title,
+        "content": AppData.instance.noteEditData.controller.text,
+        "last_edit": DateTime.now().toUtc().toString()
+      }
+    ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+
+    setNoteEditStatus(NoteEditStatus.renamedNote);
+
+  }
+  catch (error) {
+    setNoteEditStatus(NoteEditStatus.lostConnection);
+  }
+  
 }
 
 Future<void> deleteSelectedNote() async {
@@ -112,20 +123,28 @@ Future<void> deleteSelectedNote() async {
 
 Future<void> flipFavoriteNote() async {
 
-  bool isFavorite = AppData.instance.queriesData.selectedNote["is_favorite"];
+  try {
+    bool isFavorite = AppData.instance.queriesData.selectedNote["is_favorite"];
 
-  await Supabase.instance.client.from("Notes").update(
-    {
-      "is_favorite": !isFavorite,
-      "content": AppData.instance.noteEditData.controller.text
+    await Supabase.instance.client.from("Notes").update(
+      {
+        "is_favorite": !isFavorite,
+        "content": AppData.instance.noteEditData.controller.text
+      }
+    ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+
+    if (!isFavorite) {//was favorite
+      setNoteEditStatus(NoteEditStatus.addedToFavorites);
     }
-  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+    else {
+      setNoteEditStatus(NoteEditStatus.removedFromFavorites);
+    }
 
-  if (!isFavorite) {//was favorite
-    setNoteEditStatus(NoteEditStatus.addedToFavorites);
   }
-  else {
-    setNoteEditStatus(NoteEditStatus.removedFromFavorites);
+  catch (error) {
+    setNoteEditStatus(NoteEditStatus.lostConnection);
+    appLog("Failed flipping favorite note: $error", true);
   }
+  
 }
 

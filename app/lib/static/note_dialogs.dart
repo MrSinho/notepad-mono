@@ -273,8 +273,13 @@ Widget unsavedChangesDialog(BuildContext context) {
 
   TextButton saveButton = TextButton(
     child: saveMask, 
-    onPressed: () {
-      saveNoteContent();
+    onPressed: () async {
+      bool r = await saveNoteContent();
+
+      if (r == false) {
+        return;
+      }
+
       NavigatorInfo.getState()?.pop(context);
       NavigatorInfo.getState()?.pop(context);
     }
