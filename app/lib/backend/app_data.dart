@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:go_router/go_router.dart';
 import 'package:highlight/languages/markdown.dart';
@@ -47,8 +46,6 @@ class AppData {
   final ValueNotifier<int> rootPageUpdates         = ValueNotifier(0);
   final ValueNotifier<int> noteEditBarsUpdates     = ValueNotifier(0);
   final ValueNotifier<int> inputFieldUpdates       = ValueNotifier(0);
-  //final ValueNotifier<int> versionsListenerUpdates = ValueNotifier(0);
-  //final ValueNotifier<int> notesListenerUpdates    = ValueNotifier(0);
 
   late final GoRouter      router;
 

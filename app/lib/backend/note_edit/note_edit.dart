@@ -8,10 +8,8 @@ import '../../static/note_dialogs.dart';
 import '../utils.dart';
 import '../notify_ui.dart';
 import '../app_data.dart';
-import '../color_palette.dart';
 import '../router.dart';
 
-import '../../themes.dart';
 
 
 class NoteEditStatusData {
@@ -170,8 +168,8 @@ void setNoteEditStatus(NoteEditStatus status) {
 
   appLog("New note edit status: $message", true);
   
-  //notifyNoteEditBarsUpdate();
-  //notifyHomePageUpdate(); //fix later
+  notifyNoteEditBarsUpdate();
+  notifyRootPageUpdate();
 }
 
 void setNoteControllerText(String text) {
@@ -204,7 +202,7 @@ void selectNote(Map<String, dynamic> note, bool changeStatus, BuildContext conte
   setNoteControllerText(note["content"] ?? "");
   getNoteTextData();
   getNoteCursorData();
-  
+
   if (changeStatus) {
     setNoteEditStatus(NoteEditStatus.selectedNote);
   }

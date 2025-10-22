@@ -5,9 +5,6 @@ import '../app_data.dart';
 import '../note_edit/note_edit.dart';
 import '../utils.dart';
 import '../notify_ui.dart';
-import '../color_palette.dart';
-
-import '../../themes.dart';
 
 
 

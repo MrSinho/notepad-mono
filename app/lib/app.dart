@@ -5,7 +5,6 @@ import 'backend/supabase/auth_access.dart';
 import 'backend/supabase/listen.dart';
 
 import 'backend/app_data.dart';
-import 'backend/router.dart';
 
 import 'themes.dart';
 

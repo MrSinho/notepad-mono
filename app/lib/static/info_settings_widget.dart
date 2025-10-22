@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 //import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:go_router/go_router.dart';
 
 import '../backend/app_data.dart';
 import '../backend/inputs.dart';
