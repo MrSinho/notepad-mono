@@ -33,7 +33,7 @@ Future<void> queryVersions() async {
 
   AppData.instance.queriesData.version = latest;
 
-  notifyLoginPageUpdate();
+  notifyRootPageUpdate();
 
   return;
 }
@@ -68,6 +68,8 @@ Future<bool> saveNoteContent() async {
         "last_edit": lastEdit
       }
     ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+
+    AppData.instance.queriesData.selectedNote["content"] = AppData.instance.noteEditData.controller.text;
 
     AppData.instance.noteEditData.savedContentLength = AppData.instance.noteEditData.bufferLength;
     AppData.instance.noteEditData.savedContentLines  = AppData.instance.noteEditData.bufferLines;

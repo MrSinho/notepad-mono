@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'supabase/queries.dart';
 
 import 'app_data.dart';
 import 'utils.dart';
 import 'note_edit/note_edit.dart';
-import 'navigator.dart';
 
 import '../static/info_settings_widget.dart';
 import '../static/note_dialogs.dart';
@@ -144,7 +144,7 @@ void renameInputListener(BuildContext context, KeyEvent event, TextEditingContro
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       
     if (ctrl & AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyR)) {
-      NavigatorInfo.getState()?.pop(context);
+      context.pop();
     }
 
   } 
@@ -163,7 +163,7 @@ void userInfoInputListener(BuildContext context, KeyEvent event) {
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       
     if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyM)) {
-      NavigatorInfo.getState()?.pop(context);
+      context.pop();
     }
 
   } 
@@ -182,7 +182,7 @@ void shortcutsMapInputListener(BuildContext context, KeyEvent event) {
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       
     if (ctrl && AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.keyN)) {
-      NavigatorInfo.getState()?.pop(context);
+      context.pop();
     }
 
   } 

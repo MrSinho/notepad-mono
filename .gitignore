@@ -104,3 +104,6 @@ app/.metadata
 app/.idea
 
 *.env
+
+# Nix related paths
+nix/out

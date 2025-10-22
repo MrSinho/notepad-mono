@@ -58,7 +58,7 @@ If you don't have installed nix on your system, you can follow the [official gui
 ### ![](https://a11ybadges.com/badge?logo=linux) ![](https://a11ybadges.com/badge?logo=nixos)
 
 ```shell
-mkdir -p nix/out/linux | true
+mkdir -p nix/out/linux
 nix build --option sandbox false --verbose ./nix/linux --out-link ./nix/out/linux/result
 ./nix/out/linux/result/NotepadMono
 ```
@@ -82,7 +82,7 @@ networking.firewall = {
 ### ![](https://a11ybadges.com/badge?logo=android)
 
 ```shell
-mkdir -p nix/out/android | true
+mkdir -p nix/out/android
 nix build --option sandbox false --verbose ./nix/android --out-link ./nix/out/android/result
 ```
 

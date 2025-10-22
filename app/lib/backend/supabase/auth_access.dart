@@ -218,7 +218,7 @@ Future<void> sendHttpResponse(HttpRequest authRequest) async {
     authRequest.response.write(errorMessage);
 
     AppData.instance.sessionData.errorMessage = errorMessage;
-    notifyLoginPageUpdate();
+    notifyRootPageUpdate();
 
     await authRequest.response.close();
   }

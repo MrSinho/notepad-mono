@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../backend/app_data.dart';
 import '../backend/note_edit/note_edit.dart';
 import '../backend/utils.dart';
-import '../backend/navigator.dart';
 import '../backend/inputs.dart';
+import '../backend/note_edit/edit_timer.dart';
+import '../backend/router.dart';
 
 import '../static/note_bottom_sheet.dart';
 import '../static/ui_utils.dart';
@@ -25,9 +26,7 @@ Widget homePageBuilder(BuildContext context) {
         trailing: Text(formatDateTime(note["last_edit"] ?? ""), style: GoogleFonts.robotoMono(fontSize: 9)),
         onTap: () {
           selectNote(note, true, context);
-          NavigatorInfo.getState()?.push(
-            MaterialPageRoute(builder: (context) => AppData.instance.noteEditPage)
-          );
+          goToNoteEditPage(context);
         },
         onLongPress: () {
           selectNote(note, true, context);

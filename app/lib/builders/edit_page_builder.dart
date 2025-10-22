@@ -8,6 +8,8 @@ import '../backend/supabase/queries.dart';
 import '../backend/app_data.dart';
 import '../backend/utils.dart';
 
+import '../backend/color_palette.dart';
+
 import '../backend/note_edit/custom_intents/copy_lines.dart';
 import '../backend/note_edit/custom_intents/cut_lines.dart';
 import '../backend/note_edit/custom_intents/paste.dart';
@@ -19,6 +21,8 @@ import '../backend/note_edit/custom_intents/move_cursor_to_line_edge.dart';
 import '../backend/note_edit/custom_intents/canc.dart';
 
 import '../static/ui_utils.dart';
+
+import '../themes.dart';
 
 import 'app_bar_builder.dart';
 
@@ -42,6 +46,8 @@ LayoutBuilder iconTextButtonLayoutBuilder(Widget icon, Widget text, VoidCallback
 Widget noteEditPageBuilder(BuildContext context) {
 
   appLog("Note edit page builder triggered", true);
+
+  AppData.instance.editColorPaletteData = generateRandomColorPalette(2, isThemeBright(context));
 
   Padding textFieldPad = Padding(
     padding: const EdgeInsets.all(8.0),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +9,7 @@ import '../utils.dart';
 import '../notify_ui.dart';
 import '../app_data.dart';
 import '../color_palette.dart';
-import '../navigator.dart';
+import '../router.dart';
 
 import '../../themes.dart';
 
@@ -27,6 +29,9 @@ class NoteEditStatusData {
 }
 
 class NoteEditData {
+
+  late Timer saveTimer;
+  int editTime = 0;
 
   late CodeController controller;
   late FocusNode      focusNode;
@@ -165,8 +170,8 @@ void setNoteEditStatus(NoteEditStatus status) {
 
   appLog("New note edit status: $message", true);
   
-  notifyNoteEditBarsUpdate();
-  notifyHomePageUpdate();
+  //notifyNoteEditBarsUpdate();
+  //notifyHomePageUpdate(); //fix later
 }
 
 void setNoteControllerText(String text) {
@@ -199,12 +204,11 @@ void selectNote(Map<String, dynamic> note, bool changeStatus, BuildContext conte
   setNoteControllerText(note["content"] ?? "");
   getNoteTextData();
   getNoteCursorData();
-
-  AppData.instance.editColorPaletteData = generateRandomColorPalette(2, isThemeBright(context));
-
+  
   if (changeStatus) {
     setNoteEditStatus(NoteEditStatus.selectedNote);
   }
+
 }
 
 void getNoteTextData() {
@@ -389,7 +393,7 @@ void exitNoteEditPage(BuildContext context) {
     showDialog(context: context, builder: (BuildContext context) => unsavedChangesDialog(context));
   }
   else {
-    NavigatorInfo.getState()?.pop(context);
+    goToRootPage(context);
   }
 
 }

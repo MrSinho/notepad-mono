@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notepad_mono/backend/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
-import '../backend/navigator.dart';
 import '../backend/color_palette.dart';
 
 import '../themes.dart';
@@ -44,14 +45,15 @@ Dialog signOutDialog(BuildContext context) {
                 color: getCurrentThemePalette(context).quaternaryForegroundColor
               )
             ),
-            onPressed: () => NavigatorInfo.getState()?.pop(context),
+            onPressed: () => context.pop(),
           ),
           const Gap(20.0),
           TextButton(
             child: confirmMask,
-            onPressed: () async {
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              await Supabase.instance.client.auth.signOut();
+            onPressed: () {
+              context.pop();
+              Supabase.instance.client.auth.signOut();
+              goToRootPage(context);
             } 
           )
         ],

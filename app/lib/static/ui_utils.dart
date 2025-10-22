@@ -151,11 +151,11 @@ Widget favoriteButton(Map<String, dynamic> note, BuildContext context) {
 
   IconButton button = IconButton(
     icon: icon,
-    onPressed: () async {
+    onPressed: () {
       if (AppData.instance.queriesData.selectedNote["id"]! != note["id"]!) { // Select note only if not already selected
         selectNote(note, false, context);
       }
-      await flipFavoriteNote();
+      flipFavoriteNote();
     } 
   );
 

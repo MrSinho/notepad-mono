@@ -22,14 +22,14 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    appLog("Initialzed HomePageState", true);
+    appLog("Initialized HomePageState", true);
   }
   
   @override
   Widget build(BuildContext context) {
 
     ValueListenableBuilder builder = ValueListenableBuilder(
-      valueListenable: AppData.instance.homePageUpdates,
+      valueListenable: AppData.instance.rootPageUpdates,
       builder: (context, value, child) => homePageBuilder(context)
     );
 

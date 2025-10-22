@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 //import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:go_router/go_router.dart';
 
 import '../backend/app_data.dart';
-import '../backend/navigator.dart';
 import '../backend/inputs.dart';
 import '../backend/utils.dart';
 import '../backend/color_palette.dart';
@@ -97,12 +97,13 @@ void showUserInfoWidget(BuildContext context) {
     ),    
     const Gap(20),
     wrapIconTextButton(const Icon(Icons.logout_outlined),
-        Text("Log out", style: GoogleFonts.robotoMono()), () {
-      NavigatorInfo.getState()?.pop(context);
-      showDialog(
-          context: context,
-          builder: (BuildContext context) => signOutDialog(context));
-    })
+      Text("Log out", style: GoogleFonts.robotoMono()), 
+      () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => signOutDialog(context));
+      }
+    )
   ];
 
   userInfoContents.addAll(footerWidgets(context));

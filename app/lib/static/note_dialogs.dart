@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '../backend/supabase/queries.dart';
 
 import '../backend/app_data.dart';
-import '../backend/navigator.dart';
 import '../backend/color_palette.dart';
 import '../backend/inputs.dart';
+import '../backend/router.dart';
 
 import '../themes.dart';
 
@@ -39,9 +40,9 @@ Widget newNoteDialog(BuildContext context) {
 
   TextButton confirmButton = TextButton(
     child: doneMask, 
-    onPressed: () async {
-      NavigatorInfo.getState()?.pop(context);
-      await createNewNote(controller.text);
+    onPressed: () {
+      context.pop();
+      createNewNote(controller.text);
     }
   );
 
@@ -52,7 +53,7 @@ Widget newNoteDialog(BuildContext context) {
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
-    onPressed: () => NavigatorInfo.getState()?.pop(context)
+    onPressed: () => context.pop()
   );
 
   Column dialogContent = Column(
@@ -118,9 +119,9 @@ Widget renameNoteDialog(BuildContext context) {
 
   TextButton renameButton = TextButton(
     child: renameMask, 
-    onPressed: () async {
-      NavigatorInfo.getState()?.pop(context);
-      await renameNote(renameController.text);
+    onPressed: () {
+      context.pop();
+      renameNote(renameController.text);
     }
   );
 
@@ -131,7 +132,7 @@ Widget renameNoteDialog(BuildContext context) {
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
-    onPressed: () => NavigatorInfo.getState()?.pop(context)
+    onPressed: () => context.pop()
   );
 
   Column dialogContent = Column(
@@ -180,9 +181,9 @@ Widget deleteNoteDialog(BuildContext context) {
         color: getCurrentThemePalette(context).quaternaryForegroundColor
       )
     ), 
-    onPressed: () async {
-      NavigatorInfo.getState()?.pop(context);
-      await deleteSelectedNote();
+    onPressed: () {
+      context.pop();
+      deleteSelectedNote();
     }
   );
 
@@ -198,7 +199,7 @@ Widget deleteNoteDialog(BuildContext context) {
 
   TextButton noButton = TextButton(
     child: noMask, 
-    onPressed: () => NavigatorInfo.getState()?.pop(context)
+    onPressed: () => context.pop()
   );
 
   Column dialogContent = Column(
@@ -241,8 +242,8 @@ Widget unsavedChangesDialog(BuildContext context) {
       )
     ), 
     onPressed: () {
-      NavigatorInfo.getState()?.pop(context);
-      NavigatorInfo.getState()?.pop(context);
+      context.pop();
+      goToRootPage(context);
     }
   );
 
@@ -258,7 +259,7 @@ Widget unsavedChangesDialog(BuildContext context) {
 
   TextButton cancelButton = TextButton(
     child: noMask, 
-    onPressed: () => NavigatorInfo.getState()?.pop(context)
+    onPressed: () => context.pop()
   );
 
   ShaderMask saveMask = paletteGradientShaderMask(
@@ -273,15 +274,10 @@ Widget unsavedChangesDialog(BuildContext context) {
 
   TextButton saveButton = TextButton(
     child: saveMask, 
-    onPressed: () async {
-      bool r = await saveNoteContent();
-
-      if (r == false) {
-        return;
-      }
-
-      NavigatorInfo.getState()?.pop(context);
-      NavigatorInfo.getState()?.pop(context);
+    onPressed: () {
+      saveNoteContent();
+      context.pop();
+      goToRootPage(context);
     }
   );
 

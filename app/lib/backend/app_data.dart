@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 //import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:go_router/go_router.dart';
 import 'package:highlight/languages/markdown.dart';
 import 'package:app_links/app_links.dart';
+import 'package:notepad_mono/backend/router.dart';
 
-import 'supabase/listen.dart';
 import 'supabase/auth_access.dart';
 import 'supabase/queries.dart';
 
@@ -19,6 +20,8 @@ import '../new_primitives/input_field.dart';
 import 'note_edit/note_edit.dart';
 import 'color_palette.dart';
 import 'inputs.dart';
+
+import '../../../app.dart';
 
 
 
@@ -41,10 +44,13 @@ class AppData {
 
   late ColorPaletteData editColorPaletteData;
 
-  final ValueNotifier<int> loginPageUpdates    = ValueNotifier(0);
-  final ValueNotifier<int> homePageUpdates     = ValueNotifier(0);
-  final ValueNotifier<int> noteEditBarsUpdates = ValueNotifier(0);
-  final ValueNotifier<int> inputFieldUpdates   = ValueNotifier(0);
+  final ValueNotifier<int> rootPageUpdates         = ValueNotifier(0);
+  final ValueNotifier<int> noteEditBarsUpdates     = ValueNotifier(0);
+  final ValueNotifier<int> inputFieldUpdates       = ValueNotifier(0);
+  //final ValueNotifier<int> versionsListenerUpdates = ValueNotifier(0);
+  //final ValueNotifier<int> notesListenerUpdates    = ValueNotifier(0);
+
+  late final GoRouter      router;
 
   AppData._internal() {//Called once and only once, no BuildContext available
 
@@ -62,6 +68,13 @@ class AppData {
     editBottomBar     = const EditBottomBar();
     noteInputField    = const NoteInputField();
 
+    router = GoRouter(
+      routes: <RouteBase>[
+        GoRoute(path: RoutesPaths.rootPage.path, builder: (context, state) => authStreamBuilder(context)),
+        GoRoute(path: RoutesPaths.noteEditPage.path, builder: (context, state) => noteEditPage),
+      ]
+    );
+
     noteEditData.controller = CodeController(
       language: markdown,// currently only markdown linting
       namedSectionParser: const BracketsStartEndNamedSectionParser(),
@@ -77,7 +90,5 @@ class AppData {
   }
 
   void setupWithContext(BuildContext context) {
-    listenToVersions(context);
-    listenToNotes(context);
   }
 }

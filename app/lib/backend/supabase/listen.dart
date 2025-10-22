@@ -35,12 +35,11 @@ void listenToVersions(BuildContext context) {
         });
 
         AppData.instance.queriesData.version = versions.first;
-        notifyHomePageUpdate();
-        notifyLoginPageUpdate();
+        notifyCurrentPageUpdate(context);
       },
 
       onError: (error) {
-        //setNoteEditStatus(NoteEditStatus.lostConnection);
+        setNoteEditStatus(NoteEditStatus.lostConnection);
       }
 
     );
@@ -48,6 +47,7 @@ void listenToVersions(BuildContext context) {
   }
   catch (exception) {
     appLog("Failed listening to app versions: $exception", true);
+    setNoteEditStatus(NoteEditStatus.lostConnection);
   }
 
 }
@@ -65,7 +65,7 @@ void listenToNotes(BuildContext context) {
 
     AppData.instance.queriesData.streamSubscription = table.stream(primaryKey: ["id"]).listen(
 
-    (dynamic data) async {
+    (dynamic data) {
 
       //safely cast data as a List<Map<String, dynamic>>
       List<Map<String, dynamic>> notes = (data as List).whereType<Map<String, dynamic>>().toList();
@@ -78,13 +78,11 @@ void listenToNotes(BuildContext context) {
 
         AppData.instance.queriesData.notes = notes;
 
-        notifyHomePageUpdate();
-        notifyNoteEditBarsUpdate();
-
         appLog("Pulled ${notes.length} notes from listen callback", true);
 
-        AppData.instance.editColorPaletteData = generateRandomColorPalette(2, isThemeBright(context));
-          
+        notifyRootPageUpdate();
+        notifyNoteEditBarsUpdate();
+
         //Update selected note
         for (Map<String, dynamic> note in notes) {
           if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
@@ -96,7 +94,6 @@ void listenToNotes(BuildContext context) {
             selectNote(note, false, context);
           }
         }
-
       },
 
       onError: (error) {
