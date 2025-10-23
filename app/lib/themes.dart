@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'backend/navigator.dart';
+
 
 
 class SimplePalette {
@@ -120,7 +122,11 @@ class DefaultColorSchemes {
 
 }
 
-SimplePalette getCurrentThemePalette(BuildContext context) {
+SimplePalette getCurrentThemePalette() {
+
+  BuildContext? context = NavigatorInfo.key.currentContext;
+
+  if (context == null) { return ThemesPalettes.dark; }
 
   if (Theme.of(context).colorScheme == DefaultColorSchemes.bright) {
     return ThemesPalettes.bright;
@@ -138,12 +144,12 @@ SimplePalette getCurrentThemePalette(BuildContext context) {
   return ThemesPalettes.dark;
 }
 
-bool isThemeBright(BuildContext context) {
-  return (getCurrentThemePalette(context) == ThemesPalettes.bright) ? true : false;
+bool isThemeBright() {
+  return (getCurrentThemePalette() == ThemesPalettes.bright) ? true : false;
 }
 
-bool isThemeDark(BuildContext context) {
-  return (getCurrentThemePalette(context) == ThemesPalettes.dark) ? true : false;
+bool isThemeDark() {
+  return (getCurrentThemePalette() == ThemesPalettes.dark) ? true : false;
 }
 
 ThemeData brightTheme() {

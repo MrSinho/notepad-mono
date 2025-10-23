@@ -6,8 +6,6 @@ import 'package:gap/gap.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/supabase/auth_access.dart';
 
-import '../backend/app_data.dart';
-
 import '../backend/note_edit/note_edit.dart';
 
 import '../themes.dart';
@@ -141,20 +139,18 @@ Text warningText(String msg) {
   return Text(msg, style: const TextStyle(color: Colors.red));
 }
 
-Widget favoriteButton(Map<String, dynamic> note, BuildContext context) {
+Widget favoriteButton(Map<String, dynamic> note) {
 
   Widget icon = const Icon(Icons.star_rounded, color: Colors.amber);
 
   if (note["is_favorite"] == false) {
-    icon = Icon(Icons.star_outline_rounded, color: getCurrentThemePalette(context).quaternaryForegroundColor);
+    icon = Icon(Icons.star_outline_rounded, color: getCurrentThemePalette().quaternaryForegroundColor);
   }
 
   IconButton button = IconButton(
     icon: icon,
     onPressed: () {
-      if (AppData.instance.queriesData.selectedNote["id"]! != note["id"]!) { // Select note only if not already selected
-        selectNote(note, false, context);
-      }
+      selectNote(note, false);
       flipFavoriteNote();
     } 
   );

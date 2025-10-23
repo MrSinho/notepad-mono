@@ -16,7 +16,7 @@ Widget editStatusBarBuilder(BuildContext context) {
       shadowColor: AppData.instance.noteEditStatusData.status.color,
       child: Padding(
         padding: const EdgeInsetsGeometry.all(8.0),
-        child: Text(AppData.instance.noteEditStatusData.message, style: TextStyle(color: getCurrentThemePalette(context).primaryForegroundColor, fontWeight: FontWeight.normal)),
+        child: Text(AppData.instance.noteEditStatusData.message, style: TextStyle(color: getCurrentThemePalette().primaryForegroundColor, fontWeight: FontWeight.normal)),
       ),
     )
   );

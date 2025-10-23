@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:notepad_mono/backend/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../backend/color_palette.dart';
+import '../backend/router.dart';
 
 import '../themes.dart';
 
@@ -14,7 +14,7 @@ import '../themes.dart';
 Dialog signOutDialog(BuildContext context) {
 
   ShaderMask confirmMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright(context)),
+    generateRandomColorPalette(2, isThemeBright()),
     Text(
       "Confirm",
       style: GoogleFonts.robotoMono(
@@ -42,7 +42,7 @@ Dialog signOutDialog(BuildContext context) {
             child: Text(
               "Cancel",
               style: GoogleFonts.robotoMono(
-                color: getCurrentThemePalette(context).quaternaryForegroundColor
+                color: getCurrentThemePalette().quaternaryForegroundColor
               )
             ),
             onPressed: () => context.pop(),
@@ -53,7 +53,7 @@ Dialog signOutDialog(BuildContext context) {
             onPressed: () {
               context.pop();
               Supabase.instance.client.auth.signOut();
-              goToRootPage(context);
+              goToRootPage();
             } 
           )
         ],

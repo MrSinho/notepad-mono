@@ -40,7 +40,7 @@ void showNoteBottomSheet(BuildContext context) {
             title: Text("Edit", style: GoogleFonts.robotoMono()),
             onTap: () { 
               context.pop();
-              goToNoteEditPage(context);
+              goToNoteEditPage();
               //notifyHomePageUpdate(); ??
             },
           ),

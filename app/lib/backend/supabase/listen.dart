@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
@@ -8,7 +7,7 @@ import '../notify_ui.dart';
 
 
 
-void listenToVersions(BuildContext context) {
+void listenToVersions() {
 
   try {
 
@@ -32,7 +31,7 @@ void listenToVersions(BuildContext context) {
         });
 
         AppData.instance.queriesData.version = versions.first;
-        notifyCurrentPageUpdate(context);
+        notifyRootPageUpdate();
       },
 
       onError: (error) {
@@ -49,7 +48,7 @@ void listenToVersions(BuildContext context) {
 
 }
 
-void listenToNotes(BuildContext context) {
+void listenToNotes() {
 
   try {
 
@@ -88,7 +87,7 @@ void listenToNotes(BuildContext context) {
               setNoteEditStatus(NoteEditStatus.pulledChanges);
             }
 
-            selectNote(note, false, context);
+            selectNote(note, false);
           }
         }
       },

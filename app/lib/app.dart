@@ -43,7 +43,7 @@ StreamBuilder<AuthState> authStreamBuilder(BuildContext context) {
 
     builder: (context, snapshot) {
 
-      listenToVersions(context);
+      listenToVersions();
       //setupWithContext(context)
       
       if (snapshot.data != null && snapshot.data!.session != null) {
@@ -61,7 +61,7 @@ StreamBuilder<AuthState> authStreamBuilder(BuildContext context) {
               return loadingScaffold;
             }
 
-            listenToNotes(context);
+            listenToNotes();
 
             return AppData.instance.homePage;
           }

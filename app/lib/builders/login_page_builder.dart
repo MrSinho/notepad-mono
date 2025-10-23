@@ -23,7 +23,7 @@ Widget loginPageBuilder(BuildContext context) {
 
   int authProviders = LoginAuthProviders.google | LoginAuthProviders.github | LoginAuthProviders.azure;
 
-  ColorPaletteData loginPalette = generateRandomColorPalette(2, isThemeBright(context));
+  ColorPaletteData loginPalette = generateRandomColorPalette(2, isThemeBright());
 
   List<Widget> authProvidersWidgets = [];
 

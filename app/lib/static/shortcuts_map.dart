@@ -29,7 +29,7 @@ Widget tableTitle(BuildContext context, String title) {
   );
 
   ShaderMask mask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright(context)),
+    generateRandomColorPalette(2, isThemeBright()),
     align
   );
 
@@ -46,14 +46,14 @@ TableRow shortcutRow(BuildContext context, String shortcut, String description) 
           shortcut,
           style: GoogleFonts.robotoMono(
             fontWeight: FontWeight.bold,
-            color: getCurrentThemePalette(context).quaternaryForegroundColor
+            color: getCurrentThemePalette().quaternaryForegroundColor
           )
         ),
       ),
       Text(
         description,
         style: TextStyle(
-          color: getCurrentThemePalette(context).secondaryForegroundColor
+          color: getCurrentThemePalette().secondaryForegroundColor
         )
       )
     ]

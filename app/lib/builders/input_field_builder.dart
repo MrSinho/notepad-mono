@@ -28,20 +28,20 @@ Widget inputFieldBuilder(BuildContext context) {
     //minLines: null,
 
     textStyle: GoogleFonts.robotoMono(
-      color: getCurrentThemePalette(context).primaryForegroundColor,
+      color: getCurrentThemePalette().primaryForegroundColor,
       fontSize: AppData.instance.noteEditData.fontSize,
     ),
 
     gutterStyle: const GutterStyle(
       //textStyle: GoogleFonts.robotoMono(
-      //  color: getCurrentThemePalette(context).quaternaryForegroundColor,
+      //  color: getCurrentThemePalette().quaternaryForegroundColor,
       //),
       showLineNumbers: true,
       showFoldingHandles: true,
       showErrors: false,
     ),
 
-    cursorColor: getCurrentThemePalette(context).primaryForegroundColor,
+    cursorColor: getCurrentThemePalette().primaryForegroundColor,
 
     textSelectionTheme: TextSelectionThemeData(
       selectionColor: Theme.of(context).highlightColor
@@ -148,16 +148,16 @@ CodeField noteCodeFieldBuilder(CodeController controller, BuildContext context) 
     lineNumbers: true,
 
     textStyle: GoogleFonts.robotoMono(
-      color: getCurrentThemePalette(context).primaryForegroundColor,
+      color: getCurrentThemePalette().primaryForegroundColor,
     ),
 
     lineNumberStyle: LineNumberStyle(
       textStyle: GoogleFonts.robotoMono(
-      color: getCurrentThemePalette(context).quaternaryForegroundColor,
+      color: getCurrentThemePalette().quaternaryForegroundColor,
       ),
     ),
 
-    cursorColor: getCurrentThemePalette(context).primaryForegroundColor,
+    cursorColor: getCurrentThemePalette().primaryForegroundColor,
 
     textSelectionTheme: TextSelectionThemeData(
       selectionColor: Theme.of(context).highlightColor

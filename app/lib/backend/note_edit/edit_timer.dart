@@ -8,9 +8,9 @@ import '../utils.dart';
 
 
 void timerCallback(Timer timer) {
-  AppData.instance.noteEditData.editTime++;
+  AppData.instance.noteEditData.editTimeS++;
 
-  if (AppData.instance.noteEditData.editTime % 3 != 0) {
+  if (AppData.instance.noteEditData.editTimeS % 2 != 0) {
     return;
   }
 
@@ -29,7 +29,7 @@ void startEditTimer() {
 
 void resetEditTimer() {
 
-  AppData.instance.noteEditData.editTime = 0;
+  AppData.instance.noteEditData.editTimeS = 0;
 
 }
 

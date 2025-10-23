@@ -25,6 +25,9 @@ An open source app to write and sync your monospace notes everywhere.
 <img src="./docs/media/frame/frameitEditDesktop.png"/>
 </p>
 
+## Release changelog
+
+You can find the release changelog file [here](./CHANGELOG.md).
 
 ## Clone repository
 
@@ -85,6 +88,8 @@ networking.firewall = {
 mkdir -p nix/out/android
 nix build --option sandbox false --verbose ./nix/android --out-link ./nix/out/android/result
 ```
+
+For some reason during the build Gradle might fail/crash unexpectectly, and this might happen also in the Github actions job. For now rerunning the flake build will solve the issue. 
 
 ### Update flake locks (devs only)
 

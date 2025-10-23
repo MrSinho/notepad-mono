@@ -20,7 +20,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
 
   List<Widget> mainAppBarLeftChildren = [
     paletteGradientShaderMask(
-      generateRandomColorPalette(2, isThemeBright(context)),
+      generateRandomColorPalette(2, isThemeBright()),
       Text(
         AppData.instance.queriesData.version["name"] ?? "Notepad Mono",
         style: GoogleFonts.robotoMono(
@@ -122,7 +122,7 @@ Widget editAppBarContentBuilder(BuildContext context) {
       padding: const EdgeInsetsGeometry.all(12.0),
       child: Icon(Icons.circle, color: AppData.instance.noteEditStatusData.status.color, size: 14.0,),
     ),
-    favoriteButton(AppData.instance.queriesData.selectedNote, context),
+    favoriteButton(AppData.instance.queriesData.selectedNote),
     titleFlexible
   ];
 

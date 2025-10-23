@@ -29,7 +29,7 @@ Widget newNoteDialog(BuildContext context) {
   );
 
   ShaderMask doneMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright(context)),
+    generateRandomColorPalette(2, isThemeBright()),
     Text(
       "Done", 
       style: GoogleFonts.robotoMono(
@@ -50,7 +50,7 @@ Widget newNoteDialog(BuildContext context) {
     child: Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).quaternaryForegroundColor
+        color: getCurrentThemePalette().quaternaryForegroundColor
       )
     ), 
     onPressed: () => context.pop()
@@ -108,7 +108,7 @@ Widget renameNoteDialog(BuildContext context) {
   );
 
   ShaderMask renameMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright(context)),
+    generateRandomColorPalette(2, isThemeBright()),
     Text(
       "Done",
       style: GoogleFonts.robotoMono(
@@ -129,7 +129,7 @@ Widget renameNoteDialog(BuildContext context) {
     child: Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).quaternaryForegroundColor
+        color: getCurrentThemePalette().quaternaryForegroundColor
       )
     ), 
     onPressed: () => context.pop()
@@ -178,7 +178,7 @@ Widget deleteNoteDialog(BuildContext context) {
     child: Text(
       "Yes, delete",
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).quaternaryForegroundColor
+        color: getCurrentThemePalette().quaternaryForegroundColor
       )
     ), 
     onPressed: () {
@@ -188,7 +188,7 @@ Widget deleteNoteDialog(BuildContext context) {
   );
 
   ShaderMask noMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright(context)),
+    generateRandomColorPalette(2, isThemeBright()),
     Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
@@ -238,17 +238,17 @@ Widget unsavedChangesDialog(BuildContext context) {
     child: Text(
       "Discard",
       style: GoogleFonts.robotoMono(
-        color: getCurrentThemePalette(context).quaternaryForegroundColor
+        color: getCurrentThemePalette().quaternaryForegroundColor
       )
     ), 
     onPressed: () {
       context.pop();
-      goToRootPage(context);
+      goToRootPage();
     }
   );
 
   ShaderMask noMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright(context)),
+    generateRandomColorPalette(2, isThemeBright()),
     Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
@@ -263,7 +263,7 @@ Widget unsavedChangesDialog(BuildContext context) {
   );
 
   ShaderMask saveMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright(context)),
+    generateRandomColorPalette(2, isThemeBright()),
     Text(
       "Save changes",
       style: GoogleFonts.robotoMono(
@@ -277,7 +277,7 @@ Widget unsavedChangesDialog(BuildContext context) {
     onPressed: () {
       saveNoteContent();
       context.pop();
-      goToRootPage(context);
+      goToRootPage();
     }
   );
 

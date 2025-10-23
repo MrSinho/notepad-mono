@@ -30,7 +30,7 @@ void showUserInfoWidget(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           paletteGradientShaderMask(
-            generateRandomColorPalette(2, isThemeBright(context)),
+            generateRandomColorPalette(2, isThemeBright()),
             Text(AppData.instance.sessionData.username,
               style: GoogleFonts.robotoMono(
                 fontSize: 24,
@@ -58,7 +58,7 @@ void showUserInfoWidget(BuildContext context) {
           child: getProfilePicture(true)
         ),
         paletteGradientShaderMask(
-          generateRandomColorPalette(2, isThemeBright(context)),
+          generateRandomColorPalette(2, isThemeBright()),
           Text(AppData.instance.sessionData.username,
             style: GoogleFonts.robotoMono(
               fontSize: 24,
@@ -177,14 +177,14 @@ List<Widget> footerWidgets(BuildContext context) {
       "$appName, build version: $version, tag: $versionTag",
       style: TextStyle(
         fontSize: 12,
-        color: getCurrentThemePalette(context).quaternaryForegroundColor
+        color: getCurrentThemePalette().quaternaryForegroundColor
       )
     ),
     Text(
       AppData.instance.queriesData.version["copyright_notice"] ?? "",
       style: TextStyle(
         fontSize: 12,
-        color: getCurrentThemePalette(context).quaternaryForegroundColor
+        color: getCurrentThemePalette().quaternaryForegroundColor
       )
     ),
     const Gap(8),

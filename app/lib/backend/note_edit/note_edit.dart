@@ -10,6 +10,8 @@ import '../notify_ui.dart';
 import '../app_data.dart';
 import '../router.dart';
 
+import 'edit_timer.dart';
+
 
 
 class NoteEditStatusData {
@@ -29,7 +31,7 @@ class NoteEditStatusData {
 class NoteEditData {
 
   late Timer saveTimer;
-  int editTime = 0;
+  int editTimeS = 0;
 
   late CodeController controller;
   late FocusNode      focusNode;
@@ -194,7 +196,7 @@ void setNoteControllerText(String text) {
 
 }
 
-void selectNote(Map<String, dynamic> note, bool changeStatus, BuildContext context) {
+void selectNote(Map<String, dynamic> note, bool changeStatus) {
   AppData.instance.queriesData.selectedNote = note;
 
   appLog("Selected note ${note["title"]}", true);
@@ -382,6 +384,7 @@ void noteEditCallback() {
   getNoteTextData();
   checkCursorNoteEditStatus();
   notifyNoteEditBarsUpdate();
+  resetEditTimer();
 }
 
 void exitNoteEditPage(BuildContext context) {
@@ -391,7 +394,7 @@ void exitNoteEditPage(BuildContext context) {
     showDialog(context: context, builder: (BuildContext context) => unsavedChangesDialog(context));
   }
   else {
-    goToRootPage(context);
+    goToRootPage();
   }
 
 }
