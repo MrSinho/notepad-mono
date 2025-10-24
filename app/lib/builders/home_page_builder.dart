@@ -67,12 +67,68 @@ Widget homePageBuilder(BuildContext context) {
 
   // Da qui in poi sto sperimentando
 
+  List<Widget> cards = [
+    swipeCard(),
+    Card(
+      color: Colors.red,
+      //shape: border,
+      child: const Text('2'),
+    ),
+    Card(
+      color: Colors.purple,
+      //shape: border,
+      child: const Text('3'),
+    )
+  ];
+
+  CardSwiper swiper = CardSwiper(
+      cardsCount: 3,
+      allowedSwipeDirection: AllowedSwipeDirection.only(up: false, down: false, left: true, right: true),
+      cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
+        return cards[index];
+    }
+  );
+
+  FractionallySizedBox box = FractionallySizedBox(
+    widthFactor: 0.5,
+    heightFactor: 0.5,
+    child: swiper
+  );
+
+  return box;
+}
+
+Widget swipeCard() {
+
   RoundedRectangleBorder border = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(48.0), // Increase this value for more roundness
   );
 
-  List<Widget> cards = [
-    Card(
+  Padding pad = Padding(
+    padding: EdgeInsetsGeometry.all(16),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Notepad Mono v1.1.1 release notes")
+              ),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(onPressed: (){}, icon: Icon(Icons.close))
+              ),
+            )
+          ],
+        )
+      ],
+    ),
+  );
+
+  Card(
       color: Colors.blue,
       shape: border,
       child: Padding(
@@ -98,32 +154,13 @@ Widget homePageBuilder(BuildContext context) {
           ],
         ),
       )
-    ),
-    Card(
-      color: Colors.red,
-      shape: border,
-      child: const Text('2'),
-    ),
-    Card(
-      color: Colors.purple,
-      shape: border,
-      child: const Text('3'),
-    )
-  ];
+    );
 
-  CardSwiper swiper = CardSwiper(
-      cardsCount: 3,
-      allowedSwipeDirection: AllowedSwipeDirection.only(up: false, down: false, left: true, right: true),
-      cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
-        return cards[index];
-    }
+  Card card = Card(
+    shape: border,
+    child: pad,
   );
 
-  FractionallySizedBox box = FractionallySizedBox(
-    widthFactor: 0.5,
-    heightFactor: 0.5,
-    child: swiper
-  );
+  return card;
 
-  return listener;
 }
