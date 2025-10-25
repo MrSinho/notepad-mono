@@ -105,5 +105,10 @@ app/.idea
 
 *.env
 
+# Key stores
+app/android/key.properties
+*.keystore
+*.jks
+
 # Nix related paths
 nix/out

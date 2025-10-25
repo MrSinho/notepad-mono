@@ -70,6 +70,7 @@ let
         flutter create .
 
         flutter build apk --release
+        flutter build appbundle --release
         '';
 
     installPhase = ''# $PWD starts from app directory
