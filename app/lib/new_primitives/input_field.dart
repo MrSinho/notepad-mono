@@ -29,7 +29,7 @@ class NoteInputFieldState extends State<NoteInputField> {
   Widget build(BuildContext context) {
 
     ValueListenableBuilder<int> builder = ValueListenableBuilder<int>(
-      valueListenable: AppData.instance.inputFieldUpdates,
+      valueListenable: AppData.instance.widgetsNotifier.inputFieldUpdates,
       builder: (context, value, child) => inputFieldBuilder(context)
     );
 

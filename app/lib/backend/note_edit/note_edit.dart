@@ -8,7 +8,7 @@ import '../../static/note_dialogs.dart';
 
 import '../utils/utils.dart';
 
-import '../notify_ui.dart';
+import '../widgets_notifier.dart';
 import '../app_data.dart';
 import '../navigation/router.dart';
 
@@ -173,7 +173,6 @@ void setNoteEditStatus(NoteEditStatus status) {
   appLog("New note edit status: $message");
   
   notifyNoteEditBarsUpdate();
-  notifyRootPageUpdate();
 }
 
 CodeController setupEditController() {

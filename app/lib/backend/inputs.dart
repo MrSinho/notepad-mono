@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:notepad_mono/backend/navigation/router.dart';
 
 import 'supabase/queries.dart';
 
@@ -57,6 +58,9 @@ void editInputListener(BuildContext context, KeyEvent event) {
     bool shift = inputData.keysPressed.contains(LogicalKeyboardKey.shiftLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.shiftRight) || inputData.keysPressed.contains(LogicalKeyboardKey.shift);
     bool alt   = inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || inputData.keysPressed.contains(LogicalKeyboardKey.alt);
 
+    //if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.abort {
+    //  goToRootPage();
+    //}
 
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
       saveNote();

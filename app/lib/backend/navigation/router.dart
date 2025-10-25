@@ -4,7 +4,7 @@ import '../../builders/auth_stream_builder.dart';
 
 import '../note_edit/save_timer.dart';
 
-import '../notify_ui.dart';
+import '../widgets_notifier.dart';
 
 import '../app_data.dart';
 

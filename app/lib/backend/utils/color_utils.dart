@@ -50,17 +50,17 @@ ColorPaletteData generateRandomColorPalette(int outputColorCount) {
   data.colorCount = outputColorCount;
 
   int minimumBrightness = 100;
-  int maximumBrightness = 156;
+  int maximumBrightness = 255;
 
   if (isThemeBright()) {
-    minimumBrightness = 70;
-    maximumBrightness = 140;
+    minimumBrightness = 150;
+    maximumBrightness = 255;
   }
 
   for (int i = 0; i < outputColorCount; i++) {
-    int r = minimumBrightness + random.nextInt(maximumBrightness);
-    int g = minimumBrightness + random.nextInt(maximumBrightness);
-    int b = minimumBrightness + random.nextInt(maximumBrightness);
+    int r = minimumBrightness + random.nextInt(maximumBrightness - minimumBrightness);
+    int g = minimumBrightness + random.nextInt(maximumBrightness - minimumBrightness);
+    int b = minimumBrightness + random.nextInt(maximumBrightness - minimumBrightness);
 
     data.asColors.add(Color.fromARGB(255, r, g, b));
     data.asHtmlColors.add("rgba($r, $g, $b, 1.0)");

@@ -30,7 +30,7 @@ class LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     
     ValueListenableBuilder builder = ValueListenableBuilder(
-      valueListenable: AppData.instance.rootPageUpdates,
+      valueListenable: AppData.instance.widgetsNotifier.rootPageUpdates,
       builder: (context, value, child) => loginPageBuilder(context)
     );
 

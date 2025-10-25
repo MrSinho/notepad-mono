@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import '../app_data.dart';
 import '../environment.dart';
 import '../utils/utils.dart';
-import '../notify_ui.dart';
+import '../widgets_notifier.dart';
 import '../utils/color_utils.dart';
 
 import 'session.dart';

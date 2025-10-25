@@ -9,6 +9,7 @@ import 'supabase/session.dart';
 
 import '../new_primitives/login_page.dart';
 import '../new_primitives/home_page.dart';
+import '../new_primitives/notes_view.dart';
 import '../new_primitives/note_edit_page.dart';
 import '../new_primitives/edit_app_bar_content.dart';
 import '../new_primitives/edit_status_bar.dart';
@@ -22,13 +23,16 @@ import 'navigation/router.dart';
 import 'utils/color_utils.dart';
 
 import 'inputs.dart';
+import 'widgets_notifier.dart';
 
 
 
 class AppData {
   static final AppData instance = AppData._internal();
 
-  late PackageInfo packageInfo;
+  late final PackageInfo packageInfo;
+
+  late final GoRouter router;
 
   late SessionData        sessionData;
   late QueriesData        queriesData;
@@ -38,19 +42,17 @@ class AppData {
 
   late final LoginPage         loginPage;
   late final HomePage          homePage;
+  late final NotesView         notesView;
   late final NoteEditPage      noteEditPage;
   late final EditAppBarContent editAppBarContent;
   late final EditStatusBar     editStatusBar;
   late final EditBottomBar     editBottomBar;
   late final NoteInputField    noteInputField;
 
+  late final WidgetsNotifier widgetsNotifier;
+
   late ColorPaletteData editColorPaletteData;
 
-  final ValueNotifier<int> rootPageUpdates     = ValueNotifier(0);
-  final ValueNotifier<int> noteEditBarsUpdates = ValueNotifier(0);
-  final ValueNotifier<int> inputFieldUpdates   = ValueNotifier(0);
-
-  late final GoRouter router;
 
   AppData._internal() {//Called once and only once, no BuildContext available
     
@@ -62,11 +64,14 @@ class AppData {
 
     loginPage         = const LoginPage();
     homePage          = const HomePage();
+    notesView         = const NotesView();
     noteEditPage      = const NoteEditPage();
     editAppBarContent = const EditAppBarContent();
     editStatusBar     = const EditStatusBar();
     editBottomBar     = const EditBottomBar();
     noteInputField    = const NoteInputField();
+
+    widgetsNotifier = WidgetsNotifier();
 
     router = setupRouter();
 

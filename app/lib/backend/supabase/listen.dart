@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../app_data.dart';
 import '../note_edit/note_edit.dart';
 import '../utils/utils.dart';
-import '../notify_ui.dart';
+import '../widgets_notifier.dart';
 
 
 
@@ -88,7 +88,7 @@ void listenToNotes() {
 
         appLog("Pulled ${notes.length} notes from listen callback");
 
-        notifyRootPageUpdate();
+        notifyNotesViewUpdate();
         notifyNoteEditBarsUpdate();
 
         //Update selected note

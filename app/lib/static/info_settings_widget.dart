@@ -171,7 +171,6 @@ List<Widget> footerWidgets(BuildContext context) {
 
   String author     = versionData["author"]            ?? "mrsinho";
   String appName    = versionData["name"]              ?? "Notepad Mono";
-  String versionTag = versionData["tag"]               ?? "vanilla";
   String appWebsite = versionData["app_website"]       ?? "https://www.github.com/mrsinho/notepad-mono";
   String devWebsite = versionData["developer_website"] ?? "https://www.github.com/mrsinho";
 
@@ -179,7 +178,7 @@ List<Widget> footerWidgets(BuildContext context) {
   List<Widget> footer = [
     const Gap(40),
     Text(
-      "$appName, build version: $currentVersion, tag: $versionTag",
+      "$appName, build version: $currentVersion",
       style: TextStyle(
         fontSize: 12,
         color: getCurrentThemePalette().quaternaryForegroundColor

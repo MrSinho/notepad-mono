@@ -160,7 +160,7 @@ Widget favoriteButton(Map<String, dynamic> note) {
   return button;
 }
 
-Widget textButtonGradient(Text title, ColorPaletteData colorPaletteData, Function onPressed) {
+Widget textButtonGradient(Text title, ColorPaletteData colorPaletteData, VoidCallback onPressed) {
 
   ShaderMask titleGradientMask = paletteGradientShaderMask(
     colorPaletteData,
@@ -168,8 +168,8 @@ Widget textButtonGradient(Text title, ColorPaletteData colorPaletteData, Functio
   );
 
   TextButton titleButton = TextButton(
+    onPressed: onPressed,
     child: titleGradientMask,
-    onPressed: () => onPressed,
   );
 
   return titleButton;

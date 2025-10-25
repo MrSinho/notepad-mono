@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notepad_mono/themes.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/app_data.dart';
@@ -9,7 +11,7 @@ import '../backend/utils/color_utils.dart';
 import 'ui_utils.dart';
 
 
-Widget swipeCardsBuilder() {
+Widget swipeCardsBuilder(BuildContext context) {
 
   double titleFontSize = 15;
   double bodyFontSize  = 11.3;
@@ -27,7 +29,7 @@ Widget swipeCardsBuilder() {
     Text(
       "Check the latest release notes (${AppData.instance.queriesData.latestVersion["version"]})",
       textAlign: TextAlign.left,
-      style: TextStyle(fontSize: bodyFontSize),
+      style: TextStyle(fontSize: bodyFontSize, color: Colors.white),
     ),
     controller
   );
@@ -42,7 +44,7 @@ Widget swipeCardsBuilder() {
       Text(
         "The current app version is ${AppData.instance.queriesData.currentVersion["version"]}. Click to download the latest release (${AppData.instance.queriesData.latestVersion["version"]}).",
         textAlign: TextAlign.left,
-        style: TextStyle(fontSize: bodyFontSize),
+        style: TextStyle(fontSize: bodyFontSize, color: Colors.white),
       ),
       controller
     );
@@ -61,7 +63,7 @@ Widget swipeCardsBuilder() {
           Text(
             "This is an open source project, pull requests are welcome for further improvements and updates.",
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: bodyFontSize),
+            style: TextStyle(fontSize: bodyFontSize, color: Colors.white),
           ),
         ]
       ),
@@ -75,7 +77,7 @@ Widget swipeCardsBuilder() {
       ),
       Text(
         "Leaving a tip is greatly appreciated!",
-        style: TextStyle(fontSize: bodyFontSize),
+        style: TextStyle(fontSize: bodyFontSize, color: Colors.white),
       ),
       controller
     )
@@ -104,7 +106,31 @@ Widget swipeCardsBuilder() {
     child: sizedBox,
   );
 
-  return align;
+  double dragHandleWidth = 50;
+
+  Padding dragHandle = Padding(
+    padding: EdgeInsets.only(left: (MediaQuery.of(context).size.width - dragHandleWidth) / 2,),
+    child: Container(
+      width: dragHandleWidth,
+      height: 5,
+      decoration: BoxDecoration(
+        color: getCurrentThemePalette().quaternaryForegroundColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+    ),
+);
+
+
+  SlidingUpPanel panel = SlidingUpPanel(
+    panel: align,
+    minHeight: minHeight / 4,
+    maxHeight: minHeight,
+    color: Colors.transparent,
+    boxShadow: [ BoxShadow(color: Colors.transparent) ],
+    header: dragHandle
+  );
+
+  return panel;
   
 }
 
@@ -122,7 +148,7 @@ Widget swipeCard(Widget title, Widget body, CardSwiperController controller) {
         child: Align(
           alignment: Alignment.centerRight,
           child: IconButton(
-            icon: Icon(Icons.arrow_right_rounded),
+            icon: Icon(Icons.arrow_right_rounded, color: Colors.white),
             onPressed: () => controller.swipe(CardSwiperDirection.left)
           )
         ),
@@ -131,7 +157,7 @@ Widget swipeCard(Widget title, Widget body, CardSwiperController controller) {
   );
 
   Padding pad = Padding(
-    padding: EdgeInsetsGeometry.all(16),
+    padding: EdgeInsetsGeometry.all(8),
     child: Column(
       children: [
         topRow,
@@ -150,12 +176,19 @@ Widget swipeCard(Widget title, Widget body, CardSwiperController controller) {
   List<Color> dimGradientColors = [];
 
   double dimFactor = 0.15;
+  double satFactor = 0.05;
+
+  if (isThemeBright()) {
+    dimFactor = 0.3;
+    satFactor = 1.0;
+  }
+
   for (Color color in brightGradientColors) {
     Color dimColor = Color.fromARGB(255, (255 * dimFactor * color.r).toInt(), (255 * dimFactor * color.g).toInt(), (255 * dimFactor * color.b).toInt());
-    dimColor = HSLColor.fromColor(dimColor).withSaturation(0.05).toColor();
+    dimColor = HSLColor.fromColor(dimColor).withSaturation(satFactor).toColor();
     dimGradientColors.add(dimColor);
   }
-  
+
   Container container = Container(
     decoration: BoxDecoration(
       gradient: LinearGradient(

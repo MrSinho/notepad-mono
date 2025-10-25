@@ -43,6 +43,7 @@ AppBar homeAppBarBuilder(BuildContext context) {
     )
   ];
 
+  /*
   if (
     (
       AppData.instance.noteEditStatusData.status.code == NoteEditStatus.lostConnection.code || 
@@ -63,6 +64,7 @@ AppBar homeAppBarBuilder(BuildContext context) {
       )
     );
   }
+  */
 
   AppBar appBar = AppBar(
     leading: IconButton(
