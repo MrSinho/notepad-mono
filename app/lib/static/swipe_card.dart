@@ -111,7 +111,7 @@ Widget swipeCardsBuilder(BuildContext context) {
   double dragHandleWidth = 50;
 
   Padding dragHandle = Padding(
-    padding: EdgeInsets.only(left: (MediaQuery.of(context).size.width - dragHandleWidth) / 2,),
+    padding: EdgeInsets.only(left: (MediaQuery.of(context).size.width - dragHandleWidth) / 2, top: 14),
     child: Container(
       width: dragHandleWidth,
       height: 5,
