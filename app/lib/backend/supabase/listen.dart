@@ -14,7 +14,7 @@ void listenToVersions() {
     SupabaseQueryBuilder table = Supabase.instance.client.from("Versions");
 
     if (AppData.instance.queriesData.versionsSubscription != null) {
-      appLog("Cancelling versions stream from previous session", true);
+      appLog("Cancelling versions stream from previous session");
       AppData.instance.queriesData.versionsSubscription!.cancel();
     }
 
@@ -30,7 +30,19 @@ void listenToVersions() {
           return bTime.compareTo(aTime);
         });
 
-        AppData.instance.queriesData.version = versions.first;
+        for (Map<String, dynamic> version in versions) {
+          AppData.instance.queriesData.versions.addAll(
+            {
+              version["version"]: version
+            }
+          );
+
+          if (version["version"] == "v${AppData.instance.packageInfo.version}") {
+            AppData.instance.queriesData.currentVersion = version;
+          }
+        }
+
+        AppData.instance.queriesData.latestVersion = versions.first;
         notifyRootPageUpdate();
       },
 
@@ -42,7 +54,7 @@ void listenToVersions() {
     return;
   }
   catch (exception) {
-    appLog("Failed listening to app versions: $exception", true);
+    appLog("Failed listening to app versions: $exception");
     setNoteEditStatus(NoteEditStatus.lostConnection);
   }
 
@@ -55,7 +67,7 @@ void listenToNotes() {
     SupabaseQueryBuilder table = Supabase.instance.client.from("Notes");
 
     if (AppData.instance.queriesData.streamSubscription != null) {
-      appLog("Canceling notes stream subscription from the previous session", true);
+      appLog("Canceling notes stream subscription from the previous session");
       AppData.instance.queriesData.streamSubscription!.cancel();
     }
 
@@ -74,7 +86,7 @@ void listenToNotes() {
 
         AppData.instance.queriesData.notes = notes;
 
-        appLog("Pulled ${notes.length} notes from listen callback", true);
+        appLog("Pulled ${notes.length} notes from listen callback");
 
         notifyRootPageUpdate();
         notifyNoteEditBarsUpdate();
@@ -93,7 +105,7 @@ void listenToNotes() {
       },
 
       onError: (error) {
-        appLog("Failed listening to notes", true);
+        appLog("Failed listening to notes");
         setNoteEditStatus(NoteEditStatus.lostConnection);
       }
 
@@ -103,7 +115,7 @@ void listenToNotes() {
 
   }
   catch (exception) {
-    appLog("Failed listening to new notes: $exception", true);
+    appLog("Failed listening to new notes: $exception");
   }
 
 }

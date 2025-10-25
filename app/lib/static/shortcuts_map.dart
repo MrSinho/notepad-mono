@@ -29,7 +29,7 @@ Widget tableTitle(BuildContext context, String title) {
   );
 
   ShaderMask mask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright()),
+    generateRandomColorPalette(2),
     align
   );
 

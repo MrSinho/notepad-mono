@@ -12,17 +12,15 @@ import '../static/note_dialogs.dart';
 import '../static/shortcuts_map.dart';
 import '../static/ui_utils.dart';
 
-import '../themes.dart';
-
 
 
 AppBar mainAppBarBuilder(BuildContext context) {
 
   List<Widget> mainAppBarLeftChildren = [
     paletteGradientShaderMask(
-      generateRandomColorPalette(2, isThemeBright()),
+      generateRandomColorPalette(2),
       Text(
-        AppData.instance.queriesData.version["name"] ?? "Notepad Mono",
+        AppData.instance.queriesData.currentVersion["name"] ?? "Notepad Mono",
         style: GoogleFonts.robotoMono(
           fontSize: 25, 
           fontWeight: FontWeight.bold,
@@ -36,7 +34,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
         Wrap(
           children: [
             Text(
-              AppData.instance.queriesData.version["version"] ?? "",
+              AppData.instance.queriesData.currentVersion["version"],
               style: GoogleFonts.robotoMono(fontSize: 10),
             ),
           ] 
@@ -90,7 +88,7 @@ AppBar mainAppBarBuilder(BuildContext context) {
 }
 
 Widget editAppBarContentBuilder(BuildContext context) {
-  appLog("Updating edit app bar content", true);
+  appLog("Updating edit app bar content");
 
   String title = AppData.instance.queriesData.selectedNote["title"] ?? "";
 

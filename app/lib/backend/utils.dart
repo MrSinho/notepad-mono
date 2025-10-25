@@ -8,6 +8,7 @@ import 'package:material_color_generator/material_color_generator.dart';
 import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 
 import '../backend/app_data.dart';
+
 import 'note_edit/note_edit.dart';
 
 
@@ -23,7 +24,7 @@ Future<String> readFile(String path) async {
 
   } catch (error) {
 
-    appLog("Couldn't read file: $error", true);
+    appLog("Couldn't read file: $error");
 
   }
   return text;
@@ -65,15 +66,10 @@ Future<void> copyNoteToClipboard() async {
   return;
 }
 
-void appLog(String log, triggerAppData) {
+void appLog(String log) {
 
-  String appName    = "AppData";
-  String appVersion = "undefined";
-
-  if (triggerAppData) {
-    appName = AppData.instance.queriesData.version["name"] ?? appName;
-    appVersion = AppData.instance.queriesData.version["version"] ?? appVersion;
-  }
+  String appName    = AppData.instance.packageInfo.appName;
+  String appVersion = AppData.instance.packageInfo.version;
 
   debugPrint("[$appName][$appVersion] $log");
 }

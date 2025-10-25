@@ -22,8 +22,6 @@ import '../backend/note_edit/custom_intents/canc.dart';
 
 import '../static/ui_utils.dart';
 
-import '../themes.dart';
-
 import 'app_bar_builder.dart';
 
 
@@ -45,9 +43,9 @@ LayoutBuilder iconTextButtonLayoutBuilder(Widget icon, Widget text, VoidCallback
 
 Widget noteEditPageBuilder(BuildContext context) {
 
-  appLog("Note edit page builder triggered", true);
+  appLog("Note edit page builder triggered");
 
-  AppData.instance.editColorPaletteData = generateRandomColorPalette(2, isThemeBright());
+  AppData.instance.editColorPaletteData = generateRandomColorPalette(2);
 
   Padding textFieldPad = Padding(
     padding: const EdgeInsets.all(8.0),

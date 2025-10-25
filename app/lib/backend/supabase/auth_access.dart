@@ -47,7 +47,7 @@ Future<int> logout() async {
 
   } catch (error) {
 
-    appLog("Error signing out: $error", true);
+    appLog("Error signing out: $error");
 
   }
 
@@ -72,7 +72,7 @@ Future<int> googleLogin() async {
   );
 
   if (!r) {
-    appLog("Google login failed", true);
+    appLog("Google login failed");
   }
 
   return 1;
@@ -86,7 +86,7 @@ Future<int> githubLogin() async {
   );
 
   if (!r) {
-    appLog("Github login failed", true);
+    appLog("Github login failed");
   }
 
   return 1;
@@ -102,7 +102,7 @@ Future<int> azureLogin() async {
   );
 
   if (!r) {
-    appLog("Microsoft azure login failed", true);
+    appLog("Microsoft azure login failed");
   }
 
   return 1;
@@ -111,7 +111,7 @@ Future<int> azureLogin() async {
 Future<void> listenToUriLinks() async {
   
   try {
-    appLog("Initializing uri link stream", true);
+    appLog("Initializing uri link stream");
     AppData.instance.sessionData.uriListenSubscription = AppData.instance.sessionData.appLinks.uriLinkStream.listen(
       (Uri? uri) async {
       
@@ -128,26 +128,26 @@ Future<void> listenToUriLinks() async {
 
   }
   catch (error) {
-    appLog("Failed initializing uri link stream: $error", true);
+    appLog("Failed initializing uri link stream: $error");
   }
   
 }
 
 Future<void> cancelUriStream() async {
   AppData.instance.sessionData.uriListenSubscription.cancel();
-  appLog("Cancelled uri link stream", true);
+  appLog("Cancelled uri link stream");
 }
 
 Future<void> startAuthHttpServer() async {
 
-  appLog("Initializing HTTP auth server", true);
+  appLog("Initializing HTTP auth server");
   
   int port = int.parse(getEnvironmentParameterValue("HTTP_LISTEN_PORT"));
   AppData.instance.sessionData.authServer = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
   
   await for (HttpRequest request in AppData.instance.sessionData.authServer) {
 
-    appLog("Found request. Query parameters: ${request.uri.toString()}. Path: ${request.uri.path.toString()}", true);
+    appLog("Found request. Query parameters: ${request.uri.toString()}. Path: ${request.uri.path.toString()}");
 
     String? authCode = request.uri.queryParameters["code"];
 
@@ -161,7 +161,7 @@ Future<void> startAuthHttpServer() async {
 
 Future<void> stopAuthServer() async {
   await AppData.instance.sessionData.authServer.close();
-  appLog("Stopped auth http server", true);
+  appLog("Stopped auth http server");
 }
 
 Future<void> authExchangeCodeForSession(String authCode, HttpRequest? authRequest) async {
@@ -171,14 +171,14 @@ Future<void> authExchangeCodeForSession(String authCode, HttpRequest? authReques
 
     await storeUserData();
 
-    appLog("Login with auth provider successfull", true);
+    appLog("Login with auth provider successfull");
 
     if (authRequest != null) {
       await sendHttpResponse(authRequest);
     }
 
   } catch (error) {
-    appLog("Failed getting json web token for session: $error", true);
+    appLog("Failed getting json web token for session: $error");
   }
 
 }
@@ -187,15 +187,15 @@ Future<void> sendHttpResponse(HttpRequest authRequest) async {
 
   try {
 
-    String appName   = AppData.instance.queriesData.version["name"] ?? "Application";
-    String copyright = AppData.instance.queriesData.version["copyright_notice"] ?? "";
+    String appName   = AppData.instance.queriesData.currentVersion["name"] ?? "Application";
+    String copyright = AppData.instance.queriesData.currentVersion["copyright_notice"] ?? "";
 
     String htmlResponse = await rootBundle.loadString("assets/login_success.html");
 
     htmlResponse = htmlResponse.replaceAll("\$appName",   appName);
     htmlResponse = htmlResponse.replaceAll("\$copyright", copyright);
 
-    ColorPaletteData paletteData = generateRandomColorPalette(6, false);
+    ColorPaletteData paletteData = generateRandomColorPalette(6);
 
     for (int i = 0; i < paletteData.colorCount; i++) {
       htmlResponse = htmlResponse.replaceAll("\$color${i+1}", paletteData.asStrings[i]);
@@ -207,12 +207,12 @@ Future<void> sendHttpResponse(HttpRequest authRequest) async {
 
     await authRequest.response.close();
 
-    appLog("Successfully sent http response", true);
+    appLog("Successfully sent http response");
   }
   catch (error) {
     String errorMessage = "Failed sending http response: $error";
   
-    appLog(errorMessage, true);
+    appLog(errorMessage);
   
     authRequest.response.statusCode = HttpStatus.badRequest;
     authRequest.response.write(errorMessage);
@@ -249,22 +249,22 @@ Future<void> storeUserData() async {
 
   if (AppData.instance.sessionData.profilePictureUrl != "") {
 
-    appLog("Retrieving profile picture through URL", true);
+    appLog("Retrieving profile picture through URL");
 
     var response = await http.get(Uri.parse(AppData.instance.sessionData.profilePictureUrl));
 
     if (response.statusCode == 200) {
-      appLog("Download successfull, storing profile picture", true);
+      appLog("Download successfull, storing profile picture");
       AppData.instance.sessionData.profilePicture = MemoryImage(response.bodyBytes);
     }
     else {
-      appLog("Failed downloading profile picture through url: ${response.body.toString()}", true);
+      appLog("Failed downloading profile picture through url: ${response.body.toString()}");
     }
   }
 
   if (AppData.instance.sessionData.authProvider == "azure") { // Get profile picture with Microsoft Graph
 
-    appLog("Using Microsoft Graph to retrieve profile picture", true);
+    appLog("Using Microsoft Graph to retrieve profile picture");
 
     // For a valid response, see the requisites https://learn.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0&tabs=http
     var response = await http.get(
@@ -273,11 +273,11 @@ Future<void> storeUserData() async {
     );
 
     if (response.statusCode == 200) {
-      appLog("Download successfull, storing profile picture from Microsoft Graph", true);
+      appLog("Download successfull, storing profile picture from Microsoft Graph");
       AppData.instance.sessionData.profilePicture = MemoryImage(response.bodyBytes);
     }
     else {
-      appLog("Cannot retrieve profile picture with Microsoft graph: ${response.body.toString()}", true);
+      appLog("Cannot retrieve profile picture with Microsoft graph: ${response.body.toString()}");
     }
 
   }

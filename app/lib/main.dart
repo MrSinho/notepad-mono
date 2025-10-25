@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 //import 'package:sentry_flutter/sentry_flutter.dart';
 //import 'package:feedback/feedback.dart';
 
+import 'backend/app_data.dart';
 import 'backend/supabase/supabase.dart';
 import 'backend/supabase/auth_access.dart';
 
@@ -14,6 +16,8 @@ import 'app.dart';
 
 
 void main() async {
+
+  AppData.instance.packageInfo = await PackageInfo.fromPlatform();
   
   await dotenv.load(
     fileName: ".safeEnv",

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../backend/app_data.dart';
@@ -9,6 +8,7 @@ import '../backend/inputs.dart';
 import '../backend/router.dart';
 
 import '../static/note_bottom_sheet.dart';
+import '../static/swipe_card.dart';
 import '../static/ui_utils.dart';
 
 import 'app_bar_builder.dart';
@@ -49,7 +49,8 @@ Widget homePageBuilder(BuildContext context) {
             )
           ),
         )
-      )
+      ),
+      swipeCardsBuilder(),
     ],
   );
 
@@ -65,102 +66,5 @@ Widget homePageBuilder(BuildContext context) {
     onKeyEvent: (KeyEvent event) => homeInputListener(context, event),
   );
 
-  // Da qui in poi sto sperimentando
-
-  List<Widget> cards = [
-    swipeCard(),
-    Card(
-      color: Colors.red,
-      //shape: border,
-      child: const Text('2'),
-    ),
-    Card(
-      color: Colors.purple,
-      //shape: border,
-      child: const Text('3'),
-    )
-  ];
-
-  CardSwiper swiper = CardSwiper(
-      cardsCount: 3,
-      allowedSwipeDirection: AllowedSwipeDirection.only(up: false, down: false, left: true, right: true),
-      cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
-        return cards[index];
-    }
-  );
-
-  FractionallySizedBox box = FractionallySizedBox(
-    widthFactor: 0.5,
-    heightFactor: 0.5,
-    child: swiper
-  );
-
-  return box;
-}
-
-Widget swipeCard() {
-
-  RoundedRectangleBorder border = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(48.0), // Increase this value for more roundness
-  );
-
-  Padding pad = Padding(
-    padding: EdgeInsetsGeometry.all(16),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Notepad Mono v1.1.1 release notes")
-              ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(onPressed: (){}, icon: Icon(Icons.close))
-              ),
-            )
-          ],
-        )
-      ],
-    ),
-  );
-
-  Card(
-      color: Colors.blue,
-      shape: border,
-      child: Padding(
-        padding: EdgeInsetsGeometry.all(16),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Notepad Mono v1.1.1 release notes")
-                  ),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(onPressed: (){}, icon: Icon(Icons.close))
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      )
-    );
-
-  Card card = Card(
-    shape: border,
-    child: pad,
-  );
-
-  return card;
-
+  return listener;
 }

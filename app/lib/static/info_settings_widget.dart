@@ -30,7 +30,7 @@ void showUserInfoWidget(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           paletteGradientShaderMask(
-            generateRandomColorPalette(2, isThemeBright()),
+            generateRandomColorPalette(2),
             Text(AppData.instance.sessionData.username,
               style: GoogleFonts.robotoMono(
                 fontSize: 24,
@@ -58,7 +58,7 @@ void showUserInfoWidget(BuildContext context) {
           child: getProfilePicture(true)
         ),
         paletteGradientShaderMask(
-          generateRandomColorPalette(2, isThemeBright()),
+          generateRandomColorPalette(2),
           Text(AppData.instance.sessionData.username,
             style: GoogleFonts.robotoMono(
               fontSize: 24,
@@ -75,7 +75,7 @@ void showUserInfoWidget(BuildContext context) {
     );
   }
 
-  String issuesSite = AppData.instance.queriesData.version["issues_website"] ?? "https://www.github.com/mrsinho/notepad-mono/issues";
+  String issuesSite = AppData.instance.queriesData.currentVersion["issues_website"] ?? "https://www.github.com/mrsinho/notepad-mono/issues";
 
   List<Widget> userInfoContents = [
     userData,
@@ -164,24 +164,28 @@ void showUserInfoWidget(BuildContext context) {
 }
 
 List<Widget> footerWidgets(BuildContext context) {
-  String author     = AppData.instance.queriesData.version["author"]            ?? "mrsinho";
-  String appName    = AppData.instance.queriesData.version["name"]              ?? "Notepad Mono";
-  String version    = AppData.instance.queriesData.version["version"]           ?? "0.1.0";
-  String versionTag = AppData.instance.queriesData.version["tag"]               ?? "vanilla";
-  String appWebsite = AppData.instance.queriesData.version["app_website"]       ?? "https://www.github.com/mrsinho/notepad-mono";
-  String devWebsite = AppData.instance.queriesData.version["developer_website"] ?? "https://www.github.com/mrsinho";
+  String currentVersion = "v${AppData.instance.packageInfo.version}";
+
+  Map<String, dynamic> versionData = AppData.instance.queriesData.versions[currentVersion] ?? {};
+
+  String author     = versionData["author"]            ?? "mrsinho";
+  String appName    = versionData["name"]              ?? "Notepad Mono";
+  String versionTag = versionData["tag"]               ?? "vanilla";
+  String appWebsite = versionData["app_website"]       ?? "https://www.github.com/mrsinho/notepad-mono";
+  String devWebsite = versionData["developer_website"] ?? "https://www.github.com/mrsinho";
+
 
   List<Widget> footer = [
     const Gap(40),
     Text(
-      "$appName, build version: $version, tag: $versionTag",
+      "$appName, build version: $currentVersion, tag: $versionTag",
       style: TextStyle(
         fontSize: 12,
         color: getCurrentThemePalette().quaternaryForegroundColor
       )
     ),
     Text(
-      AppData.instance.queriesData.version["copyright_notice"] ?? "",
+      AppData.instance.queriesData.currentVersion["copyright_notice"] ?? "",
       style: TextStyle(
         fontSize: 12,
         color: getCurrentThemePalette().quaternaryForegroundColor

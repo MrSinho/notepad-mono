@@ -26,7 +26,7 @@ void homeInputListener(BuildContext context, KeyEvent event) {
 
   if (event is KeyDownEvent) {
     AppData.instance.inputData.keysPressed.add(event.logicalKey);
-    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
+    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}");
       
     bool ctrl  = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
 
@@ -51,7 +51,7 @@ void editInputListener(BuildContext context, KeyEvent event) {
   
   if (event is KeyDownEvent) {
     inputData.keysPressed.add(event.logicalKey);
-    appLog("Keys pressed: ${inputData.keysPressed.toString()}", true);
+    appLog("Keys pressed: ${inputData.keysPressed.toString()}");
       
     bool ctrl  = inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || inputData.keysPressed.contains(LogicalKeyboardKey.control);
     bool shift = inputData.keysPressed.contains(LogicalKeyboardKey.shiftLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.shiftRight) || inputData.keysPressed.contains(LogicalKeyboardKey.shift);
@@ -120,7 +120,7 @@ void newNoteInputListener(BuildContext context, KeyEvent event, TextEditingContr
 
   if (event is KeyDownEvent) {
     AppData.instance.inputData.keysPressed.add(event.logicalKey);
-    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
+    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}");
       
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
     
@@ -139,7 +139,7 @@ void renameInputListener(BuildContext context, KeyEvent event, TextEditingContro
 
   if (event is KeyDownEvent) {
     AppData.instance.inputData.keysPressed.add(event.logicalKey);
-    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
+    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}");
 
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       
@@ -158,7 +158,7 @@ void userInfoInputListener(BuildContext context, KeyEvent event) {
 
   if (event is KeyDownEvent) {
     AppData.instance.inputData.keysPressed.add(event.logicalKey);
-    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
+    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}");
 
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       
@@ -177,7 +177,7 @@ void shortcutsMapInputListener(BuildContext context, KeyEvent event) {
 
   if (event is KeyDownEvent) {
     AppData.instance.inputData.keysPressed.add(event.logicalKey);
-    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}", true);
+    appLog("Keys pressed: ${AppData.instance.inputData.keysPressed.toString()}");
 
     bool ctrl = AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlLeft) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.controlRight) || AppData.instance.inputData.keysPressed.contains(LogicalKeyboardKey.control);
       

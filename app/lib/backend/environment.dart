@@ -8,10 +8,10 @@ String getEnvironmentParameterValue(String parameterName) {
   value ??= String.fromEnvironment(parameterName, defaultValue: "");
 
   if (value == "") {
-    appLog("Environment parameter $parameterName not found", true);
+    appLog("Environment parameter $parameterName not found");
   }
 
-  appLog("Parameter $parameterName: $value", true);
+  appLog("Parameter $parameterName: $value");
 
   return value;
 }

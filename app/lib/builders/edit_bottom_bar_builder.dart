@@ -7,7 +7,7 @@ import '../backend/utils.dart';
 
 Widget editBottomBarBuilder(BuildContext context) {
 
-  appLog("Updating edit bottom bar", true);
+  appLog("Updating edit bottom bar");
 
   Row content = Row(
     mainAxisAlignment: MainAxisAlignment.center,

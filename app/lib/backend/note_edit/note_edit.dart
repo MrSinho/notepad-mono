@@ -30,7 +30,7 @@ class NoteEditStatusData {
 
 class NoteEditData {
 
-  late Timer saveTimer;
+  Timer saveTimer = Timer(Duration.zero, (){});
   int editTimeS = 0;
 
   late CodeController controller;
@@ -168,7 +168,7 @@ void setNoteEditStatus(NoteEditStatus status) {
   AppData.instance.noteEditStatusData.status  = status;
   AppData.instance.noteEditStatusData.message = message;
 
-  appLog("New note edit status: $message", true);
+  appLog("New note edit status: $message");
   
   notifyNoteEditBarsUpdate();
   notifyRootPageUpdate();
@@ -183,7 +183,7 @@ void setNoteControllerText(String text) {
     AppData.instance.noteEditData.currentCursorStart = cursorStart;
   }
 
-  appLog("Cursor start: $cursorStart", true);
+  appLog("Cursor start: $cursorStart");
 
   AppData.instance.noteEditData.controller.text = text;
 
@@ -199,7 +199,7 @@ void setNoteControllerText(String text) {
 void selectNote(Map<String, dynamic> note, bool changeStatus) {
   AppData.instance.queriesData.selectedNote = note;
 
-  appLog("Selected note ${note["title"]}", true);
+  appLog("Selected note ${note["title"]}");
 
   setNoteControllerText(note["content"] ?? "");
   getNoteTextData();
@@ -212,7 +212,7 @@ void selectNote(Map<String, dynamic> note, bool changeStatus) {
 }
 
 void getNoteTextData() {
-  appLog("Getting note text data", true);
+  appLog("Getting note text data");
 
   AppData.instance.noteEditData.bufferLength = AppData.instance.noteEditData.controller.text.length;
   AppData.instance.noteEditData.bufferLines = '\n'.allMatches(AppData.instance.noteEditData.controller.text).length + 1;
@@ -223,8 +223,8 @@ void getNoteTextData() {
 
   AppData.instance.noteEditData.unsavedBytes = (AppData.instance.noteEditData.bufferLength - AppData.instance.queriesData.selectedNote["content"].toString().length).abs();
 
-  appLog("Buffer length: ${AppData.instance.noteEditData.bufferLength}, lines: ${AppData.instance.noteEditData.bufferLines}", true);
-  appLog("Saved content length: ${AppData.instance.noteEditData.savedContentLength}, lines: ${AppData.instance.noteEditData.savedContentLines}", true);
+  appLog("Buffer length: ${AppData.instance.noteEditData.bufferLength}, lines: ${AppData.instance.noteEditData.bufferLines}");
+  appLog("Saved content length: ${AppData.instance.noteEditData.savedContentLength}, lines: ${AppData.instance.noteEditData.savedContentLines}");
 
 }
 
@@ -291,8 +291,8 @@ void getNoteCursorData() {
 
   getCursorPosition();
 
-  appLog("Cursor row: ${AppData.instance.noteEditData.cursorRow}, column: ${AppData.instance.noteEditData.cursorColumn}", true);
-  appLog("Selection length: ${AppData.instance.noteEditData.selectionLength}, lines: ${AppData.instance.noteEditData.selectionLines}", true);
+  appLog("Cursor row: ${AppData.instance.noteEditData.cursorRow}, column: ${AppData.instance.noteEditData.cursorColumn}");
+  appLog("Selection length: ${AppData.instance.noteEditData.selectionLength}, lines: ${AppData.instance.noteEditData.selectionLines}");
 }
 
 void checkCursorNoteEditStatus() {
@@ -379,7 +379,7 @@ void checkCursorNoteEditStatus() {
 }
 
 void noteEditCallback() {
-  appLog("Cursor listen callback triggered", true);
+  appLog("Cursor listen callback triggered");
   getNoteCursorData();
   getNoteTextData();
   checkCursorNoteEditStatus();
@@ -390,7 +390,7 @@ void noteEditCallback() {
 void exitNoteEditPage(BuildContext context) {
 
   if (AppData.instance.noteEditData.controller.text != AppData.instance.queriesData.selectedNote["content"]) {
-    appLog("Unsaved changes!!", true);
+    appLog("Unsaved changes!!");
     showDialog(context: context, builder: (BuildContext context) => unsavedChangesDialog(context));
   }
   else {

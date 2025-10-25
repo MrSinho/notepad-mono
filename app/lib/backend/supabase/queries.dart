@@ -4,20 +4,22 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
 import '../note_edit/note_edit.dart';
-import '../notify_ui.dart';
 import '../utils.dart';
 
 
 
 class QueriesData {
-  Map<String, dynamic>       version      = {};
-  List<Map<String, dynamic>> notes        = [];
-  Map<String, dynamic>       selectedNote = {};
+  Map<String, Map<String, dynamic>> versions = {};
+  Map<String, dynamic>       currentVersion  = { "name": "Notepad Mono", "version": "v0.1.0" };
+  Map<String, dynamic>       latestVersion   = {};
+  List<Map<String, dynamic>> notes           = [];
+  Map<String, dynamic>       selectedNote    = {};
 
   StreamSubscription? streamSubscription;
   StreamSubscription? versionsSubscription;
 }
 
+/*
 Future<void> queryVersions() async {
 
   List<Map<String, dynamic>> versions = await Supabase.instance.client.from("Versions").select();
@@ -31,12 +33,13 @@ Future<void> queryVersions() async {
 
   Map<String, dynamic> latest = versions.first;
 
-  AppData.instance.queriesData.version = latest;
+  AppData.instance.queriesData.latestVersion = latest;
 
   notifyRootPageUpdate();
 
   return;
 }
+*/
 
 Future<void> queryNotes() async {
   
@@ -50,7 +53,7 @@ Future<void> queryNotes() async {
 
   }
   catch (exception) {
-    appLog("Failed listening to new notes: $exception", true);
+    appLog("Failed listening to new notes: $exception");
   }
 
 
@@ -145,7 +148,7 @@ Future<void> flipFavoriteNote() async {
   }
   catch (error) {
     setNoteEditStatus(NoteEditStatus.lostConnection);
-    appLog("Failed flipping favorite note: $error", true);
+    appLog("Failed flipping favorite note: $error");
   }
   
 }

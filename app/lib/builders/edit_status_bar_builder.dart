@@ -9,7 +9,7 @@ import '../themes.dart';
 
 Widget editStatusBarBuilder(BuildContext context) {
 
-  appLog("Updating edit status bar", true);
+  appLog("Updating edit status bar");
 
   Center content = Center(
     child: Card(

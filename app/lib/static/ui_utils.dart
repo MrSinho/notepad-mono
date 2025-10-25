@@ -8,6 +8,8 @@ import '../backend/supabase/auth_access.dart';
 
 import '../backend/note_edit/note_edit.dart';
 
+import '../backend/color_palette.dart';
+
 import '../themes.dart';
 
 
@@ -52,7 +54,7 @@ Padding wrapIconText(Widget icon, Widget text) {
   return result;
 }
 
-Widget wrapIconTextIcon(Icon leftIcon, Text text, rightIcon) {
+Widget wrapIconTextIcon(Widget leftIcon, Text text, rightIcon) {
   DecoratedBox result = DecoratedBox(
       //padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
@@ -156,4 +158,19 @@ Widget favoriteButton(Map<String, dynamic> note) {
   );
 
   return button;
+}
+
+Widget textButtonGradient(Text title, ColorPaletteData colorPaletteData, Function onPressed) {
+
+  ShaderMask titleGradientMask = paletteGradientShaderMask(
+    colorPaletteData,
+    title
+  );
+
+  TextButton titleButton = TextButton(
+    child: titleGradientMask,
+    onPressed: () => onPressed,
+  );
+
+  return titleButton;
 }

@@ -15,14 +15,13 @@ void timerCallback(Timer timer) {
   }
 
   if (AppData.instance.noteEditData.controller.text != AppData.instance.queriesData.selectedNote["content"]) {
-    appLog("Triggered autosave!", true);
+    appLog("Triggered autosave!");
     saveNoteContent();
   }
 }
 
 void startEditTimer() {
 
-  resetEditTimer();
   AppData.instance.noteEditData.saveTimer = Timer.periodic(const Duration(seconds: 1), timerCallback);
 
 }
@@ -35,6 +34,8 @@ void resetEditTimer() {
 
 void stopEditTimer() {
 
-  AppData.instance.noteEditData.saveTimer.cancel();
+  if (AppData.instance.noteEditData.saveTimer.isActive) {
+    AppData.instance.noteEditData.saveTimer.cancel();
+  }
 
 }

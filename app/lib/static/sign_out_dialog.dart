@@ -14,7 +14,7 @@ import '../themes.dart';
 Dialog signOutDialog(BuildContext context) {
 
   ShaderMask confirmMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright()),
+    generateRandomColorPalette(2),
     Text(
       "Confirm",
       style: GoogleFonts.robotoMono(
@@ -51,6 +51,7 @@ Dialog signOutDialog(BuildContext context) {
           TextButton(
             child: confirmMask,
             onPressed: () {
+              context.pop();
               context.pop();
               Supabase.instance.client.auth.signOut();
               goToRootPage();

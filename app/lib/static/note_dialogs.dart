@@ -29,7 +29,7 @@ Widget newNoteDialog(BuildContext context) {
   );
 
   ShaderMask doneMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright()),
+    generateRandomColorPalette(2),
     Text(
       "Done", 
       style: GoogleFonts.robotoMono(
@@ -108,7 +108,7 @@ Widget renameNoteDialog(BuildContext context) {
   );
 
   ShaderMask renameMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright()),
+    generateRandomColorPalette(2),
     Text(
       "Done",
       style: GoogleFonts.robotoMono(
@@ -188,7 +188,7 @@ Widget deleteNoteDialog(BuildContext context) {
   );
 
   ShaderMask noMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright()),
+    generateRandomColorPalette(2),
     Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
@@ -248,7 +248,7 @@ Widget unsavedChangesDialog(BuildContext context) {
   );
 
   ShaderMask noMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright()),
+    generateRandomColorPalette(2),
     Text(
       "Cancel",
       style: GoogleFonts.robotoMono(
@@ -263,7 +263,7 @@ Widget unsavedChangesDialog(BuildContext context) {
   );
 
   ShaderMask saveMask = paletteGradientShaderMask(
-    generateRandomColorPalette(2, isThemeBright()),
+    generateRandomColorPalette(2),
     Text(
       "Save changes",
       style: GoogleFonts.robotoMono(

@@ -22,7 +22,7 @@ class NoteInputFieldState extends State<NoteInputField> {
   @override
   void initState() {
     super.initState();
-    appLog("Initialized NoteInputFieldState", true);
+    appLog("Initialized NoteInputFieldState");
   }
 
   @override

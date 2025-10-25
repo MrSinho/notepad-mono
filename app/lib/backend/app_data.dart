@@ -3,6 +3,7 @@ import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:go_router/go_router.dart';
 import 'package:highlight/languages/markdown.dart';
 import 'package:app_links/app_links.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'supabase/auth_access.dart';
 import 'supabase/queries.dart';
@@ -29,6 +30,8 @@ import '../../../app.dart';
 class AppData {
   static final AppData instance = AppData._internal();
 
+  late PackageInfo packageInfo;
+
   late SessionData        sessionData;
   late QueriesData        queriesData;
   late NoteEditData       noteEditData;
@@ -52,7 +55,7 @@ class AppData {
   late final GoRouter      router;
 
   AppData._internal() {//Called once and only once, no BuildContext available
-
+    
     sessionData        = SessionData();
     queriesData        = QueriesData();
     noteEditStatusData = NoteEditStatusData();

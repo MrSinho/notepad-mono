@@ -11,7 +11,7 @@ class NavigatorInfo {
   static NavigatorState? getState() {
 
     if (key.currentState == null) {
-      appLog("Trying to access invalid NavigatorState", true);
+      appLog("Trying to access invalid NavigatorState");
     }
 
     return key.currentState;

@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:color_palette_generator/color_palette_generator.dart';
 
+import '../themes.dart';
+
 
 
 class ColorPaletteData {
@@ -39,7 +41,7 @@ List<String> colorPaletteToStringList(ColorPalette palette) {
   return list;
 }
 
-ColorPaletteData generateRandomColorPalette(int outputColorCount, bool isThemeBright) {
+ColorPaletteData generateRandomColorPalette(int outputColorCount) {
   
   Random random = Random();
 
@@ -49,7 +51,7 @@ ColorPaletteData generateRandomColorPalette(int outputColorCount, bool isThemeBr
   int minimumBrightness = 100;
   int maximumBrightness = 156;
 
-  if (isThemeBright) {
+  if (isThemeBright()) {
     minimumBrightness = 70;
     maximumBrightness = 140;
   }

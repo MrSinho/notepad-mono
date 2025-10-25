@@ -9,21 +9,19 @@ import '../backend/app_data.dart';
 
 import '../static/ui_utils.dart';
 
-import '../themes.dart';
-
 
 
 Widget loginPageBuilder(BuildContext context) {
 
-  String appName     = AppData.instance.queriesData.version["name"] ?? "Notepad Mono";
-  String description = AppData.instance.queriesData.version["description"] ?? "Write and sync monospace notes everywhere";
+  String appName     = AppData.instance.queriesData.currentVersion["name"] ?? "Notepad Mono";
+  String description = AppData.instance.queriesData.currentVersion["description"] ?? "Write and sync monospace notes everywhere";
 
   Text title    = Text(" $appName!", style: GoogleFonts.robotoMono(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white));
   Text subtitle = Text(description,  style: GoogleFonts.robotoMono(fontWeight: FontWeight.bold));
 
   int authProviders = LoginAuthProviders.google | LoginAuthProviders.github | LoginAuthProviders.azure;
 
-  ColorPaletteData loginPalette = generateRandomColorPalette(2, isThemeBright());
+  ColorPaletteData loginPalette = generateRandomColorPalette(2);
 
   List<Widget> authProvidersWidgets = [];
 
@@ -118,7 +116,6 @@ Widget loginPageBuilder(BuildContext context) {
       decoration: containerDecoration,
       child: signupCenter
     );
-
 
     Scaffold scaffold = Scaffold(
       body: SafeArea(child: container),

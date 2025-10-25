@@ -22,7 +22,7 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    appLog("Initialized HomePageState", true);
+    appLog("Initialized HomePageState");
   }
   
   @override
