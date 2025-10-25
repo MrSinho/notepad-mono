@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../backend/supabase/queries.dart';
 
 import '../backend/app_data.dart';
-import '../backend/router.dart';
+import '../backend/navigation/router.dart';
 
 import 'note_dialogs.dart';
 

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'supabase/queries.dart';
 
 import 'app_data.dart';
-import 'utils.dart';
+import 'utils/utils.dart';
 import 'note_edit/note_edit.dart';
 
 import '../static/info_settings_widget.dart';
@@ -57,18 +57,10 @@ void editInputListener(BuildContext context, KeyEvent event) {
     bool shift = inputData.keysPressed.contains(LogicalKeyboardKey.shiftLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.shiftRight) || inputData.keysPressed.contains(LogicalKeyboardKey.shift);
     bool alt   = inputData.keysPressed.contains(LogicalKeyboardKey.altLeft) || inputData.keysPressed.contains(LogicalKeyboardKey.altRight) || inputData.keysPressed.contains(LogicalKeyboardKey.alt);
 
+
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
-      saveNoteContent();
+      saveNote();
     }
-
-    if (ctrl && !alt && shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyS)) {
-      //Save as
-    }
-
-    //if (ctrl && alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyC)) {//create custom intent
-    //  copyNoteToClipboard();
-    //  AppData.instance.inputData.keysPressed.clear();
-    //}
 
     if (ctrl && !alt && !shift && inputData.keysPressed.contains(LogicalKeyboardKey.keyT)) {
       flipFavoriteNote();

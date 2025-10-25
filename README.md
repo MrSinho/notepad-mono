@@ -93,12 +93,15 @@ For some reason during the build Gradle might fail/crash unexpectectly, and this
 
 ### Update flake locks (devs only)
 
-
-
 <p align="center">
 <img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="200"/>
 <img src="./docs/media/mockupuphone/googlePixel8Obsidian/editMobile-portrait.png" width="200"/>
 </p>
+
+```shell
+cd nix/linux
+nix flake update
+```
 
 ## Check Android Manifest in the .apk file
 

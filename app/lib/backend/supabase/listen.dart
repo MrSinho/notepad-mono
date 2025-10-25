@@ -2,7 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../app_data.dart';
 import '../note_edit/note_edit.dart';
-import '../utils.dart';
+import '../utils/utils.dart';
 import '../notify_ui.dart';
 
 

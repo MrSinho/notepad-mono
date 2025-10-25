@@ -3,15 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../backend/app_data.dart';
 import '../backend/note_edit/note_edit.dart';
-import '../backend/utils.dart';
+import '../backend/utils/utils.dart';
 import '../backend/inputs.dart';
-import '../backend/router.dart';
+import '../backend/navigation/router.dart';
 
 import '../static/note_bottom_sheet.dart';
 import '../static/swipe_card.dart';
 import '../static/ui_utils.dart';
 
-import 'app_bar_builder.dart';
+import 'home_app_bar_builder.dart';
 
 
 
@@ -55,7 +55,7 @@ Widget homePageBuilder(BuildContext context) {
   );
 
   Scaffold scaffold = Scaffold(
-    appBar: mainAppBarBuilder(context),
+    appBar: homeAppBarBuilder(context),
     body: SafeArea(child: view) // Important for mobile devices
   );
 

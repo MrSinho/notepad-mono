@@ -6,9 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../backend/supabase/queries.dart';
 
 import '../backend/app_data.dart';
-import '../backend/color_palette.dart';
+import '../backend/utils/color_utils.dart';
 import '../backend/inputs.dart';
-import '../backend/router.dart';
+import '../backend/navigation/router.dart';
 
 import '../themes.dart';
 
@@ -275,7 +275,7 @@ Widget unsavedChangesDialog(BuildContext context) {
   TextButton saveButton = TextButton(
     child: saveMask, 
     onPressed: () {
-      saveNoteContent();
+      saveNote();
       context.pop();
       goToRootPage();
     }

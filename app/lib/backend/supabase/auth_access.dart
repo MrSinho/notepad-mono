@@ -1,36 +1,18 @@
-import 'dart:async';
 import 'dart:io';
+import 'dart:async';
 
-import 'package:flutter/widgets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:app_links/app_links.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 
 import '../app_data.dart';
 import '../environment.dart';
-import '../utils.dart';
+import '../utils/utils.dart';
 import '../notify_ui.dart';
-import '../color_palette.dart';
+import '../utils/color_utils.dart';
+
+import 'session.dart';
 
 
-
-class SessionData {
-  String accessToken = "";
-
-  String errorMessage = "";
-  
-  String authProvider = "";
-  String email        = "";
-  String username     = "";
-
-  String profilePictureUrl = "";
-  MemoryImage? profilePicture;
-
-  late HttpServer authServer;
-  late AppLinks appLinks;
-  late StreamSubscription uriListenSubscription;
-}
 
 class LoginAuthProviders {
   static const int google = 1 << 0;
@@ -221,65 +203,6 @@ Future<void> sendHttpResponse(HttpRequest authRequest) async {
     notifyRootPageUpdate();
 
     await authRequest.response.close();
-  }
-
-}
-
-void clearSessionInfo() {
-  AppData.instance.sessionData = SessionData();
-}
-
-void copySessionInfo() {
-  Session session = Supabase.instance.client.auth.currentSession!;
-  AppData.instance.sessionData.accessToken = session.providerToken ?? "";
-
-  AppData.instance.sessionData.authProvider      = Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "";
-  AppData.instance.sessionData.email             = Supabase.instance.client.auth.currentUser?.email ?? "";
-  AppData.instance.sessionData.username          = Supabase.instance.client.auth.currentUser?.userMetadata?["user_name"] ?? "";
-  AppData.instance.sessionData.profilePictureUrl = Supabase.instance.client.auth.currentUser?.userMetadata?["picture"] ?? "";
-
-  if (AppData.instance.sessionData.username == "") {
-    AppData.instance.sessionData.username = AppData.instance.sessionData.email.split("@")[0];
-  }
-}
-
-Future<void> storeUserData() async {
-
-  copySessionInfo();
-
-  if (AppData.instance.sessionData.profilePictureUrl != "") {
-
-    appLog("Retrieving profile picture through URL");
-
-    var response = await http.get(Uri.parse(AppData.instance.sessionData.profilePictureUrl));
-
-    if (response.statusCode == 200) {
-      appLog("Download successfull, storing profile picture");
-      AppData.instance.sessionData.profilePicture = MemoryImage(response.bodyBytes);
-    }
-    else {
-      appLog("Failed downloading profile picture through url: ${response.body.toString()}");
-    }
-  }
-
-  if (AppData.instance.sessionData.authProvider == "azure") { // Get profile picture with Microsoft Graph
-
-    appLog("Using Microsoft Graph to retrieve profile picture");
-
-    // For a valid response, see the requisites https://learn.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0&tabs=http
-    var response = await http.get(
-      Uri.parse("https://graph.microsoft.com/v1.0/me/photo/\$value"),
-      headers: {"Authorization": "Bearer ${AppData.instance.sessionData.accessToken}"},
-    );
-
-    if (response.statusCode == 200) {
-      appLog("Download successfull, storing profile picture from Microsoft Graph");
-      AppData.instance.sessionData.profilePicture = MemoryImage(response.bodyBytes);
-    }
-    else {
-      appLog("Cannot retrieve profile picture with Microsoft graph: ${response.body.toString()}");
-    }
-
   }
 
 }

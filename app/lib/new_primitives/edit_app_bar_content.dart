@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
-import '../backend/utils.dart';
+import '../backend/utils/utils.dart';
 
-import '../builders/app_bar_builder.dart';
+import '../builders/edit_app_bar_builder.dart';
 
 
 
@@ -30,7 +30,7 @@ class EditAppBarContentState extends State<EditAppBarContent> {
 
     ValueListenableBuilder<int> builder = ValueListenableBuilder<int>(
       valueListenable: AppData.instance.noteEditBarsUpdates,
-      builder: (context, value, child) => editAppBarContentBuilder(context)
+      builder: (context, value, child) => editAppBarContent(context)
     );
 
     return builder;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'backend/navigator.dart';
+import 'backend/navigation/navigator.dart';
 
 
 

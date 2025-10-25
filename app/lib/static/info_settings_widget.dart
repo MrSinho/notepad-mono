@@ -4,10 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../backend/supabase/session.dart';
+
 import '../backend/app_data.dart';
 import '../backend/inputs.dart';
-import '../backend/utils.dart';
-import '../backend/color_palette.dart';
+import '../backend/utils/color_utils.dart';
 
 import 'sign_out_dialog.dart';
 import 'ui_utils.dart';

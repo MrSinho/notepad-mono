@@ -3,7 +3,8 @@ import 'dart:async';
 import '../supabase/queries.dart';
 
 import '../app_data.dart';
-import '../utils.dart';
+
+import '../utils/utils.dart';
 
 
 
@@ -16,7 +17,7 @@ void timerCallback(Timer timer) {
 
   if (AppData.instance.noteEditData.controller.text != AppData.instance.queriesData.selectedNote["content"]) {
     appLog("Triggered autosave!");
-    saveNoteContent();
+    saveNote();
   }
 }
 

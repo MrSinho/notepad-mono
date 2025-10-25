@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
 
 import '../backend/inputs.dart';
-import '../backend/color_palette.dart';
+import '../backend/utils/color_utils.dart';
 
 import '../themes.dart';
 

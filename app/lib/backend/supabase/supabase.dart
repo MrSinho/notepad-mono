@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../utils.dart';
+import '../utils/utils.dart';
 import '../environment.dart';
 
 

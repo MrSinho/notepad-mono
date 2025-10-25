@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:color_palette_generator/color_palette_generator.dart';
+import 'package:material_color_generator/material_color_generator.dart';
 
-import '../themes.dart';
+import '../../themes.dart';
 
 
 
@@ -104,4 +105,11 @@ ShaderMask paletteGradientShaderMask(ColorPaletteData paletteData, Widget child)
   );
 
   return mask;
+}
+
+MaterialColor generateMaterialColorData(Color color) {
+
+  MaterialColor materialColor = generateMaterialColor(color: color);
+
+  return materialColor;
 }

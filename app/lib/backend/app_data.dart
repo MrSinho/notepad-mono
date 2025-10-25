@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_code_editor/flutter_code_editor.dart';
+
 import 'package:go_router/go_router.dart';
-import 'package:highlight/languages/markdown.dart';
 import 'package:app_links/app_links.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'supabase/auth_access.dart';
 import 'supabase/queries.dart';
+import 'supabase/session.dart';
 
 import '../new_primitives/login_page.dart';
 import '../new_primitives/home_page.dart';
@@ -18,12 +17,11 @@ import '../new_primitives/input_field.dart';
 
 import 'note_edit/note_edit.dart';
 
-import 'color_palette.dart';
-import 'inputs.dart';
-import 'navigator.dart';
-import 'router.dart';
+import 'navigation/router.dart';
 
-import '../../../app.dart';
+import 'utils/color_utils.dart';
+
+import 'inputs.dart';
 
 
 
@@ -52,7 +50,7 @@ class AppData {
   final ValueNotifier<int> noteEditBarsUpdates = ValueNotifier(0);
   final ValueNotifier<int> inputFieldUpdates   = ValueNotifier(0);
 
-  late final GoRouter      router;
+  late final GoRouter router;
 
   AppData._internal() {//Called once and only once, no BuildContext available
     
@@ -70,21 +68,10 @@ class AppData {
     editBottomBar     = const EditBottomBar();
     noteInputField    = const NoteInputField();
 
-    router = GoRouter(
-      navigatorKey: NavigatorInfo.key,
-      routes: <RouteBase>[
-        GoRoute(path: RoutesPaths.rootPage.path, builder: (context, state) => authStreamBuilder(context)),
-        GoRoute(path: RoutesPaths.noteEditPage.path, builder: (context, state) => noteEditPage),
-      ]
-    );
+    router = setupRouter();
 
-    noteEditData.controller = CodeController(
-      language: markdown,// currently only markdown linting
-      namedSectionParser: const BracketsStartEndNamedSectionParser(),
-    );
-    noteEditData.controller.popupController.enabled = true;
+    noteEditData.controller = setupEditController();
 
-    noteEditData.controller.addListener(noteEditCallback);
     noteEditData.focusNode = FocusNode();
 
     queriesData.selectedNote = {"title": "note"};

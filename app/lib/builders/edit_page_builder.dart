@@ -6,11 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import '../backend/note_edit/note_edit.dart';
 import '../backend/supabase/queries.dart';
 import '../backend/app_data.dart';
-import '../backend/utils.dart';
+import '../backend/utils/utils.dart';
 
-import '../backend/color_palette.dart';
+import '../backend/utils/color_utils.dart';
 
+import '../backend/note_edit/custom_intents/copy_selection.dart';
 import '../backend/note_edit/custom_intents/copy_lines.dart';
+import '../backend/note_edit/custom_intents/copy_note.dart';
 import '../backend/note_edit/custom_intents/cut_lines.dart';
 import '../backend/note_edit/custom_intents/paste.dart';
 import '../backend/note_edit/custom_intents/duplicate_lines.dart';
@@ -22,7 +24,7 @@ import '../backend/note_edit/custom_intents/canc.dart';
 
 import '../static/ui_utils.dart';
 
-import 'app_bar_builder.dart';
+import 'edit_app_bar_builder.dart';
 
 
 
@@ -59,9 +61,9 @@ Widget noteEditPageBuilder(BuildContext context) {
   }
 
   List<Widget> editBarTopContent = [
-    iconTextButtonLayoutBuilder(const Icon(Icons.save_rounded), Text("Save"), () => saveNoteContent(), minWidth), 
-    iconTextButtonLayoutBuilder(const Icon(Icons.copy_rounded), Text("Copy"), () => copySelectionToClipboard(), minWidth), 
-    iconTextButtonLayoutBuilder(const Icon(Icons.sticky_note_2_rounded), Text("Copy note"), () => copyNoteToClipboard(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.save_rounded), Text("Save"), () => saveNote(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.copy_rounded), Text("Copy"), () => copySelection(), minWidth), 
+    iconTextButtonLayoutBuilder(const Icon(Icons.sticky_note_2_rounded), Text("Copy note"), () => copyNote(), minWidth), 
     iconTextButtonLayoutBuilder(const Icon(Icons.wrap_text_rounded), Text("Copy line/s"), () => copyLines(), minWidth), 
     iconTextButtonLayoutBuilder(const Icon(Icons.wrap_text_rounded), Text("Duplicate lines/s"), () => duplicateLines(), minWidth), 
     iconTextButtonLayoutBuilder(const Icon(Icons.cut_rounded), Text("Cut line/s"), () => cutLines(), minWidth),

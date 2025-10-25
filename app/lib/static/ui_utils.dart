@@ -8,7 +8,7 @@ import '../backend/supabase/auth_access.dart';
 
 import '../backend/note_edit/note_edit.dart';
 
-import '../backend/color_palette.dart';
+import '../backend/utils/color_utils.dart';
 
 import '../themes.dart';
 

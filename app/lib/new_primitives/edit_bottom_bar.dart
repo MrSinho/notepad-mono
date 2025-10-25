@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../backend/app_data.dart';
-import '../backend/utils.dart';
+import '../backend/utils/utils.dart';
 
 import '../builders/edit_bottom_bar_builder.dart';
 

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/app_data.dart';
-import '../backend/color_palette.dart';
+import '../backend/utils/color_utils.dart';
 
 import 'ui_utils.dart';
 

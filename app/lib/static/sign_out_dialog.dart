@@ -4,8 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../backend/color_palette.dart';
-import '../backend/router.dart';
+import '../backend/utils/color_utils.dart';
+import '../backend/navigation/router.dart';
 
 import '../themes.dart';
 

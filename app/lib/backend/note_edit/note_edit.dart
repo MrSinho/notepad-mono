@@ -1,16 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:highlight/languages/markdown.dart';
 import 'package:flutter/material.dart';
 
 import '../../static/note_dialogs.dart';
 
-import '../utils.dart';
+import '../utils/utils.dart';
+
 import '../notify_ui.dart';
 import '../app_data.dart';
-import '../router.dart';
+import '../navigation/router.dart';
 
-import 'edit_timer.dart';
+import 'save_timer.dart';
 
 
 
@@ -172,6 +174,19 @@ void setNoteEditStatus(NoteEditStatus status) {
   
   notifyNoteEditBarsUpdate();
   notifyRootPageUpdate();
+}
+
+CodeController setupEditController() {
+  CodeController controller = CodeController(
+    language: markdown,// currently only markdown linting
+    namedSectionParser: const BracketsStartEndNamedSectionParser(),
+  );
+    
+  controller.popupController.enabled = true;
+
+  controller.addListener(noteEditCallback);
+
+  return controller;
 }
 
 void setNoteControllerText(String text) {
