@@ -98,7 +98,9 @@ Widget swipeCardsBuilder(BuildContext context) {
   SizedBox sizedBox = SizedBox(
     width: minWidth,
     height: minHeight,
-    child: swiper,
+    child: Card(
+      child: swiper,
+    ),
   );
 
   Align align = Align(
