@@ -37,11 +37,13 @@ jobs:
         cp nix/out/allarch-android/result/Notepad_Mono.apk Notepad_Mono-${{ github.ref_name }}-allarch-android.apk
         cp nix/out/allarch-android/result/Notepad_Mono.aab Notepad_Mono-${{ github.ref_name }}-allarch-android.aab
 
-    - name: "Upload release apk"
+    - name: "Upload release files (apk and aab)"
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: Notepad_Mono-${{ github.ref_name }}-allarch-android.apk Notepad_Mono-${{ github.ref_name }}-allarch-android.aab
+        files: |
+          Notepad_Mono-${{ github.ref_name }}-allarch-android.apk
+          Notepad_Mono-${{ github.ref_name }}-allarch-android.aab
         overwrite_files: true
 
     - name: "Success"
