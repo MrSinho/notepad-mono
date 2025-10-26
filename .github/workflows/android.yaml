@@ -26,15 +26,15 @@ jobs:
     - name: "Decode keystore"
       working-directory: app
       run: |
-        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/release-key.jks
+        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/release-key.jks
 
-    - name: "Setup key.properties"
+    - name: "Setup key properties"
       working-directory: app
       run: |
         cat <<EOF > android/key.properties
-        storePassword=${{ secrets.KEYSTORE_PASSWORD }}
-        keyPassword=${{ secrets.KEY_PASSWORD }}
-        keyAlias=${{ secrets.KEY_ALIAS }}
+        storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+        keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
         storeFile=release-key.jks
         EOF
 
