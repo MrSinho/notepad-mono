@@ -174,15 +174,15 @@ Widget swipeCard(Widget title, Widget body, CardSwiperController controller) {
     ),
   );
 
-  List<Color> brightGradientColors = generateRandomColorPalette(2).asColors;
+  List<Color> brightGradientColors = generateRandomColorPalette(3).asColors;
   List<Color> dimGradientColors = [];
 
   double dimFactor = 0.15;
   double satFactor = 0.05;
 
   if (isThemeBright()) {
-    dimFactor = 0.3;
-    satFactor = 1.0;
+    dimFactor = 0.5;
+    satFactor = 0.3;
   }
 
   for (Color color in brightGradientColors) {

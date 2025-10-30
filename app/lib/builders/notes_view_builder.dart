@@ -15,7 +15,7 @@ import '../static/ui_utils.dart';
 
 
 Widget notesViewBuilder(BuildContext context) {
-  List<ListTile> notesUI = [];
+  List<Widget> notesUI = [];
 
   for (Map<String, dynamic> note in AppData.instance.queriesData.notes) {
 
@@ -55,6 +55,8 @@ Widget notesViewBuilder(BuildContext context) {
     );
   }
 
+  notesUI.add(Gap(196));
+
   SingleChildScrollView scroll = SingleChildScrollView(
     child: Padding(
       padding: const EdgeInsets.only(left: 14),
@@ -64,10 +66,6 @@ Widget notesViewBuilder(BuildContext context) {
       )
     ),
   );
-
-  //Expanded expanded = Expanded(
-  //  child: scroll
-  //);
 
   return scroll;
 }

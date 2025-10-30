@@ -40,6 +40,10 @@
             drv = defaultPackage;
         };
 
+        devShell = pipeline.pkgs.mkShell {
+            buildInputs = pipeline.buildInputs;
+        };
+
     }
 
     );# outputs

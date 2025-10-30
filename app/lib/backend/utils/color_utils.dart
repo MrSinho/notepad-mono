@@ -62,7 +62,10 @@ ColorPaletteData generateRandomColorPalette(int outputColorCount) {
     int g = minimumBrightness + random.nextInt(maximumBrightness - minimumBrightness);
     int b = minimumBrightness + random.nextInt(maximumBrightness - minimumBrightness);
 
-    data.asColors.add(Color.fromARGB(255, r, g, b));
+    Color color = Color.fromARGB(255, r, g, b);
+    color = HSLColor.fromColor(color).withSaturation(1.0).toColor();
+
+    data.asColors.add(color);
     data.asHtmlColors.add("rgba($r, $g, $b, 1.0)");
   }
 

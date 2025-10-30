@@ -31,7 +31,7 @@ void showUserInfoWidget(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           paletteGradientShaderMask(
-            generateRandomColorPalette(2),
+            generateRandomColorPalette(3),
             Text(AppData.instance.sessionData.username,
               style: GoogleFonts.robotoMono(
                 fontSize: 24,
@@ -59,7 +59,7 @@ void showUserInfoWidget(BuildContext context) {
           child: getProfilePicture(true)
         ),
         paletteGradientShaderMask(
-          generateRandomColorPalette(2),
+          generateRandomColorPalette(3),
           Text(AppData.instance.sessionData.username,
             style: GoogleFonts.robotoMono(
               fontSize: 24,
