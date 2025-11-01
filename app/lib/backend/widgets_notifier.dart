@@ -15,16 +15,6 @@ class WidgetsNotifier {
 
 
 
-void notifyNoteEditBarsUpdate() {
-  appLog("Notifying builder update for note edit page");
-  AppData.instance.widgetsNotifier.noteEditBarsUpdates.value++;
-}
-
-void notifyNoteEditFieldUpdate() {
-  appLog("Notifying builder update for note edit page");
-  AppData.instance.widgetsNotifier.inputFieldUpdates.value++;
-}
-
 void notifyRootPageUpdate() {
   appLog("Notifying builder update for root page");
   AppData.instance.widgetsNotifier.rootPageUpdates.value++;
@@ -35,8 +25,19 @@ void notifyNotesViewUpdate() {
   AppData.instance.widgetsNotifier.notesViewUpdates.value++;
 }
 
+void notifyNoteEditBarsUpdate() {
+  appLog("Notifying builder update for note edit page");
+  AppData.instance.widgetsNotifier.noteEditBarsUpdates.value++;
+}
+
+void notifyNoteEditFieldUpdate() {
+  appLog("Notifying builder update for note edit page");
+  AppData.instance.widgetsNotifier.inputFieldUpdates.value++;
+}
+
 void notifyAllPagesUpdate() {
   notifyRootPageUpdate();
+  notifyNotesViewUpdate();
   notifyNoteEditBarsUpdate();
   notifyNoteEditFieldUpdate();
 }

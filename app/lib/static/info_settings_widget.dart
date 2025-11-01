@@ -10,8 +10,9 @@ import '../backend/app_data.dart';
 import '../backend/inputs.dart';
 import '../backend/utils/color_utils.dart';
 
-import 'sign_out_dialog.dart';
 import 'ui_utils.dart';
+import 'sign_out_dialog.dart';
+import 'delete_account_dialog.dart';
 
 import '../themes.dart';
 
@@ -96,14 +97,33 @@ void showUserInfoWidget(BuildContext context) {
       () => launchUrl(Uri.parse(issuesSite)),
     ),    
     const Gap(20),
-    wrapIconTextButton(const Icon(Icons.logout_outlined),
-      Text("Log out", style: GoogleFonts.robotoMono()), 
-      () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => signOutDialog(context));
-      }
+    Wrap(
+      direction: Axis.horizontal,
+      children: [
+        wrapIconTextButton(
+          const Icon(Icons.logout_outlined),
+          Text("Log out", style: GoogleFonts.robotoMono()), 
+          () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => signOutDialog(context)
+            );
+          }
+        ),
+        SizedBox(width: 16),
+        wrapIconTextButton(
+          const Icon(Icons.warning_rounded, color: Colors.red),
+          Text("Delete account", style: GoogleFonts.robotoMono()), 
+          () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => deleteAccountDialog(context)
+            );
+          }
+        )
+      ],
     )
+    
   ];
 
   userInfoContents.addAll(footerWidgets(context));

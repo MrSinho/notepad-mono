@@ -94,7 +94,7 @@ Future<void> createNewNote(String title) async {
   await Supabase.instance.client.from("Notes").insert(
     {
       "title": title,
-      "owner": Supabase.instance.client.auth.currentSession!.user.email,
+      //owner id set automatically
       //date time set automatically
       "content": "# $title\n\n_Write something..._",
     }

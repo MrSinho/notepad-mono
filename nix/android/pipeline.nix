@@ -39,7 +39,7 @@ let
         pkgs.jdk17
     ];
 
-    buildPhase = ''
+    environmentSetup = ''
         export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
         export HOME=$TMPDIR
 
@@ -64,6 +64,10 @@ let
 
         # Ensure directories exist and are writable
         mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR $XDG_CACHE_HOME $XDG_CONFIG_HOME $GRADLE_USER_HOME $ANDROID_USER_HOME 
+    '';
+
+    buildPhase = ''
+        ${environmentSetup}
 
         cd app
         flutter pub get
@@ -80,8 +84,9 @@ let
     '';
 
 in {
-    pkgs         = pkgs;
-    buildInputs  = buildInputs;
-    buildPhase   = buildPhase;
-    installPhase = installPhase;
+    pkgs             = pkgs;
+    buildInputs      = buildInputs;
+    buildPhase       = buildPhase;
+    installPhase     = installPhase;
+    environmentSetup = environmentSetup;
 }

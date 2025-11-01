@@ -25,11 +25,59 @@ Future<int> logout() async {
   try {
 
     await Supabase.instance.client.auth.signOut(scope: SignOutScope.local);
-    clearSessionInfo();
+    clearAppData();
 
   } catch (error) {
 
     appLog("Error signing out: $error");
+
+  }
+
+  return 1;
+}
+
+Future<int> createUser() async {
+
+  try {
+
+    List<Map<String, dynamic>> data = await Supabase.instance.client.from("Users")
+      .select()
+      .eq("id", AppData.instance.sessionData.userID);
+
+    if (data.isEmpty) {
+      appLog("User not found in users table, creating a new user");
+
+      await Supabase.instance.client.from("Users").insert(
+        {
+          "id": AppData.instance.sessionData.userID
+        }
+      );
+      
+      appLog("New user created successfully!");
+    }
+    else {
+      appLog("User already registered");
+    }
+
+
+  } catch (error) {
+    appLog("Error creating user: $error");
+
+  }
+
+  return 1;
+}
+
+Future<int> deleteUser() async {
+
+  try {
+    appLog("Deleting user through edge function");
+    await Supabase.instance.client.functions.invoke("delete-user");
+
+    logout();
+
+  } catch (error) {
+    appLog("Error deleting user: $error");
 
   }
 

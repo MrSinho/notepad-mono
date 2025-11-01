@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../backend/supabase/auth_access.dart';
 import '../backend/supabase/listen.dart';
 import '../backend/supabase/session.dart';
 
@@ -34,6 +35,7 @@ StreamBuilder<AuthState> authStreamBuilder(BuildContext context) {
             }
 
             listenToNotes();
+            createUser();
 
             return AppData.instance.homePage;
           }

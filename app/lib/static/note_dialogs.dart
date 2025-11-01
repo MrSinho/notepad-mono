@@ -33,7 +33,8 @@ Widget newNoteDialog(BuildContext context) {
     Text(
       "Done", 
       style: GoogleFonts.robotoMono(
-        color: Colors.white
+        color: Colors.white,
+        fontWeight: FontWeight.bold
       )
     )
   );
@@ -60,7 +61,7 @@ Widget newNoteDialog(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.min,
     children: [
-      Text("Create note", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
+      Text("Create note", textAlign: TextAlign.center, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
       const Gap(20),
       IntrinsicWidth(child: field),
       const Gap(20),
@@ -112,7 +113,8 @@ Widget renameNoteDialog(BuildContext context) {
     Text(
       "Done",
       style: GoogleFonts.robotoMono(
-        color: Colors.white
+        color: Colors.white,
+        fontWeight: FontWeight.bold
       )
     )
   );
@@ -139,7 +141,7 @@ Widget renameNoteDialog(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.min,
     children: [
-      Text("Rename note", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
+      Text("Rename note", textAlign: TextAlign.center, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
       const Gap(20),
       IntrinsicWidth(child: renameField),
       const Gap(20),
@@ -206,7 +208,7 @@ Widget deleteNoteDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text("Confirm delete ${AppData.instance.queriesData.selectedNote["title"]}", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
+      Text("Confirm delete ${AppData.instance.queriesData.selectedNote["title"]}", textAlign: TextAlign.center, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
       const Gap(20),
       Text("Are you sure you want to delete this note?", style: GoogleFonts.robotoMono(fontSize: 12),),
       const Gap(20),
@@ -285,7 +287,7 @@ Widget unsavedChangesDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text("Discard unsaved changes?", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
+      Text("Discard unsaved changes?", textAlign: TextAlign.center, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold),),
       const Gap(20),
       Wrap(
         direction: Axis.horizontal,

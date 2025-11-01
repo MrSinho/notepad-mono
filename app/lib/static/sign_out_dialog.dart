@@ -18,7 +18,8 @@ Dialog signOutDialog(BuildContext context) {
     Text(
       "Confirm",
       style: GoogleFonts.robotoMono(
-        color: Colors.white
+        color: Colors.white,
+        fontWeight: FontWeight.bold
       )
     )
   );
@@ -27,7 +28,7 @@ Dialog signOutDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text("Confirm Sign Out", style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
+      Text("Confirm Sign Out", textAlign: TextAlign.center, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold)),
       const Gap(20),
       Text(
         "Are you sure you want to sign out and leave this session?",

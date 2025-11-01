@@ -87,3 +87,13 @@ class AppData {
   void setupWithContext(BuildContext context) {
   }
 }
+
+void clearAppData() {
+  AppData.instance.sessionData        = SessionData();
+  AppData.instance.queriesData        = QueriesData();
+  AppData.instance.noteEditStatusData = NoteEditStatusData();
+  AppData.instance.noteEditData       = NoteEditData();
+  AppData.instance.inputData          = InputData();
+
+  notifyAllPagesUpdate();
+}

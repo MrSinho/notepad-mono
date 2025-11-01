@@ -129,9 +129,15 @@ adb shell pm list packages | grep notepad_mono
 adb shell am start -a android.intent.action.VIEW -d "notepad-mono://login-callback"
 ```
 
+## External packages
+
+All the external packages are pulled from [pub.dev](https://pub.dev) listed with their relative version in the [pubspec.yaml].
+
 ## Data hosting and transparency
 
-Currently the notes and databases are hosted by [Supabase](https://https://supabase.com/). While the database is encrypted and has RLS enabled, admin devs can still theoretically have access to the notes content. For safety reasons it's highly recommended to NOT save sensitive data such as passwords and personal information.
+Currently the notes and databases are hosted by [Supabase](https://https://supabase.com/). While the database is encrypted and has RLS enabled, there is not E2E encryption enabled. admin devs could theoretically have access to the notes content. For safety reasons it's highly recommended to NOT save sensitive data such as passwords and personal information.
+
+For more information about the privacy policy see the [related page](https://github.com/MrSinho/notepad-mono/blob/main/PRIVACY_POLICY.md).
 
 ## License
 

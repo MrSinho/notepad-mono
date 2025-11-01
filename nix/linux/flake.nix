@@ -24,10 +24,8 @@
                 
                 src = ./../../.;
 
-                buildInputs = pipeline.buildInputs;
-
-                buildPhase = pipeline.buildPhase;
-                
+                buildInputs  = pipeline.buildInputs;
+                buildPhase   = pipeline.buildPhase;
                 installPhase = pipeline.installPhase;
             }
         );
@@ -42,6 +40,7 @@
 
         devShell = pipeline.pkgs.mkShell {
             buildInputs = pipeline.buildInputs;
+            shellHook   = pipeline.environmentSetup;
         };
 
     }

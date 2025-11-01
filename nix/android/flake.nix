@@ -19,15 +19,13 @@
         notepad-mono = (
             pipeline.pkgs.stdenv.mkDerivation {
 
-                pname = "Notepad Mono";
+                pname   = "Notepad Mono";
                 version = "0.1.0";
                 
                 src = ./../../.;
 
-                buildInputs = pipeline.buildInputs;
-
-                buildPhase = pipeline.buildPhase;
-                
+                buildInputs  = pipeline.buildInputs;
+                buildPhase   = pipeline.buildPhase;
                 installPhase = pipeline.installPhase;
             }
         );
@@ -42,7 +40,9 @@
 
         devShell = pipeline.pkgs.mkShell {
             buildInputs = pipeline.buildInputs;
+            shellHook   = pipeline.environmentSetup;
         };
+
 
     }
 

@@ -22,11 +22,15 @@ let
         pkgs.libdeflate
     ];
 
-    buildPhase = ''
+    environmentSetup = ''
         export FLUTTER_STORAGE_BASE_DIR=$TMPDIR/flutter_storage
         export HOME=$TMPDIR
         mkdir -p $HOME $FLUTTER_STORAGE_BASE_DIR
-        
+    '';
+
+    buildPhase = ''
+        ${environmentSetup}
+
         cd app
         flutter pub get
         flutter create .
@@ -71,8 +75,9 @@ let
     '';
 
 in {
-    pkgs         = pkgs;
-    buildInputs  = buildInputs;
-    buildPhase   = buildPhase;
-    installPhase = installPhase;
+    pkgs             = pkgs;
+    buildInputs      = buildInputs;
+    buildPhase       = buildPhase;
+    installPhase     = installPhase;
+    environmentSetup = environmentSetup;
 }

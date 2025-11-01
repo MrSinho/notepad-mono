@@ -89,8 +89,9 @@ Widget loginPageBuilder(BuildContext context) {
       child: Card(child: signupPad),
     );
 
-    const double minWidth = 800;
-    if (MediaQuery.of(context).size.width < minWidth) {
+    const double minWidth  = 800;
+    const double minHeight = 620;
+    if (MediaQuery.of(context).size.width < minWidth || MediaQuery.of(context).size.height < minHeight) {
       signupBox = FractionallySizedBox(
         child: signupPad,
       );
@@ -108,7 +109,7 @@ Widget loginPageBuilder(BuildContext context) {
       ),
     );
 
-    if (MediaQuery.of(context).size.width < minWidth) {
+    if (MediaQuery.of(context).size.width < minWidth || MediaQuery.of(context).size.height < minHeight) {
       containerDecoration = BoxDecoration();// Keep default theme
     }
 

@@ -18,6 +18,7 @@ class SessionData {
 
   String errorMessage = "";
   
+  String userID       = "";
   String authProvider = "";
   String email        = "";
   String username     = "";
@@ -32,14 +33,11 @@ class SessionData {
 
 
 
-void clearSessionInfo() {
-  AppData.instance.sessionData = SessionData();
-}
-
 void copySessionInfo() {
   Session session = Supabase.instance.client.auth.currentSession!;
   AppData.instance.sessionData.accessToken = session.providerToken ?? "";
 
+  AppData.instance.sessionData.userID            = Supabase.instance.client.auth.currentUser?.id ?? "";
   AppData.instance.sessionData.authProvider      = Supabase.instance.client.auth.currentUser?.appMetadata["provider"] ?? "";
   AppData.instance.sessionData.email             = Supabase.instance.client.auth.currentUser?.email ?? "";
   AppData.instance.sessionData.username          = Supabase.instance.client.auth.currentUser?.userMetadata?["user_name"] ?? "";
