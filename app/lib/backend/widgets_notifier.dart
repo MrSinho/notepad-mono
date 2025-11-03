@@ -8,6 +8,8 @@ import 'app_data.dart';
 
 class WidgetsNotifier {
   final ValueNotifier<int> rootPageUpdates     = ValueNotifier(0);
+  final ValueNotifier<int> loginPageUpdates    = ValueNotifier(0);
+  final ValueNotifier<int> homePageUpdates     = ValueNotifier(0);
   final ValueNotifier<int> notesViewUpdates    = ValueNotifier(0);
   final ValueNotifier<int> noteEditBarsUpdates = ValueNotifier(0);
   final ValueNotifier<int> inputFieldUpdates   = ValueNotifier(0);
@@ -15,9 +17,19 @@ class WidgetsNotifier {
 
 
 
-void notifyRootPageUpdate() {
+void notifyRootPageUpdate() { // Updates both login page and home page
   appLog("Notifying builder update for root page");
   AppData.instance.widgetsNotifier.rootPageUpdates.value++;
+}
+
+void notifyLoginPageUpdate() {
+  appLog("Notifying builder update for login page");
+  AppData.instance.widgetsNotifier.loginPageUpdates.value++;
+}
+
+void notifyHomePageUpdate() {
+  appLog("Notifying builder update for home page");
+  AppData.instance.widgetsNotifier.homePageUpdates.value++;
 }
 
 void notifyNotesViewUpdate() {

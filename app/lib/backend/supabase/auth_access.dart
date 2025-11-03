@@ -87,7 +87,7 @@ Future<int> deleteUser() async {
 String getRedirectPath() {
   
   if (Platform.isAndroid || Platform.isIOS) {
-    return getEnvironmentParameterValue("DEEP_LINK_REDIRECT_URL");
+    return getEnvironmentParameterValue("DEEP_REDIRECT_URL");
   }
 
   return getEnvironmentParameterValue("HTTP_REDIRECT_URL");
@@ -138,21 +138,104 @@ Future<int> azureLogin() async {
   return 1;
 }
 
+Future<void> getAuthSessionCode(HttpRequest? request, Uri uri) async {
+  String? authCode = uri.queryParameters["code"];// http://localhost:4516/?code=... or notepad-mono://?code=...
+
+  if (authCode != null) {
+    appLog("Received login callback uri link");
+    await authExchangeCodeForSession(request, authCode);
+  }
+  else {
+    appLog("Invalid code parameter in login callback uri");
+    //error = true;
+  }
+
+}
+
+Future<void> getSessiontDummyKey(HttpRequest? request, Uri uri) async {
+  String? key = uri.queryParameters["key"]; // XXX://dummy/?key=
+  
+  if (key == null) {
+    return;
+  }
+
+  appLog("Received dummy uri link");
+  appLog("Got key: $key");
+
+  if (key == getEnvironmentParameterValue("DUMMY_USER_KEY")) {
+    appLog("Dummy key valid, starting dummy user session");
+    
+    logout(); // just in case
+    createDummySession();
+
+    if (request != null) {
+      await sendHttpSuccess(request);
+    }
+  }
+  else {
+    appLog("Invalid key parameter in dummy uri");
+    //error = true;
+  }
+
+}
+
+Future<void> evaluateUriLink(HttpRequest? request, Uri uri) async {
+  appLog("Evaluating uri link");
+  
+  if (request != null) {
+    appLog("Got request: ${request.requestedUri.toString()}");
+  }
+  appLog("Query parameters: ${uri.toString()}");
+
+  //bool error = false; 
+
+  // Skip favicon.ico requests
+  if (uri.path == "/favicon.ico") { // http://localhost:4516/favicon.ico
+    return;
+  }
+
+  getEnvironmentParameterValue("LOGIN_URI_HOST");// I put it here just for logging purposes
+  //  == getEnvironmentParameterValue("LOGIN_URI_HOST") but for some reason I have problems with empty strings from the environment
+  if (uri.host == "") { // notepad-mono://?code=... or http://localhost:4516/?code=...
+    getAuthSessionCode(request, uri);
+  }
+
+  else if (uri.host == getEnvironmentParameterValue("DUMMY_URI_HOST")) { // http://localhost:4516//dummy/?key=... or notepad-mono://dummy/?key=
+    getSessiontDummyKey(request, uri);
+  }
+
+  //else if (uri.host.isEmpty) { // XXX://?
+  //  appLog("Empty uri link host, attempting to process query parameters");
+  //  getAuthSessionCode(request, uri);
+  //  getSessiontDummyKey(request, uri);
+  //}
+
+  //else {
+  //  appLog("Unknown uri link host: ${uri.host}");
+  //  //error = true;
+  //}
+
+}
+
 Future<void> listenToUriLinks() async {
   
   try {
     appLog("Initializing uri link stream");
     AppData.instance.sessionData.uriListenSubscription = AppData.instance.sessionData.appLinks.uriLinkStream.listen(
       (Uri? uri) async {
-      
-        if (uri != null && uri.scheme == getEnvironmentParameterValue("URI_SCHEME") && uri.host == getEnvironmentParameterValue("URI_HOST")) {
-          
-          String? authCode = uri.queryParameters["code"];
 
-          if (authCode != null) {
-            await authExchangeCodeForSession(authCode, null);
-          }
+        if (uri == null) {
+          return;
         }
+
+        if (uri.scheme != getEnvironmentParameterValue("DEEP_URI_SCHEME")) {// notepad-mono://
+          return;
+        }
+
+        appLog("Received deep uri link");
+
+        evaluateUriLink(null, uri);
+
       }
     );
 
@@ -169,22 +252,14 @@ Future<void> cancelUriStream() async {
 }
 
 Future<void> startAuthHttpServer() async {
-
-  appLog("Initializing HTTP auth server");
+  appLog("Initializing auth HTTP server");
   
   int port = int.parse(getEnvironmentParameterValue("HTTP_LISTEN_PORT"));
   AppData.instance.sessionData.authServer = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
   
-  await for (HttpRequest request in AppData.instance.sessionData.authServer) {
-
-    appLog("Found request. Query parameters: ${request.uri.toString()}. Path: ${request.uri.path.toString()}");
-
-    String? authCode = request.uri.queryParameters["code"];
-
-    if (authCode != null) {
-      await authExchangeCodeForSession(authCode, request);
-    }
-
+  await for (HttpRequest request in AppData.instance.sessionData.authServer) {// localhost:4516//
+    appLog("Received http request");
+    evaluateUriLink(request, request.uri);
   }
 
 }
@@ -194,7 +269,7 @@ Future<void> stopAuthServer() async {
   appLog("Stopped auth http server");
 }
 
-Future<void> authExchangeCodeForSession(String authCode, HttpRequest? authRequest) async {
+Future<void> authExchangeCodeForSession(HttpRequest? authRequest, String authCode) async {
   try {
 
     await Supabase.instance.client.auth.exchangeCodeForSession(authCode);
@@ -204,7 +279,7 @@ Future<void> authExchangeCodeForSession(String authCode, HttpRequest? authReques
     appLog("Login with auth provider successfull");
 
     if (authRequest != null) {
-      await sendHttpResponse(authRequest);
+      await sendHttpSuccess(authRequest);
     }
 
   } catch (error) {
@@ -213,7 +288,7 @@ Future<void> authExchangeCodeForSession(String authCode, HttpRequest? authReques
 
 }
 
-Future<void> sendHttpResponse(HttpRequest authRequest) async {
+Future<void> sendHttpSuccess(HttpRequest authRequest) async {
 
   try {
 
@@ -248,7 +323,7 @@ Future<void> sendHttpResponse(HttpRequest authRequest) async {
     authRequest.response.write(errorMessage);
 
     AppData.instance.sessionData.errorMessage = errorMessage;
-    notifyRootPageUpdate();
+    notifyLoginPageUpdate();// To display an error message (not implemented yet)
 
     await authRequest.response.close();
   }

@@ -7,6 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'supabase/queries.dart';
 import 'supabase/session.dart';
 
+import '../new_primitives/root_page.dart';
 import '../new_primitives/login_page.dart';
 import '../new_primitives/home_page.dart';
 import '../new_primitives/notes_view.dart';
@@ -40,6 +41,7 @@ class AppData {
   late NoteEditStatusData noteEditStatusData;
   late InputData          inputData;
 
+  late final RootPage          rootPage;
   late final LoginPage         loginPage;
   late final HomePage          homePage;
   late final NotesView         notesView;
@@ -62,6 +64,7 @@ class AppData {
     noteEditData       = NoteEditData();
     inputData          = InputData();
 
+    rootPage          = const RootPage();
     loginPage         = const LoginPage();
     homePage          = const HomePage();
     notesView         = const NotesView();

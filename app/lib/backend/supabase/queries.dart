@@ -19,28 +19,6 @@ class QueriesData {
   StreamSubscription? versionsSubscription;
 }
 
-/*
-Future<void> queryVersions() async {
-
-  List<Map<String, dynamic>> versions = await Supabase.instance.client.from("Versions").select();
-
-  //Sort notes by last edit date
-  versions.sort((a, b) {
-    final aTime = DateTime.tryParse(a["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-    final bTime = DateTime.tryParse(b["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-    return bTime.compareTo(aTime);
-  });
-
-  Map<String, dynamic> latest = versions.first;
-
-  AppData.instance.queriesData.latestVersion = latest;
-
-  notifyRootPageUpdate();
-
-  return;
-}
-*/
-
 Future<void> queryNotes() async {
   
   try {

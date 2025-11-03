@@ -1,9 +1,19 @@
-SUPABASE_URL='https://pxtqtkxkkbxoigfklbgw.supabase.co'
-SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4dHF0a3hra2J4b2lnZmtsYmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjQ3NDYsImV4cCI6MjA1OTA0MDc0Nn0.nDRJO9xP7wV-0MC0Iz6cSviz3HKfjxWV_91BrWAVvJY'
+SUPABASE_PROJECT_URL='https://pxtqtkxkkbxoigfklbgw.supabase.co'
+SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4dHF0a3hra2J4b2lnZmtsYmd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjQ3NDYsImV4cCI6MjA1OTA0MDc0Nn0.nDRJO9xP7wV-0MC0Iz6cSviz3HKfjxWV_91BrWAVvJY'
 
 HTTP_LISTEN_PORT="4516"
+# No listening port for deep links
+
+DEEP_URI_SCHEME="notepad-mono"
+#HTTP_URI_SCHEME="localhost:4516"
+
+# Redirect to after login
+DEEP_REDIRECT_URL='notepad-mono://login-callback'
 HTTP_REDIRECT_URL='https://pxtqtkxkkbxoigfklbgw.supabase.co/auth/v1/callback'
 
-URI_SCHEME="notepad-mono"
-URI_HOST="login-callback"
-DEEP_LINK_REDIRECT_URL='notepad-mono://login-callback'
+
+# Becomes localhost:4516/?code=... or notepad-mono://?code=...
+LOGIN_URI_HOST=""
+# Becomes localhost:4516//dummy/?key=... or notepad-mono://dummy/?key=...
+DUMMY_URI_HOST="dummy"
+DUMMY_USER_KEY="WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa"

@@ -14,13 +14,15 @@ Future<void> loadEnv() async {
 String getEnvironmentParameterValue(String parameterName) {
   String? value = dotenv.env[parameterName];
 
-  value ??= String.fromEnvironment(parameterName, defaultValue: "");
+  appLog(".env parameter $parameterName: $value");
 
-  if (value == "") {
-    appLog("Environment parameter $parameterName not found");
+  if (value != null) {
+    return value;
   }
 
-  appLog("Parameter $parameterName: $value");
+  value = String.fromEnvironment(parameterName, defaultValue: "");
+
+  appLog("Environment parameter $parameterName: $value");
 
   return value;
 }

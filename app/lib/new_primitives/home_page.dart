@@ -29,7 +29,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     ValueListenableBuilder builder = ValueListenableBuilder(
-      valueListenable: AppData.instance.widgetsNotifier.rootPageUpdates,
+      valueListenable: AppData.instance.widgetsNotifier.homePageUpdates,
       builder: (context, value, child) => homePageBuilder(context)
     );
 

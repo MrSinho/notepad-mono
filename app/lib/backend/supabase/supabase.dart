@@ -10,9 +10,9 @@ Future<int> initializeSupabase() async {
     
     await Supabase.initialize(
 
-      url: getEnvironmentParameterValue('SUPABASE_URL'),
+      url: getEnvironmentParameterValue('SUPABASE_PROJECT_URL'),
 
-      anonKey: getEnvironmentParameterValue('SUPABASE_KEY'),
+      anonKey: getEnvironmentParameterValue('SUPABASE_ANON_KEY'),
 
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,

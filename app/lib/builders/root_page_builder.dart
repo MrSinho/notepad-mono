@@ -9,7 +9,7 @@ import '../backend/app_data.dart';
 
 
 
-StreamBuilder<AuthState> authStreamBuilder(BuildContext context) {
+Widget rootPageBuilder(BuildContext context) {
 
   StreamBuilder<AuthState> builder = StreamBuilder<AuthState>(
     stream: Supabase.instance.client.auth.onAuthStateChange,
@@ -19,7 +19,7 @@ StreamBuilder<AuthState> authStreamBuilder(BuildContext context) {
       listenToVersions();
       //setupWithContext(context)
       
-      if (snapshot.data != null && snapshot.data!.session != null) {
+      if (snapshot.data != null && snapshot.data!.session != null) { // Authenticated
 
         FutureBuilder builder = FutureBuilder<void>(
           future: storeUserData(),
@@ -50,6 +50,11 @@ StreamBuilder<AuthState> authStreamBuilder(BuildContext context) {
 
     }
   );
+
+  if (AppData.instance.sessionData == DummySession.data) { // Dummy session
+    debugPrint("Setting up dummy user session UI");
+    return AppData.instance.homePage;
+  }
 
   return builder;
 }

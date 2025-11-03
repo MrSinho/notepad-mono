@@ -43,7 +43,7 @@ void listenToVersions() {
         }
 
         AppData.instance.queriesData.latestVersion = versions.first;
-        notifyRootPageUpdate();
+        notifyHomePageUpdate();
       },
 
       onError: (error) {

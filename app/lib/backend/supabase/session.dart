@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:app_links/app_links.dart';
+import 'package:notepad_mono/backend/widgets_notifier.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 import 'package:http/http.dart' as http;
@@ -14,14 +15,14 @@ import '../utils/utils.dart';
 
 
 class SessionData {
-  String accessToken = "";
+  String accessToken;
 
-  String errorMessage = "";
+  String errorMessage;
   
-  String userID       = "";
-  String authProvider = "";
-  String email        = "";
-  String username     = "";
+  String userID;
+  String authProvider;
+  String email;
+  String username;
 
   String profilePictureUrl = "";
   MemoryImage? profilePicture;
@@ -29,8 +30,31 @@ class SessionData {
   late HttpServer authServer;
   late AppLinks appLinks;
   late StreamSubscription uriListenSubscription;
+
+  SessionData(
+    {
+      this.accessToken       = "",
+      this.errorMessage      = "",
+      this.userID            = "",
+      this.authProvider      = "",
+      this.email             = "",
+      this.username          = "",
+      this.profilePictureUrl = "",
+    }
+  );
+
 }
 
+class DummySession {
+  static SessionData data = SessionData(
+    accessToken       : "tolkien",
+    userID            : "tolkien",
+    authProvider      : "tolkien",
+    email             : "tolkien@dummy.com",
+    username          : "Tolkien",
+    profilePictureUrl : "",
+  );
+}
 
 
 void copySessionInfo() {
@@ -46,6 +70,11 @@ void copySessionInfo() {
   if (AppData.instance.sessionData.username == "") {
     AppData.instance.sessionData.username = AppData.instance.sessionData.email.split("@")[0];
   }
+}
+
+void createDummySession() {
+  AppData.instance.sessionData = DummySession.data;
+  notifyLoginPageUpdate();
 }
 
 Future<void> storeUserData() async {

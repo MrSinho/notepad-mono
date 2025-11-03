@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 
-import '../../builders/auth_stream_builder.dart';
+import '../../builders/root_page_builder.dart';
 
 import '../note_edit/save_timer.dart';
 
@@ -25,7 +25,7 @@ GoRouter setupRouter() {
   GoRouter router = GoRouter(
     navigatorKey: NavigatorInfo.key,
     routes: <RouteBase>[
-      GoRoute(path: RoutesPaths.rootPage.path, builder: (context, state) => authStreamBuilder(context)),
+      GoRoute(path: RoutesPaths.rootPage.path, builder: (context, state) => AppData.instance.rootPage),
       GoRoute(path: RoutesPaths.noteEditPage.path, builder: (context, state) => AppData.instance.noteEditPage),
     ]
   );
