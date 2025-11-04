@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+
+import '../backend/supabase/auth_access.dart';
 
 import '../backend/utils/color_utils.dart';
 import '../backend/navigation/router.dart';
@@ -54,7 +55,7 @@ Dialog signOutDialog(BuildContext context) {
             onPressed: () {
               context.pop();
               context.pop();
-              Supabase.instance.client.auth.signOut();
+              logout();
               goToRootPage();
             } 
           )

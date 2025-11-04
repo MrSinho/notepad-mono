@@ -15,25 +15,25 @@ Widget editBottomBarBuilder(BuildContext context) {
       Expanded(
         child: Align(
           alignment: Alignment.centerLeft,
-          child: Text("Row ${AppData.instance.noteEditData.cursorRow}, column ${AppData.instance.noteEditData.cursorColumn}")
+          child: Text("Row ${AppData.instance.noteEditData.stringData.cursorRow}, column ${AppData.instance.noteEditData.stringData.cursorColumn}")
         ) 
       ),
       //Expanded(
       //  child: Align(
       //    alignment: Alignment.centerLeft,
-      //    child: Text("Selected ${AppData.instance.noteEditData.selectionLength} characters, ${AppData.instance.noteEditData.selectionLines} lines")
+      //    child: Text("Selected ${AppData.instance.noteEditData.stringData.selectionLength} characters, ${AppData.instance.noteEditData.stringData.selectionLines} lines")
       //  )
       //),
       Expanded(
         child: Align(
           alignment: Alignment.center,
-          child: Text("*${AppData.instance.noteEditData.bufferLength} chars, ${AppData.instance.noteEditData.bufferLines} lines")
+          child: Text("*${AppData.instance.noteEditData.stringData.bufferLength} chars, ${AppData.instance.noteEditData.stringData.bufferLines} lines")
         ) 
       ),
       Expanded(
         child: Align(
           alignment: Alignment.centerRight,
-          child: Text("Saved ${AppData.instance.noteEditData.savedContentLength} chars, ${AppData.instance.noteEditData.savedContentLines} lines")
+          child: Text("Saved ${AppData.instance.noteEditData.stringData.savedContentLength} chars, ${AppData.instance.noteEditData.stringData.savedContentLines} lines")
         ) 
       ),
     ],

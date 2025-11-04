@@ -5,6 +5,8 @@ import '../backend/supabase/auth_access.dart';
 import '../backend/supabase/listen.dart';
 import '../backend/supabase/session.dart';
 
+import '../backend/utils/utils.dart';
+
 import '../backend/app_data.dart';
 
 
@@ -52,7 +54,7 @@ Widget rootPageBuilder(BuildContext context) {
   );
 
   if (AppData.instance.sessionData == DummySession.data) { // Dummy session
-    debugPrint("Setting up dummy user session UI");
+    appLog("Setting up dummy user session UI");
     return AppData.instance.homePage;
   }
 

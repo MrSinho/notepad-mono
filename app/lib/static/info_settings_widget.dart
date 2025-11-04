@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:gap/gap.dart';
+import 'package:notepad_mono/backend/navigation/router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/supabase/session.dart';
@@ -79,6 +81,45 @@ void showUserInfoWidget(BuildContext context) {
 
   String issuesSite = AppData.instance.queriesData.currentVersion["issues_website"] ?? "https://www.github.com/mrsinho/notepad-mono/issues";
 
+  Widget sessionActions = Wrap(
+    direction: Axis.horizontal,
+    children: [
+      wrapIconTextButton(
+        const Icon(Icons.logout_outlined),
+        Text("Log out", style: GoogleFonts.robotoMono()), 
+        () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => signOutDialog(context)
+          );
+        }
+      ),
+      SizedBox(width: 16),
+      wrapIconTextButton(
+        const Icon(Icons.warning_rounded, color: Colors.red),
+        Text("Delete account", style: GoogleFonts.robotoMono()), 
+        () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => deleteAccountDialog(context)
+          );
+        }
+      )
+    ]
+  );
+
+  if (AppData.instance.sessionData == DummySession.data) {
+    sessionActions = wrapIconTextButton(
+      const Icon(Icons.logout_outlined, color: Colors.orange),
+      Text("Exit dummy session", style: GoogleFonts.robotoMono(color: Colors.orange)), 
+      () {
+        clearUserRelatedAppData();
+        context.pop();
+        goToRootPage();
+      }
+    );
+  }
+
   List<Widget> userInfoContents = [
     userData,
     const Gap(20),
@@ -97,33 +138,7 @@ void showUserInfoWidget(BuildContext context) {
       () => launchUrl(Uri.parse(issuesSite)),
     ),    
     const Gap(20),
-    Wrap(
-      direction: Axis.horizontal,
-      children: [
-        wrapIconTextButton(
-          const Icon(Icons.logout_outlined),
-          Text("Log out", style: GoogleFonts.robotoMono()), 
-          () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => signOutDialog(context)
-            );
-          }
-        ),
-        SizedBox(width: 16),
-        wrapIconTextButton(
-          const Icon(Icons.warning_rounded, color: Colors.red),
-          Text("Delete account", style: GoogleFonts.robotoMono()), 
-          () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => deleteAccountDialog(context)
-            );
-          }
-        )
-      ],
-    )
-    
+    sessionActions
   ];
 
   userInfoContents.addAll(footerWidgets(context));

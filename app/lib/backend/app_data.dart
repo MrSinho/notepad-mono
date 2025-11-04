@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:app_links/app_links.dart';
+import 'package:notepad_mono/backend/supabase/listen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'supabase/queries.dart';
@@ -79,7 +80,6 @@ class AppData {
     router = setupRouter();
 
     noteEditData.controller = setupEditController();
-
     noteEditData.focusNode = FocusNode();
 
     queriesData.selectedNote = {"title": "note"};
@@ -91,12 +91,14 @@ class AppData {
   }
 }
 
-void clearAppData() {
+void clearUserRelatedAppData() {
   AppData.instance.sessionData        = SessionData();
-  AppData.instance.queriesData        = QueriesData();
   AppData.instance.noteEditStatusData = NoteEditStatusData();
-  AppData.instance.noteEditData       = NoteEditData();
-  AppData.instance.inputData          = InputData();
+  
+  AppData.instance.noteEditData.stringData = NoteEditStringData();
+  
+  AppData.instance.queriesData.notes        = [];
+  AppData.instance.queriesData.selectedNote = {};
 
-  notifyAllPagesUpdate();
+  cancelNotesStream();
 }

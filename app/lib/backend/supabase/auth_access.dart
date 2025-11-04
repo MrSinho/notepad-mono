@@ -6,9 +6,12 @@ import 'package:flutter/services.dart';
 
 import '../app_data.dart';
 import '../environment.dart';
-import '../utils/utils.dart';
 import '../widgets_notifier.dart';
+
+import '../utils/utils.dart';
 import '../utils/color_utils.dart';
+
+import '../navigation/router.dart';
 
 import 'session.dart';
 
@@ -25,7 +28,7 @@ Future<int> logout() async {
   try {
 
     await Supabase.instance.client.auth.signOut(scope: SignOutScope.local);
-    clearAppData();
+    //clearAppData();
 
   } catch (error) {
 
@@ -166,6 +169,11 @@ Future<void> getSessiontDummyKey(HttpRequest? request, Uri uri) async {
     appLog("Dummy key valid, starting dummy user session");
     
     logout(); // just in case
+    //stopEditTimer();
+    clearUserRelatedAppData();
+    goToRootPage();
+    notifyRootPageUpdate();
+
     createDummySession();
 
     if (request != null) {
@@ -203,17 +211,6 @@ Future<void> evaluateUriLink(HttpRequest? request, Uri uri) async {
   else if (uri.host == getEnvironmentParameterValue("DUMMY_URI_HOST")) { // http://localhost:4516//dummy/?key=... or notepad-mono://dummy/?key=
     getSessiontDummyKey(request, uri);
   }
-
-  //else if (uri.host.isEmpty) { // XXX://?
-  //  appLog("Empty uri link host, attempting to process query parameters");
-  //  getAuthSessionCode(request, uri);
-  //  getSessiontDummyKey(request, uri);
-  //}
-
-  //else {
-  //  appLog("Unknown uri link host: ${uri.host}");
-  //  //error = true;
-  //}
 
 }
 

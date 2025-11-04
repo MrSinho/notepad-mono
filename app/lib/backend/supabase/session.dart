@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:app_links/app_links.dart';
-import 'package:notepad_mono/backend/widgets_notifier.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_boring_avatars/flutter_boring_avatars.dart';
 import 'package:http/http.dart' as http;
@@ -47,11 +46,11 @@ class SessionData {
 
 class DummySession {
   static SessionData data = SessionData(
-    accessToken       : "tolkien",
-    userID            : "tolkien",
-    authProvider      : "tolkien",
-    email             : "tolkien@dummy.com",
-    username          : "Tolkien",
+    accessToken       : "dummy",
+    userID            : "dummy",
+    authProvider      : "dummy provider",
+    email             : "dummy@dummydomain.com",
+    username          : "DumDummy",
     profilePictureUrl : "",
   );
 }
@@ -74,7 +73,6 @@ void copySessionInfo() {
 
 void createDummySession() {
   AppData.instance.sessionData = DummySession.data;
-  notifyLoginPageUpdate();
 }
 
 Future<void> storeUserData() async {

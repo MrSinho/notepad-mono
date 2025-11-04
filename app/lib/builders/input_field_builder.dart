@@ -99,7 +99,14 @@ Widget inputFieldBuilder(BuildContext context) {
         MoveLinesUpIntent: MoveLinesUpAction(),
         MoveLinesDownIntent: MoveLinesDownAction(),
       },
-      child: theme,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            theme,
+            SizedBox(height: 240),
+          ],
+        ),
+      ), 
     ),
   );
 

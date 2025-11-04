@@ -41,3 +41,18 @@ String formatDateTime(String src) {
   return formatted;
 }
 
+void sortMapList(List<Map<String, dynamic>> list, String key) {
+
+  list.sort((a, b) {
+    final aTime = DateTime.tryParse(a[key] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
+    final bTime = DateTime.tryParse(b[key] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
+    return bTime.compareTo(aTime);
+  });
+
+}
+
+
+
+
+
+

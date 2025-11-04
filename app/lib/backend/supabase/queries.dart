@@ -1,21 +1,26 @@
 import 'dart:async';
 
+import 'package:notepad_mono/backend/widgets_notifier.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../app_data.dart';
 import '../note_edit/note_edit.dart';
+
 import '../utils/utils.dart';
+
+import '../app_data.dart';
+
+import 'session.dart';
 
 
 
 class QueriesData {
   Map<String, Map<String, dynamic>> versions = {};
-  Map<String, dynamic>       currentVersion  = { "name": "Notepad Mono", "version": "v0.1.0" };
+  Map<String, dynamic>       currentVersion  = {};
   Map<String, dynamic>       latestVersion   = {};
   List<Map<String, dynamic>> notes           = [];
   Map<String, dynamic>       selectedNote    = {};
 
-  StreamSubscription? streamSubscription;
+  StreamSubscription? notesSubscription;
   StreamSubscription? versionsSubscription;
 }
 
@@ -37,7 +42,12 @@ Future<void> queryNotes() async {
 
 }
 
-Future<bool> saveNote() async {
+Future<void> saveNote() async {
+
+  if (AppData.instance.sessionData == DummySession.data) {
+    dummySaveNote();
+    return;
+  }
 
   try {
 
@@ -50,36 +60,84 @@ Future<bool> saveNote() async {
       }
     ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
 
-    AppData.instance.queriesData.selectedNote["content"] = AppData.instance.noteEditData.controller.text;
-
-    AppData.instance.noteEditData.savedContentLength = AppData.instance.noteEditData.bufferLength;
-    AppData.instance.noteEditData.savedContentLines  = AppData.instance.noteEditData.bufferLines;
-    AppData.instance.noteEditData.lastEdit           = formatDateTime(lastEdit);
+    copySavedNoteData();
 
     setNoteEditStatus(NoteEditStatus.savedChanges);
-
-    return true;
   }
   catch (error) {
     setNoteEditStatus(NoteEditStatus.failedSave);
-
-    return false;
   }
 
 }
 
+void dummySaveNote() {
+  appLog("Saving dummy note");
+
+  copySavedNoteData();
+  notifyHomePageUpdate();
+
+  sortMapList(AppData.instance.queriesData.notes, "last_edit");
+
+  setNoteEditStatus(NoteEditStatus.savedChanges);
+}
+
+void copySavedNoteData() {
+  String lastEdit = DateTime.now().toUtc().toString();
+
+  AppData.instance.queriesData.selectedNote["content"]   = AppData.instance.noteEditData.controller.text;
+  AppData.instance.queriesData.selectedNote["last_edit"] = lastEdit;
+
+  AppData.instance.noteEditData.stringData.savedContentLength = AppData.instance.noteEditData.stringData.bufferLength;
+  AppData.instance.noteEditData.stringData.savedContentLines  = AppData.instance.noteEditData.stringData.bufferLines;
+  AppData.instance.noteEditData.stringData.lastEdit           = formatDateTime(lastEdit);
+}
+
 Future<void> createNewNote(String title) async {
-  await Supabase.instance.client.from("Notes").insert(
-    {
-      "title": title,
-      //owner id set automatically
-      //date time set automatically
-      "content": "# $title\n\n_Write something..._",
-    }
-  );
+
+  if (AppData.instance.sessionData == DummySession.data) {
+    dummyCreateNewNote(title);
+    return;
+  }
+
+  try {
+    await Supabase.instance.client.from("Notes").insert(
+      {
+        "title": title,
+        "owner_id": AppData.instance.sessionData.userID,
+        //date time set automatically
+        "content": "# $title\n\n_Write something..._",
+      }
+    );
+  }
+  catch (error) {
+    setNoteEditStatus(NoteEditStatus.failedSave);
+  }
+  
+}
+
+void dummyCreateNewNote(String title) {
+  appLog("Creating new dummy note");
+
+  Map<String, dynamic> newNote = {
+    "id": DateTime.now().millisecondsSinceEpoch.toString(),
+    "title": title,
+    "owner_id": AppData.instance.sessionData.userID,
+    "last_edit": DateTime.now().toUtc().toString(),
+    "content": "# $title\n\n_Write something..._",
+    "is_favorite": false,
+  };
+
+  AppData.instance.queriesData.notes.insert(0, newNote);
+
+  notifyNotesViewUpdate();
 }
 
 Future<void> renameNote(String title) async {
+
+  if (AppData.instance.sessionData == DummySession.data) {
+    dummyRenameNote(title);
+    return;
+  }
 
   try {
     await Supabase.instance.client.from("Notes").update(
@@ -99,12 +157,54 @@ Future<void> renameNote(String title) async {
   
 }
 
+void dummyRenameNote(String title) {
+  appLog("Renaming dummy note");
+
+  AppData.instance.queriesData.selectedNote["title"]     = title;
+  AppData.instance.queriesData.selectedNote["content"]   = AppData.instance.noteEditData.controller.text;
+  AppData.instance.queriesData.selectedNote["last_edit"] = DateTime.now().toUtc().toString();
+
+  sortMapList(AppData.instance.queriesData.notes, "last_edit");
+
+  notifyNotesViewUpdate();
+  notifyNoteEditBarsUpdate();
+}
+
 Future<void> deleteSelectedNote() async {
-  await Supabase.instance.client.from("Notes").delete(
-  ).eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+
+  if (AppData.instance.sessionData == DummySession.data) {
+    dummyDeleteSelectedNote();
+    return;
+  }
+
+  try {
+    await Supabase.instance.client.from("Notes").delete().eq("id", AppData.instance.queriesData.selectedNote["id"]??"");
+  }
+  catch (error) {
+    setNoteEditStatus(NoteEditStatus.lostConnection);
+  }
+
+}
+
+void dummyDeleteSelectedNote() {
+  appLog("Deleting dummy note");
+
+  for (Map<String, dynamic> note in AppData.instance.queriesData.notes) {
+    if (note["id"] == AppData.instance.queriesData.selectedNote["id"]) {
+      AppData.instance.queriesData.notes.remove(note);
+      break;
+    }
+  }
+
+  notifyNotesViewUpdate();
 }
 
 Future<void> flipFavoriteNote() async {
+
+  if (AppData.instance.sessionData == DummySession.data) {
+    dummyFlipFavoriteNote();
+    return;
+  }
 
   try {
     bool isFavorite = AppData.instance.queriesData.selectedNote["is_favorite"];
@@ -129,5 +229,22 @@ Future<void> flipFavoriteNote() async {
     appLog("Failed flipping favorite note: $error");
   }
   
+}
+
+void dummyFlipFavoriteNote() {
+  appLog("Flipping favorite status of dummy note");
+
+  bool isFavorite = AppData.instance.queriesData.selectedNote["is_favorite"];
+  AppData.instance.queriesData.selectedNote["is_favorite"] = !isFavorite;
+
+  if (!isFavorite) {//was favorite
+    setNoteEditStatus(NoteEditStatus.addedToFavorites);
+  }
+  else {
+    setNoteEditStatus(NoteEditStatus.removedFromFavorites);
+  }
+
+  notifyNotesViewUpdate();
+  notifyNoteEditBarsUpdate();
 }
 

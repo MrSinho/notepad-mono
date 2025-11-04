@@ -14,8 +14,7 @@ void listenToVersions() {
     SupabaseQueryBuilder table = Supabase.instance.client.from("Versions");
 
     if (AppData.instance.queriesData.versionsSubscription != null) {
-      appLog("Cancelling versions stream from previous session");
-      AppData.instance.queriesData.versionsSubscription!.cancel();
+      cancelVersionsStream();
     }
 
     AppData.instance.queriesData.versionsSubscription = table.stream(primaryKey: ["id"]).listen(
@@ -24,11 +23,7 @@ void listenToVersions() {
 
         List<Map<String, dynamic>> versions = (data as List).whereType<Map<String, dynamic>>().toList();
 
-        versions.sort((a, b) {
-          final aTime = DateTime.tryParse(a["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-          final bTime = DateTime.tryParse(b["release_date"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-          return bTime.compareTo(aTime);
-        });
+        sortMapList(versions, "release_date");
 
         for (Map<String, dynamic> version in versions) {
           AppData.instance.queriesData.versions.addAll(
@@ -60,29 +55,36 @@ void listenToVersions() {
 
 }
 
+void cancelVersionsStream() {
+  appLog("Cancelling versions stream from previous session");
+
+  if (AppData.instance.queriesData.versionsSubscription == null) {
+    appLog("Already invalid stream subscription, nothing to cancel");
+    return;
+  }
+
+  AppData.instance.queriesData.versionsSubscription!.cancel();
+
+}
+
 void listenToNotes() {
 
   try {
 
     SupabaseQueryBuilder table = Supabase.instance.client.from("Notes");
 
-    if (AppData.instance.queriesData.streamSubscription != null) {
-      appLog("Canceling notes stream subscription from the previous session");
-      AppData.instance.queriesData.streamSubscription!.cancel();
+    if (AppData.instance.queriesData.notesSubscription != null) {
+      cancelNotesStream();
     }
 
-    AppData.instance.queriesData.streamSubscription = table.stream(primaryKey: ["id"]).listen(
+    AppData.instance.queriesData.notesSubscription = table.stream(primaryKey: ["id"]).listen(
 
     (dynamic data) {
 
       //safely cast data as a List<Map<String, dynamic>>
       List<Map<String, dynamic>> notes = (data as List).whereType<Map<String, dynamic>>().toList();
 
-        notes.sort((a, b) {
-          final aTime = DateTime.tryParse(a["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-          final bTime = DateTime.tryParse(b["last_edit"] ?? "") ?? DateTime.fromMillisecondsSinceEpoch(0);
-          return bTime.compareTo(aTime);
-        });
+        sortMapList(notes, "last_edit");
 
         AppData.instance.queriesData.notes = notes;
 
@@ -117,6 +119,18 @@ void listenToNotes() {
   catch (exception) {
     appLog("Failed listening to new notes: $exception");
   }
+
+}
+
+void cancelNotesStream() {
+  appLog("Cancelling notes stream from previous session");
+
+  if (AppData.instance.queriesData.notesSubscription == null) {
+    appLog("Already invalid stream subscription, nothing to cancel");
+    return;
+  }
+
+  AppData.instance.queriesData.notesSubscription!.cancel();
 
 }
 
