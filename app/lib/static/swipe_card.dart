@@ -5,10 +5,11 @@ import 'package:notepad_mono/themes.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../backend/app_data.dart';
 import '../backend/utils/color_utils.dart';
+import '../backend/utils/ui_utils.dart';
 
-import 'ui_utils.dart';
+import '../backend/app_data.dart';
+
 
 
 Widget swipeCardsBuilder(BuildContext context) {

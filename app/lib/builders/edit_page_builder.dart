@@ -9,6 +9,7 @@ import '../backend/app_data.dart';
 import '../backend/utils/utils.dart';
 
 import '../backend/utils/color_utils.dart';
+import '../backend/utils/ui_utils.dart';
 
 import '../backend/note_edit/custom_intents/copy_selection.dart';
 import '../backend/note_edit/custom_intents/copy_lines.dart';
@@ -21,8 +22,6 @@ import '../backend/note_edit/custom_intents/outdent_lines.dart';
 import '../backend/note_edit/custom_intents/move_lines.dart';
 import '../backend/note_edit/custom_intents/move_cursor_to_line_edge.dart';
 import '../backend/note_edit/custom_intents/canc.dart';
-
-import '../static/ui_utils.dart';
 
 import 'edit_app_bar_builder.dart';
 

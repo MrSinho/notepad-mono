@@ -8,6 +8,8 @@ import '../backend/supabase/auth_access.dart';
 import '../backend/utils/color_utils.dart';
 import '../backend/navigation/router.dart';
 
+import '../backend/app_data.dart';
+
 import '../themes.dart';
 
 
@@ -53,9 +55,9 @@ Dialog signOutDialog(BuildContext context) {
           TextButton(
             child: confirmMask,
             onPressed: () {
-              context.pop();
-              context.pop();
+              popAll(context);
               logout();
+              clearUserRelatedAppData();
               goToRootPage();
             } 
           )

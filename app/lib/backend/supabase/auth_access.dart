@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/services.dart';
 
@@ -11,6 +12,7 @@ import '../widgets_notifier.dart';
 import '../utils/utils.dart';
 import '../utils/color_utils.dart';
 
+import '../navigation/navigator.dart';
 import '../navigation/router.dart';
 
 import 'session.dart';
@@ -168,8 +170,13 @@ Future<void> getSessiontDummyKey(HttpRequest? request, Uri uri) async {
   if (key == getEnvironmentParameterValue("DUMMY_USER_KEY")) {
     appLog("Dummy key valid, starting dummy user session");
     
-    logout(); // just in case
-    //stopEditTimer();
+    BuildContext? context = getNavigatorContext();
+    
+    if (context != null) {
+      popAll(context);// There's no context here...
+    }
+    
+    logout();
     clearUserRelatedAppData();
     goToRootPage();
     notifyRootPageUpdate();

@@ -14,11 +14,11 @@ import 'session.dart';
 
 
 class QueriesData {
-  Map<String, Map<String, dynamic>> versions = {};
-  Map<String, dynamic>       currentVersion  = {};
-  Map<String, dynamic>       latestVersion   = {};
-  List<Map<String, dynamic>> notes           = [];
-  Map<String, dynamic>       selectedNote    = {};
+  Map<String, Map<String, dynamic>> versions        = {};
+  Map<String, dynamic>              currentVersion  = {};
+  Map<String, dynamic>              latestVersion   = {};
+  List<Map<String, dynamic>>        notes           = [];
+  Map<String, dynamic>              selectedNote    = {};
 
   StreamSubscription? notesSubscription;
   StreamSubscription? versionsSubscription;

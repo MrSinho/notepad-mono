@@ -5,14 +5,16 @@ import 'package:gap/gap.dart';
 import '../backend/supabase/session.dart';
 
 import '../backend/app_data.dart';
-import '../backend/utils/utils.dart';
+
 import '../backend/note_edit/note_edit.dart';
+
+import '../backend/utils/utils.dart';
+import '../backend/utils/ui_utils.dart';
 import '../backend/utils/color_utils.dart';
 
 import '../static/info_settings_widget.dart';
 import '../static/note_dialogs.dart';
 import '../static/shortcuts_map.dart';
-import '../static/ui_utils.dart';
 
 
 

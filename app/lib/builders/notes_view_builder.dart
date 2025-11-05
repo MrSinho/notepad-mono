@@ -5,13 +5,16 @@ import 'package:gap/gap.dart';
 import 'package:notepad_mono/static/note_dialogs.dart';
 
 import '../backend/note_edit/note_edit.dart';
-import '../backend/utils/utils.dart';
+
 import '../backend/navigation/router.dart';
+
+import '../backend/utils/utils.dart';
+import '../backend/utils/ui_utils.dart';
 
 import '../backend/app_data.dart';
 
 import '../static/note_bottom_sheet.dart';
-import '../static/ui_utils.dart';
+
 
 
 Widget notesViewBuilder(BuildContext context) {

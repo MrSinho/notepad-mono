@@ -3,14 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:simple_icons/simple_icons.dart';
 import 'package:gap/gap.dart';
 
-import '../backend/supabase/queries.dart';
-import '../backend/supabase/auth_access.dart';
+import '../supabase/queries.dart';
+import '../supabase/auth_access.dart';
 
-import '../backend/note_edit/note_edit.dart';
+import '../note_edit/note_edit.dart';
 
-import '../backend/utils/color_utils.dart';
+import 'color_utils.dart';
 
-import '../themes.dart';
+import '../../themes.dart';
 
 
 

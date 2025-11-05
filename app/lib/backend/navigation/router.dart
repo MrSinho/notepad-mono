@@ -1,6 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../builders/root_page_builder.dart';
 
 import '../note_edit/save_timer.dart';
 
@@ -44,4 +43,10 @@ void goToRootPage() {
   getNavigatorContext()?.go(RoutesPaths.rootPage.path);
   stopEditTimer();
   notifyRootPageUpdate();
+}
+
+void popAll(BuildContext context) {
+  while (context.canPop()) {
+    context.pop();
+  }
 }

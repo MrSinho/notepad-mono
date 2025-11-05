@@ -12,7 +12,7 @@ import '../themes.dart';
 
 
 
-Dialog deleteAccountDialog(BuildContext context) {
+Dialog deleteUserDataDialog(BuildContext context) {
 
   String appName = AppData.instance.queriesData.currentVersion["name"] ?? "Notepad Mono";
 
@@ -20,20 +20,21 @@ Dialog deleteAccountDialog(BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text("Confirm delete account", textAlign: TextAlign.center, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.red)),
+      Text("Delete user data", textAlign: TextAlign.center, style: GoogleFonts.robotoMono(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.red)),
       const Gap(20),
       Text(
-        "Are you sure you want to permanently delete your $appName account associated with the email address ${AppData.instance.sessionData.email}?",
+        "Are you sure you want to permanently delete all of your notes associated with the email address ${AppData.instance.sessionData.email}?",
         textAlign: TextAlign.center,
       ),
       const Gap(8),
       Text(
-        "You can still create a new account using the same email address.",
+        "Your $appName account will NOT be deleted.",
         textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent),
       ),
       const Gap(16),
       Text(
-        "This action cannot be undone!",
+        "You will lose all of your notes forever. This action cannot be undone!",
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
       ),
@@ -60,7 +61,7 @@ Dialog deleteAccountDialog(BuildContext context) {
           const Gap(20.0),
           TextButton(
             child: Text(
-              "Delete account",
+              "Delete data",
               style: GoogleFonts.robotoMono(
                 fontWeight: FontWeight.bold,
                 color: Colors.red

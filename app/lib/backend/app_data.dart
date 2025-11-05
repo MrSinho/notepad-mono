@@ -85,6 +85,8 @@ class AppData {
     queriesData.selectedNote = {"title": "note"};
 
     sessionData.appLinks = AppLinks();
+
+    
   }
 
   void setupWithContext(BuildContext context) {

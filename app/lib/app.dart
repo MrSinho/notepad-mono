@@ -18,7 +18,7 @@ class NoteApp extends StatelessWidget {
       
       routerConfig: AppData.instance.router,
 
-      theme: brightTheme(),
+      theme: darkTheme(),
 
       darkTheme: darkTheme(),
 

@@ -4,10 +4,11 @@ import 'package:simple_icons/simple_icons.dart';
 import 'package:gap/gap.dart';
 
 import '../backend/supabase/auth_access.dart';
-import '../backend/utils/color_utils.dart';
-import '../backend/app_data.dart';
 
-import '../static/ui_utils.dart';
+import '../backend/utils/color_utils.dart';
+import '../backend/utils/ui_utils.dart';
+
+import '../backend/app_data.dart';
 
 
 

@@ -10,13 +10,13 @@ import '../backend/supabase/session.dart';
 
 import '../backend/app_data.dart';
 import '../backend/inputs.dart';
-import '../backend/utils/color_utils.dart';
 
-import 'ui_utils.dart';
-import 'sign_out_dialog.dart';
-import 'delete_account_dialog.dart';
+import '../backend/utils/color_utils.dart';
+import '../backend/utils/ui_utils.dart';
 
 import '../themes.dart';
+
+import 'account_settings.dart';
 
 
 
@@ -81,40 +81,19 @@ void showUserInfoWidget(BuildContext context) {
 
   String issuesSite = AppData.instance.queriesData.currentVersion["issues_website"] ?? "https://www.github.com/mrsinho/notepad-mono/issues";
 
-  Widget sessionActions = Wrap(
-    direction: Axis.horizontal,
-    children: [
-      wrapIconTextButton(
-        const Icon(Icons.logout_outlined),
-        Text("Log out", style: GoogleFonts.robotoMono()), 
-        () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => signOutDialog(context)
-          );
-        }
-      ),
-      SizedBox(width: 16),
-      wrapIconTextButton(
-        const Icon(Icons.warning_rounded, color: Colors.red),
-        Text("Delete account", style: GoogleFonts.robotoMono()), 
-        () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => deleteAccountDialog(context)
-          );
-        }
-      )
-    ]
+  Widget sessionAction = wrapIconTextButton(
+    const Icon(Icons.manage_accounts_rounded),
+    const Text("Account settings"),
+    () => showDialog(context: context, builder: (context) => accountSettingsWidget(context))
   );
 
   if (AppData.instance.sessionData == DummySession.data) {
-    sessionActions = wrapIconTextButton(
+    sessionAction = wrapIconTextButton(
       const Icon(Icons.logout_outlined, color: Colors.orange),
       Text("Exit dummy session", style: GoogleFonts.robotoMono(color: Colors.orange)), 
       () {
         clearUserRelatedAppData();
-        context.pop();
+        popAll(context);
         goToRootPage();
       }
     );
@@ -122,7 +101,7 @@ void showUserInfoWidget(BuildContext context) {
 
   List<Widget> userInfoContents = [
     userData,
-    const Gap(20),
+    const Gap(24),
     //wrapIconTextButton(
     //  const Icon(Icons.bug_report_rounded),
     //  Text("Report a bug", style: GoogleFonts.robotoMono()),
@@ -137,8 +116,9 @@ void showUserInfoWidget(BuildContext context) {
       Text("Report an issue", style: GoogleFonts.robotoMono()),
       () => launchUrl(Uri.parse(issuesSite)),
     ),    
-    const Gap(20),
-    sessionActions
+    const Gap(12),
+    sessionAction,
+    const Gap(36)
   ];
 
   userInfoContents.addAll(footerWidgets(context));
@@ -211,7 +191,6 @@ List<Widget> footerWidgets(BuildContext context) {
 
 
   List<Widget> footer = [
-    const Gap(40),
     Text(
       "$appName, build version: $currentVersion",
       style: TextStyle(
