@@ -75,6 +75,11 @@ Future<int> createUser() async {
 
 Future<int> deleteUser() async {
 
+  if (AppData.instance.sessionData == DummySession.data) {
+    exitDummySession();
+    return 1;
+  }
+
   try {
     appLog("Deleting user through edge function");
     await Supabase.instance.client.functions.invoke("delete-user");
@@ -87,6 +92,11 @@ Future<int> deleteUser() async {
   }
 
   return 1;
+}
+
+void exitDummySession() {
+  appLog("Deleting dummy user");
+  clearUserRelatedAppData();
 }
 
 String getRedirectPath() {

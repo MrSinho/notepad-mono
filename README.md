@@ -150,7 +150,7 @@ adb shell am start -a android.intent.action.VIEW -d "notepad-mono://dummy/?key=W
 
 This `key` parameter corresponds to an environment variable which is read during the compilation of the application.
 
-This "dummy" session is temporary but unlocks all the application features including note creation and editing. It does NOT include user account management.
+This "dummy" session is temporary but unlocks all the application features including note creation and editing.
 
 ## External packages
 

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notepad_mono/backend/navigation/router.dart';
 import 'package:notepad_mono/static/info_settings_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:notepad_mono/static/privacy_policy.dart';
 
+import '../backend/supabase/session.dart';
+import '../backend/supabase/auth_access.dart';
+
 import '../backend/utils/ui_utils.dart';
+
+import '../backend/app_data.dart';
 
 import 'sign_out_dialog.dart';
 import 'delete_user_data.dart';
@@ -21,6 +27,18 @@ Widget accountSettingsWidget(BuildContext context) {
     Text("Log out", style: GoogleFonts.robotoMono()), 
     () => showDialog(context: context, builder: (BuildContext context) => signOutDialog(context))
   );
+
+  if (AppData.instance.sessionData == DummySession.data) {
+    logoutAction = wrapIconTextButton(
+      const Icon(Icons.logout_outlined, color: Colors.orange),
+      Text("Exit dummy session", style: GoogleFonts.robotoMono(color: Colors.orange)), 
+      () {
+        popAll(context);
+        exitDummySession();
+        goToRootPage();
+      }
+    );
+  }
 
   Widget privacyPolicyAction = wrapIconTextButton(
     const Icon(Icons.privacy_tip_rounded, color: Colors.blue),

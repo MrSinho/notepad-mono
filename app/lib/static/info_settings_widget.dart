@@ -86,18 +86,6 @@ void showUserInfoWidget(BuildContext context) {
     () => showDialog(context: context, builder: (context) => accountSettingsWidget(context))
   );
 
-  if (AppData.instance.sessionData == DummySession.data) {
-    sessionAction = wrapIconTextButton(
-      const Icon(Icons.logout_outlined, color: Colors.orange),
-      Text("Exit dummy session", style: GoogleFonts.robotoMono(color: Colors.orange)), 
-      () {
-        clearUserRelatedAppData();
-        popAll(context);
-        goToRootPage();
-      }
-    );
-  }
-
   List<Widget> userInfoContents = [
     userData,
     const Gap(24),
