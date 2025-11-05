@@ -199,6 +199,17 @@ void dummyDeleteSelectedNote() {
   notifyNotesViewUpdate();
 }
 
+Future<void> deleteAllNotes() async {
+  
+  try {
+    await Supabase.instance.client.from("Notes").delete().eq("owner_id", AppData.instance.sessionData.userID);
+  }
+  catch (error) {
+    setNoteEditStatus(NoteEditStatus.lostConnection);
+  }
+
+}
+
 Future<void> flipFavoriteNote() async {
 
   if (AppData.instance.sessionData == DummySession.data) {
