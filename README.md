@@ -129,6 +129,29 @@ adb shell pm list packages | grep notepad_mono
 adb shell am start -a android.intent.action.VIEW -d "notepad-mono://login-callback"
 ```
 
+## Start dummy session
+
+For testing purposes, if you do not want to create a new account you can have access to all the application features using a special URI:
+
+* On desktop devices:
+
+```bash
+curl http://localhost:4516//dummy/?key=WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa
+```
+
+* On Android:
+
+```bash
+# From any browser browser this link: notepad-mono://dummy/?key=WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa
+
+# Or using the Android Debug Bridge (only debug builds)
+adb shell am start -a android.intent.action.VIEW -d "notepad-mono://dummy/?key=WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa"
+```
+
+This `key` parameter corresponds to an environment variable which is read during the compilation of the application.
+
+This "dummy" session is temporary but unlocks all the application features including note creation and editing. It does NOT include user account management.
+
 ## External packages
 
 All the external packages are pulled from [pub.dev](https://pub.dev) listed with their relative version in the [pubspec.yaml].
