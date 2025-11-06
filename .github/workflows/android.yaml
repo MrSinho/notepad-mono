@@ -23,21 +23,6 @@ jobs:
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
-    - name: "Decode keystore"
-      working-directory: app
-      run: |
-        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/release-key.jks
-
-    - name: "Setup key properties"
-      working-directory: app
-      run: |
-        cat <<EOF > android/key.properties
-        storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-        keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
-        keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
-        storeFile=release-key.jks
-        EOF
-
     - name: "Build flake"
       run: |
         mkdir -p nix/out/allarch-android

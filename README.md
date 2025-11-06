@@ -122,7 +122,7 @@ cp app/build/app/outputs/flutter-apk/app-release.apk build/release/android/Notep
 cp app/build/app/outputs/bundle/release/app-release.aab build/release/android/Notepad_Mono.aab
 ```
 
-## Check Android Manifest in the .apk file
+### Check Android Manifest in the .apk file
 
 ```bash
 # Starting from repo root directory, after nix build
@@ -130,7 +130,7 @@ cd result/android
 aapt dump xmltree notepad_mono.apk AndroidManifest.xml
 ```
 
-## Android diagnostic
+### Android diagnostic
 
 - Enable the developer options on your Android device
 - Enable USB debug in the developer options
