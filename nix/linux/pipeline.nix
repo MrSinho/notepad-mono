@@ -56,8 +56,11 @@ let
           fi
         done
 
-        # Copy bundle folder to output
-        cp -r $PWD/build/linux/x64/release/bundle/* $out/
+        # Attempt copy x64 bundle folder to output
+        cp -r $PWD/build/linux/x64/release/bundle/* $out/ | true
+        
+        # Attempt copy arm64 bundle folder to output
+        cp -r $PWD/build/linux/arm64/release/bundle/* $out/ | true
 
         # Patch also executable to find shared libraries
         # readelf -d $out/notepad_mono
