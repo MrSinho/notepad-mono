@@ -40,6 +40,9 @@ let
 
     installPhase = ''# $PWD starts from app directory
         mkdir -p $out
+        
+        # Get current architecture
+        arch=$(uname -m)
 
         # Replace broken shared library paths with safe packages from nix store
         for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
@@ -56,11 +59,18 @@ let
           fi
         done
 
-        # Attempt copy x64 bundle folder to output
-        cp -r $PWD/build/linux/x64/release/bundle/* $out/ | true
-        
-        # Attempt copy arm64 bundle folder to output
-        cp -r $PWD/build/linux/arm64/release/bundle/* $out/ | true
+        # Never seen in my life...
+        case "$arch" in
+            x86_64)
+            cp -r $PWD/build/linux/x64/release/bundle/* $out/
+            ;;
+            aarch64)
+            cp -r $PWD/build/linux/arm64/release/bundle/* $out/
+            ;;
+            *)
+            echo "Unknown architecture: $arch"
+            ;;
+        esac
 
         # Patch also executable to find shared libraries
         # readelf -d $out/notepad_mono
