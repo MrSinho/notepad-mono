@@ -17,8 +17,9 @@ jobs:
         include:
           - arch: x86_64-windows
             runner: windows-latest
-          - arch: arm64-windows
-            runner: windows-11-arm
+          # Not supported yet!
+          #- arch: arm64-windows
+          #  runner: windows-11-arm
     
     steps:
     - name: "Checkout repo"

@@ -103,6 +103,25 @@ cd nix/linux
 nix flake update
 ```
 
+### Build for android using release keystore jks (devs only)
+
+```shell
+cd nix/android
+
+nix develop --command bash
+
+cd ../../app
+
+flutter build apk --release
+flutter build appbundle --release
+
+cd ../
+mkdir -p build/release/android
+
+cp app/build/app/outputs/flutter-apk/app-release.apk build/release/android/Notepad_Mono.apk
+cp app/build/app/outputs/bundle/release/app-release.aab build/release/android/Notepad_Mono.aab
+```
+
 ## Check Android Manifest in the .apk file
 
 ```bash
