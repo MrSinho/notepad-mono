@@ -57,7 +57,7 @@ let
         done
 
         # Copy bundle folder to output
-        cp -r $PWD/build/linux/x64/release/bundle/* $out
+        cp -r $PWD/build/linux/x64/release/bundle/* $out/
 
         # Patch also executable to find shared libraries
         # readelf -d $out/notepad_mono
