@@ -142,7 +142,7 @@ curl http://localhost:4516//dummy/?key=WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa
 * On Android:
 
 ```bash
-# From any browser browser this link: notepad-mono://dummy/?key=WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa
+# From any browser or API client you can enter this link: notepad-mono://dummy/?key=WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa
 
 # Or using the Android Debug Bridge (only debug builds)
 adb shell am start -a android.intent.action.VIEW -d "notepad-mono://dummy/?key=WQBjbIwEEpxhqCPhxwEFIAivcFdlCXpa"
