@@ -42,10 +42,26 @@ let
         mkdir -p $out
         
         # Get current architecture
-        arch=$(uname -m)
+        SYS_ARCH=$(uname -m)
+
+        ARCH=""
+
+        # Never seen in my life...
+        case "$SYS_ARCH" in
+            x86_64)
+            ARCH="x64"
+            cp -r $PWD/build/linux/x64/release/bundle/* $out/
+            ;;
+            aarch64)
+            ARCH="arm64"
+            ;;
+            *)
+            echo "Unknown architecture: $SYS_ARCH"
+            ;;
+        esac
 
         # Replace broken shared library paths with safe packages from nix store
-        for so in $PWD/build/linux/x64/release/bundle/lib/*.so; do
+        for so in $PWD/build/linux/$ARCH/release/bundle/lib/*.so; do
           if readelf -d "$so" | grep -q RUNPATH; then
             patchelf --set-rpath ${pkgs.pango}/lib "$so"
             patchelf --add-rpath ${pkgs.cairo}/lib "$so"
@@ -59,18 +75,8 @@ let
           fi
         done
 
-        # Never seen in my life...
-        case "$arch" in
-            x86_64)
-            cp -r $PWD/build/linux/x64/release/bundle/* $out/
-            ;;
-            aarch64)
-            cp -r $PWD/build/linux/arm64/release/bundle/* $out/
-            ;;
-            *)
-            echo "Unknown architecture: $arch"
-            ;;
-        esac
+        # Copy build files
+        cp -r $PWD/build/linux/$ARCH/release/bundle/* $out/
 
         # Patch also executable to find shared libraries
         # readelf -d $out/notepad_mono
