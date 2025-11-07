@@ -26,7 +26,7 @@
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
-              />
+            />
             
             <!-- Launcher intent -->
             <intent-filter>
@@ -45,10 +45,10 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs with notepad-mono://login-callback -->
-                <data
-                android:scheme="notepad-mono"
-                android:host="login-callback" />
+                
+                <!-- Accepts URIs with notepad-mono:// -->
+                <data android:scheme="notepad-mono" android:host="login-callback" />
+                <data android:scheme="notepad-mono" android:host="dummy" />
             </intent-filter>
 
         </activity>
