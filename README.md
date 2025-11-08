@@ -85,7 +85,7 @@ nix build --option sandbox false --verbose ./nix/linux --out-link ./nix/out/linu
 ```
 
 > [!NOTE]
-> If you are running the application on NixOS, be sure you have enabled the **UDP port 3000**.
+> If you are running the application on NixOS, be sure you have enabled the **UDP port 4516**.
 
 ```nix
 networking.firewall = {
