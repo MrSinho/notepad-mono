@@ -89,7 +89,6 @@ app/macos
 app/ios
 
 # Android files
-app/android/app/src/main/res
 app/android/build
 app/android/.gitignore
 app/android/gradle
