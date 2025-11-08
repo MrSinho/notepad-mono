@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:notepad_mono/backend/widgets_notifier.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../note_edit/note_edit.dart';
 
 import '../utils/utils.dart';
+
+import '../widgets_notifier.dart';
 
 import '../app_data.dart';
 
@@ -14,14 +15,34 @@ import 'session.dart';
 
 
 class QueriesData {
-  Map<String, Map<String, dynamic>> versions        = {};
-  Map<String, dynamic>              currentVersion  = {};
-  Map<String, dynamic>              latestVersion   = {};
-  List<Map<String, dynamic>>        notes           = [];
-  Map<String, dynamic>              selectedNote    = {};
+  Map<String, Map<String, dynamic>> versions        = DefaultQueriesData.versions;
+  Map<String, dynamic>              currentVersion  = DefaultQueriesData.currentVersion;
+  Map<String, dynamic>              latestVersion   = DefaultQueriesData.latestVersion;
+  List<Map<String, dynamic>>        notes           = DefaultQueriesData.notes;
+  Map<String, dynamic>              selectedNote    = DefaultQueriesData.selectedNote;
 
   StreamSubscription? notesSubscription;
   StreamSubscription? versionsSubscription;
+}
+
+class DefaultQueriesData {
+  static Map<String, Map<String, dynamic>> versions = {
+    "v1.1.1": {
+      "version": "v1.1.1",
+      "name": "Notepad Mono",
+      "author": "Sinho Softworks",
+      "description": "Write and sync monospace notes everywhere",
+      "release_date": DateTime.now().toUtc().toString()
+    }
+  };
+
+  static Map<String, dynamic> currentVersion = versions["v1.1.1"]!;
+
+  static Map<String, dynamic> latestVersion = versions["v1.1.1"]!;
+
+  static List<Map<String, dynamic>> notes = [];
+
+  static Map<String, dynamic> selectedNote = {};
 }
 
 Future<void> queryNotes() async {

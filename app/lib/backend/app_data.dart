@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:app_links/app_links.dart';
-import 'package:notepad_mono/backend/supabase/listen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'supabase/listen.dart';
 import 'supabase/queries.dart';
 import 'supabase/session.dart';
 

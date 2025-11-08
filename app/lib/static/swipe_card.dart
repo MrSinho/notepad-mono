@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:notepad_mono/themes.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -9,6 +8,8 @@ import '../backend/utils/color_utils.dart';
 import '../backend/utils/ui_utils.dart';
 
 import '../backend/app_data.dart';
+
+import '../themes.dart';
 
 
 

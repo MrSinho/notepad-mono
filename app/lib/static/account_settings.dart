@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:notepad_mono/backend/navigation/router.dart';
-import 'package:notepad_mono/static/info_settings_widget.dart';
 import 'package:gap/gap.dart';
-import 'package:notepad_mono/static/privacy_policy.dart';
 
+import '../backend/navigation/router.dart';
 import '../backend/supabase/session.dart';
 import '../backend/supabase/auth_access.dart';
 
@@ -12,6 +10,8 @@ import '../backend/utils/ui_utils.dart';
 
 import '../backend/app_data.dart';
 
+import 'info_settings_widget.dart';
+import 'privacy_policy.dart';
 import 'sign_out_dialog.dart';
 import 'delete_user_data.dart';
 import 'delete_account_dialog.dart';

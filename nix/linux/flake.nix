@@ -20,7 +20,7 @@
             pipeline.pkgs.stdenv.mkDerivation {
 
                 pname = "Notepad Mono";
-                version = "0.1.0";
+                version = "1.1.1";
                 
                 src = ./../../.;
 

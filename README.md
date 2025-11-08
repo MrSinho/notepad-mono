@@ -1,18 +1,36 @@
 # Notepad Mono
 
-[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/linux.yaml?style=for-the-badge&label=Nix%20Linux%20build&labelColor=grey&logo=linux)](https://github.com/MrSinho/notepad-mono/actions)
-[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/android.yaml?style=for-the-badge&label=Nix%20Android%20build&labelColor=grey&logo=android)](https://github.com/MrSinho/notepad-mono/actions)
-[![](https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/windows.yaml?style=for-the-badge&label=Actions%20Windows%20build&labelColor=grey&logo=github)](https://github.com/MrSinho/notepad-mono/actions)
-
-![](https://img.shields.io/github/license/mrsinho/notepad-mono?style=for-the-badge)
-
-[![CodeFactor](https://www.codefactor.io/repository/github/mrsinho/notepad-mono/badge)](https://www.codefactor.io/repository/github/mrsinho/notepad-mono)
-
-An open source app to write and sync your monospace notes everywhere.
 
 <p align="center">
-<img src="./docs/media/frame/frameitHomeDesktop.png"/>
+<img src="./docs/media/logo.png" width="256"/>
 </p>
+
+
+<p align="center">
+  <a href="https://github.com/MrSinho/notepad-mono/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/linux.yaml?style=for-the-badge&label=Nix%20Linux%20build&labelColor=grey&logo=linux">
+  </a>
+  <a href="https://github.com/MrSinho/notepad-mono/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/android.yaml?style=for-the-badge&label=Nix%20Android%20build&labelColor=grey&logo=android">
+  </a>
+  <a href="https://github.com/MrSinho/notepad-mono/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/mrsinho/notepad-mono/windows.yaml?style=for-the-badge&label=Actions%20Windows%20build&labelColor=grey&logo=github">
+  </a>
+</p>
+
+<p align="center">
+An open source app to write and sync your monospace notes everywhere.
+</p>
+
+<p align="center">
+  <a href="https://github.com/MrSinho/notepad-mono/blob/main/README.md">
+    <img src="https://img.shields.io/github/license/mrsinho/notepad-mono?style=for-the-badge">
+  </a>
+  <a href="https://www.codefactor.io/repository/github/mrsinho/notepad-mono">
+    <img src="https://www.codefactor.io/repository/github/mrsinho/notepad-mono/badge">
+  </a>
+</p>
+
 
 ## Features
 
@@ -22,7 +40,7 @@ An open source app to write and sync your monospace notes everywhere.
 * Pretty UI and status bar
 
 <p align="center">
-<img src="./docs/media/frame/frameitEditDesktop.png"/>
+  <img src="./docs/media/frame/frameitEditDesktop.png">
 </p>
 
 ## Release changelog
@@ -90,6 +108,24 @@ nix build --option sandbox false --verbose ./nix/android --out-link ./nix/out/an
 ```
 
 For some reason during the build Gradle might fail/crash unexpectectly, and this might happen also in the Github actions job. For now rerunning the flake build will solve the issue. 
+
+### Enter Nix dev environment
+
+* For Linux only build environment:
+
+```shell
+cd nix/linux
+
+nix develop --command bash
+```
+
+* For Linux and Android build environment:
+
+```shell
+cd nix/android
+
+nix develop --command bash
+```
 
 ### Update flake locks (devs only)
 

@@ -123,9 +123,7 @@ Dialog confirmDeleteAccountDialog(BuildContext context) {
                 color: getCurrentThemePalette().quaternaryForegroundColor
               )
             ),
-            onPressed: () {
-              popAll(context);
-            }
+            onPressed: () => context.pop()
           ),
           const Gap(20.0),
           TextButton(
@@ -195,9 +193,7 @@ Dialog confirmDeleteUserDataDialog(BuildContext context) {
                 color: getCurrentThemePalette().quaternaryForegroundColor
               )
             ),
-            onPressed: () {
-              popAll(context);
-            }
+            onPressed: () => context.pop()
           ),
           const Gap(20.0),
           TextButton(

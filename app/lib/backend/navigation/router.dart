@@ -33,14 +33,14 @@ GoRouter setupRouter() {
 }
 
 void goToNoteEditPage() {
-  getNavigatorContext()?.go(RoutesPaths.noteEditPage.path);
+  getNavigatorContext()?.push(RoutesPaths.noteEditPage.path);
   startEditTimer();
   notifyNoteEditBarsUpdate();
   notifyNoteEditFieldUpdate();
 }
 
 void goToRootPage() {
-  getNavigatorContext()?.go(RoutesPaths.rootPage.path);
+  getNavigatorContext()?.push(RoutesPaths.rootPage.path);
   stopEditTimer();
   notifyRootPageUpdate();
 }

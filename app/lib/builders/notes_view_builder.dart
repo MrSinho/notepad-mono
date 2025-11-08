@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
-import 'package:notepad_mono/static/note_dialogs.dart';
+
+import '../static/note_bottom_sheet.dart';
+import '../static/note_dialogs.dart';
 
 import '../backend/note_edit/note_edit.dart';
 
@@ -13,13 +15,12 @@ import '../backend/utils/ui_utils.dart';
 
 import '../backend/app_data.dart';
 
-import '../static/note_bottom_sheet.dart';
 
 
 
 Widget notesViewBuilder(BuildContext context) {
   List<Widget> notesUI = [];
-
+  
   for (Map<String, dynamic> note in AppData.instance.queriesData.notes) {
 
     notesUI.add(

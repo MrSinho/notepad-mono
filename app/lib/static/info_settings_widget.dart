@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:gap/gap.dart';
-import 'package:notepad_mono/backend/navigation/router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/supabase/session.dart';
@@ -21,6 +20,17 @@ import 'account_settings.dart';
 
 void showUserInfoWidget(BuildContext context) {
   
+  Widget usernameTitle = paletteGradientShaderMask(
+    generateRandomColorPalette(3),
+    Text(AppData.instance.sessionData.username,
+      style: GoogleFonts.robotoMono(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.white
+      )
+    )
+  );
+
   Widget userData = Row(// Desktop
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -32,16 +42,7 @@ void showUserInfoWidget(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          paletteGradientShaderMask(
-            generateRandomColorPalette(3),
-            Text(AppData.instance.sessionData.username,
-              style: GoogleFonts.robotoMono(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white
-              )
-            )
-          ),
+          usernameTitle,
           const Gap(4),
           Text(AppData.instance.sessionData.email, style: GoogleFonts.robotoMono(fontSize: 14)),
           const Gap(4),
@@ -60,16 +61,7 @@ void showUserInfoWidget(BuildContext context) {
           padding: const EdgeInsetsGeometry.all(16.0),
           child: getProfilePicture(true)
         ),
-        paletteGradientShaderMask(
-          generateRandomColorPalette(3),
-          Text(AppData.instance.sessionData.username,
-            style: GoogleFonts.robotoMono(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-            )
-          )
-        ),
+        usernameTitle,
         const Gap(4),
         Text(AppData.instance.sessionData.email, style: GoogleFonts.robotoMono(fontSize: 14)),
         const Gap(4),
