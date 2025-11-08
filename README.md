@@ -95,7 +95,7 @@ networking.firewall = {
   ];
   allowedUDPPorts = [
     # [...]
-    3000
+    4516
   ];
 };
 ```
