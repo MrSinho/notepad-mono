@@ -40,7 +40,7 @@
 
       src = ./../../app/.;
       
-      pubspecLock = lib.importJSON ./pubspec.lock.json;
+      pubspecLock = pkgs.lib.importJSON ./../../app/pubspec.lock.json; # To convert pubspec.lock into json: `yq -o json pubspec.lock > pubspec.lock.json`
 
       pubspecLockHash = pkgs.lib.fakeSha256;
 

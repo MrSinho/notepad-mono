@@ -83,8 +83,8 @@ app/README.md
 
 # Other stuff
 app/README.md
-app/windows/flutter
-app/linux/flutter
+#app/windows/flutter # They are needed for reproducible builds
+#app/linux/flutter # They are needed for reproducible builds
 app/macos
 app/ios
 
