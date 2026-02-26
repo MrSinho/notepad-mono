@@ -3,4 +3,4 @@
 let
   flake = builtins.getFlake ./.;
 in
-  flake.defaultApp
+  flake.defaultPackage
