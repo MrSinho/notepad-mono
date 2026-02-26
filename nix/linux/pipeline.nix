@@ -3,6 +3,10 @@
 let
 
     buildInputs = [
+        pkgs.gcc
+        pkgs.gnumake
+        pkgs.cmake
+
         pkgs.flutter
 
         pkgs.patchelf
@@ -14,7 +18,7 @@ let
         pkgs.fontconfig
         pkgs.gdk-pixbuf
         pkgs.harfbuzz
-        pkgs.xorg.libX11
+        pkgs.libX11
         pkgs.libdeflate
     ];
 
@@ -66,7 +70,7 @@ let
             patchelf --add-rpath ${pkgs.fontconfig.lib}/lib "$so"
             patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib "$so"
             patchelf --add-rpath ${pkgs.harfbuzz}/lib "$so"
-            patchelf --add-rpath ${pkgs.xorg.libX11}/lib "$so"
+            patchelf --add-rpath ${pkgs.libX11}/lib "$so"
             patchelf --add-rpath ${pkgs.libdeflate}/lib "$so"
           fi
         done
@@ -82,7 +86,7 @@ let
         patchelf --add-rpath ${pkgs.fontconfig.lib}/lib $out/notepad_mono
         patchelf --add-rpath ${pkgs.gdk-pixbuf}/lib $out/notepad_mono
         patchelf --add-rpath ${pkgs.harfbuzz}/lib $out/notepad_mono
-        patchelf --add-rpath ${pkgs.xorg.libX11}/lib $out/notepad_mono
+        patchelf --add-rpath ${pkgs.libX11}/lib $out/notepad_mono
         patchelf --add-rpath ${pkgs.libdeflate}/lib $out/notepad_mono
 
         mv $out/notepad_mono $out/NotepadMono

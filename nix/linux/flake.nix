@@ -1,50 +1,71 @@
 {
-    inputs = {# Flake imports
-        nixpkgs = {
-            url = "github:nixos/nixpkgs/nixos-unstable";
-        };
-        flake-utils = {
-            url = "github:numtide/flake-utils";
-        };
+  inputs = {
+    
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    outputs = { nixpkgs, flake-utils, ... }:
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
+  };
+
+  outputs = { nixpkgs, flake-utils, ... }:
+  
+  flake-utils.lib.eachDefaultSystem (
+      
+  system: let
     
-    flake-utils.lib.eachDefaultSystem (
-            
-    system: let
+    pkgs = import nixpkgs { inherit system; }; # Evaluate package set
 
-        pipeline = import ./pipeline.nix { inherit nixpkgs; };
+    pipeline = import ./pipeline.nix { inherit pkgs; };
 
-        notepad-mono = (
-            pipeline.pkgs.stdenv.mkDerivation {
+    #notepad-mono = (
+    #  pkgs.stdenv.mkDerivation {
+    #
+    #    pname = "Notepad Mono";
+    #    version = "1.1.1";
+    #    
+    #    src = ./../../.;
+    #
+    #    buildInputs  = pipeline.buildInputs;
+    #    buildPhase   = pipeline.buildPhase;
+    #    installPhase = pipeline.installPhase;
+    #  }
+    #);
+    
+    notepad-mono = pkgs.flutter.buildFlutterApplication {
+      pname = "Notepad Mono";
+      version = "1.1.1";
 
-                pname = "Notepad Mono";
-                version = "1.1.1";
-                
-                src = ./../../.;
+      src = ./../../app/.;
+      
+      pubspecLock = lib.importJSON ./pubspec.lock.json;
 
-                buildInputs  = pipeline.buildInputs;
-                buildPhase   = pipeline.buildPhase;
-                installPhase = pipeline.installPhase;
-            }
-        );
-        
-    in rec {
+      pubspecLockHash = pkgs.lib.fakeSha256;
 
-        defaultPackage = notepad-mono;
+      meta = {
+        description = "Notepad Mono Flutter App";
+        platforms = pkgs.lib.platforms.linux;
+      };
 
-        defaultApp = flake-utils.lib.mkApp {
-            drv = defaultPackage;
-        };
+    };
 
-        devShell = pipeline.pkgs.mkShell {
-            buildInputs = pipeline.buildInputs;
-            shellHook   = pipeline.environmentSetup;
-        };
+  in rec {
 
-    }
+    defaultPackage = notepad-mono;
 
-    );# outputs
+    defaultApp = flake-utils.lib.mkApp {
+      drv = defaultPackage;
+    };
+
+    devShell = pkgs.mkShell {
+      buildInputs = pipeline.buildInputs;
+      shellHook   = pipeline.environmentSetup;
+    };
+
+  }
+
+  );# outputs
 
 }

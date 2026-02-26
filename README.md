@@ -127,7 +127,7 @@ cd nix/android
 nix develop --command bash
 ```
 
-### Update flake locks (devs only)
+### Update flake and pubspec locks (devs only)
 
 <p align="center">
 <img src="./docs/media/mockupuphone/googlePixel8Obsidian/homeMobile-portrait.png" width="200"/>
@@ -137,6 +137,11 @@ nix develop --command bash
 ```shell
 cd nix/linux
 nix flake update
+```
+
+```shell
+cd app
+yq -o json pubspec.lock > pubspec.lock.json
 ```
 
 ### Build for android using release keystore jks (devs only)
