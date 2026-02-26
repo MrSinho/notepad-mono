@@ -1,10 +1,6 @@
-{ nixpkgs, system }:
+{ pkgs, ... }:
 
 let
-
-    pkgs = import nixpkgs {
-        inherit system;
-    };
 
     buildInputs = [
         pkgs.flutter
