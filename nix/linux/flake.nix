@@ -14,7 +14,7 @@
             
     system: let
 
-        pipeline = import ./pipeline.nix { inherit system nixpkgs; };
+        pipeline = import ./pipeline.nix { inherit nixpkgs; };
 
         notepad-mono = (
             pipeline.pkgs.stdenv.mkDerivation {
