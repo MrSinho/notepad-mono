@@ -82,7 +82,7 @@ Linux:
 ```shell
 mkdir -p nix/out/linux
 nix build ./nix/linux --out-link ./nix/out/linux/result
-./nix/out/linux/result/NotepadMono
+./nix/out/linux/result/app/Notepad-Mono/notepad_mono
 ```
 
 Android:
