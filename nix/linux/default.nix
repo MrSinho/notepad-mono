@@ -6,7 +6,7 @@ in
   
 pkgs.stdenv.mkDerivation {
 
-  pname = "Notepad Mono";
+  pname = "Notepad-Mono";
   version = "1.1.1";
                 
   src = ./../../.;
