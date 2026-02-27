@@ -72,16 +72,23 @@ flutter build windows --release
 
 ## Build from source with Nix flake
 
-The Nix flake will download the required packages, compile and patch the Linux and Android binaries. Since application relies on external packages from [pub.dev](https://pub.dev) you must disable the `sandbox` option.
+The Nix flake will download the required packages, compile and patch the Linux and Android binaries. The flutter packages can be cached from [pub.dev](https://pub.dev) for Linux builds through `pkgs.flutter.buildFlutterApplication`, but for Android binaries you must disable the `sandbox` option to allow "impure" builds.
 
 If you don't have installed nix on your system, you can follow the [official guide](https://nixos.org/download) for all platforms.
 
 ### ![](https://a11ybadges.com/badge?logo=linux) ![](https://a11ybadges.com/badge?logo=nixos)
 
+Linux:
 ```shell
 mkdir -p nix/out/linux
-nix build --option sandbox false --verbose ./nix/linux --out-link ./nix/out/linux/result
+nix build ./nix/linux --out-link ./nix/out/linux/result
 ./nix/out/linux/result/NotepadMono
+```
+
+Android:
+```shell
+mkdir -p nix/out/android
+nix build ./nix/android --option sandbox false --out-link ./nix/out/android/result
 ```
 
 > [!NOTE]
@@ -134,13 +141,16 @@ nix develop --command bash
 <img src="./docs/media/mockupuphone/googlePixel8Obsidian/editMobile-portrait.png" width="200"/>
 </p>
 
+Update flake build inputs and packages:
 ```shell
 cd nix/linux
 nix flake update
 ```
 
+Update pubspec.lock and convert it into JSON format for nix builds:
 ```shell
 cd app
+flutter pub upgrade
 yq -o json pubspec.lock > pubspec.lock.json
 ```
 

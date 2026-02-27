@@ -111,4 +111,4 @@ app/android/key.properties
 *.jks
 
 # Nix related paths
-nix/out
+#nix/out
