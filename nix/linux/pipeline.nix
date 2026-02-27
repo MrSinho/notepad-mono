@@ -98,4 +98,22 @@ in {
   buildPhase       = buildPhase;
   installPhase     = installPhase;
   environmentSetup = environmentSetup;
+
+  notepad-mono = pkgs.flutter.buildFlutterApplication {
+    pname = "Notepad-Mono";
+    version = "1.1.1";
+  
+    src = ./../../app/.;
+        
+    pubspecLock = pkgs.lib.importJSON ./../../app/pubspec.lock.json; # To convert pubspec.lock into json: `yq -o json pubspec.lock > pubspec.lock.json`
+  
+    pubspecLockHash = pkgs.lib.fakeSha256;
+  
+    meta = {
+      description = "Notepad Mono Flutter App";
+      platforms = pkgs.lib.platforms.linux;
+    };
+    
+  };
+
 }
